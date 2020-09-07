@@ -1,14 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { Row } from 'antd';
-import { v4 } from 'uuid';
+import React, { useEffect, useState } from "react";
+import { Row } from "antd";
+import { v4 } from "uuid";
 
-import { data } from './../data/data';
+import { data } from "./../data/data";
 
 // Import composents
-import OnMap from './map/OnMap';
-import Info from './info/Info';
-import SearchInput from './search/SearchInput';
-import DND from './dnd/index';
+import OnMap from "./map/OnMap";
+import Info from "./info/Info";
+import SearchInput from "./search/SearchInput";
+import DND from "./dnd/index";
+
+// Get the property from Utils
+import { getProperty } from "../utils/getPropertyKey";
+
+// get the function to compare the distance between a point fix and a banch of punkt
+import { calculateDistanceAndSort } from "../utils/getDistanceFromLatLonInKm";
 
 interface Tstations {
   _id: string;
@@ -24,28 +30,74 @@ interface Tstations {
 
 type Tloading = boolean;
 
-function getProperty<T, K extends keyof T>(obj: T, key: K) {
-  return obj[key]; // Inferred type is T[K]
-}
-
 const Aufgabe = () => {
   const [stations, setStations] = useState<Tstations[]>([]);
   const [loading, setLoading] = useState<Tloading>(true);
-  const [selected, setSelected] = useState();
-  const [choose, setChoose] = useState('');
-  const [state, setState] = useState({
-    search: {
-      title: 'Search',
+  const [selected, setSelected] = useState<Tstations>();
+  const [choose, setChoose] = useState("");
+  const [stateDND, setStateDND] = useState({
+    vorschlag: {
+      title: "Vorschlag",
       items: [],
     },
-    traject: {
-      title: 'Traject',
+    trajekt: {
+      title: "Trajekt",
       items: [],
     },
   });
 
   const clickOnMap = (e: any) => {
     setSelected(e);
+  };
+
+  const clickOnDrop = (e: any) => {
+    const response = stations.filter((el) => el.Haltestelle === e.name)[0];
+    console.log(
+      "calculated and sorted",
+      calculateDistanceAndSort(response, stations)
+    );
+    setSelected(response);
+
+    const vorschläge = calculateDistanceAndSort(response, stations);
+
+    console.log("vorassshcläge", vorschläge[0].to.Haltestelle);
+
+    setStateDND((prev: any) => {
+      return {
+        ...prev,
+        vorschlag: {
+          title: "Vorschlag",
+          items: [
+            {
+              id: v4(),
+              name: vorschläge[0].to.Haltestelle,
+            },
+            {
+              id: v4(),
+              name: vorschläge[1].to.Haltestelle,
+            },
+            {
+              id: v4(),
+              name: vorschläge[2].to.Haltestelle,
+            },
+          ],
+        },
+      };
+    });
+  };
+
+  const clickDuble = (e: any) => {
+    setStateDND((prev: any) => {
+      return {
+        ...prev,
+        trajekt: {
+          title: "Trajekt",
+          items: stateDND.trajekt.items.filter(
+            (item: any) => item.name !== e.name
+          ),
+        },
+      };
+    });
   };
 
   useEffect(() => {
@@ -57,10 +109,10 @@ const Aufgabe = () => {
           setStations(response);
           setLoading(false);
         } else {
-          console.error('Cannt fetch stations from backend ');
+          console.error("Cannt fetch stations from backend ");
         }
       } catch (error) {
-        console.error('error from trycatch');
+        console.error("error from trycatch");
       }
     };
     fetchDataFromBackend();
@@ -68,17 +120,17 @@ const Aufgabe = () => {
 
   const onEvent = (e: any) => {
     setChoose(e);
-    setState((prev: any) => {
+    setStateDND((prev: any) => {
       return {
         ...prev,
-        search: {
-          title: 'Search',
+        trajekt: {
+          title: "Trajekt",
           items: [
+            ...prev.trajekt.items,
             {
               id: v4(),
               name: e,
             },
-            ...prev.search.items,
           ],
         },
       };
@@ -97,9 +149,9 @@ const Aufgabe = () => {
     }
 
     const itemCopy = {
-      ...getProperty(state, source.droppableId).items[source.index],
+      ...getProperty(stateDND, source.droppableId).items[source.index],
     };
-    setState((prev) => {
+    setStateDND((prev) => {
       prev = { ...prev };
       // Remove from previous items array
       getProperty(prev, source.droppableId).items.splice(source.index, 1);
@@ -114,22 +166,24 @@ const Aufgabe = () => {
       return prev;
     });
   };
-  console.log('stations', stations);
-  console.log('state', state);
+
+  console.log("Strecke", stateDND);
 
   return (
-    <div className='site-card-wrapper'>
+    <div className="site-card-wrapper">
       <Row gutter={14}>
         <SearchInput stations={stations} handleEvent={(e: any) => onEvent(e)} />
         <DND
           choose={choose}
-          state={state}
+          stateDND={stateDND}
           handleDragEnd={(e: any) => handleDragEnd(e)}
+          Onclick={(e: any) => clickOnDrop(e)}
+          OnDubleClick={(e: any) => clickDuble(e)}
         />
         <OnMap
           loading={loading}
           stations={stations}
-          state={state}
+          stateDND={stateDND}
           Onclick={(e: any) => clickOnMap(e)}
         />
         <Info selected={selected} />

@@ -1,11 +1,11 @@
-import React, { Fragment } from 'react';
-import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
-import { Spin, Card, Col } from 'antd';
-import L from 'leaflet';
+import React, { Fragment } from "react";
+import { Map, TileLayer, Marker, Popup, Polyline } from "react-leaflet";
+import { Spin, Card, Col } from "antd";
+import L from "leaflet";
 
-const OnMap = ({ loading, stations, state, Onclick }: any) => {
-  // Map component
-  L.Icon.Default.imagePath = 'https://unpkg.com/leaflet@1.5.0/dist/images/';
+const OnMap = ({ loading, stations, stateDND, Onclick }: any) => {
+  // Icon per default
+  L.Icon.Default.imagePath = "https://unpkg.com/leaflet@1.5.0/dist/images/";
 
   const position = {
     lat: 48.16517718624497,
@@ -13,40 +13,33 @@ const OnMap = ({ loading, stations, state, Onclick }: any) => {
     zoom: 12,
   };
 
-  // To make the map and to refactor
-  const tableaufiltrer = (tab1: any, tab2: any) => {
-    const tableToCompare = tab2.traject.items.map((el: any) => el.name);
-    return tab1.filter((el: any) => tableToCompare.includes(el.Haltestelle));
-  };
-
   const handleClick = (e: any) => {
     Onclick(e);
   };
-
   return (
     <Fragment>
       <Col span={12}>
-        <Card bordered={true} title='Map'>
+        <Card bordered={true} title="Map">
           {loading ? (
             <Spin
               style={{
-                display: 'flex',
-                justifyContent: 'center',
-                margin: '30px',
+                display: "flex",
+                justifyContent: "center",
+                margin: "30px",
               }}
             />
           ) : (
             <Map
               center={[position.lat, position.lng]}
               zoom={position.zoom}
-              style={{ height: '60vh' }}
+              style={{ height: "60vh" }}
             >
               <TileLayer
                 attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
-              {state &&
-                tableaufiltrer(stations, state).map((el: any, i: any) => (
+              {stations &&
+                stations.map((el: any, i: any) => (
                   <Marker
                     position={[el.location.lat, el.location.lng]}
                     draggable={true}
@@ -67,6 +60,21 @@ const OnMap = ({ loading, stations, state, Onclick }: any) => {
 };
 
 export default OnMap;
+
+/*
+                tableaufiltrer(stations, stateDND).map((el: any, i: any) => (
+                  <Marker
+                    position={[el.location.lat, el.location.lng]}
+                    draggable={true}
+                    key={el._id}
+                    onClick={() => {
+                      handleClick(el);
+                    }}
+                  >
+                    <Popup>{el.Haltestelle}</Popup>
+                  </Marker>
+                )
+*/
 
 // import React, { Fragment } from 'react';
 // import { Map, TileLayer, Marker, Popup } from 'react-leaflet';

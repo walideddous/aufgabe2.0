@@ -1,9 +1,9 @@
-import React, { Fragment, useState } from 'react';
-import { AutoComplete } from 'antd';
+import React, { Fragment, useState } from "react";
+import { AutoComplete } from "antd";
 
 const SearchInput = ({ stations, handleEvent }: any) => {
   // Search Component
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
 
   // Auto complete component
   const { Option } = AutoComplete;
@@ -13,9 +13,8 @@ const SearchInput = ({ stations, handleEvent }: any) => {
   };
 
   const onSelect = (data: string) => {
-    setSearch('');
+    setSearch("");
     handleEvent(data);
-    console.log('el', data);
   };
 
   const handleClick = (el: any) => {};
@@ -23,10 +22,10 @@ const SearchInput = ({ stations, handleEvent }: any) => {
   return (
     <Fragment>
       <AutoComplete
-        style={{ width: '60%', margin: 20 }}
+        style={{ width: "60%", margin: 20 }}
         onSearch={handleSearch}
         onSelect={onSelect}
-        placeholder='Stationsname eingeben'
+        placeholder="Stationsname eingeben"
         open={search ? true : false}
       >
         {stations

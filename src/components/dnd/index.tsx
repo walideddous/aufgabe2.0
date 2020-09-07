@@ -1,14 +1,27 @@
-import React, { Fragment } from 'react';
-import './style.css';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import _ from 'lodash';
-import { Card, Col } from 'antd';
+import React, { Fragment } from "react";
+import "./style.css";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import _ from "lodash";
+import { Card, Col } from "antd";
 
-const DND = ({ choose, state, handleDragEnd }: any) => {
+const DND = ({
+  choose,
+  stateDND,
+  handleDragEnd,
+  Onclick,
+  OnDubleClick,
+}: any) => {
+  const handleClick = (e: any) => {
+    Onclick(e);
+  };
+
+  const handleDoubleClick = (e: any) => {
+    OnDubleClick(e);
+  };
   return (
-    <div className='App'>
+    <div className="App">
       <DragDropContext onDragEnd={(e) => handleDragEnd(e)}>
-        {_.map(state, (data: any, key: any) => {
+        {_.map(stateDND, (data: any, key: any) => {
           return (
             <Col span={12}>
               <Card bordered={true}>
@@ -18,7 +31,7 @@ const DND = ({ choose, state, handleDragEnd }: any) => {
                       <div
                         ref={provided.innerRef}
                         {...provided.droppableProps}
-                        className={'droppable-col'}
+                        className={"droppable-col"}
                       >
                         {data.items.map((el: any, index: number) => {
                           return (
@@ -31,7 +44,13 @@ const DND = ({ choose, state, handleDragEnd }: any) => {
                                 return (
                                   <Fragment>
                                     <div
-                                      className='item'
+                                      className="item"
+                                      onClick={() => {
+                                        handleClick(el);
+                                      }}
+                                      onDoubleClick={() => {
+                                        handleDoubleClick(el);
+                                      }}
                                       ref={provided.innerRef}
                                       {...provided.draggableProps}
                                       {...provided.dragHandleProps}
