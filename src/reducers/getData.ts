@@ -35,19 +35,3 @@ export default function getDataReducer(
       return state;
   }
 }
-
-/*
- [
-    {
-      _id: "",
-      Haltestelle: "",
-      adresse: "",
-      location: {
-        lat: 0,
-        lng: 0,
-      },
-      Umstiegmöglischkeiten: "",
-    },
-  ],
-
-*/

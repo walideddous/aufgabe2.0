@@ -1,59 +1,66 @@
-import React, { Fragment } from 'react';
-import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
-import MarkerClusterGroup from 'react-leaflet-markercluster';
-import { Spin, Card, Col } from 'antd';
-import L from 'leaflet';
+import React, { Fragment } from "react";
+import { Map, TileLayer, Popup, CircleMarker, Polyline } from "react-leaflet";
+import MarkerClusterGroup from "react-leaflet-markercluster";
+import { Spin, Card, Col } from "antd";
+import L from "leaflet";
 
-const OnMap = ({ loading, stations, stateDND, Onclick }: any) => {
+// import the function to filter the table of the trajeckt and drw the linie on map
+import { getPathFromTrajekt } from "../../utils/getPathFromTrajekt";
+
+const OnMap = ({ loading, stations, stateDND, selected, Onclick }: any) => {
   // Icon per default
-  L.Icon.Default.imagePath = 'https://unpkg.com/leaflet@1.5.0/dist/images/';
+  L.Icon.Default.imagePath = "https://unpkg.com/leaflet@1.5.0/dist/images/";
 
+  // Center the Map
   const position = {
     lat: 48.16517718624497,
     lng: 11.575250355866128,
-    zoom: 12,
+    zoom: 11,
   };
 
-  const handleClick = (e: any) => {
-    Onclick(e);
-  };
   return (
     <Fragment>
       <Col span={12}>
-        <Card bordered={true} title='Map'>
+        <Card bordered={true} title="Map">
           {loading ? (
             <Spin
               style={{
-                display: 'flex',
-                justifyContent: 'center',
-                margin: '30px',
+                display: "flex",
+                justifyContent: "center",
+                margin: "30px",
               }}
             />
           ) : (
             <Map
-              center={[position.lat, position.lng]}
-              zoom={position.zoom}
-              style={{ height: '60vh' }}
+              center={
+                selected
+                  ? [selected.location.lat, selected.location.lng]
+                  : [position.lat, position.lng]
+              }
+              zoom={selected ? 14 : position.zoom}
+              style={{ height: "60vh" }}
             >
               <TileLayer
                 attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
               <MarkerClusterGroup>
                 {stations &&
                   stations.map((el: any, i: any) => (
-                    <Marker
-                      position={[el.location.lat, el.location.lng]}
-                      draggable={true}
+                    <CircleMarker
+                      center={[el.location.lat, el.location.lng]}
                       key={el._id}
-                      onClick={() => {
-                        handleClick(el);
-                      }}
+                      color={"blue"}
+                      radius={20}
                     >
                       <Popup>{el.Haltestelle}</Popup>
-                    </Marker>
+                    </CircleMarker>
                   ))}
               </MarkerClusterGroup>
+              <Polyline
+                positions={getPathFromTrajekt(stateDND, stations)}
+                color="red"
+              ></Polyline>
             </Map>
           )}
         </Card>
@@ -63,101 +70,3 @@ const OnMap = ({ loading, stations, stateDND, Onclick }: any) => {
 };
 
 export default OnMap;
-
-/*
-                tableaufiltrer(stations, stateDND).map((el: any, i: any) => (
-                  <Marker
-                    position={[el.location.lat, el.location.lng]}
-                    draggable={true}
-                    key={el._id}
-                    onClick={() => {
-                      handleClick(el);
-                    }}
-                  >
-                    <Popup>{el.Haltestelle}</Popup>
-                  </Marker>
-                )
-*/
-
-// import React, { Fragment } from 'react';
-// import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
-// import { Spin } from 'antd';
-// import L from 'leaflet';
-
-// //Redux
-// import { connect, ConnectedProps } from 'react-redux';
-
-// // Types declaration
-// type State = {
-//   lat: number;
-//   lng: number;
-//   zoom: number;
-// };
-
-// interface GetData {
-//   getDataReducer: {
-//     loading: boolean;
-//     data: {}[];
-//   };
-// }
-
-// type PropsFromRedux = ConnectedProps<typeof connector>;
-
-// const OnMap = ({ data, loading }: PropsFromRedux) => {
-//   L.Icon.Default.imagePath = 'https://unpkg.com/leaflet@1.5.0/dist/images/';
-
-//   const position = {
-//     lat: 48.16517718624497,
-//     lng: 11.575250355866128,
-//     zoom: 12,
-//   };
-
-//   // Create the lat and lng for the path
-//   const path = (data: any) => {
-//     let result = [];
-//     for (let i = 0; i < data.length; i++) {
-//       result.push([data[i].location.lat, data[i].location.lat]);
-//     }
-//     return result;
-//   };
-
-//   return (
-//     <Fragment>
-//       {loading ? (
-//         <Spin
-//           style={{ display: 'flex', justifyContent: 'center', margin: '30px' }}
-//         />
-//       ) : (
-//         <Map
-//           center={[position.lat, position.lng]}
-//           zoom={position.zoom}
-//           style={{ height: '60vh' }}
-//         >
-//           <TileLayer
-//             attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-//             url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-//           />
-//           {data.map((el: any, i: any) => (
-//             <Marker
-//               position={[el.location.lat, el.location.lng]}
-//               draggable={true}
-//               key={el._id}
-//               color='red'
-//             >
-//               <Popup>{el.Haltestelle}</Popup>
-//             </Marker>
-//           ))}
-//         </Map>
-//       )}
-//     </Fragment>
-//   );
-// };
-
-// const mapStateToProps = (state: GetData) => ({
-//   data: state.getDataReducer.data,
-//   loading: state.getDataReducer.loading,
-// });
-
-// const connector = connect(mapStateToProps);
-
-// export default connector(OnMap);

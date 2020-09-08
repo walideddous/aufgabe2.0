@@ -1,7 +1,9 @@
 .App {
   text-align: center;
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
 }
-
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -35,4 +37,34 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.App .column {
+  width: 30%;
+}
+
+.droppable-col {
+  width: 100%;
+  background-color: #007cba;
+  padding: 10px 10px 0 10px;
+  border-radius: 7px;
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  margin-bottom: 10px;
+  background-color: #007cba;
+  color: white;
+  border: 1px solid white;
+  padding: 5px;
+  border-radius: 7px;
+}
+
+.item.dragging {
+  background-color: coral;
 }

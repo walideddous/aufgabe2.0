@@ -1,40 +1,60 @@
-import React, { Fragment } from 'react';
-import { Card, Col } from 'antd';
+import React, { Fragment } from "react";
+import { Card, Col } from "antd";
 
-const Info = ({ selected }: any) => {
+const Info = ({ selected, distance }: any) => {
   return (
     <Fragment>
       <Col span={12}>
-        <Card bordered={true} title='Haltestelle Info'>
+        <Card bordered={true} title="Haltestelle Info">
           {selected ? (
             <Fragment>
               <p>
                 <strong>Haltestelle</strong>
-                {' : '}
+                {" : "}
                 {selected.Haltestelle}
               </p>
               <p>
                 <strong>Adresse</strong>
-                {' : '}
+                {" : "}
                 {selected.adresse}
               </p>
               <p>
                 <strong>Umstiegmöglischkeiten</strong>
-                {' : '}
+                {" : "}
                 {selected.Umstiegmöglischkeiten}
               </p>
               <p>
                 <strong>Location</strong>
-                {' : '}
-                {'Latitude :'} {selected.location && selected.location.lat}{' '}
-                {', Longitude :'}
+                {" : "}
+                {"Latitude :"} {selected.location && selected.location.lat}{" "}
+                {", Longitude :"}
                 {selected.location && selected.location.lng}
               </p>
               <p>
                 <strong>WeitereInformationen</strong>
-                {' : '}
+                {" : "}
                 {selected.weitereInformationen}
               </p>
+              <div>
+                <p>
+                  <strong>Distance</strong> {" : "}
+                </p>
+                <p>
+                  Between {selected.Haltestelle} and{" "}
+                  {distance[0].to.Haltestelle} is{" "}
+                  {distance[0].distance.toFixed(3)} Km
+                </p>
+                <p>
+                  Between {selected.Haltestelle} and{" "}
+                  {distance[1].to.Haltestelle} is{" "}
+                  {distance[1].distance.toFixed(3)} Km
+                </p>
+                <p>
+                  Between {selected.Haltestelle} and{" "}
+                  {distance[2].to.Haltestelle} is{" "}
+                  {distance[2].distance.toFixed(3)} Km
+                </p>
+              </div>
             </Fragment>
           ) : (
             <p>Wählen Sie eine Station</p>
@@ -46,77 +66,3 @@ const Info = ({ selected }: any) => {
 };
 
 export default Info;
-
-//Redux
-// import React, { Fragment } from 'react';
-//
-// import { connect, ConnectedProps } from 'react-redux';
-// interface GetData {
-//   getDataReducer: {
-//     loading: boolean;
-//     selected: {
-//       _id: string;
-//       Haltestelle: string;
-//       adresse: string;
-//       Umstiegmöglischkeiten: string;
-//       location: {
-//         lat: string;
-//         lng: string;
-//       };
-//       weitereInformationen: string;
-//     };
-//   };
-// }
-
-// type PropsFromRedux = ConnectedProps<typeof connector>;
-
-// const index = ({ selected, loading }: PropsFromRedux) => {
-//   console.log('selected', selected);
-
-//   return (
-//     <Fragment>
-//       {selected ? (
-//         <Fragment>
-//           <p>
-//             <strong>Haltestelle</strong>
-//             {' : '}
-//             {selected.Haltestelle}
-//           </p>
-//           <p>
-//             <strong>Adresse</strong>
-//             {' : '}
-//             {selected.adresse}
-//           </p>
-//           <p>
-//             <strong>Umstiegmöglischkeiten</strong>
-//             {' : '}
-//             {selected.Umstiegmöglischkeiten}
-//           </p>
-//           <p>
-//             <strong>Location</strong>
-//             {' : '}
-//             {'Latitude :'} {selected.location && selected.location.lat}{' '}
-//             {', Longitude :'}
-//             {selected.location && selected.location.lng}
-//           </p>
-//           <p>
-//             <strong>Location</strong>
-//             {' : '}
-//             {selected.weitereInformationen}
-//           </p>
-//         </Fragment>
-//       ) : (
-//         <h1>Choose a station</h1>
-//       )}
-//     </Fragment>
-//   );
-// };
-
-// const mapStateToProps = (state: GetData) => ({
-//   selected: state.getDataReducer.selected,
-//   loading: state.getDataReducer.loading,
-// });
-
-// const connector = connect(mapStateToProps);
-
-// export default connector(index);

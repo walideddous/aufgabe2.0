@@ -10,31 +10,21 @@ import Info from "./info/Info";
 import SearchInput from "./search/SearchInput";
 import DND from "./dnd/index";
 
+// Import the types of the state
+import { Tstations, Tloading, Tchoose, Tdistance } from "./type/Types";
+
 // Get the property from Utils
 import { getProperty } from "../utils/getPropertyKey";
 
 // get the function to compare the distance between a point fix and a banch of punkt
 import { calculateDistanceAndSort } from "../utils/getDistanceFromLatLonInKm";
 
-interface Tstations {
-  _id: string;
-  Haltestelle: string;
-  adresse: string;
-  location: {
-    lat: number;
-    lng: number;
-  };
-  Umstiegmöglischkeiten: string;
-  weitereInformationen: string;
-}
-
-type Tloading = boolean;
-
 const Aufgabe = () => {
   const [stations, setStations] = useState<Tstations[]>([]);
   const [loading, setLoading] = useState<Tloading>(true);
   const [selected, setSelected] = useState<Tstations>();
-  const [choose, setChoose] = useState("");
+  const [choose, setChoose] = useState<Tchoose>("");
+  const [distance, setDistance] = useState<Tdistance[]>([]);
   const [stateDND, setStateDND] = useState({
     vorschlag: {
       title: "Vorschlag",
@@ -46,21 +36,36 @@ const Aufgabe = () => {
     },
   });
 
+  // Fetch the data from the Backend and set the state "Stations"
+  useEffect(() => {
+    // Simulation a call from the Backend
+    const fetchDataFromBackend = async () => {
+      try {
+        const response = await data();
+        if (response) {
+          setStations(response);
+          setLoading(false);
+        } else {
+          console.error("Cannt fetch stations from backend ");
+        }
+      } catch (error) {
+        console.error("error from trycatch");
+      }
+    };
+    fetchDataFromBackend();
+  }, []);
+
   const clickOnMap = (e: any) => {
     setSelected(e);
   };
 
   const clickOnDrop = (e: any) => {
     const response = stations.filter((el) => el.Haltestelle === e.name)[0];
-    console.log(
-      "calculated and sorted",
-      calculateDistanceAndSort(response, stations)
-    );
     setSelected(response);
 
     const vorschläge = calculateDistanceAndSort(response, stations);
 
-    console.log("vorassshcläge", vorschläge[0].to.Haltestelle);
+    setDistance(vorschläge);
 
     setStateDND((prev: any) => {
       return {
@@ -99,24 +104,6 @@ const Aufgabe = () => {
       };
     });
   };
-
-  useEffect(() => {
-    // Simulation a call from the Backend
-    const fetchDataFromBackend = async () => {
-      try {
-        const response = await data();
-        if (response) {
-          setStations(response);
-          setLoading(false);
-        } else {
-          console.error("Cannt fetch stations from backend ");
-        }
-      } catch (error) {
-        console.error("error from trycatch");
-      }
-    };
-    fetchDataFromBackend();
-  }, []);
 
   const onEvent = (e: any) => {
     setChoose(e);
@@ -167,8 +154,6 @@ const Aufgabe = () => {
     });
   };
 
-  console.log("Strecke", stateDND);
-
   return (
     <div className="site-card-wrapper">
       <Row gutter={14}>
@@ -184,52 +169,13 @@ const Aufgabe = () => {
           loading={loading}
           stations={stations}
           stateDND={stateDND}
+          selected={selected}
           Onclick={(e: any) => clickOnMap(e)}
         />
-        <Info selected={selected} />
+        <Info selected={selected} distance={distance} />
       </Row>
     </div>
   );
 };
 
 export default Aufgabe;
-
-/*
-       <Col span={12}>
-          <Card bordered={true} title='Search Component'>
-            <SearchedList choose={choose} loading={loading} />
-            <Col span={24}>
-              <Card bordered={true}>
-                Stationen, die weniger als 1 Kilometer entfernt sind
-              </Card>
-            </Col>
-          </Card>
-        </Col>
-        <Col span={12}>
-          <Card bordered={true} title='Drop Component'>
-            <Timeline>
-              {stations &&
-                stations.map((el, i) => (
-                  <Timeline.Item key={i}>
-                    <Button
-                      type='default'
-                      style={{ width: '30vh' }}
-                      onClick={() => {
-                        handleClick(el);
-                      }}
-                    >
-                      {el.Haltestelle}
-                    </Button>
-                    <Tooltip title='delete'>
-                      <Button
-                        type='dashed'
-                        shape='circle'
-                        icon={<DeleteOutlined />}
-                      />
-                    </Tooltip>
-                  </Timeline.Item>
-                ))}
-            </Timeline>
-          </Card>
-        </Col>
-*/

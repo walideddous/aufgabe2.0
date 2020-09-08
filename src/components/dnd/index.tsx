@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-import "./style.css";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import _ from "lodash";
 import { Card, Col } from "antd";
@@ -24,7 +23,7 @@ const DND = ({
         {_.map(stateDND, (data: any, key: any) => {
           return (
             <Col span={12}>
-              <Card bordered={true}>
+              <Card bordered={true} title={data.title}>
                 <Droppable droppableId={key}>
                   {(provided: any) => {
                     return (
@@ -78,3 +77,8 @@ const DND = ({
 };
 
 export default DND;
+
+/*
+import { DeleteOutlined } from '@ant-design/icons';
+<Button type='dashed' shape='circle' icon={<DeleteOutlined />} /> 
+*/
