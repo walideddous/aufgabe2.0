@@ -20,7 +20,7 @@ const SearchInput = ({ stations, handleEvent }: any) => {
   return (
     <Fragment>
       <AutoComplete
-        style={{ width: "60%", margin: 20 }}
+        style={{ width: "48%", margin: 20 }}
         onSearch={handleSearch}
         onSelect={onSelect}
         placeholder="Stationsname eingeben"
@@ -31,7 +31,9 @@ const SearchInput = ({ stations, handleEvent }: any) => {
             el.Haltestelle.toLowerCase().includes(search.toLowerCase())
           )
           .map((el: any, i: number) => (
-            <Option value={el.Haltestelle}>{el.Haltestelle}</Option>
+            <Option value={el.Haltestelle} key={i}>
+              {el.Haltestelle}
+            </Option>
           ))}
       </AutoComplete>
     </Fragment>

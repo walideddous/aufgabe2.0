@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Map, TileLayer, Popup, CircleMarker, Polyline } from "react-leaflet";
+import { Map, TileLayer, CircleMarker, Polyline, Tooltip } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import { Spin, Card, Col } from "antd";
 import L from "leaflet";
@@ -7,7 +7,7 @@ import L from "leaflet";
 // import the function to filter the table of the trajeckt and drw the linie on map
 import { getPathFromTrajekt } from "../../utils/getPathFromTrajekt";
 
-const OnMap = ({ loading, stations, stateDND, selected, Onclick }: any) => {
+const OnMap = ({ loading, stations, stateDND, selected }: any) => {
   // Icon per default
   L.Icon.Default.imagePath = "https://unpkg.com/leaflet@1.5.0/dist/images/";
 
@@ -44,7 +44,7 @@ const OnMap = ({ loading, stations, stateDND, selected, Onclick }: any) => {
                 attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
-              <MarkerClusterGroup>
+              <MarkerClusterGroup disableClusteringAtZoom={20}>
                 {stations &&
                   stations.map((el: any, i: any) => (
                     <CircleMarker
@@ -53,7 +53,7 @@ const OnMap = ({ loading, stations, stateDND, selected, Onclick }: any) => {
                       color={"blue"}
                       radius={20}
                     >
-                      <Popup>{el.Haltestelle}</Popup>
+                      <Tooltip permanent>{el.Haltestelle}</Tooltip>
                     </CircleMarker>
                   ))}
               </MarkerClusterGroup>

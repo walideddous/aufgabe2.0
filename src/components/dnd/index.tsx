@@ -1,28 +1,23 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import _ from "lodash";
-import { Card, Col } from "antd";
+import { Card, Col, Button } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
 
-const DND = ({
-  choose,
-  stateDND,
-  handleDragEnd,
-  Onclick,
-  OnDubleClick,
-}: any) => {
+const DND = ({ choose, stateDND, handleDragEnd, Onclick, onDelete }: any) => {
   const handleClick = (e: any) => {
     Onclick(e);
   };
 
-  const handleDoubleClick = (e: any) => {
-    OnDubleClick(e);
+  const handleDelete = (e: any, i: any) => {
+    onDelete(e);
   };
   return (
     <div className="App">
       <DragDropContext onDragEnd={(e) => handleDragEnd(e)}>
-        {_.map(stateDND, (data: any, key: any) => {
+        {_.map(stateDND, (data: any, key: string) => {
           return (
-            <Col span={12}>
+            <Col span={12} key={key}>
               <Card bordered={true} title={data.title}>
                 <Droppable droppableId={key}>
                   {(provided: any) => {
@@ -41,14 +36,17 @@ const DND = ({
                             >
                               {(provided) => {
                                 return (
-                                  <Fragment>
+                                  <div
+                                    className="dnd-container"
+                                    style={{
+                                      display: "flex",
+                                      justifyContent: "space-around",
+                                    }}
+                                  >
                                     <div
                                       className="item"
                                       onClick={() => {
                                         handleClick(el);
-                                      }}
-                                      onDoubleClick={() => {
-                                        handleDoubleClick(el);
                                       }}
                                       ref={provided.innerRef}
                                       {...provided.draggableProps}
@@ -56,7 +54,15 @@ const DND = ({
                                     >
                                       {el.name}
                                     </div>
-                                  </Fragment>
+                                    <Button
+                                      type="dashed"
+                                      shape="circle"
+                                      icon={<DeleteOutlined />}
+                                      onClick={() => {
+                                        handleDelete(el, provided);
+                                      }}
+                                    />
+                                  </div>
                                 );
                               }}
                             </Draggable>
@@ -77,8 +83,3 @@ const DND = ({
 };
 
 export default DND;
-
-/*
-import { DeleteOutlined } from '@ant-design/icons';
-<Button type='dashed' shape='circle' icon={<DeleteOutlined />} /> 
-*/

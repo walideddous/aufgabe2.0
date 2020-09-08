@@ -55,10 +55,6 @@ const Aufgabe = () => {
     fetchDataFromBackend();
   }, []);
 
-  const clickOnMap = (e: any) => {
-    setSelected(e);
-  };
-
   const clickOnDrop = (e: any) => {
     const response = stations.filter((el) => el.Haltestelle === e.name)[0];
     setSelected(response);
@@ -91,13 +87,19 @@ const Aufgabe = () => {
     });
   };
 
-  const clickDuble = (e: any) => {
+  const handleDeleteOnDND = (e: any) => {
     setStateDND((prev: any) => {
       return {
         ...prev,
         trajekt: {
           title: "Trajekt",
           items: stateDND.trajekt.items.filter(
+            (item: any) => item.name !== e.name
+          ),
+        },
+        vorschlag: {
+          title: "Trajekt",
+          items: stateDND.vorschlag.items.filter(
             (item: any) => item.name !== e.name
           ),
         },
@@ -156,21 +158,20 @@ const Aufgabe = () => {
 
   return (
     <div className="site-card-wrapper">
-      <Row gutter={14}>
+      <Row gutter={[14, 14]}>
         <SearchInput stations={stations} handleEvent={(e: any) => onEvent(e)} />
         <DND
           choose={choose}
           stateDND={stateDND}
           handleDragEnd={(e: any) => handleDragEnd(e)}
           Onclick={(e: any) => clickOnDrop(e)}
-          OnDubleClick={(e: any) => clickDuble(e)}
+          onDelete={(e: any) => handleDeleteOnDND(e)}
         />
         <OnMap
           loading={loading}
           stations={stations}
           stateDND={stateDND}
           selected={selected}
-          Onclick={(e: any) => clickOnMap(e)}
         />
         <Info selected={selected} distance={distance} />
       </Row>
