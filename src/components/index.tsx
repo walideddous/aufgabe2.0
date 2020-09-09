@@ -1,37 +1,37 @@
-import React, { useEffect, useState } from "react";
-import { Row } from "antd";
-import { v4 } from "uuid";
+import React, { useEffect, useState } from 'react';
+import { Row } from 'antd';
+import { v4 } from 'uuid';
 
-import { data } from "./../data/data";
+import { data } from './../data/data';
 
 // Import composents
-import OnMap from "./map/OnMap";
-import Info from "./info/Info";
-import SearchInput from "./search/SearchInput";
-import DragDrop from "./dnd/DragDrop";
+import OnMap from './map/OnMap';
+import Info from './info/Info';
+import SearchInput from './search/SearchInput';
+import DragDrop from './dnd/DragDrop';
 
 // Import the types of the state
-import { Tstations, Tloading, Tchoose, Tdistance } from "./type/Types";
+import { Tstations, Tloading, Tchoose, Tdistance } from './type/Types';
 
 // Get the property from Utils
-import { getProperty } from "../utils/getPropertyKey";
+import { getProperty } from '../utils/getPropertyKey';
 
 // get the function to compare the distance between a point fix and a banch of punkt
-import { calculateDistanceAndSort } from "../utils/getDistanceFromLatLonInKm";
+import { calculateDistanceAndSort } from '../utils/getDistanceFromLatLonInKm';
 
 const Aufgabe: React.FC = () => {
   const [stations, setStations] = useState<Tstations[]>([]);
   const [loading, setLoading] = useState<Tloading>(true);
   const [selected, setSelected] = useState<Tstations>();
-  const [choose, setChoose] = useState<Tchoose>("");
+  const [choose, setChoose] = useState<Tchoose>('');
   const [distance, setDistance] = useState<Tdistance[]>([]);
   const [stateDND, setStateDND] = useState({
     vorschlag: {
-      title: "Vorschlag",
+      title: 'Vorschlag',
       items: [],
     },
     trajekt: {
-      title: "Trajekt",
+      title: 'Trajekt',
       items: [],
     },
   });
@@ -46,10 +46,10 @@ const Aufgabe: React.FC = () => {
           setStations(response);
           setLoading(false);
         } else {
-          console.error("Cannt fetch stations from backend ");
+          console.error('Cannt fetch stations from backend ');
         }
       } catch (error) {
-        console.error("error from trycatch");
+        console.error('error from trycatch');
       }
     };
     fetchDataFromBackend();
@@ -68,7 +68,7 @@ const Aufgabe: React.FC = () => {
       return {
         ...prev,
         vorschlag: {
-          title: "Vorschlag",
+          title: 'Vorschlag',
           items: [
             {
               id: v4(),
@@ -88,25 +88,37 @@ const Aufgabe: React.FC = () => {
     });
   };
 
-  // Delete the button from DND
-  const handleDeleteOnDND = (e: { id: string | number; name: string }) => {
-    setStateDND((prev: any) => {
-      return {
-        ...prev,
-        trajekt: {
-          title: "Trajekt",
-          items: stateDND.trajekt.items.filter(
-            (item: any) => item.name !== e.name
-          ),
-        },
-        vorschlag: {
-          title: "Trajekt",
-          items: stateDND.vorschlag.items.filter(
-            (item: any) => item.name !== e.name
-          ),
-        },
-      };
-    });
+  // Delete the button from Drag and drop
+  const handleDeleteOnDND = (
+    e: { id: string | number; name: string },
+    SourceOrTarget: string
+  ) => {
+    if (SourceOrTarget === 'Trajekt') {
+      setStateDND((prev: any) => {
+        return {
+          ...prev,
+          trajekt: {
+            title: 'Trajekt',
+            items: stateDND.trajekt.items.filter(
+              (item: any) => item.name !== e.name
+            ),
+          },
+        };
+      });
+    }
+    if (SourceOrTarget === 'Vorschlag') {
+      setStateDND((prev: any) => {
+        return {
+          ...prev,
+          vorschlag: {
+            title: 'Vorschlag',
+            items: stateDND.vorschlag.items.filter(
+              (item: any) => item.name !== e.name
+            ),
+          },
+        };
+      });
+    }
   };
 
   // to choose the station from the input options
@@ -123,7 +135,7 @@ const Aufgabe: React.FC = () => {
       return {
         ...prev,
         trajekt: {
-          title: "Trajekt",
+          title: 'Trajekt',
           items: [
             ...prev.trajekt.items,
             {
@@ -133,7 +145,7 @@ const Aufgabe: React.FC = () => {
           ],
         },
         vorschlag: {
-          title: "Vorschlag",
+          title: 'Vorschlag',
           items: [
             {
               id: v4(),
@@ -185,7 +197,7 @@ const Aufgabe: React.FC = () => {
   };
 
   return (
-    <div className="site-card-wrapper">
+    <div className='site-card-wrapper'>
       <Row gutter={[14, 14]}>
         <SearchInput stations={stations} handleEvent={onEvent} />
         <DragDrop

@@ -57,8 +57,8 @@
 }
 
 .item {
-  display: "flex";
-  justify-content: "space-between";
+  display: flex;
+  justify-content: space-between;
   flex-direction: row;
   margin-bottom: 10px;
   background-color: #007cba;
@@ -69,8 +69,8 @@
   width: 100%;
 }
 .item-highlighted {
-  display: "flex";
-  justify-content: "space-around";
+  display: flex;
+  justify-content: space-between;
   flex-direction: row;
   margin-bottom: 10px;
   background-color: red;
