@@ -74,6 +74,7 @@ const DragDrop = ({
                                   onClick={() => {
                                     handleClick(el);
                                   }}
+                                  style={{ width: '90%' }}
                                 >
                                   {el.name}
                                 </span>
@@ -133,6 +134,7 @@ const DragDrop = ({
                                   onClick={() => {
                                     handleClick(el);
                                   }}
+                                  style={{ width: '90%' }}
                                 >
                                   {el.name}
                                 </span>
