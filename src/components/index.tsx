@@ -8,7 +8,7 @@ import { data } from "./../data/data";
 import OnMap from "./map/OnMap";
 import Info from "./info/Info";
 import SearchInput from "./search/SearchInput";
-import DND from "./dnd/index";
+import DragDrop from "./dnd/DragDrop";
 
 // Import the types of the state
 import { Tstations, Tloading, Tchoose, Tdistance } from "./type/Types";
@@ -19,7 +19,7 @@ import { getProperty } from "../utils/getPropertyKey";
 // get the function to compare the distance between a point fix and a banch of punkt
 import { calculateDistanceAndSort } from "../utils/getDistanceFromLatLonInKm";
 
-const Aufgabe = () => {
+const Aufgabe: React.FC = () => {
   const [stations, setStations] = useState<Tstations[]>([]);
   const [loading, setLoading] = useState<Tloading>(true);
   const [selected, setSelected] = useState<Tstations>();
@@ -55,7 +55,8 @@ const Aufgabe = () => {
     fetchDataFromBackend();
   }, []);
 
-  const clickOnDrop = (e: any) => {
+  // Select the Station when you click on the button to show the suggestion
+  const clickOnDrop = (e: { id: string | number; name: string }) => {
     const response = stations.filter((el) => el.Haltestelle === e.name)[0];
     setSelected(response);
 
@@ -87,7 +88,8 @@ const Aufgabe = () => {
     });
   };
 
-  const handleDeleteOnDND = (e: any) => {
+  // Delete the button from DND
+  const handleDeleteOnDND = (e: { id: string | number; name: string }) => {
     setStateDND((prev: any) => {
       return {
         ...prev,
@@ -107,7 +109,15 @@ const Aufgabe = () => {
     });
   };
 
-  const onEvent = (e: any) => {
+  // to choose the station from the input options
+  const onEvent = (e: string) => {
+    const response = stations.filter((el) => el.Haltestelle === e)[0];
+    setSelected(response);
+
+    const vorschläge = calculateDistanceAndSort(response, stations);
+
+    setDistance(vorschläge);
+
     setChoose(e);
     setStateDND((prev: any) => {
       return {
@@ -122,10 +132,28 @@ const Aufgabe = () => {
             },
           ],
         },
+        vorschlag: {
+          title: "Vorschlag",
+          items: [
+            {
+              id: v4(),
+              name: vorschläge[0].to.Haltestelle,
+            },
+            {
+              id: v4(),
+              name: vorschläge[1].to.Haltestelle,
+            },
+            {
+              id: v4(),
+              name: vorschläge[2].to.Haltestelle,
+            },
+          ],
+        },
       };
     });
   };
 
+  // To Drag and Drop from source to the destination
   const handleDragEnd = ({ destination, source }: any) => {
     if (!destination) {
       return;
@@ -159,13 +187,13 @@ const Aufgabe = () => {
   return (
     <div className="site-card-wrapper">
       <Row gutter={[14, 14]}>
-        <SearchInput stations={stations} handleEvent={(e: any) => onEvent(e)} />
-        <DND
+        <SearchInput stations={stations} handleEvent={onEvent} />
+        <DragDrop
           choose={choose}
           stateDND={stateDND}
-          handleDragEnd={(e: any) => handleDragEnd(e)}
-          Onclick={(e: any) => clickOnDrop(e)}
-          onDelete={(e: any) => handleDeleteOnDND(e)}
+          handleDragEnd={handleDragEnd}
+          onclick={clickOnDrop}
+          onDelete={handleDeleteOnDND}
         />
         <OnMap
           loading={loading}

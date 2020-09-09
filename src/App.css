@@ -57,13 +57,28 @@
 }
 
 .item {
+  display: "flex";
+  justify-content: "space-between";
+  flex-direction: row;
   margin-bottom: 10px;
   background-color: #007cba;
   color: white;
   border: 1px solid white;
   padding: 5px;
   border-radius: 7px;
-  width: 80%;
+  width: 100%;
+}
+.item-highlighted {
+  display: "flex";
+  justify-content: "space-around";
+  flex-direction: row;
+  margin-bottom: 10px;
+  background-color: red;
+  color: white;
+  border: 1px solid white;
+  padding: 5px;
+  border-radius: 7px;
+  width: 100%;
 }
 
 .item.dragging {

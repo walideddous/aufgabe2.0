@@ -7,7 +7,17 @@ import L from "leaflet";
 // import the function to filter the table of the trajeckt and drw the linie on map
 import { getPathFromTrajekt } from "../../utils/getPathFromTrajekt";
 
-const OnMap = ({ loading, stations, stateDND, selected }: any) => {
+// Import type
+import { Tloading, Tstations, TstateDND } from "../type/Types";
+
+interface TpropsOnMap {
+  loading: Tloading;
+  stations: Tstations[];
+  stateDND: TstateDND;
+  selected: Tstations | undefined;
+}
+
+const OnMap = ({ loading, stations, stateDND, selected }: TpropsOnMap) => {
   // Icon per default
   L.Icon.Default.imagePath = "https://unpkg.com/leaflet@1.5.0/dist/images/";
 
@@ -46,12 +56,23 @@ const OnMap = ({ loading, stations, stateDND, selected }: any) => {
               />
               <MarkerClusterGroup disableClusteringAtZoom={20}>
                 {stations &&
-                  stations.map((el: any, i: any) => (
+                  stations.map((el: Tstations, i: number) => (
                     <CircleMarker
                       center={[el.location.lat, el.location.lng]}
                       key={el._id}
                       color={
-                        selected && selected._id === el._id ? "red" : "blue"
+                        (selected && selected._id === el._id) ||
+                        (stateDND &&
+                          stateDND.trajekt &&
+                          stateDND.trajekt.items &&
+                          stateDND.trajekt.items[
+                            stateDND.trajekt.items.length - 1
+                          ] &&
+                          stateDND.trajekt.items[
+                            stateDND.trajekt.items.length - 1
+                          ].name === el.Haltestelle)
+                          ? "red"
+                          : "blue"
                       }
                       radius={20}
                     >

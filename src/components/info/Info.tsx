@@ -1,7 +1,15 @@
 import React, { Fragment } from "react";
 import { Card, Col } from "antd";
 
-const Info = ({ selected, distance }: any) => {
+// Import types
+import { Tstations, Tdistance } from "../type/Types";
+
+interface TpropsInfo {
+  selected: Tstations | undefined;
+  distance: Tdistance[];
+}
+
+const Info = ({ selected, distance }: TpropsInfo) => {
   return (
     <Fragment>
       <Col span={12}>

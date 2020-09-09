@@ -6860,6 +6860,21 @@ leaflet-arc@^1.0.2:
   dependencies:
     arc "git+https://github.com/springmeyer/arc.js.git#b005df058b010d1c7aaf3aa451516d41294dac0e"
 
+leaflet-arrowheads@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/leaflet-arrowheads/-/leaflet-arrowheads-1.2.1.tgz#ee611f63fee9366a2516d6f7b32aebb7c7e8cfb8"
+  integrity sha512-oVPAplA82bXH00RKDXWytJuC1NZH06Y/T6ZAwGr1nxn6KiH5wcs8N+f0DEZ1YmFbJgsykd9GC7vgUxkIHN+73Q==
+  dependencies:
+    leaflet "^1.6.0"
+    leaflet-geometryutil "^0.9.3"
+
+leaflet-geometryutil@^0.9.3:
+  version "0.9.3"
+  resolved "https://registry.yarnpkg.com/leaflet-geometryutil/-/leaflet-geometryutil-0.9.3.tgz#e10fa302d99d4b1d3c6365a1f39298635a2704cd"
+  integrity sha512-Wi6YvfNx/Xu9q35AEfXpsUXmIFLen/MO+C2qimxHRnjyeyOxBhdcZa6kSiReaOX0cGK7yQInqrzz0dkIqZ8Dpg==
+  dependencies:
+    leaflet ">=0.7.0"
+
 leaflet-geosearch@^3.0.6:
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/leaflet-geosearch/-/leaflet-geosearch-3.0.6.tgz#6f2dbb208140563017520b4e9b6c265a7a4c3432"
@@ -6880,6 +6895,11 @@ leaflet.markercluster@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/leaflet.markercluster/-/leaflet.markercluster-1.4.1.tgz#b53f2c4f2ca7306ddab1dbb6f1861d5e8aa6c5e5"
   integrity sha512-ZSEpE/EFApR0bJ1w/dUGwTSUvWlpalKqIzkaYdYB7jaftQA/Y2Jav+eT4CMtEYFj+ZK4mswP13Q2acnPBnhGOw==
+
+leaflet@>=0.7.0:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.7.1.tgz#10d684916edfe1bf41d688a3b97127c0322a2a19"
+  integrity sha512-/xwPEBidtg69Q3HlqPdU3DnrXQOvQU/CCHA1tcDQVzOwm91YMYaILjNp7L4Eaw5Z4sOYdbBz6koWyibppd8Zqw==
 
 leaflet@^1.6.0:
   version "1.6.0"

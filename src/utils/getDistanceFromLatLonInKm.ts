@@ -1,4 +1,12 @@
-function getDistanceFromLatLonInKm(lat1: any, lon1: any, lat2: any, lon2: any) {
+// Import type
+import { Tstations } from "../components/type/Types";
+
+function getpreciseDistanceFromLatLonInKm(
+  lat1: number,
+  lon1: number,
+  lat2: number,
+  lon2: number
+) {
   var R = 6371; // Radius of the earth in km
   var dLat = deg2rad(lat2 - lat1); // deg2rad below
   var dLon = deg2rad(lon2 - lon1);
@@ -13,12 +21,15 @@ function getDistanceFromLatLonInKm(lat1: any, lon1: any, lat2: any, lon2: any) {
   return d;
 }
 
-function deg2rad(deg: any) {
+function deg2rad(deg: number) {
   return deg * (Math.PI / 180);
 }
 
 // Calculate the distance from a fixed punkt to every punkt of the table
-export function calculateDistanceAndSort(objClicked: any, tabData: any) {
+export function calculateDistanceAndSort(
+  objClicked: any,
+  tabData: Tstations[]
+) {
   const result = [];
   const { location } = objClicked;
 
@@ -32,7 +43,7 @@ export function calculateDistanceAndSort(objClicked: any, tabData: any) {
     const lng1 = filteredTable[i].location.lng;
 
     // calculate the distance betyeen a fix point and and others points
-    let distance = getDistanceFromLatLonInKm(
+    let distance = getpreciseDistanceFromLatLonInKm(
       location.lat,
       location.lng,
       lat1,
@@ -46,9 +57,23 @@ export function calculateDistanceAndSort(objClicked: any, tabData: any) {
   }
 
   // Sort the table By distance
-  const sortedTable = result.sort((a: any, b: any) => {
-    return a.distance - b.distance;
-  });
+  const sortedTable = result.sort(
+    (a: { distance: number }, b: { distance: number }) => {
+      return a.distance - b.distance;
+    }
+  );
 
   return sortedTable;
+}
+
+function getDistanceFromLatLonInKm(
+  lat1: number,
+  lon1: number,
+  lat2: number,
+  lon2: number
+) {
+  var lat = Math.pow(lat2 - lat1, 2);
+  var lon = Math.pow(lon2 - lon1, 2);
+  var d = lat + lon;
+  return d;
 }

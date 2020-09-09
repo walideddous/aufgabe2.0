@@ -32,10 +32,16 @@ export interface Tdistance {
 export interface TstateDND {
   vorschlag: {
     title: string;
-    items: [];
+    items: {
+      id: number;
+      name: string;
+    }[];
   };
   trajekt: {
     title: string;
-    items: [];
+    items: {
+      id: number;
+      name: string;
+    }[];
   };
 }
