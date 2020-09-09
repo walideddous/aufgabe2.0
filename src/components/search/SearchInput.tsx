@@ -32,6 +32,10 @@ const SearchInput = ({ stations, handleEvent }: any) => {
           )
           .map((el: any, i: number) => (
             <Option value={el.Haltestelle} key={i}>
+              <i
+                className="fas fa-subway"
+                style={{ color: "#1890ff", margin: "0 10px" }}
+              ></i>
               {el.Haltestelle}
             </Option>
           ))}

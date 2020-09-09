@@ -50,7 +50,9 @@ const OnMap = ({ loading, stations, stateDND, selected }: any) => {
                     <CircleMarker
                       center={[el.location.lat, el.location.lng]}
                       key={el._id}
-                      color={"blue"}
+                      color={
+                        selected && selected._id === el._id ? "red" : "blue"
+                      }
                       radius={20}
                     >
                       <Tooltip permanent>{el.Haltestelle}</Tooltip>
