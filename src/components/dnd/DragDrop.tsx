@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { Card, Col, Button } from 'antd';
-import { DeleteOutlined } from '@ant-design/icons';
+import React, { useState } from "react";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { Card, Col, Button } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
 
 // Import types
-import { TstateDND, Tchoose } from '../type/Types';
+import { TstateDND, Tchoose } from "../type/Types";
 
 // Declare Types
 interface TporpsDND {
@@ -39,21 +39,18 @@ const DragDrop = ({
     onDelete(e, SourceOrTarget);
   };
 
-  // Handle the highlitimg
-  const handleButtonColor = () => {};
-
   return (
-    <div className='App'>
+    <div className="App">
       <DragDropContext onDragEnd={handleDragEnd}>
         <Col span={12}>
           <Card bordered={true} title={stateDND.vorschlag.title}>
-            <Droppable droppableId={'vorschlag'}>
+            <Droppable droppableId={"vorschlag"}>
               {(provided: any) => {
                 return (
                   <div
                     ref={provided.innerRef}
                     {...provided.droppableProps}
-                    className={'droppable-col'}
+                    className={"droppable-col"}
                   >
                     {stateDND.vorschlag.items.map((el: any, index: number) => {
                       return (
@@ -65,22 +62,15 @@ const DragDrop = ({
                           {(provided) => {
                             return (
                               <div
-                                className='item'
+                                className="item"
                                 ref={provided.innerRef}
                                 {...provided.draggableProps}
                                 {...provided.dragHandleProps}
                               >
-                                <span
-                                  onClick={() => {
-                                    handleClick(el);
-                                  }}
-                                  style={{ width: '90%' }}
-                                >
-                                  {el.name}
-                                </span>
+                                <span style={{ width: "90%" }}>{el.name}</span>
                                 <Button
-                                  type='dashed'
-                                  shape='circle'
+                                  type="dashed"
+                                  shape="circle"
                                   icon={<DeleteOutlined />}
                                   onClick={() => {
                                     handleDelete(el, stateDND.vorschlag.title);
@@ -101,13 +91,13 @@ const DragDrop = ({
         </Col>
         <Col span={12}>
           <Card bordered={true} title={stateDND.trajekt.title}>
-            <Droppable droppableId={'trajekt'}>
+            <Droppable droppableId={"trajekt"}>
               {(provided: any) => {
                 return (
                   <div
                     ref={provided.innerRef}
                     {...provided.droppableProps}
-                    className={'droppable-col'}
+                    className={"droppable-col"}
                   >
                     {stateDND.trajekt.items.map((el: any, index: number) => {
                       return (
@@ -123,8 +113,8 @@ const DragDrop = ({
                                   stateDND.trajekt.items[
                                     stateDND.trajekt.items.length - 1
                                   ].id === el.id
-                                    ? 'item-highlighted'
-                                    : 'item'
+                                    ? "item-highlighted"
+                                    : "item"
                                 }
                                 ref={provided.innerRef}
                                 {...provided.draggableProps}
@@ -134,13 +124,13 @@ const DragDrop = ({
                                   onClick={() => {
                                     handleClick(el);
                                   }}
-                                  style={{ width: '90%' }}
+                                  style={{ width: "90%" }}
                                 >
                                   {el.name}
                                 </span>
                                 <Button
-                                  type='dashed'
-                                  shape='circle'
+                                  type="dashed"
+                                  shape="circle"
                                   icon={<DeleteOutlined />}
                                   onClick={() => {
                                     handleDelete(el, stateDND.trajekt.title);

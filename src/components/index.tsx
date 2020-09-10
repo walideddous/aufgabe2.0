@@ -1,40 +1,44 @@
-import React, { useEffect, useState } from 'react';
-import { Row } from 'antd';
-import { v4 } from 'uuid';
+import React, { useEffect, useState } from "react";
+import { Row } from "antd";
+import { v4 } from "uuid";
 
-import { data } from './../data/data';
+import { data } from "./../data/data";
 
 // Import composents
-import OnMap from './map/OnMap';
-import Info from './info/Info';
-import SearchInput from './search/SearchInput';
-import DragDrop from './dnd/DragDrop';
+import OnMap from "./map/OnMap";
+import Info from "./info/Info";
+import SearchInput from "./search/SearchInput";
+import DragDrop from "./dnd/DragDrop";
 
 // Import the types of the state
-import { Tstations, Tloading, Tchoose, Tdistance } from './type/Types';
+import { Tstations, Tloading, Tchoose, Tdistance } from "./type/Types";
 
 // Get the property from Utils
-import { getProperty } from '../utils/getPropertyKey';
+import { getProperty } from "../utils/getPropertyKey";
 
 // get the function to compare the distance between a point fix and a banch of punkt
-import { calculateDistanceAndSort } from '../utils/getDistanceFromLatLonInKm';
+import { calculateDistanceAndSort } from "../utils/getDistanceFromLatLonInKm";
+
+// Import function to get the elemet of the last element auto selected in drop field
+import { getLastDropElem } from "../utils/getLastDropElem";
 
 const Aufgabe: React.FC = () => {
   const [stations, setStations] = useState<Tstations[]>([]);
   const [loading, setLoading] = useState<Tloading>(true);
   const [selected, setSelected] = useState<Tstations>();
-  const [choose, setChoose] = useState<Tchoose>('');
+  const [choose, setChoose] = useState<Tchoose>("");
   const [distance, setDistance] = useState<Tdistance[]>([]);
   const [stateDND, setStateDND] = useState({
     vorschlag: {
-      title: 'Vorschlag',
+      title: "Vorschlag",
       items: [],
     },
     trajekt: {
-      title: 'Trajekt',
+      title: "Trajekt",
       items: [],
     },
   });
+  const [lastAutoSelectElem, setlastAutoSelectElem] = useState<Tstations>();
 
   // Fetch the data from the Backend and set the state "Stations"
   useEffect(() => {
@@ -46,29 +50,47 @@ const Aufgabe: React.FC = () => {
           setStations(response);
           setLoading(false);
         } else {
-          console.error('Cannt fetch stations from backend ');
+          console.error("Cannt fetch stations from backend ");
         }
       } catch (error) {
-        console.error('error from trycatch');
+        console.error("error from trycatch");
       }
     };
     fetchDataFromBackend();
   }, []);
+
+  // Update the state of lastAutoSelectElem
+  useEffect(() => {
+    let lastElem: any;
+    if (stateDND.trajekt.items.length) {
+      lastElem = stateDND.trajekt.items[stateDND.trajekt.items.length - 1];
+      if (lastElem.name) {
+        lastElem = stations.filter((el) => el.Haltestelle === lastElem.name)[0];
+        setlastAutoSelectElem({ ...lastElem });
+      }
+    }
+  }, [stateDND]);
+
+  // Update the suugestion when the state of the lastAutoSelectElem change
+  useEffect(() => {
+    console.log("lastAutoSelectElem", lastAutoSelectElem);
+  }, [lastAutoSelectElem]);
 
   // Select the Station when you click on the button to show the suggestion
   const clickOnDrop = (e: { id: string | number; name: string }) => {
     const response = stations.filter((el) => el.Haltestelle === e.name)[0];
     setSelected(response);
 
-    const vorschläge = calculateDistanceAndSort(response, stations);
+    console.log("response", response);
 
+    const vorschläge = calculateDistanceAndSort(response, stations);
     setDistance(vorschläge);
 
     setStateDND((prev: any) => {
       return {
         ...prev,
         vorschlag: {
-          title: 'Vorschlag',
+          title: "Vorschlag",
           items: [
             {
               id: v4(),
@@ -93,27 +115,27 @@ const Aufgabe: React.FC = () => {
     e: { id: string | number; name: string },
     SourceOrTarget: string
   ) => {
-    if (SourceOrTarget === 'Trajekt') {
+    if (SourceOrTarget === "Trajekt") {
       setStateDND((prev: any) => {
         return {
           ...prev,
           trajekt: {
-            title: 'Trajekt',
+            title: "Trajekt",
             items: stateDND.trajekt.items.filter(
-              (item: any) => item.name !== e.name
+              (item: any) => item.id !== e.id
             ),
           },
         };
       });
     }
-    if (SourceOrTarget === 'Vorschlag') {
+    if (SourceOrTarget === "Vorschlag") {
       setStateDND((prev: any) => {
         return {
           ...prev,
           vorschlag: {
-            title: 'Vorschlag',
+            title: "Vorschlag",
             items: stateDND.vorschlag.items.filter(
-              (item: any) => item.name !== e.name
+              (item: any) => item.id !== e.id
             ),
           },
         };
@@ -127,7 +149,6 @@ const Aufgabe: React.FC = () => {
     setSelected(response);
 
     const vorschläge = calculateDistanceAndSort(response, stations);
-
     setDistance(vorschläge);
 
     setChoose(e);
@@ -135,7 +156,7 @@ const Aufgabe: React.FC = () => {
       return {
         ...prev,
         trajekt: {
-          title: 'Trajekt',
+          title: "Trajekt",
           items: [
             ...prev.trajekt.items,
             {
@@ -145,7 +166,7 @@ const Aufgabe: React.FC = () => {
           ],
         },
         vorschlag: {
-          title: 'Vorschlag',
+          title: "Vorschlag",
           items: [
             {
               id: v4(),
@@ -197,7 +218,7 @@ const Aufgabe: React.FC = () => {
   };
 
   return (
-    <div className='site-card-wrapper'>
+    <div className="site-card-wrapper">
       <Row gutter={[14, 14]}>
         <SearchInput stations={stations} handleEvent={onEvent} />
         <DragDrop
@@ -212,8 +233,15 @@ const Aufgabe: React.FC = () => {
           stations={stations}
           stateDND={stateDND}
           selected={selected}
+          selectMarkerOnMap={(el) => {
+            setSelected(el);
+          }}
         />
-        <Info selected={selected} distance={distance} />
+        <Info
+          selected={selected}
+          distance={distance}
+          lastAutoSelectElem={lastAutoSelectElem}
+        />
       </Row>
     </div>
   );

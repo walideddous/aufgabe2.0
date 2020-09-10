@@ -66,6 +66,7 @@ export function calculateDistanceAndSort(
   return sortedTable;
 }
 
+/*
 function getDistanceFromLatLonInKm(
   lat1: number,
   lon1: number,
@@ -77,3 +78,4 @@ function getDistanceFromLatLonInKm(
   var d = lat + lon;
   return d;
 }
+*/
