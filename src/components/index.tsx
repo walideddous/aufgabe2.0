@@ -19,9 +19,6 @@ import { getProperty } from "../utils/getPropertyKey";
 // get the function to compare the distance between a point fix and a banch of punkt
 import { calculateDistanceAndSort } from "../utils/getDistanceFromLatLonInKm";
 
-// Import function to get the elemet of the last element auto selected in drop field
-import { getLastDropElem } from "../utils/getLastDropElem";
-
 const Aufgabe: React.FC = () => {
   const [stations, setStations] = useState<Tstations[]>([]);
   const [loading, setLoading] = useState<Tloading>(true);
@@ -69,19 +66,19 @@ const Aufgabe: React.FC = () => {
         setlastAutoSelectElem({ ...lastElem });
       }
     }
-  }, [stateDND]);
+  }, [stateDND, stations]);
 
-  // Update the suugestion when the state of the lastAutoSelectElem change
   useEffect(() => {
-    console.log("lastAutoSelectElem", lastAutoSelectElem);
+    if (lastAutoSelectElem) {
+      const vorschläge = calculateDistanceAndSort(lastAutoSelectElem, stations);
+      setDistance(vorschläge);
+    }
   }, [lastAutoSelectElem]);
 
   // Select the Station when you click on the button to show the suggestion
   const clickOnDrop = (e: { id: string | number; name: string }) => {
     const response = stations.filter((el) => el.Haltestelle === e.name)[0];
     setSelected(response);
-
-    console.log("response", response);
 
     const vorschläge = calculateDistanceAndSort(response, stations);
     setDistance(vorschläge);
@@ -146,7 +143,8 @@ const Aufgabe: React.FC = () => {
   // to choose the station from the input options
   const onEvent = (e: string) => {
     const response = stations.filter((el) => el.Haltestelle === e)[0];
-    setSelected(response);
+    setlastAutoSelectElem({ ...response });
+    // setSelected(response);
 
     const vorschläge = calculateDistanceAndSort(response, stations);
     setDistance(vorschläge);
@@ -215,6 +213,32 @@ const Aufgabe: React.FC = () => {
 
       return prev;
     });
+    setSelected(undefined);
+
+    // set the source one
+
+    setStateDND((prev: any) => {
+      return {
+        ...prev,
+        vorschlag: {
+          title: "Vorschlag",
+          items: [
+            {
+              id: v4(),
+              name: distance[0].to.Haltestelle,
+            },
+            {
+              id: v4(),
+              name: distance[1].to.Haltestelle,
+            },
+            {
+              id: v4(),
+              name: distance[2].to.Haltestelle,
+            },
+          ],
+        },
+      };
+    });
   };
 
   return (
@@ -233,6 +257,7 @@ const Aufgabe: React.FC = () => {
           stations={stations}
           stateDND={stateDND}
           selected={selected}
+          lastAutoSelectElem={lastAutoSelectElem}
           selectMarkerOnMap={(el) => {
             setSelected(el);
           }}

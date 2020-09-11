@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import { Card, Col } from "antd";
 
 // Import types
@@ -138,3 +138,10 @@ const Info = ({ selected, distance, lastAutoSelectElem }: TpropsInfo) => {
 };
 
 export default Info;
+
+/*
+      {lastAutoSelectElem && (
+
+      )}
+
+*/

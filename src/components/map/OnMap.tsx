@@ -15,16 +15,16 @@ interface TpropsOnMap {
   stations: Tstations[];
   stateDND: TstateDND;
   selected: Tstations | undefined;
+  lastAutoSelectElem: Tstations | undefined;
   selectMarkerOnMap: (el: Tstations) => void;
 }
-
-// const onClick = ({ event, props }: any) => console.log(event, props);
 
 const OnMap = ({
   loading,
   stations,
   stateDND,
   selected,
+  lastAutoSelectElem,
   selectMarkerOnMap,
 }: TpropsOnMap) => {
   // Icon per default
@@ -69,11 +69,14 @@ const OnMap = ({
                 },
               ]}
               center={
-                selected
-                  ? [selected.location.lat, selected.location.lng]
+                lastAutoSelectElem
+                  ? [
+                      lastAutoSelectElem.location.lat,
+                      lastAutoSelectElem.location.lng,
+                    ]
                   : [position.lat, position.lng]
               }
-              zoom={selected ? 14 : position.zoom}
+              zoom={lastAutoSelectElem ? 14 : position.zoom}
               style={{ height: "60vh" }}
             >
               <TileLayer
@@ -94,7 +97,7 @@ const OnMap = ({
                           ? "red"
                           : "blue"
                       }
-                      radius={20}
+                      radius={15}
                       onclick={() => clickOnMarker(el)}
                     >
                       <Tooltip>{el.Haltestelle}</Tooltip>
