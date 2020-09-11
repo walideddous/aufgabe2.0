@@ -12,8 +12,8 @@ function App() {
     <Provider store={Store}>
       <Router>
         <Switch>
-          <Route exact path="/" component={Acceuil} />
-          <Route exact path="/prototyp" component={Aufgabe} />
+          <Route exact path="/" component={Aufgabe} />
+          <Route exact path="/react" component={Acceuil} />
         </Switch>
       </Router>
     </Provider>
