@@ -62,7 +62,7 @@ const DragDrop = ({
                           {(provided) => {
                             return (
                               <div
-                                className="item"
+                                className="item-suggestion "
                                 ref={provided.innerRef}
                                 {...provided.draggableProps}
                                 {...provided.dragHandleProps}

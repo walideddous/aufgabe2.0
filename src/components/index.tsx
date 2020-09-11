@@ -144,7 +144,8 @@ const Aufgabe: React.FC = () => {
   const onEvent = (e: string) => {
     const response = stations.filter((el) => el.Haltestelle === e)[0];
     setlastAutoSelectElem({ ...response });
-    // setSelected(response);
+    console.log("lastAutoSelectElem", lastAutoSelectElem);
+    setSelected(response);
 
     const vorschläge = calculateDistanceAndSort(response, stations);
     setDistance(vorschläge);
@@ -216,7 +217,7 @@ const Aufgabe: React.FC = () => {
     setSelected(undefined);
 
     // set the source one
-
+    /*
     setStateDND((prev: any) => {
       return {
         ...prev,
@@ -239,6 +240,7 @@ const Aufgabe: React.FC = () => {
         },
       };
     });
+    */
   };
 
   return (

@@ -4,8 +4,11 @@ import MarkerClusterGroup from "react-leaflet-markercluster";
 import { Spin, Card, Col } from "antd";
 import L from "leaflet";
 
-// import the function to filter the table of the trajeckt and drw the linie on map
+// import the function to filter the table of the trajeckt and draw the linie on map
 import { getPathFromTrajekt } from "../../utils/getPathFromTrajekt";
+
+// import the function to get the list of suggestion
+import { getSuggestion } from "../../utils/getSuggestion";
 
 // Import type
 import { Tloading, Tstations, TstateDND } from "../type/Types";
@@ -95,6 +98,11 @@ const OnMap = ({
                           stateDND.trajekt.items.length - 1
                         ].name === el.Haltestelle
                           ? "red"
+                          : stateDND.vorschlag.items.length &&
+                            stateDND.vorschlag.items
+                              .map((el) => el.name)
+                              .includes(el.Haltestelle)
+                          ? "green"
                           : "blue"
                       }
                       radius={15}
