@@ -4,11 +4,12 @@ import MarkerClusterGroup from "react-leaflet-markercluster";
 import { Spin, Card, Col } from "antd";
 import L from "leaflet";
 
+// Import
+import "leaflet-contextmenu";
+import "leaflet-contextmenu/dist/leaflet.contextmenu.css";
+
 // import the function to filter the table of the trajeckt and draw the linie on map
 import { getPathFromTrajekt } from "../../utils/getPathFromTrajekt";
-
-// import the function to get the list of suggestion
-import { getSuggestion } from "../../utils/getSuggestion";
 
 // Import type
 import { Tloading, Tstations, TstateDND } from "../type/Types";
@@ -19,6 +20,8 @@ interface TpropsOnMap {
   stateDND: TstateDND;
   selected: Tstations | undefined;
   lastAutoSelectElem: Tstations | undefined;
+  onAddBeforSelected: (e: string) => void;
+  onAddAfterSelected: (e: string) => void;
   selectMarkerOnMap: (el: Tstations) => void;
 }
 
@@ -28,6 +31,8 @@ const OnMap = ({
   stateDND,
   selected,
   lastAutoSelectElem,
+  onAddAfterSelected,
+  onAddBeforSelected,
   selectMarkerOnMap,
 }: TpropsOnMap) => {
   // Icon per default
@@ -44,9 +49,13 @@ const OnMap = ({
     selectMarkerOnMap(el);
   };
 
-  function showCoordinates(e: any) {
-    alert(e.latlng);
-  }
+  const addBeforSelected = (e: any) => {
+    onAddBeforSelected(e.relatedTarget._tooltip.options.children);
+  };
+
+  const addAfterSelected = (e: any) => {
+    onAddAfterSelected(e.relatedTarget._tooltip.options.children);
+  };
 
   return (
     <Fragment>
@@ -62,15 +71,6 @@ const OnMap = ({
             />
           ) : (
             <Map
-              id="map"
-              contextmenu={true}
-              contextmenuWidth={130}
-              contextmenuItems={[
-                {
-                  text: "Show coordinates",
-                  callback: showCoordinates,
-                },
-              ]}
               center={
                 lastAutoSelectElem
                   ? [
@@ -90,6 +90,19 @@ const OnMap = ({
                 {stations &&
                   stations.map((el: Tstations, i: number) => (
                     <CircleMarker
+                      id="map"
+                      contextmenu={true}
+                      contextmenuWidth={200}
+                      contextmenuItems={[
+                        {
+                          text: "Add before the selected Trajekt",
+                          callback: addBeforSelected,
+                        },
+                        {
+                          text: "Add after the selected Trajekt",
+                          callback: addAfterSelected,
+                        },
+                      ]}
                       center={[el.location.lat, el.location.lng]}
                       key={el._id}
                       color={

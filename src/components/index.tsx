@@ -66,14 +66,7 @@ const Aufgabe: React.FC = () => {
         setlastAutoSelectElem({ ...lastElem });
       }
     }
-  }, [stateDND, stations]);
-
-  useEffect(() => {
-    if (lastAutoSelectElem) {
-      const vorschläge = calculateDistanceAndSort(lastAutoSelectElem, stations);
-      setDistance(vorschläge);
-    }
-  }, [lastAutoSelectElem]);
+  }, [stateDND.trajekt.items, stations]);
 
   // Select the Station when you click on the button to show the suggestion
   const clickOnDrop = (e: { id: string | number; name: string }) => {
@@ -143,8 +136,7 @@ const Aufgabe: React.FC = () => {
   // to choose the station from the input options
   const onEvent = (e: string) => {
     const response = stations.filter((el) => el.Haltestelle === e)[0];
-    setlastAutoSelectElem({ ...response });
-    console.log("lastAutoSelectElem", lastAutoSelectElem);
+    setlastAutoSelectElem(response);
     setSelected(response);
 
     const vorschläge = calculateDistanceAndSort(response, stations);
@@ -243,6 +235,74 @@ const Aufgabe: React.FC = () => {
     */
   };
 
+  const handleAddAfterSelected = (e: string) => {
+    const response = stations.filter((el) => el.Haltestelle === e)[0];
+    setSelected(response);
+
+    const vorschläge = calculateDistanceAndSort(response, stations);
+    setDistance(vorschläge);
+
+    setStateDND((prev: any) => {
+      return {
+        ...prev,
+        trajekt: {
+          title: "Trajekt",
+          items: [
+            ...prev.trajekt.items,
+            {
+              id: v4(),
+              name: e,
+            },
+          ],
+        },
+        vorschlag: {
+          title: "Vorschlag",
+          items: [
+            {
+              id: v4(),
+              name: vorschläge[0].to.Haltestelle,
+            },
+            {
+              id: v4(),
+              name: vorschläge[1].to.Haltestelle,
+            },
+            {
+              id: v4(),
+              name: vorschläge[2].to.Haltestelle,
+            },
+          ],
+        },
+      };
+    });
+  };
+
+  const handleAddBeforSelected = (e: any) => {
+    console.log("tal3it il before", e);
+    console.log(
+      "stateDND.trajekt.items.slice(0, stateDND.trajekt.items.length - 2)",
+      stateDND.trajekt.items[stateDND.trajekt.items.length]
+    );
+    console.log(
+      "stateDND.trajekt.items.slice(stateDND.trajekt.items.length - 1)",
+      stateDND.trajekt.items.slice(stateDND.trajekt.items.length)
+    );
+    setStateDND((prev: any) => {
+      return {
+        ...prev,
+        trajekt: {
+          title: "Trajekt",
+          items: [
+            {
+              id: v4(),
+              name: e,
+            },
+            ...prev.trajekt.items,
+          ],
+        },
+      };
+    });
+  };
+
   return (
     <div className="site-card-wrapper">
       <Row gutter={[14, 14]}>
@@ -259,6 +319,8 @@ const Aufgabe: React.FC = () => {
           stations={stations}
           stateDND={stateDND}
           selected={selected}
+          onAddBeforSelected={handleAddBeforSelected}
+          onAddAfterSelected={handleAddAfterSelected}
           lastAutoSelectElem={lastAutoSelectElem}
           selectMarkerOnMap={(el) => {
             setSelected(el);

@@ -70,7 +70,7 @@ const DragDrop = ({
                                 <span style={{ width: "90%" }}>{el.name}</span>
                                 <Button
                                   type="dashed"
-                                  shape="circle"
+                                  shape="round"
                                   icon={<DeleteOutlined />}
                                   onClick={() => {
                                     handleDelete(el, stateDND.vorschlag.title);
@@ -130,7 +130,7 @@ const DragDrop = ({
                                 </span>
                                 <Button
                                   type="dashed"
-                                  shape="circle"
+                                  shape="round"
                                   icon={<DeleteOutlined />}
                                   onClick={() => {
                                     handleDelete(el, stateDND.trajekt.title);
