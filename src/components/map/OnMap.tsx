@@ -1,10 +1,9 @@
 import React, { Fragment } from 'react';
-import { Map, TileLayer, CircleMarker, Polyline, Tooltip } from 'react-leaflet';
+import { Map, TileLayer, CircleMarker, Tooltip, Polyline } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import { Spin, Card, Col } from 'antd';
 import L from 'leaflet';
 import 'leaflet-polylinedecorator';
-
 // Import leaflet context menu
 import 'leaflet-contextmenu';
 import 'leaflet-contextmenu/dist/leaflet.contextmenu.css';
@@ -46,13 +45,6 @@ const OnMap = ({
     zoom: 11,
   };
 
-  const arrow = [
-    {
-      offset: '100%',
-      repeat: 0,
-    },
-  ];
-
   const clickOnMarker = (el: any) => {
     selectMarkerOnMap(el);
   };
@@ -80,14 +72,18 @@ const OnMap = ({
           ) : (
             <Map
               center={
-                lastAutoSelectElem
+                lastAutoSelectElem && !selected
                   ? [
                       lastAutoSelectElem.location.lat,
                       lastAutoSelectElem.location.lng,
                     ]
+                  : selected && lastAutoSelectElem
+                  ? [selected.location.lat, selected.location.lng]
+                  : selected && !lastAutoSelectElem
+                  ? [selected.location.lat, selected.location.lng]
                   : [position.lat, position.lng]
               }
-              zoom={lastAutoSelectElem ? 14 : position.zoom}
+              zoom={lastAutoSelectElem ? 14 : selected ? 14 : position.zoom}
               style={{ height: '60vh' }}
             >
               <TileLayer
@@ -115,10 +111,15 @@ const OnMap = ({
                       center={[el.location.lat, el.location.lng]}
                       key={el._id}
                       color={
-                        stateDND.trajekt.items.length &&
-                        stateDND.trajekt.items[
-                          stateDND.trajekt.items.length - 1
-                        ].name === el.Haltestelle
+                        (lastAutoSelectElem &&
+                          !selected &&
+                          lastAutoSelectElem.Haltestelle === el.Haltestelle) ||
+                        (lastAutoSelectElem &&
+                          selected &&
+                          selected.Haltestelle === el.Haltestelle) ||
+                        (selected &&
+                          !lastAutoSelectElem &&
+                          selected.Haltestelle === el.Haltestelle)
                           ? 'red'
                           : stateDND.vorschlag.items.length &&
                             stateDND.vorschlag.items
@@ -137,6 +138,7 @@ const OnMap = ({
               <Polyline
                 positions={getPathFromTrajekt(stateDND, stations)}
                 color='red'
+                arrowheads
               ></Polyline>
             </Map>
           )}

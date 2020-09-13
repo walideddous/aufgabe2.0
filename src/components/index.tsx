@@ -11,7 +11,13 @@ import SearchInput from './search/SearchInput';
 import DragDrop from './dnd/DragDrop';
 
 // Import the types of the state
-import { Tstations, Tloading, Tchoose, Tdistance } from './type/Types';
+import {
+  Tstations,
+  TstateDND,
+  Tloading,
+  Tchoose,
+  Tdistance,
+} from './type/Types';
 
 // Get the property from Utils
 import { getProperty } from '../utils/getPropertyKey';
@@ -25,7 +31,7 @@ const Aufgabe: React.FC = () => {
   const [selected, setSelected] = useState<Tstations>();
   const [choose, setChoose] = useState<Tchoose>('');
   const [distance, setDistance] = useState<Tdistance[]>([]);
-  const [stateDND, setStateDND] = useState({
+  const [stateDND, setStateDND] = useState<TstateDND>({
     vorschlag: {
       title: 'Vorschlag',
       items: [],
@@ -56,17 +62,36 @@ const Aufgabe: React.FC = () => {
     fetchDataFromBackend();
   }, []);
 
-  // Update the state of lastAutoSelectElem
+  // Update the state of stateDND when you drag and drop
   useEffect(() => {
-    let lastElem: any;
-    if (stateDND.trajekt.items.length) {
-      lastElem = stateDND.trajekt.items[stateDND.trajekt.items.length - 1];
-      if (lastElem.name) {
-        lastElem = stations.filter((el) => el.Haltestelle === lastElem.name)[0];
-        setlastAutoSelectElem({ ...lastElem });
-      }
+    if (lastAutoSelectElem) {
+      const vorschläge = calculateDistanceAndSort(lastAutoSelectElem, stations);
+      setDistance(vorschläge);
+
+      setStateDND((prev: any) => {
+        return {
+          ...prev,
+          vorschlag: {
+            title: 'Vorschlag',
+            items: [
+              {
+                id: v4(),
+                name: vorschläge[0].to.Haltestelle,
+              },
+              {
+                id: v4(),
+                name: vorschläge[1].to.Haltestelle,
+              },
+              {
+                id: v4(),
+                name: vorschläge[2].to.Haltestelle,
+              },
+            ],
+          },
+        };
+      });
     }
-  }, [stateDND.trajekt.items, stations]);
+  }, [lastAutoSelectElem, stations]);
 
   // Select the Station when you click on the button to show the suggestion
   const clickOnDrop = (e: { id: string | number; name: string }) => {
@@ -127,6 +152,19 @@ const Aufgabe: React.FC = () => {
             items: stateDND.vorschlag.items.filter(
               (item: any) => item.id !== e.id
             ),
+          },
+        };
+      });
+    }
+    if (stateDND.trajekt.items.length === 1) {
+      setlastAutoSelectElem(undefined);
+      setSelected(undefined);
+      setStateDND((prev: any) => {
+        return {
+          ...prev,
+          vorschlag: {
+            title: 'Vorschlag',
+            items: [],
           },
         };
       });
@@ -207,11 +245,20 @@ const Aufgabe: React.FC = () => {
       return prev;
     });
     setSelected(undefined);
+    let lastElem: any;
+    if (stateDND.trajekt.items.length) {
+      lastElem = stateDND.trajekt.items[stateDND.trajekt.items.length - 1];
+      if (lastElem.name) {
+        lastElem = stations.filter((el) => el.Haltestelle === lastElem.name)[0];
+        setlastAutoSelectElem({ ...lastElem });
+      }
+    }
   };
 
   const handleAddAfterSelected = (e: string) => {
     const response = stations.filter((el) => el.Haltestelle === e)[0];
-    setSelected(response);
+    setSelected(undefined);
+    setlastAutoSelectElem(response);
 
     const vorschläge = calculateDistanceAndSort(response, stations);
     setDistance(vorschläge);
@@ -251,15 +298,6 @@ const Aufgabe: React.FC = () => {
   };
 
   const handleAddBeforSelected = (e: any) => {
-    console.log('tal3it il before', e);
-    console.log(
-      'stateDND.trajekt.items.slice(0, stateDND.trajekt.items.length - 2)',
-      stateDND.trajekt.items[stateDND.trajekt.items.length]
-    );
-    console.log(
-      'stateDND.trajekt.items.slice(stateDND.trajekt.items.length - 1)',
-      stateDND.trajekt.items.slice(stateDND.trajekt.items.length)
-    );
     setStateDND((prev: any) => {
       return {
         ...prev,
@@ -313,6 +351,8 @@ const Aufgabe: React.FC = () => {
         <DragDrop
           choose={choose}
           stateDND={stateDND}
+          selected={selected}
+          lastAutoSelectElem={lastAutoSelectElem}
           handleDragEnd={handleDragEnd}
           onclick={clickOnDrop}
           onDelete={handleDeleteOnDND}
