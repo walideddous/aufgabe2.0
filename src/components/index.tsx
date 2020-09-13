@@ -131,6 +131,20 @@ const Aufgabe: React.FC = () => {
     SourceOrTarget: string
   ) => {
     if (SourceOrTarget === 'Trajekt') {
+      if (
+        e.name === lastAutoSelectElem?.Haltestelle &&
+        stateDND.trajekt.items.length > 1
+      ) {
+        console.log('last', lastAutoSelectElem);
+        let newValue =
+          stateDND.trajekt.items[stateDND.trajekt.items.length - 2];
+        setlastAutoSelectElem(
+          stations.filter((el) => el.Haltestelle === newValue.name)[0]
+        );
+      }
+      if (stateDND.trajekt.items.length === 1) {
+        setlastAutoSelectElem(undefined);
+      }
       setStateDND((prev: any) => {
         return {
           ...prev,
