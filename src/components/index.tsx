@@ -100,6 +100,7 @@ const Aufgabe: React.FC = () => {
   ) => {
     const response = stations.filter((el) => el.Haltestelle === e.name)[0];
     setSelected({ ...response, index });
+    setlastAutoSelectElem(undefined);
 
     const vorschläge = calculateDistanceAndSort(response, stations);
     setDistance(vorschläge);
@@ -135,7 +136,8 @@ const Aufgabe: React.FC = () => {
   ) => {
     if (SourceOrTarget === "Trajekt") {
       if (
-        e.name === lastAutoSelectElem?.Haltestelle &&
+        (e.name === lastAutoSelectElem?.Haltestelle ||
+          e.name === selected?.Haltestelle) &&
         stateDND.trajekt.items.length > 1
       ) {
         let newValue =
@@ -143,6 +145,7 @@ const Aufgabe: React.FC = () => {
         setlastAutoSelectElem(
           stations.filter((el) => el.Haltestelle === newValue.name)[0]
         );
+        setSelected(undefined);
       }
       if (stateDND.trajekt.items.length === 1) {
         setlastAutoSelectElem(undefined);
@@ -273,8 +276,9 @@ const Aufgabe: React.FC = () => {
 
   const handleAddAfterSelected = (e: string) => {
     const response = stations.filter((el) => el.Haltestelle === e)[0];
-    setSelected(undefined);
+
     setlastAutoSelectElem(response);
+    setSelected(undefined);
 
     const vorschläge = calculateDistanceAndSort(response, stations);
     setDistance(vorschläge);
@@ -314,26 +318,29 @@ const Aufgabe: React.FC = () => {
   };
 
   const handleAddBeforSelected = (e: any) => {
-    setStateDND((prev: any) => {
-      return {
-        ...prev,
-        trajekt: {
-          title: "Trajekt",
-          items: [
-            {
-              id: v4(),
-              name: e,
-            },
-            ...prev.trajekt.items,
-          ],
-        },
-      };
-    });
+    // const response = stations.filter((el) => el.Haltestelle === e)[0];
+    if (lastAutoSelectElem) {
+      setStateDND((prev: any) => {
+        return {
+          ...prev,
+          trajekt: {
+            title: "Trajekt",
+            items: [
+              {
+                id: v4(),
+                name: e,
+              },
+              ...prev.trajekt.items,
+            ],
+          },
+        };
+      });
+    }
   };
 
-  const clickOnMapMarker = (el: Tstations) => {
-    setSelected(el);
-    setlastAutoSelectElem(undefined);
+  const clickOnMapMarker = (el: Tstations, index: number) => {
+    setSelected({ ...el, index });
+
     const vorschläge = calculateDistanceAndSort(el, stations);
     setDistance(vorschläge);
 
@@ -359,6 +366,7 @@ const Aufgabe: React.FC = () => {
         },
       };
     });
+    setlastAutoSelectElem(undefined);
   };
 
   return (

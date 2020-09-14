@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 import { Map, TileLayer, CircleMarker, Tooltip, Polyline } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import { Spin, Card, Col } from "antd";
@@ -22,7 +22,7 @@ interface TpropsOnMap {
   lastAutoSelectElem: Tstations | undefined;
   onAddBeforSelected: (e: string) => void;
   onAddAfterSelected: (e: string) => void;
-  selectMarkerOnMap: (el: Tstations) => void;
+  selectMarkerOnMap: (el: Tstations, index: number) => void;
 }
 
 const OnMap = ({
@@ -45,8 +45,8 @@ const OnMap = ({
     zoom: 11,
   };
 
-  const clickOnMarker = (el: any) => {
-    selectMarkerOnMap(el);
+  const clickOnMarker = (el: any, index: number) => {
+    selectMarkerOnMap(el, index);
   };
 
   const addBeforSelected = (e: any) => {
@@ -83,7 +83,15 @@ const OnMap = ({
                   ? [selected.location.lat, selected.location.lng]
                   : [position.lat, position.lng]
               }
-              zoom={lastAutoSelectElem ? 14 : selected ? 14 : position.zoom}
+              zoom={
+                lastAutoSelectElem && !selected
+                  ? 14
+                  : selected && lastAutoSelectElem
+                  ? 14
+                  : selected && !lastAutoSelectElem
+                  ? 14
+                  : position.zoom
+              }
               style={{ height: "60vh" }}
             >
               <TileLayer
@@ -92,7 +100,7 @@ const OnMap = ({
               />
               <MarkerClusterGroup disableClusteringAtZoom={20}>
                 {stations &&
-                  stations.map((el: Tstations, i: number) => (
+                  stations.map((el: Tstations, index: number) => (
                     <CircleMarker
                       id="map"
                       contextmenu={true}
@@ -129,7 +137,7 @@ const OnMap = ({
                           : "blue"
                       }
                       radius={15}
-                      onclick={() => clickOnMarker(el)}
+                      onclick={() => clickOnMarker(el, index)}
                     >
                       <Tooltip>{el.Haltestelle}</Tooltip>
                     </CircleMarker>
