@@ -1,18 +1,18 @@
-import React, { Fragment } from 'react';
-import { Map, TileLayer, CircleMarker, Tooltip, Polyline } from 'react-leaflet';
-import MarkerClusterGroup from 'react-leaflet-markercluster';
-import { Spin, Card, Col } from 'antd';
-import L from 'leaflet';
-import 'leaflet-polylinedecorator';
+import React, { Fragment, useState } from "react";
+import { Map, TileLayer, CircleMarker, Tooltip, Polyline } from "react-leaflet";
+import MarkerClusterGroup from "react-leaflet-markercluster";
+import { Spin, Card, Col } from "antd";
+import L from "leaflet";
+import "leaflet-polylinedecorator";
 // Import leaflet context menu
-import 'leaflet-contextmenu';
-import 'leaflet-contextmenu/dist/leaflet.contextmenu.css';
+import "leaflet-contextmenu";
+import "leaflet-contextmenu/dist/leaflet.contextmenu.css";
 
 // import the function to filter the table of the trajeckt and draw the linie on map
-import { getPathFromTrajekt } from '../../utils/getPathFromTrajekt';
+import { getPathFromTrajekt } from "../../utils/getPathFromTrajekt";
 
 // Import type
-import { Tloading, Tstations, TstateDND } from '../type/Types';
+import { Tloading, Tstations, TstateDND } from "../type/Types";
 
 interface TpropsOnMap {
   loading: Tloading;
@@ -36,7 +36,7 @@ const OnMap = ({
   selectMarkerOnMap,
 }: TpropsOnMap) => {
   // Icon per default
-  L.Icon.Default.imagePath = 'https://unpkg.com/leaflet@1.5.0/dist/images/';
+  L.Icon.Default.imagePath = "https://unpkg.com/leaflet@1.5.0/dist/images/";
 
   // Center the Map
   const position = {
@@ -60,13 +60,13 @@ const OnMap = ({
   return (
     <Fragment>
       <Col span={12}>
-        <Card bordered={true} title='Map'>
+        <Card bordered={true} title="Map">
           {loading ? (
             <Spin
               style={{
-                display: 'flex',
-                justifyContent: 'center',
-                margin: '30px',
+                display: "flex",
+                justifyContent: "center",
+                margin: "30px",
               }}
             />
           ) : (
@@ -84,27 +84,27 @@ const OnMap = ({
                   : [position.lat, position.lng]
               }
               zoom={lastAutoSelectElem ? 14 : selected ? 14 : position.zoom}
-              style={{ height: '60vh' }}
+              style={{ height: "60vh" }}
             >
               <TileLayer
                 attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
               <MarkerClusterGroup disableClusteringAtZoom={20}>
                 {stations &&
                   stations.map((el: Tstations, i: number) => (
                     <CircleMarker
-                      id='map'
+                      id="map"
                       contextmenu={true}
                       contextmenuWidth={200}
                       contextmenuInheritItems={false}
                       contextmenuItems={[
                         {
-                          text: 'Add before the selected Trajekt',
+                          text: "Add before the selected Trajekt",
                           callback: addBeforSelected,
                         },
                         {
-                          text: 'Add after the selected Trajekt',
+                          text: "Add after the selected Trajekt",
                           callback: addAfterSelected,
                         },
                       ]}
@@ -120,13 +120,13 @@ const OnMap = ({
                         (selected &&
                           !lastAutoSelectElem &&
                           selected.Haltestelle === el.Haltestelle)
-                          ? 'red'
+                          ? "red"
                           : stateDND.vorschlag.items.length &&
                             stateDND.vorschlag.items
                               .map((el) => el.name)
                               .includes(el.Haltestelle)
-                          ? 'green'
-                          : 'blue'
+                          ? "green"
+                          : "blue"
                       }
                       radius={15}
                       onclick={() => clickOnMarker(el)}
@@ -137,7 +137,7 @@ const OnMap = ({
               </MarkerClusterGroup>
               <Polyline
                 positions={getPathFromTrajekt(stateDND, stations)}
-                color='red'
+                color="red"
                 arrowheads
               ></Polyline>
             </Map>

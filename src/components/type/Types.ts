@@ -1,4 +1,5 @@
 export interface Tstations {
+  index?: number;
   _id: string;
   Haltestelle: string;
   adresse: string;

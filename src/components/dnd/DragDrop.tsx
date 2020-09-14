@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { Card, Col, Button } from 'antd';
-import { DeleteOutlined } from '@ant-design/icons';
+import React, { useState } from "react";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { Card, Col, Button } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
 
 // Import types
-import { TstateDND, Tchoose, Tstations } from '../type/Types';
+import { TstateDND, Tchoose, Tstations } from "../type/Types";
 
 // Declare Types
 interface TporpsDND {
@@ -12,7 +12,7 @@ interface TporpsDND {
   stateDND: TstateDND;
   selected: Tstations | undefined;
   lastAutoSelectElem: Tstations | undefined;
-  onclick: (e: { id: string | number; name: string }) => void;
+  onclick: (e: { id: string | number; name: string }, index: number) => void;
   onDelete: (
     e: { id: string | number; name: string },
     SourceOrTarget: string
@@ -31,8 +31,11 @@ const DragDrop = ({
 }: TporpsDND) => {
   const [clicked, setClicked] = useState(false);
 
-  const handleClick = (e: { id: string | number; name: string }) => {
-    onclick(e);
+  const handleClick = (
+    e: { id: string | number; name: string },
+    index: number
+  ) => {
+    onclick(e, index);
     setClicked(!clicked);
   };
 
@@ -42,18 +45,19 @@ const DragDrop = ({
   ) => {
     onDelete(e, SourceOrTarget);
   };
+
   return (
-    <div className='App'>
+    <div className="App">
       <DragDropContext onDragEnd={handleDragEnd}>
         <Col span={12}>
           <Card bordered={true} title={stateDND.vorschlag.title}>
-            <Droppable droppableId={'vorschlag'}>
+            <Droppable droppableId={"vorschlag"}>
               {(provided: any) => {
                 return (
                   <div
                     ref={provided.innerRef}
                     {...provided.droppableProps}
-                    className={'droppable-col'}
+                    className={"droppable-col"}
                   >
                     {stateDND.vorschlag.items.map((el: any, index: number) => {
                       return (
@@ -65,15 +69,15 @@ const DragDrop = ({
                           {(provided) => {
                             return (
                               <div
-                                className='item-suggestion '
+                                className="item-suggestion "
                                 ref={provided.innerRef}
                                 {...provided.draggableProps}
                                 {...provided.dragHandleProps}
                               >
-                                <span style={{ width: '90%' }}>{el.name}</span>
+                                <span style={{ width: "90%" }}>{el.name}</span>
                                 <Button
-                                  type='dashed'
-                                  shape='round'
+                                  type="dashed"
+                                  shape="round"
                                   icon={<DeleteOutlined />}
                                   onClick={() => {
                                     handleDelete(el, stateDND.vorschlag.title);
@@ -94,13 +98,13 @@ const DragDrop = ({
         </Col>
         <Col span={12}>
           <Card bordered={true} title={stateDND.trajekt.title}>
-            <Droppable droppableId={'trajekt'}>
+            <Droppable droppableId={"trajekt"}>
               {(provided: any) => {
                 return (
                   <div
                     ref={provided.innerRef}
                     {...provided.droppableProps}
-                    className={'droppable-col'}
+                    className={"droppable-col"}
                   >
                     {stateDND.trajekt.items.map((el: any, index: number) => {
                       return (
@@ -115,16 +119,16 @@ const DragDrop = ({
                                 className={
                                   (lastAutoSelectElem &&
                                     !selected &&
-                                    lastAutoSelectElem.Haltestelle ===
-                                      el.name) ||
+                                    stateDND.trajekt.items.length - 1 ===
+                                      index) ||
                                   (lastAutoSelectElem &&
                                     selected &&
-                                    selected.Haltestelle === el.name) ||
+                                    selected.index === index) ||
                                   (selected &&
                                     !lastAutoSelectElem &&
-                                    selected.Haltestelle === el.name)
-                                    ? 'item-highlighted'
-                                    : 'item'
+                                    selected.index === index)
+                                    ? "item-highlighted"
+                                    : "item"
                                 }
                                 ref={provided.innerRef}
                                 {...provided.draggableProps}
@@ -132,15 +136,15 @@ const DragDrop = ({
                               >
                                 <span
                                   onClick={() => {
-                                    handleClick(el);
+                                    handleClick(el, index);
                                   }}
-                                  style={{ width: '90%' }}
+                                  style={{ width: "90%" }}
                                 >
                                   {el.name}
                                 </span>
                                 <Button
-                                  type='dashed'
-                                  shape='round'
+                                  type="dashed"
+                                  shape="round"
                                   icon={<DeleteOutlined />}
                                   onClick={() => {
                                     handleDelete(el, stateDND.trajekt.title);
