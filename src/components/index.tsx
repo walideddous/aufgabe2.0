@@ -132,12 +132,14 @@ const Aufgabe: React.FC = () => {
   // Delete the button from Drag and drop
   const handleDeleteOnDND = (
     e: { id: string | number; name: string },
-    SourceOrTarget: string
+    SourceOrTarget: string,
+    index: number
   ) => {
     if (SourceOrTarget === "Trajekt") {
       if (
         (e.name === lastAutoSelectElem?.Haltestelle ||
           e.name === selected?.Haltestelle) &&
+        stateDND.trajekt.items[index] == e &&
         stateDND.trajekt.items.length > 1
       ) {
         let newValue =
@@ -149,6 +151,7 @@ const Aufgabe: React.FC = () => {
       }
       if (stateDND.trajekt.items.length === 1) {
         setlastAutoSelectElem(undefined);
+        setSelected(undefined);
       }
       setStateDND((prev: any) => {
         return {
@@ -318,25 +321,33 @@ const Aufgabe: React.FC = () => {
   };
 
   const handleAddBeforSelected = (e: any) => {
-    // const response = stations.filter((el) => el.Haltestelle === e)[0];
-    if (lastAutoSelectElem) {
-      setStateDND((prev: any) => {
-        return {
-          ...prev,
-          trajekt: {
-            title: "Trajekt",
-            items: [
-              {
-                id: v4(),
-                name: e,
-              },
-              ...prev.trajekt.items,
-            ],
-          },
-        };
-      });
-    }
+    const response = stations.filter((el) => el.Haltestelle === e)[0];
+    console.log(
+      "last auto Selected Element inside the function",
+      lastAutoSelectElem
+    );
+    console.log("selected Daten inside the function", selected);
+    setStateDND((prev: any) => {
+      return {
+        ...prev,
+        trajekt: {
+          title: "Trajekt",
+          items: [
+            {
+              id: v4(),
+              name: e,
+            },
+            ...prev.trajekt.items,
+          ],
+        },
+      };
+    });
   };
+  console.log(
+    "last auto Selected Element outside the function",
+    lastAutoSelectElem
+  );
+  console.log("selected Daten outside the function", selected);
 
   const clickOnMapMarker = (el: Tstations, index: number) => {
     setSelected({ ...el, index });

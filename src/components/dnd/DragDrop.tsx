@@ -15,7 +15,8 @@ interface TporpsDND {
   onclick: (e: { id: string | number; name: string }, index: number) => void;
   onDelete: (
     e: { id: string | number; name: string },
-    SourceOrTarget: string
+    SourceOrTarget: string,
+    index: number
   ) => void;
   handleDragEnd: (e: any) => void;
 }
@@ -41,9 +42,10 @@ const DragDrop = ({
 
   const handleDelete = (
     e: { id: string | number; name: string },
-    SourceOrTarget: string
+    SourceOrTarget: string,
+    index: number
   ) => {
-    onDelete(e, SourceOrTarget);
+    onDelete(e, SourceOrTarget, index);
   };
 
   return (
@@ -80,7 +82,11 @@ const DragDrop = ({
                                   shape="round"
                                   icon={<DeleteOutlined />}
                                   onClick={() => {
-                                    handleDelete(el, stateDND.vorschlag.title);
+                                    handleDelete(
+                                      el,
+                                      stateDND.vorschlag.title,
+                                      index
+                                    );
                                   }}
                                 />
                               </div>
@@ -147,7 +153,11 @@ const DragDrop = ({
                                   shape="round"
                                   icon={<DeleteOutlined />}
                                   onClick={() => {
-                                    handleDelete(el, stateDND.trajekt.title);
+                                    handleDelete(
+                                      el,
+                                      stateDND.trajekt.title,
+                                      index
+                                    );
                                   }}
                                 />
                               </div>
