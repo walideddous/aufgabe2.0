@@ -117,7 +117,7 @@ const OnMap = ({
                         },
                       ]}
                       center={[el.location.lat, el.location.lng]}
-                      key={el._id}
+                      key={el.id}
                       color={
                         (lastAutoSelectElem &&
                           !selected &&

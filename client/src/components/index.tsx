@@ -55,7 +55,6 @@ const Aufgabe: React.FC = () => {
         });
         if (queryResult) {
           const result = queryResult.data.data.haltestelles;
-          console.log("result", result);
           setStations(result);
           setLoading(false);
         } else {
@@ -342,11 +341,6 @@ const Aufgabe: React.FC = () => {
       };
     });
   };
-  console.log(
-    "last auto Selected Element outside the function",
-    lastAutoSelectElem
-  );
-  console.log("selected Daten outside the function", selected);
 
   const clickOnMapMarker = (el: Tstations, index: number) => {
     setSelected({ ...el, index });

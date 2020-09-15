@@ -1,6 +1,6 @@
 export interface Tstations {
   index?: number;
-  _id: string;
+  id: string;
   name: string;
   adresse: string;
   location: {
@@ -17,7 +17,7 @@ export type Tchoose = string;
 export interface Tdistance {
   from: string;
   to: {
-    _id: string;
+    id: string;
     name: string;
     adresse: string;
     location: {
