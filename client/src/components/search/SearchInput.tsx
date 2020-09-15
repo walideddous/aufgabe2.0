@@ -1,5 +1,10 @@
 import React, { Fragment, useState } from "react";
-import { AutoComplete } from "antd";
+import { AutoComplete, Button } from "antd";
+
+// Import autorisation function to ste the token in header
+import setAuthToken from "../../utils/setAuthToken";
+// Import token secret
+import { JSON_SECRET } from "../../config/config";
 
 // Import type
 import { Tstations } from "../type/Types";
@@ -29,6 +34,10 @@ const SearchInput = ({ stations, handleEvent }: TporpsSearchInput) => {
     handleEvent(data);
   };
 
+  const getData = () => {
+    localStorage.setItem("authorization", "Bearer " + JSON_SECRET);
+  };
+
   return (
     <Fragment>
       <AutoComplete
@@ -55,6 +64,9 @@ const SearchInput = ({ stations, handleEvent }: TporpsSearchInput) => {
               </Option>
             ))}
       </AutoComplete>
+      <Button type="primary" style={{ margin: 20 }} onClick={getData}>
+        Get the Data
+      </Button>
     </Fragment>
   );
 };

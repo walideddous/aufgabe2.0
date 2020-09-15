@@ -10,3 +10,6 @@ export const GET_HALTESTELLE_QUERY = ` query haltestelles{
         }
     }
 } `;
+
+export const JSON_SECRET =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IndhbGlkIiwiaWF0IjoxNTE2MjM5MDIyfQ.j1VE5hBFsznHMN6CgGOqVhe1RVYnaKWuaU6MwxcZMuk";

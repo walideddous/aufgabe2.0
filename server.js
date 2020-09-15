@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const { graphqlHTTP } = require("express-graphql");
 const dotenv = require("dotenv");
+const { verify, decode } = require("jsonwebtoken");
 const schema = require("./schema.js");
 
 // Import the data to test
@@ -27,6 +28,25 @@ app.use(express.json());
 
 // enable `cors` to set HTTP response header: Access-Control-Allow-Origin: *
 app.use(cors());
+
+// Middelware for the jsontoken
+app.use((req, _, next) => {
+  let accessToken;
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
+    accessToken = req.headers.authorization.split(" ")[1];
+    try {
+      const data = decode(accessToken, process.env.JWT_SECRET);
+      if (data) {
+        next();
+      }
+    } catch {
+      console.error("token Incorrect not authorized");
+    }
+  }
+});
 
 // use GraphQl
 app.use(

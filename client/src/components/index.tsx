@@ -4,7 +4,11 @@ import { Row } from "antd";
 import { v4 } from "uuid";
 
 // Import const values to connect with graphQL
-import { GET_HALTESTELLE_QUERY, GRAPHQL_API } from "../config/config";
+import {
+  GET_HALTESTELLE_QUERY,
+  GRAPHQL_API,
+  JSON_SECRET,
+} from "../config/config";
 
 // Import composents
 import OnMap from "./map/OnMap";
@@ -26,6 +30,13 @@ import { getProperty } from "../utils/getPropertyKey";
 
 // get the function to compare the distance between a point fix and a banch of punkt
 import { calculateDistanceAndSort } from "../utils/getDistanceFromLatLonInKm";
+
+const authAxios = axios.create({
+  baseURL: GRAPHQL_API,
+  headers: {
+    authorization: "Bearer " + JSON_SECRET,
+  },
+});
 
 const Aufgabe: React.FC = () => {
   const [stations, setStations] = useState<Tstations[]>([]);
@@ -50,7 +61,7 @@ const Aufgabe: React.FC = () => {
     // Simulation a call from the Backend
     const fetchDataFromBackend = async () => {
       try {
-        const queryResult = await axios.post(GRAPHQL_API, {
+        const queryResult = await authAxios.post("", {
           query: GET_HALTESTELLE_QUERY,
         });
         if (queryResult) {
@@ -58,7 +69,7 @@ const Aufgabe: React.FC = () => {
           setStations(result);
           setLoading(false);
         } else {
-          console.error("Cannt fetch stations from backend ");
+          console.log("not aithorized provid a token");
         }
       } catch (error) {
         console.error("error from trycatch");
