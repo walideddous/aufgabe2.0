@@ -7,7 +7,7 @@ export interface getDataActions {
   type: typeof GET_SUCCESS;
   payload: {
     _id: string;
-    Haltestelle: string;
+    name: string;
     adresse: string;
     Umstiegmöglischkeiten: string;
   }[];
@@ -33,7 +33,7 @@ export interface LoadingType {
   selected: any;
   data: {
     _id: string;
-    Haltestelle: string;
+    name: string;
     adresse: string;
     location: {
       lat: number | string;

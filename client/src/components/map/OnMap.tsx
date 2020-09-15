@@ -121,25 +121,25 @@ const OnMap = ({
                       color={
                         (lastAutoSelectElem &&
                           !selected &&
-                          lastAutoSelectElem.Haltestelle === el.Haltestelle) ||
+                          lastAutoSelectElem.name === el.name) ||
                         (lastAutoSelectElem &&
                           selected &&
-                          selected.Haltestelle === el.Haltestelle) ||
+                          selected.name === el.name) ||
                         (selected &&
                           !lastAutoSelectElem &&
-                          selected.Haltestelle === el.Haltestelle)
+                          selected.name === el.name)
                           ? "red"
                           : stateDND.vorschlag.items.length &&
                             stateDND.vorschlag.items
                               .map((el) => el.name)
-                              .includes(el.Haltestelle)
+                              .includes(el.name)
                           ? "green"
                           : "blue"
                       }
                       radius={15}
                       onclick={() => clickOnMarker(el, index)}
                     >
-                      <Tooltip>{el.Haltestelle}</Tooltip>
+                      <Tooltip>{el.name}</Tooltip>
                     </CircleMarker>
                   ))}
               </MarkerClusterGroup>

@@ -5,7 +5,7 @@ export const getSuggestion = (stateDND: TstateDND, stations: Tstations[]) => {
   let result = [];
   for (let i = 0; i < getTrajekt.length; i++) {
     for (let j = 0; j < stations.length; j++) {
-      if (getTrajekt[i] === stations[j].Haltestelle) {
+      if (getTrajekt[i] === stations[j].name) {
         result.push(stations[j]);
       }
     }

@@ -34,7 +34,7 @@ export function calculateDistanceAndSort(
   const { location } = objClicked;
 
   const filteredTable = tabData.filter(
-    (el: any) => el.Haltestelle !== objClicked.Haltestelle
+    (el: any) => el.name !== objClicked.name
   );
 
   for (let i = 0; i < filteredTable.length; i++) {
@@ -50,7 +50,7 @@ export function calculateDistanceAndSort(
       lng1
     );
     result.push({
-      from: objClicked.Haltestelle,
+      from: objClicked.name,
       to: filteredTable[i],
       distance,
     });

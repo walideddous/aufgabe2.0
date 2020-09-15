@@ -1,7 +1,7 @@
 export interface Tstations {
   index?: number;
   _id: string;
-  Haltestelle: string;
+  name: string;
   adresse: string;
   location: {
     lat: number;
@@ -18,7 +18,7 @@ export interface Tdistance {
   from: string;
   to: {
     _id: string;
-    Haltestelle: string;
+    name: string;
     adresse: string;
     location: {
       lat: number;

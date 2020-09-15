@@ -1,5 +1,6 @@
 const fs = require("fs");
 const express = require("express");
+const cors = require("cors");
 const { graphqlHTTP } = require("express-graphql");
 const dotenv = require("dotenv");
 const schema = require("./schema.js");
@@ -23,6 +24,9 @@ connectDB();
 
 // Body parser
 app.use(express.json());
+
+// enable `cors` to set HTTP response header: Access-Control-Allow-Origin: *
+app.use(cors());
 
 // use GraphQl
 app.use(

@@ -36,16 +36,31 @@ const HaltestelleType = new GraphQLObjectType({
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
   fields: {
-    haltestelle: {
+    haltestelles: {
       type: new GraphQLList(HaltestelleType),
+      resolve(parentValue) {
+        return haltestelles;
+        /*  
+        When i will work with mongoDB
+           promises (.then.catch)
+
+        */
+      },
+    },
+    haltestelle: {
+      type: HaltestelleType,
       args: {
         id: { type: GraphQLString },
       },
       resolve(parentValue, args) {
-        return haltestelles;
+        for (let i = 0; i < haltestelles.length; i++) {
+          if (haltestelles[i].id == args.id) {
+            return haltestelles[i];
+          }
+        }
         /*  
         When i will work with mongoDB
-        
+             promises (.then.catch)
 
         */
       },

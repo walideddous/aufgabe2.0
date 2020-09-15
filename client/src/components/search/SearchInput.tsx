@@ -40,19 +40,20 @@ const SearchInput = ({ stations, handleEvent }: TporpsSearchInput) => {
         placeholder="Stationsname eingeben"
         open={search ? true : false}
       >
-        {stations
-          .filter((el: any) =>
-            el.Haltestelle.toLowerCase().includes(search.toLowerCase())
-          )
-          .map((el: { Haltestelle: string }, i: number) => (
-            <Option value={el.Haltestelle} key={i}>
-              <i
-                className="fas fa-subway"
-                style={{ color: "#1890ff", margin: "0 10px" }}
-              ></i>
-              {el.Haltestelle}
-            </Option>
-          ))}
+        {stations &&
+          stations
+            .filter((el: any) =>
+              el.name.toLowerCase().includes(search.toLowerCase())
+            )
+            .map((el: { name: string }, i: number) => (
+              <Option value={el.name} key={i}>
+                <i
+                  className="fas fa-subway"
+                  style={{ color: "#1890ff", margin: "0 10px" }}
+                ></i>
+                {el.name}
+              </Option>
+            ))}
       </AutoComplete>
     </Fragment>
   );

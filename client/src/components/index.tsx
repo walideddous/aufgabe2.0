@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { Row } from "antd";
 import { v4 } from "uuid";
 
-import { data } from "./../data/data";
+// Import const values to connect with graphQL
+import { GET_HALTESTELLE_QUERY, GRAPHQL_API } from "../config/config";
 
 // Import composents
 import OnMap from "./map/OnMap";
@@ -48,9 +50,13 @@ const Aufgabe: React.FC = () => {
     // Simulation a call from the Backend
     const fetchDataFromBackend = async () => {
       try {
-        const response = await data();
-        if (response) {
-          setStations(response);
+        const queryResult = await axios.post(GRAPHQL_API, {
+          query: GET_HALTESTELLE_QUERY,
+        });
+        if (queryResult) {
+          const result = queryResult.data.data.haltestelles;
+          console.log("result", result);
+          setStations(result);
           setLoading(false);
         } else {
           console.error("Cannt fetch stations from backend ");
@@ -76,15 +82,15 @@ const Aufgabe: React.FC = () => {
             items: [
               {
                 id: v4(),
-                name: vorschläge[0].to.Haltestelle,
+                name: vorschläge[0].to.name,
               },
               {
                 id: v4(),
-                name: vorschläge[1].to.Haltestelle,
+                name: vorschläge[1].to.name,
               },
               {
                 id: v4(),
-                name: vorschläge[2].to.Haltestelle,
+                name: vorschläge[2].to.name,
               },
             ],
           },
@@ -98,7 +104,7 @@ const Aufgabe: React.FC = () => {
     e: { id: string | number; name: string },
     index: number
   ) => {
-    const response = stations.filter((el) => el.Haltestelle === e.name)[0];
+    const response = stations.filter((el) => el.name === e.name)[0];
     setSelected({ ...response, index });
     setlastAutoSelectElem(undefined);
 
@@ -113,15 +119,15 @@ const Aufgabe: React.FC = () => {
           items: [
             {
               id: v4(),
-              name: vorschläge[0].to.Haltestelle,
+              name: vorschläge[0].to.name,
             },
             {
               id: v4(),
-              name: vorschläge[1].to.Haltestelle,
+              name: vorschläge[1].to.name,
             },
             {
               id: v4(),
-              name: vorschläge[2].to.Haltestelle,
+              name: vorschläge[2].to.name,
             },
           ],
         },
@@ -137,15 +143,14 @@ const Aufgabe: React.FC = () => {
   ) => {
     if (SourceOrTarget === "Trajekt") {
       if (
-        (e.name === lastAutoSelectElem?.Haltestelle ||
-          e.name === selected?.Haltestelle) &&
-        stateDND.trajekt.items[index] == e &&
+        (e.name === lastAutoSelectElem?.name || e.name === selected?.name) &&
+        stateDND.trajekt.items[index] === e &&
         stateDND.trajekt.items.length > 1
       ) {
         let newValue =
           stateDND.trajekt.items[stateDND.trajekt.items.length - 2];
         setlastAutoSelectElem(
-          stations.filter((el) => el.Haltestelle === newValue.name)[0]
+          stations.filter((el) => el.name === newValue.name)[0]
         );
         setSelected(undefined);
       }
@@ -195,7 +200,7 @@ const Aufgabe: React.FC = () => {
 
   // to choose the station from the input options
   const onEvent = (e: string) => {
-    const response = stations.filter((el) => el.Haltestelle === e)[0];
+    const response = stations.filter((el) => el.name === e)[0];
     setlastAutoSelectElem(response);
     setSelected(undefined);
 
@@ -221,15 +226,15 @@ const Aufgabe: React.FC = () => {
           items: [
             {
               id: v4(),
-              name: vorschläge[0].to.Haltestelle,
+              name: vorschläge[0].to.name,
             },
             {
               id: v4(),
-              name: vorschläge[1].to.Haltestelle,
+              name: vorschläge[1].to.name,
             },
             {
               id: v4(),
-              name: vorschläge[2].to.Haltestelle,
+              name: vorschläge[2].to.name,
             },
           ],
         },
@@ -271,14 +276,14 @@ const Aufgabe: React.FC = () => {
     if (stateDND.trajekt.items.length) {
       lastElem = stateDND.trajekt.items[stateDND.trajekt.items.length - 1];
       if (lastElem.name) {
-        lastElem = stations.filter((el) => el.Haltestelle === lastElem.name)[0];
+        lastElem = stations.filter((el) => el.name === lastElem.name)[0];
         setlastAutoSelectElem({ ...lastElem });
       }
     }
   };
 
   const handleAddAfterSelected = (e: string) => {
-    const response = stations.filter((el) => el.Haltestelle === e)[0];
+    const response = stations.filter((el) => el.name === e)[0];
 
     setlastAutoSelectElem(response);
     setSelected(undefined);
@@ -304,15 +309,15 @@ const Aufgabe: React.FC = () => {
           items: [
             {
               id: v4(),
-              name: vorschläge[0].to.Haltestelle,
+              name: vorschläge[0].to.name,
             },
             {
               id: v4(),
-              name: vorschläge[1].to.Haltestelle,
+              name: vorschläge[1].to.name,
             },
             {
               id: v4(),
-              name: vorschläge[2].to.Haltestelle,
+              name: vorschläge[2].to.name,
             },
           ],
         },
@@ -321,12 +326,6 @@ const Aufgabe: React.FC = () => {
   };
 
   const handleAddBeforSelected = (e: any) => {
-    const response = stations.filter((el) => el.Haltestelle === e)[0];
-    console.log(
-      "last auto Selected Element inside the function",
-      lastAutoSelectElem
-    );
-    console.log("selected Daten inside the function", selected);
     setStateDND((prev: any) => {
       return {
         ...prev,
@@ -363,15 +362,15 @@ const Aufgabe: React.FC = () => {
           items: [
             {
               id: v4(),
-              name: vorschläge[0].to.Haltestelle,
+              name: vorschläge[0].to.name,
             },
             {
               id: v4(),
-              name: vorschläge[1].to.Haltestelle,
+              name: vorschläge[1].to.name,
             },
             {
               id: v4(),
-              name: vorschläge[2].to.Haltestelle,
+              name: vorschläge[2].to.name,
             },
           ],
         },
