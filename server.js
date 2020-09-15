@@ -1,7 +1,14 @@
+const fs = require("fs");
 const express = require("express");
-const dotenv = require("dotenv");
 const { graphqlHTTP } = require("express-graphql");
+const dotenv = require("dotenv");
 const schema = require("./schema.js");
+
+// Import the data to test
+const result = fs.readFileSync(
+  `${__dirname}/client/src/data/data.json`,
+  "utf-8"
+);
 
 // Import the database
 const connectDB = require("./config/db");
@@ -27,7 +34,8 @@ app.use(
 );
 
 // Route
-app.get("/", (req, res) => res.send("API Running"));
+app.get("/", (req, res) => res.send("API is Running"));
+app.get("/data", (req, res) => res.send(result));
 
 const PORT = process.env.PORT || 5000;
 

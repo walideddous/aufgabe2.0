@@ -1,44 +1,34 @@
+const fs = require("fs");
 const {
   GraphQLObjectType,
   GraphQLString,
-  GraphQLInt,
+  GraphQLFloat,
   GraphQLSchema,
   GraphQLList,
   GraphQLNonNull,
 } = require("graphql");
 
-// Hardcoded Data
-/*
-const customers = [
-  {
-    id: "1",
-    name: "John Doe",
-    email: "jdoe@gmail.com",
-    age: 35,
-  },
-  {
-    id: "2",
-    name: "steve",
-    email: "jdoe@gmail.com",
-    age: 25,
-  },
-  {
-    id: "3",
-    name: "sara",
-    email: "sara@gmail.com",
-    age: 32,
-  },
-];
-*/
+const haltestelles = JSON.parse(
+  fs.readFileSync(`${__dirname}/client/src/data/data.json`, "utf-8")
+);
 
-// Customer Type
-const CustomerType = new GraphQLObjectType({
-  name: "Customer",
+// Location Type
+const locationType = new GraphQLObjectType({
+  name: "Location",
+  fields: () => ({
+    lat: { type: GraphQLFloat },
+    lng: { type: GraphQLFloat },
+  }),
+});
+
+// Haltestelle Type
+const HaltestelleType = new GraphQLObjectType({
+  name: "Haltestelle",
   fields: () => ({
     id: { type: GraphQLString },
     name: { type: GraphQLString },
-    email: { type: GraphQLString },
-    age: { type: GraphQLInt },
+    adresse: { type: GraphQLString },
+    location: { type: locationType },
   }),
 });
 
@@ -46,25 +36,18 @@ const CustomerType = new GraphQLObjectType({
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
   fields: {
-    customer: {
-      type: CustomerType,
+    haltestelle: {
+      type: new GraphQLList(HaltestelleType),
       args: {
         id: { type: GraphQLString },
       },
       resolve(parentValue, args) {
-        /*
-        for (let i = 0; i < customers.length; i++) {
-          if (customers[i].id == args.id) {
-            return customers[i];
-          }
-        }
+        return haltestelles;
+        /*  
+        When i will work with mongoDB
+        
+
         */
-      },
-    },
-    customers: {
-      type: new GraphQLList(CustomerType),
-      resolve(parentValue, args) {
-        return customers;
       },
     },
   },
