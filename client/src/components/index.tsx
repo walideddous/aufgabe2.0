@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
-import { Row } from "antd";
+import { Row, Button } from "antd";
 import { v4 } from "uuid";
 
 // Import const values to connect with graphQL
@@ -55,9 +55,35 @@ const Aufgabe: React.FC = () => {
     },
   });
   const [lastAutoSelectElem, setlastAutoSelectElem] = useState<Tstations>();
+  const [isSending, setIsSending] = useState<boolean>(false);
+  const [updateDate, setUpdateDate] = useState<string>();
+
+  const sendRequest = useCallback(async () => {
+    if (isSending) return;
+    // update state
+    setIsSending(true);
+    // send the actual request
+    try {
+      const queryResult = await authAxios.post("", {
+        query: GET_HALTESTELLE_QUERY,
+      });
+      if (queryResult) {
+        const result = queryResult.data.data.haltestelles;
+        setStations(result);
+        setUpdateDate(Date().toString().substr(4, 24));
+        setLoading(false);
+      } else {
+        console.log("not aithorized provid a token");
+      }
+    } catch (error) {
+      console.error("error from trycatch");
+    }
+    // once the request is sent, update state again
+    setIsSending(false);
+  }, [isSending]);
 
   // Fetch the data from the Backend and set the state "Stations"
-  useEffect(() => {
+  /* useEffect(() => {
     // Simulation a call from the Backend
     const fetchDataFromBackend = async () => {
       try {
@@ -77,6 +103,7 @@ const Aufgabe: React.FC = () => {
     };
     fetchDataFromBackend();
   }, []);
+  */
 
   // Update the state of stateDND when you drag and drop
   useEffect(() => {
@@ -392,7 +419,28 @@ const Aufgabe: React.FC = () => {
   return (
     <div className="site-card-wrapper">
       <Row gutter={[14, 14]}>
-        <SearchInput stations={stations} handleEvent={onEvent} />
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <SearchInput stations={stations} handleEvent={onEvent} />
+          <p style={{ margin: 20 }}>
+            <strong>Update at : </strong>
+            {updateDate}
+          </p>
+          <Button
+            type="primary"
+            style={{ margin: 20 }}
+            disabled={isSending}
+            onClick={sendRequest}
+          >
+            Get the Data
+          </Button>
+        </div>
+
         <DragDrop
           choose={choose}
           stateDND={stateDND}
