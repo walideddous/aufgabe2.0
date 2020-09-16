@@ -46,11 +46,11 @@ const Aufgabe: React.FC = () => {
   const [distance, setDistance] = useState<Tdistance[]>([]);
   const [stateDND, setStateDND] = useState<TstateDND>({
     vorschlag: {
-      title: "Vorschlag",
+      title: "Suggestion",
       items: [],
     },
     trajekt: {
-      title: "Trajekt",
+      title: "Road",
       items: [],
     },
   });
@@ -58,6 +58,7 @@ const Aufgabe: React.FC = () => {
   const [isSending, setIsSending] = useState<boolean>(false);
   const [updateDate, setUpdateDate] = useState<string>();
 
+  // Send the request when you click on get the Data button
   const sendRequest = useCallback(async () => {
     if (isSending) return;
     // update state
@@ -115,7 +116,7 @@ const Aufgabe: React.FC = () => {
         return {
           ...prev,
           vorschlag: {
-            title: "Vorschlag",
+            title: "Suggestion",
             items: [
               {
                 id: v4(),
@@ -152,7 +153,7 @@ const Aufgabe: React.FC = () => {
       return {
         ...prev,
         vorschlag: {
-          title: "Vorschlag",
+          title: "Suggestion",
           items: [
             {
               id: v4(),
@@ -178,7 +179,7 @@ const Aufgabe: React.FC = () => {
     SourceOrTarget: string,
     index: number
   ) => {
-    if (SourceOrTarget === "Trajekt") {
+    if (SourceOrTarget === "Road") {
       if (
         (e.name === lastAutoSelectElem?.name || e.name === selected?.name) &&
         stateDND.trajekt.items[index] === e &&
@@ -199,7 +200,7 @@ const Aufgabe: React.FC = () => {
         return {
           ...prev,
           trajekt: {
-            title: "Trajekt",
+            title: "Road",
             items: stateDND.trajekt.items.filter(
               (item: any) => item.id !== e.id
             ),
@@ -207,12 +208,12 @@ const Aufgabe: React.FC = () => {
         };
       });
     }
-    if (SourceOrTarget === "Vorschlag") {
+    if (SourceOrTarget === "Suggestion") {
       setStateDND((prev: any) => {
         return {
           ...prev,
           vorschlag: {
-            title: "Vorschlag",
+            title: "Suggestion",
             items: stateDND.vorschlag.items.filter(
               (item: any) => item.id !== e.id
             ),
@@ -227,7 +228,7 @@ const Aufgabe: React.FC = () => {
         return {
           ...prev,
           vorschlag: {
-            title: "Vorschlag",
+            title: "Suggestion",
             items: [],
           },
         };
@@ -249,7 +250,7 @@ const Aufgabe: React.FC = () => {
       return {
         ...prev,
         trajekt: {
-          title: "Trajekt",
+          title: "Road",
           items: [
             ...prev.trajekt.items,
             {
@@ -259,7 +260,7 @@ const Aufgabe: React.FC = () => {
           ],
         },
         vorschlag: {
-          title: "Vorschlag",
+          title: "Suggestion",
           items: [
             {
               id: v4(),
@@ -332,7 +333,7 @@ const Aufgabe: React.FC = () => {
       return {
         ...prev,
         trajekt: {
-          title: "Trajekt",
+          title: "Road",
           items: [
             ...prev.trajekt.items,
             {
@@ -342,7 +343,7 @@ const Aufgabe: React.FC = () => {
           ],
         },
         vorschlag: {
-          title: "Vorschlag",
+          title: "Suggestion",
           items: [
             {
               id: v4(),
@@ -362,12 +363,13 @@ const Aufgabe: React.FC = () => {
     });
   };
 
-  const handleAddBeforSelected = () => {
+  const handleAddBeforSelected = useCallback(() => {
+    console.log("last auto inside the function", lastAutoSelectElem);
     // setStateDND((prev: any) => {
     //   return {
     //     ...prev,
     //     trajekt: {
-    //       title: "Trajekt",
+    //       title: "Road",
     //       items: [
     //         {
     //           id: v4(),
@@ -378,7 +380,7 @@ const Aufgabe: React.FC = () => {
     //     },
     //   };
     // });
-  };
+  }, [lastAutoSelectElem, selected]);
 
   /* useEffect(() => {
     handleAddBeforSelected();
@@ -395,7 +397,7 @@ const Aufgabe: React.FC = () => {
       return {
         ...prev,
         vorschlag: {
-          title: "Vorschlag",
+          title: "Suggestion",
           items: [
             {
               id: v4(),

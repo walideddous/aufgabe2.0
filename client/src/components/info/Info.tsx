@@ -15,7 +15,7 @@ const Info = ({ selected, distance, lastAutoSelectElem }: TpropsInfo) => {
     <Fragment>
       {(selected && lastAutoSelectElem) || (selected && !lastAutoSelectElem) ? (
         <Col span={12}>
-          <Card bordered={true} title="Haltestelle Info">
+          <Card bordered={true} title="Station Info">
             {selected ? (
               <Fragment>
                 <p>
@@ -66,7 +66,7 @@ const Info = ({ selected, distance, lastAutoSelectElem }: TpropsInfo) => {
                 )}
               </Fragment>
             ) : (
-              <p>Wählen Sie eine Station</p>
+              <p>Choose a station</p>
             )}
           </Card>
         </Col>
@@ -129,7 +129,7 @@ const Info = ({ selected, distance, lastAutoSelectElem }: TpropsInfo) => {
                 )}
               </Fragment>
             ) : (
-              <p>Wählen Sie eine Station</p>
+              <p>Choose a station</p>
             )}
           </Card>
         </Col>
