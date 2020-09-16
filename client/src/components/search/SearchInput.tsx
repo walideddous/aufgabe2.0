@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
 import { AutoComplete, Button } from "antd";
 
 // Import autorisation function to ste the token in header
@@ -39,7 +39,13 @@ const SearchInput = ({ stations, handleEvent }: TporpsSearchInput) => {
   };
 
   return (
-    <Fragment>
+    <div
+      style={{
+        width: "100%",
+        display: "flex",
+        justifyContent: "space-between",
+      }}
+    >
       <AutoComplete
         style={{ width: "48%", margin: 20 }}
         onSearch={handleSearch}
@@ -67,7 +73,7 @@ const SearchInput = ({ stations, handleEvent }: TporpsSearchInput) => {
       <Button type="primary" style={{ margin: 20 }} onClick={getData}>
         Get the Data
       </Button>
-    </Fragment>
+    </div>
   );
 };
 

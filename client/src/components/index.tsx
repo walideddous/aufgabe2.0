@@ -335,23 +335,28 @@ const Aufgabe: React.FC = () => {
     });
   };
 
-  const handleAddBeforSelected = (e: any) => {
-    setStateDND((prev: any) => {
-      return {
-        ...prev,
-        trajekt: {
-          title: "Trajekt",
-          items: [
-            {
-              id: v4(),
-              name: e,
-            },
-            ...prev.trajekt.items,
-          ],
-        },
-      };
-    });
+  const handleAddBeforSelected = () => {
+    // setStateDND((prev: any) => {
+    //   return {
+    //     ...prev,
+    //     trajekt: {
+    //       title: "Trajekt",
+    //       items: [
+    //         {
+    //           id: v4(),
+    //           name: e,
+    //         },
+    //         ...prev.trajekt.items,
+    //       ],
+    //     },
+    //   };
+    // });
   };
+
+  /* useEffect(() => {
+    handleAddBeforSelected();
+  }, []);
+  */
 
   const clickOnMapMarker = (el: Tstations, index: number) => {
     setSelected({ ...el, index });

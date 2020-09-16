@@ -77,7 +77,7 @@ const DragDrop = ({
                                 {...provided.dragHandleProps}
                               >
                                 <span style={{ width: "90%" }}>{el.name}</span>
-                                <Button
+                                {/*<Button
                                   type="dashed"
                                   shape="round"
                                   icon={<DeleteOutlined />}
@@ -88,7 +88,7 @@ const DragDrop = ({
                                       index
                                     );
                                   }}
-                                />
+                                />*/}
                               </div>
                             );
                           }}

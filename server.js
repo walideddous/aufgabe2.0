@@ -3,7 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const { graphqlHTTP } = require("express-graphql");
 const dotenv = require("dotenv");
-const { verify, decode } = require("jsonwebtoken");
+const { verify } = require("jsonwebtoken");
 const schema = require("./schema.js");
 
 // Import the data to test
@@ -18,7 +18,7 @@ const connectDB = require("./config/db");
 const app = express();
 
 // Load env vars
-dotenv.config({ path: "./config/config.env" });
+dotenv.config({ path: "./config.env" });
 
 //Connect to Database
 connectDB();
@@ -29,7 +29,7 @@ app.use(express.json());
 // enable `cors` to set HTTP response header: Access-Control-Allow-Origin: *
 app.use(cors());
 
-// Middelware for the jsontoken
+// Middelware for the jsonwebtoken
 app.use((req, _, next) => {
   let accessToken;
   if (
@@ -38,7 +38,7 @@ app.use((req, _, next) => {
   ) {
     accessToken = req.headers.authorization.split(" ")[1];
     try {
-      const data = decode(accessToken, process.env.JWT_SECRET);
+      const data = verify(accessToken, process.env.JWT_SECRET);
       if (data) {
         next();
       }
