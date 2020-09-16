@@ -72,7 +72,7 @@ const Info = ({ selected, distance, lastAutoSelectElem }: TpropsInfo) => {
         </Col>
       ) : (
         <Col span={12}>
-          <Card bordered={true} title="Haltestelle Info">
+          <Card bordered={true} title="Station Info">
             {lastAutoSelectElem ? (
               <Fragment>
                 <p>
