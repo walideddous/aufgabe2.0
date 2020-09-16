@@ -4,11 +4,7 @@ import { Row, Button } from "antd";
 import { v4 } from "uuid";
 
 // Import const values to connect with graphQL
-import {
-  GET_HALTESTELLE_QUERY,
-  GRAPHQL_API,
-  JSON_SECRET,
-} from "../config/config";
+import { GET_HALTESTELLE_QUERY, GRAPHQL_API } from "../config/config";
 
 // Import composents
 import OnMap from "./map/OnMap";
