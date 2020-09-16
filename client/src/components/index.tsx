@@ -34,7 +34,7 @@ import { calculateDistanceAndSort } from "../utils/getDistanceFromLatLonInKm";
 const authAxios = axios.create({
   baseURL: GRAPHQL_API,
   headers: {
-    authorization: "Bearer " + JSON_SECRET,
+    authorization: "Bearer " + process.env.REACT_APP_JSON_SECRET_KEY,
   },
 });
 
