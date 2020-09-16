@@ -10,9 +10,6 @@
     "@testing-library/user-event": "^7.2.1",
     "@types/jest": "^24.9.1",
     "@types/leaflet": "^1.5.17",
-    "@types/leaflet-geosearch": "^2.7.1",
-    "@types/leaflet-routing-machine": "^3.2.2",
-    "@types/lodash": "^4.14.161",
     "@types/node": "^12.12.54",
     "@types/react": "^16.9.49",
     "@types/react-beautiful-dnd": "^13.0.0",
@@ -26,23 +23,12 @@
     "axios": "^0.20.0",
     "graphql": "^15.3.0",
     "leaflet": "^1.6.0",
-    "leaflet-arc": "^1.0.2",
-    "leaflet-arrowheads": "^1.2.1",
     "leaflet-contextmenu": "^1.4.0",
-    "leaflet-geosearch": "^3.0.6",
     "leaflet-polylinedecorator": "^1.6.0",
-    "leaflet-routing-machine": "^3.2.12",
-    "leaflet.markercluster": "^1.4.1",
-    "lodash": "^4.17.20",
     "react": "^16.13.1",
     "react-beautiful-dnd": "^13.0.0",
-    "react-contexify": "^4.1.1",
-    "react-dnd": "^11.1.3",
-    "react-dnd-html5-backend": "^11.1.3",
     "react-dom": "^16.13.1",
     "react-leaflet": "^2.7.0",
-    "react-leaflet-arrowheads": "^1.1.0",
-    "react-leaflet-control": "^2.1.2",
     "react-leaflet-markercluster": "^2.0.0",
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
@@ -74,7 +60,5 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
-    "dotenv": "^8.2.0"
-  }
+  "devDependencies": {}
 }
