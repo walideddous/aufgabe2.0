@@ -49,10 +49,9 @@ const OnMap = ({
     selectMarkerOnMap(el, index);
   };
 
-  /*const addBeforSelected = (e: any) => {
+  const addBeforSelected = (e: any) => {
     onAddBeforSelected(e.relatedTarget._tooltip.options.children);
   };
-  */
 
   const addAfterSelected = (e: any) => {
     onAddAfterSelected(e.relatedTarget._tooltip.options.children);
@@ -108,10 +107,10 @@ const OnMap = ({
                       contextmenuWidth={200}
                       contextmenuInheritItems={false}
                       contextmenuItems={[
-                        /*  {
+                        {
                           text: "Add before the selected Trajekt",
                           callback: addBeforSelected,
-                        },  */
+                        },
                         {
                           text: "Add after the selected Trajekt",
                           callback: addAfterSelected,
