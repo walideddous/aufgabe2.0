@@ -363,7 +363,7 @@ const Aufgabe: React.FC = () => {
     });
   };
 
-  const handleAddBeforSelected = useCallback(() => {
+  const handleAddBeforSelected = () => {
     console.log("last auto inside the function", lastAutoSelectElem);
     // setStateDND((prev: any) => {
     //   return {
@@ -380,12 +380,7 @@ const Aufgabe: React.FC = () => {
     //     },
     //   };
     // });
-  }, [lastAutoSelectElem, selected]);
-
-  /* useEffect(() => {
-    handleAddBeforSelected();
-  }, []);
-  */
+  };
 
   const clickOnMapMarker = (el: Tstations, index: number) => {
     setSelected({ ...el, index });
