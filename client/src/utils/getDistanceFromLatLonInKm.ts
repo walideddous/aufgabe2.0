@@ -31,7 +31,7 @@ export function calculateDistanceAndSort(
   tabData: Tstations[]
 ) {
   const result = [];
-  const { location } = objClicked;
+  const { coord } = objClicked;
 
   const filteredTable = tabData.filter(
     (el: any) => el.name !== objClicked.name
@@ -39,13 +39,13 @@ export function calculateDistanceAndSort(
 
   for (let i = 0; i < filteredTable.length; i++) {
     // get the lat and lng from the table
-    const lat1 = filteredTable[i].location.lat;
-    const lng1 = filteredTable[i].location.lng;
+    const lat1 = filteredTable[i].coord.WGS84.lat;
+    const lng1 = filteredTable[i].coord.WGS84.lon;
 
     // calculate the distance betyeen a fix point and and others points
     let distance = getpreciseDistanceFromLatLonInKm(
-      location.lat,
-      location.lng,
+      coord.WGS84.lat,
+      coord.WGS84.lon,
       lat1,
       lng1
     );

@@ -6,7 +6,7 @@ export const SEARCH_INPUT = "SEARCH_INPUT";
 export interface getDataActions {
   type: typeof GET_SUCCESS;
   payload: {
-    id: string;
+    _id: string;
     name: string;
     adresse: string;
     Umstiegmöglischkeiten: string;
@@ -31,14 +31,4 @@ export interface SearchInput {
 export interface LoadingType {
   loading: boolean;
   selected: any;
-  data: {
-    id: string;
-    name: string;
-    adresse: string;
-    location: {
-      lat: number | string;
-      lng: number | string;
-    };
-    Umstiegmöglischkeiten: string;
-  }[];
 }

@@ -1,14 +1,14 @@
 export interface Tstations {
   index?: number;
-  id: string;
+  _id: string;
   name: string;
-  adresse: string;
-  location: {
-    lat: number;
-    lng: number;
+  coord: {
+    WGS84: {
+      lat: number;
+      lon: number;
+    };
   };
-  Umstiegmöglischkeiten: string;
-  weitereInformationen: string;
+  modes: [String];
 }
 
 export type Tloading = boolean;
@@ -17,15 +17,15 @@ export type Tchoose = string;
 export interface Tdistance {
   from: string;
   to: {
-    id: string;
+    _id: string;
     name: string;
-    adresse: string;
-    location: {
-      lat: number;
-      lng: number;
+    coord: {
+      WGS84: {
+        lat: number;
+        lon: number;
+      };
     };
-    Umstiegmöglischkeiten: string;
-    weitereInformationen: string;
+    modes: [String];
   };
   distance: number;
 }

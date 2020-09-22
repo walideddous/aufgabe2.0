@@ -5,13 +5,14 @@ import {
   selectButtonActions,
 } from "./types";
 import { data } from "../data/data";
-
+/*
 export function getData(): getDataActions {
   return {
     type: GET_SUCCESS,
-    payload: data(),
+
   };
 }
+*/
 
 export function selectButton(el: Object): selectButtonActions {
   return {

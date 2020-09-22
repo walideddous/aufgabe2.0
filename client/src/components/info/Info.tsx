@@ -24,26 +24,17 @@ const Info = ({ selected, distance, lastAutoSelectElem }: TpropsInfo) => {
                   {selected.name}
                 </p>
                 <p>
-                  <strong>Adresse</strong>
+                  <strong>modes</strong>
                   {" : "}
-                  {selected.adresse}
-                </p>
-                <p>
-                  <strong>Umstiegmöglischkeiten</strong>
-                  {" : "}
-                  {selected.Umstiegmöglischkeiten}
+                  {selected.modes ? selected.modes : "Modes is empty"}
                 </p>
                 <p>
                   <strong>Location</strong>
                   {" : "}
-                  {"Latitude :"} {selected.location && selected.location.lat}{" "}
+                  {"Latitude :"}{" "}
+                  {selected.coord.WGS84 && selected.coord.WGS84.lat}{" "}
                   {", Longitude :"}
-                  {selected.location && selected.location.lng}
-                </p>
-                <p>
-                  <strong>WeitereInformationen</strong>
-                  {" : "}
-                  {selected.weitereInformationen}
+                  {selected.coord.WGS84 && selected.coord.WGS84.lon}
                 </p>
                 {distance.length && (
                   <div>
@@ -81,29 +72,21 @@ const Info = ({ selected, distance, lastAutoSelectElem }: TpropsInfo) => {
                   {lastAutoSelectElem.name}
                 </p>
                 <p>
-                  <strong>Adresse</strong>
+                  <strong>modes</strong>
                   {" : "}
-                  {lastAutoSelectElem.adresse}
-                </p>
-                <p>
-                  <strong>Umstiegmöglischkeiten</strong>
-                  {" : "}
-                  {lastAutoSelectElem.Umstiegmöglischkeiten}
+                  {lastAutoSelectElem.modes
+                    ? lastAutoSelectElem.modes
+                    : "Modes is empty"}
                 </p>
                 <p>
                   <strong>Location</strong>
                   {" : "}
                   {"Latitude :"}{" "}
-                  {lastAutoSelectElem.location &&
-                    lastAutoSelectElem.location.lat}{" "}
+                  {lastAutoSelectElem.coord.WGS84 &&
+                    lastAutoSelectElem.coord.WGS84.lat}{" "}
                   {", Longitude :"}
-                  {lastAutoSelectElem.location &&
-                    lastAutoSelectElem.location.lng}
-                </p>
-                <p>
-                  <strong>WeitereInformationen</strong>
-                  {" : "}
-                  {lastAutoSelectElem.weitereInformationen}
+                  {lastAutoSelectElem.coord.WGS84 &&
+                    lastAutoSelectElem.coord.WGS84.lon}
                 </p>
                 {distance.length && (
                   <div>

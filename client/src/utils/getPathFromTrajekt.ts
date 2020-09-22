@@ -13,5 +13,5 @@ export const getPathFromTrajekt = (
       }
     }
   }
-  return result.map((el: any) => [el.location.lat, el.location.lng]);
+  return result.map((el: any) => [el.coord.WGS84.lat, el.coord.WGS84.lon]);
 };

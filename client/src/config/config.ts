@@ -1,12 +1,13 @@
-export const GRAPHQL_API = "http://localhost:5000/graphql";
+export const GRAPHQL_API = "http://ems-dev.m.mdv:8101/graphql";
+
+export const REST_API = "http://ems-dev.m.mdv:8101/data";
 
 export const GET_HALTESTELLE_QUERY = ` query haltestelles{
     haltestelles{
-        id
-        name
-        adresse
-        location{
-            lat,lng
+        _id,
+        name,
+        modes,
+        coord{WGS84{lat,lng}
         }
     }
 } `;

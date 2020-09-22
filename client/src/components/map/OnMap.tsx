@@ -40,9 +40,9 @@ const OnMap = ({
 
   // Center the Map
   const position = {
-    lat: 48.16517718624497,
-    lng: 11.575250355866128,
-    zoom: 11,
+    lat: 46.8155135,
+    lng: 8.224471999999992,
+    zoom: 5,
   };
 
   const clickOnMarker = (el: any, index: number) => {
@@ -74,13 +74,13 @@ const OnMap = ({
               center={
                 lastAutoSelectElem && !selected
                   ? [
-                      lastAutoSelectElem.location.lat,
-                      lastAutoSelectElem.location.lng,
+                      lastAutoSelectElem.coord.WGS84.lat,
+                      lastAutoSelectElem.coord.WGS84.lon,
                     ]
                   : selected && lastAutoSelectElem
-                  ? [selected.location.lat, selected.location.lng]
+                  ? [selected.coord.WGS84.lat, selected.coord.WGS84.lon]
                   : selected && !lastAutoSelectElem
-                  ? [selected.location.lat, selected.location.lng]
+                  ? [selected.coord.WGS84.lat, selected.coord.WGS84.lon]
                   : [position.lat, position.lng]
               }
               zoom={
@@ -98,7 +98,7 @@ const OnMap = ({
                 attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
-              <MarkerClusterGroup disableClusteringAtZoom={20}>
+              <MarkerClusterGroup disableClusteringAtZoom={14}>
                 {stations &&
                   stations.map((el: Tstations, index: number) => (
                     <CircleMarker
@@ -116,8 +116,8 @@ const OnMap = ({
                           callback: addAfterSelected,
                         },
                       ]}
-                      center={[el.location.lat, el.location.lng]}
-                      key={el.id}
+                      center={[el.coord.WGS84.lat, el.coord.WGS84.lon]}
+                      key={el._id}
                       color={
                         (lastAutoSelectElem &&
                           !selected &&

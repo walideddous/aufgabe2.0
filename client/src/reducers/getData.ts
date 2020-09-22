@@ -6,12 +6,10 @@ import {
   LoadingType,
 } from "../actions/types";
 
-import { data } from "../data/data";
-
 const initialState: LoadingType = {
   loading: true,
   selected: {},
-  data: data(),
+  //data: data(),
 };
 
 export default function getDataReducer(
