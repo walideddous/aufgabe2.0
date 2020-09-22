@@ -76,7 +76,9 @@ const DragDrop = ({
                                 {...provided.draggableProps}
                                 {...provided.dragHandleProps}
                               >
-                                <span style={{ width: "90%" }}>{el.name}</span>
+                                <span style={{ width: "90%", height: "30px" }}>
+                                  {el.name}
+                                </span>
                                 {/*<Button
                                   type="dashed"
                                   shape="round"

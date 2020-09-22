@@ -113,18 +113,22 @@ const Aufgabe: React.FC = () => {
   }, [lastAutoSelectElem, stations]);
 
   // Select the Station when you click on the button to show the suggestion
-  const clickOnDrop = (
+  const clickOnDrop = async (
     e: { id: string | number; name: string },
     index: number
   ) => {
-    const response = stations.filter((el) => el.name === e.name)[0];
-    setSelected({ ...response, index });
-    setlastAutoSelectElem(undefined);
-
-    const vorschläge = calculateDistanceAndSort(response, stations);
-    setDistance(vorschläge);
-
-    setStateDND((prev: any) => {
+    console.log("1");
+    const response = await stations.filter((el) => el.name === e.name)[0];
+    console.log("2");
+    await setSelected({ ...response, index });
+    console.log("3");
+    await setlastAutoSelectElem(undefined);
+    console.log("4");
+    const vorschläge = await calculateDistanceAndSort(response, stations);
+    console.log("5");
+    await setDistance(vorschläge);
+    console.log("6");
+    await setStateDND((prev: any) => {
       return {
         ...prev,
         vorschlag: {
@@ -146,6 +150,7 @@ const Aufgabe: React.FC = () => {
         },
       };
     });
+    console.log("7");
   };
 
   // Delete the button from Drag and drop
@@ -213,14 +218,20 @@ const Aufgabe: React.FC = () => {
 
   // to choose the station from the input options
   const onEvent = async (e: string) => {
-    const response = stations.filter((el) => el.name === e)[0];
-    setlastAutoSelectElem(response);
-    setSelected(undefined);
-
-    const vorschläge = calculateDistanceAndSort(response, stations);
-    setDistance(vorschläge);
-    setChoose(e);
-    setStateDND((prev: any) => {
+    console.log("1");
+    const response = await stations.filter((el) => el.name === e)[0];
+    console.log("2");
+    await setlastAutoSelectElem(response);
+    console.log("3");
+    await setSelected(undefined);
+    console.log("4");
+    const vorschläge = await calculateDistanceAndSort(response, stations);
+    console.log("5");
+    await setDistance(vorschläge);
+    console.log("6");
+    await setChoose(e);
+    console.log("7");
+    await setStateDND((prev: any) => {
       return {
         ...prev,
         trajekt: {
@@ -252,6 +263,7 @@ const Aufgabe: React.FC = () => {
         },
       };
     });
+    console.log("8");
   };
 
   // To Drag and Drop from source to the destination
