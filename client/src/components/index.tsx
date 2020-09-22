@@ -213,14 +213,14 @@ const Aufgabe: React.FC = () => {
 
   // to choose the station from the input options
   const onEvent = async (e: string) => {
-    const response = await stations.filter((el) => el.name === e)[0];
-    await setlastAutoSelectElem(response);
-    await setSelected(undefined);
+    const response = stations.filter((el) => el.name === e)[0];
+    setlastAutoSelectElem(response);
+    setSelected(undefined);
 
-    const vorschläge = await calculateDistanceAndSort(response, stations);
-    await setDistance(vorschläge);
-    await setChoose(e);
-    await setStateDND((prev: any) => {
+    const vorschläge = calculateDistanceAndSort(response, stations);
+    setDistance(vorschläge);
+    setChoose(e);
+    setStateDND((prev: any) => {
       return {
         ...prev,
         trajekt: {
@@ -356,10 +356,10 @@ const Aufgabe: React.FC = () => {
   };
 
   const clickOnMapMarker = async (el: Tstations, index: number) => {
-    await setSelected({ ...el, index });
-    const vorschläge = await calculateDistanceAndSort(el, stations);
-    await setDistance(vorschläge);
-    await setStateDND((prev: any) => {
+    setSelected({ ...el, index });
+    const vorschläge = calculateDistanceAndSort(el, stations);
+    setDistance(vorschläge);
+    setStateDND((prev: any) => {
       return {
         ...prev,
         vorschlag: {
@@ -381,7 +381,7 @@ const Aufgabe: React.FC = () => {
         },
       };
     });
-    await setlastAutoSelectElem(undefined);
+    setlastAutoSelectElem(undefined);
   };
 
   return (
