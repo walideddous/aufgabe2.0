@@ -98,7 +98,7 @@ const OnMap = ({
                 attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
-              <MarkerClusterGroup disableClusteringAtZoom={14}>
+              <MarkerClusterGroup disableClusteringAtZoom={20}>
                 {stations &&
                   stations.map((el: Tstations, index: number) => (
                     <CircleMarker
@@ -108,11 +108,11 @@ const OnMap = ({
                       contextmenuInheritItems={false}
                       contextmenuItems={[
                         {
-                          text: "Add before the selected Trajekt",
+                          text: "Add before the highlighted stations",
                           callback: addBeforSelected,
                         },
                         {
-                          text: "Add after the selected Trajekt",
+                          text: "Add after the highlighted stations",
                           callback: addAfterSelected,
                         },
                       ]}
@@ -143,11 +143,12 @@ const OnMap = ({
                     </CircleMarker>
                   ))}
               </MarkerClusterGroup>
-              <Polyline
-                positions={getPathFromTrajekt(stateDND, stations)}
-                color="red"
-                arrowheads
-              ></Polyline>
+              {stateDND.trajekt.items.length && (
+                <Polyline
+                  positions={getPathFromTrajekt(stateDND, stations)}
+                  color="red"
+                ></Polyline>
+              )}
             </Map>
           )}
         </Card>

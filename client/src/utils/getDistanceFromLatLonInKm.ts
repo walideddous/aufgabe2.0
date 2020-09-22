@@ -1,6 +1,7 @@
 // Import type
 import { Tstations } from "../components/type/Types";
 
+/*
 function getpreciseDistanceFromLatLonInKm(
   lat1: number,
   lon1: number,
@@ -25,6 +26,8 @@ function deg2rad(deg: number) {
   return deg * (Math.PI / 180);
 }
 
+*/
+
 // Calculate the distance from a fixed punkt to every punkt of the table
 export function calculateDistanceAndSort(
   objClicked: any,
@@ -42,8 +45,8 @@ export function calculateDistanceAndSort(
     const lat1 = filteredTable[i].coord.WGS84.lat;
     const lng1 = filteredTable[i].coord.WGS84.lon;
 
-    // calculate the distance betyeen a fix point and and others points
-    let distance = getpreciseDistanceFromLatLonInKm(
+    // calculate the distance between a fix point and others points
+    let distance = getDistanceFromLatLonInKm(
       coord.WGS84.lat,
       coord.WGS84.lon,
       lat1,
@@ -66,7 +69,6 @@ export function calculateDistanceAndSort(
   return sortedTable;
 }
 
-/*
 function getDistanceFromLatLonInKm(
   lat1: number,
   lon1: number,
@@ -78,4 +80,3 @@ function getDistanceFromLatLonInKm(
   var d = lat + lon;
   return d;
 }
-*/

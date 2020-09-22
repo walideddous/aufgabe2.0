@@ -1,5 +1,6 @@
 import { TstateDND, Tstations } from "../components/type/Types";
 
+// Get the table of table of coordination(lat,lon) => [[lat,lon],[lat,lon]....]
 export const getPathFromTrajekt = (
   stateDND: TstateDND,
   stations: Tstations[]

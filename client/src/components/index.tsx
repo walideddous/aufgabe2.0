@@ -4,7 +4,7 @@ import { Row, Button } from "antd";
 import { v4 } from "uuid";
 
 // Import const values to connect with graphQL
-import { GET_HALTESTELLE_QUERY, GRAPHQL_API, REST_API } from "../config/config";
+import { GET_HALTESTELLE_QUERY, GRAPHQL_API } from "../config/config";
 
 // Import composents
 import OnMap from "./map/OnMap";
@@ -29,13 +29,6 @@ import { calculateDistanceAndSort } from "../utils/getDistanceFromLatLonInKm";
 
 const authAxios = axios.create({
   baseURL: GRAPHQL_API,
-  /* headers: {
-    authorization: "Bearer " + process.env.REACT_APP_JSON_SECRET_KEY,
-  },
-  */
-});
-const authRestAxios = axios.create({
-  baseURL: REST_API,
   headers: {
     authorization: "Bearer " + process.env.REACT_APP_JSON_SECRET_KEY,
   },
@@ -68,21 +61,13 @@ const Aufgabe: React.FC = () => {
     setIsSending(true);
     // send the actual request
     try {
-      console.log("bien");
+      console.log("start fetching");
       // GraphQl
-      /*
-      const queryResult = await authAxios.post("", {
+      const queryResult = await authAxios.post("/graphql", {
         query: GET_HALTESTELLE_QUERY,
       });
-      */
-
-      // Rest Api
-      const apiResult = await authRestAxios.get("");
-      console.log("query", apiResult);
-      if (apiResult) {
-        //const result = apiResult.data.data.haltestelles;
-        const result = apiResult.data;
-        console.log("result", result);
+      if (queryResult) {
+        const result = queryResult.data.data.haltestelles;
         setStations(result);
         setUpdateDate(Date().toString().substr(4, 24));
         setLoading(false);
@@ -228,20 +213,13 @@ const Aufgabe: React.FC = () => {
 
   // to choose the station from the input options
   const onEvent = async (e: string) => {
-    console.log("1");
     const response = await stations.filter((el) => el.name === e)[0];
-    console.log("2");
     await setlastAutoSelectElem(response);
-    console.log("3");
     await setSelected(undefined);
-    console.log("4");
 
     const vorschläge = await calculateDistanceAndSort(response, stations);
-    console.log("5");
     await setDistance(vorschläge);
-    console.log("6");
     await setChoose(e);
-    console.log("7");
     await setStateDND((prev: any) => {
       return {
         ...prev,
@@ -274,7 +252,6 @@ const Aufgabe: React.FC = () => {
         },
       };
     });
-    console.log("8");
   };
 
   // To Drag and Drop from source to the destination
@@ -318,8 +295,7 @@ const Aufgabe: React.FC = () => {
   };
 
   const handleAddAfterSelected = (e: string) => {
-    const response = stations.filter((el) => el.name === e)[0];
-
+    const response = stations.filter((el, i) => el.name === e)[0];
     setlastAutoSelectElem(response);
     setSelected(undefined);
 
@@ -379,13 +355,11 @@ const Aufgabe: React.FC = () => {
     // });
   };
 
-  const clickOnMapMarker = (el: Tstations, index: number) => {
-    setSelected({ ...el, index });
-
-    const vorschläge = calculateDistanceAndSort(el, stations);
-    setDistance(vorschläge);
-
-    setStateDND((prev: any) => {
+  const clickOnMapMarker = async (el: Tstations, index: number) => {
+    await setSelected({ ...el, index });
+    const vorschläge = await calculateDistanceAndSort(el, stations);
+    await setDistance(vorschläge);
+    await setStateDND((prev: any) => {
       return {
         ...prev,
         vorschlag: {
@@ -407,7 +381,7 @@ const Aufgabe: React.FC = () => {
         },
       };
     });
-    setlastAutoSelectElem(undefined);
+    await setlastAutoSelectElem(undefined);
   };
 
   return (
