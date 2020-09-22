@@ -50,6 +50,7 @@ const RootQuery = new GraphQLObjectType({
       resolve(parentValue) {
         return (async function () {
           let client;
+          let result;
           try {
             if (process.env.MONGO_URI) {
               client = await MongoClient.connect(process.env.MONGO_URI);
@@ -61,8 +62,7 @@ const RootQuery = new GraphQLObjectType({
               // Get the documents collection
               const collection = db.collection("mdv.ojp.stops");
 
-              const docs = await collection.find().toArray();
-              return docs;
+              result = await collection.find().toArray();
             } else {
               console.log("Mongo URI fehlt");
             }
@@ -71,6 +71,8 @@ const RootQuery = new GraphQLObjectType({
           }
           // Close connection
           client.close();
+          console.log("data fetched and database closed ");
+          return result;
         })();
       },
     },

@@ -29,7 +29,7 @@ app.use(express.json());
 app.use(cors());
 
 // Middelware for the jsonwebtoken
-/*
+
 app.use((req, _, next) => {
   let accessToken;
   if (
@@ -45,9 +45,10 @@ app.use((req, _, next) => {
     } catch {
       console.error("token Incorrect not authorized");
     }
+  } else {
+    console.log("No token Provided");
   }
 });
-*/
 
 // use GraphQl
 app.use(
