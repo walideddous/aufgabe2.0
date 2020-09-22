@@ -1,3 +1,5 @@
+const MongoClient = require("mongodb").MongoClient;
+const assert = require("assert");
 const fs = require("fs");
 const express = require("express");
 const cors = require("cors");
@@ -12,16 +14,13 @@ const result = fs.readFileSync(
   "utf-8"
 );
 
-// Import the database
-const connectDB = require("./config/db");
-
 const app = express();
 
 // Load env vars
 dotenv.config({ path: "./config.env" });
 
-//Connect to Database
-connectDB();
+// Database Name
+const dbName = "ptdata";
 
 // Body parser
 app.use(express.json());
@@ -30,6 +29,7 @@ app.use(express.json());
 app.use(cors());
 
 // Middelware for the jsonwebtoken
+/*
 app.use((req, _, next) => {
   let accessToken;
   if (
@@ -47,6 +47,7 @@ app.use((req, _, next) => {
     }
   }
 });
+*/
 
 // use GraphQl
 app.use(
@@ -59,7 +60,34 @@ app.use(
 
 // Route
 app.get("/", (req, res) => res.send("API is Running"));
-app.get("/data", (req, res) => res.send(result));
+app.get("/data", (req, res) => {
+  if (process.env.MONGO_URI) {
+    MongoClient.connect(process.env.MONGO_URI, function (err, client) {
+      assert.strictEqual(null, err);
+      console.log("Connected successfully to server");
+      // Get the dataBase
+      const db = client.db(dbName);
+      const findDocuments = function (db, callback) {
+        // Get the documents collection
+        const collection = db.collection("mdv.ojp.stops");
+        // Find some documents
+        collection.find({}).toArray(function (err, docs) {
+          assert.strictEqual(err, null);
+          console.log("Found the following records");
+          res.json(docs);
+          callback(docs);
+        });
+      };
+
+      findDocuments(db, function () {
+        client.close();
+        console.log("database closed ");
+      });
+    });
+  } else {
+    console.log("Mongo URI fehlt");
+  }
+});
 
 const PORT = process.env.PORT || 5000;
 

@@ -1,23 +1,32 @@
+const MongoClient = require("mongodb").MongoClient;
+const assert = require("assert");
 const fs = require("fs");
 const {
   GraphQLObjectType,
   GraphQLString,
   GraphQLFloat,
+  GraphQLID,
   GraphQLSchema,
   GraphQLList,
-  GraphQLNonNull,
 } = require("graphql");
 
-const haltestelles = JSON.parse(
-  fs.readFileSync(`${__dirname}/client/src/data/data.json`, "utf-8")
-);
+// Database Name
+const dbName = "ptdata";
+
+// lat, lon Type
+const latLonType = new GraphQLObjectType({
+  name: "LatLon",
+  fields: () => ({
+    lat: { type: GraphQLFloat },
+    lon: { type: GraphQLFloat },
+  }),
+});
 
 // Location Type
 const locationType = new GraphQLObjectType({
   name: "Location",
   fields: () => ({
-    lat: { type: GraphQLFloat },
-    lng: { type: GraphQLFloat },
+    WGS84: { type: latLonType },
   }),
 });
 
@@ -25,10 +34,10 @@ const locationType = new GraphQLObjectType({
 const HaltestelleType = new GraphQLObjectType({
   name: "Haltestelle",
   fields: () => ({
-    id: { type: GraphQLString },
+    _id: { type: GraphQLID },
     name: { type: GraphQLString },
-    adresse: { type: GraphQLString },
-    location: { type: locationType },
+    modes: { type: GraphQLList(GraphQLString) },
+    coord: { type: locationType },
   }),
 });
 
@@ -39,30 +48,30 @@ const RootQuery = new GraphQLObjectType({
     haltestelles: {
       type: new GraphQLList(HaltestelleType),
       resolve(parentValue) {
-        return haltestelles;
-        /*  
-        When i will work with mongoDB
-           promises (.then.catch)
+        return (async function () {
+          let client;
+          try {
+            if (process.env.MONGO_URI) {
+              client = await MongoClient.connect(process.env.MONGO_URI);
+              console.log("Connected successfully to server");
 
-        */
-      },
-    },
-    haltestelle: {
-      type: HaltestelleType,
-      args: {
-        id: { type: GraphQLString },
-      },
-      resolve(parentValue, args) {
-        for (let i = 0; i < haltestelles.length; i++) {
-          if (haltestelles[i].id == args.id) {
-            return haltestelles[i];
+              // Get the dataBase
+              const db = client.db(dbName);
+
+              // Get the documents collection
+              const collection = db.collection("mdv.ojp.stops");
+
+              const docs = await collection.find().toArray();
+              return docs;
+            } else {
+              console.log("Mongo URI fehlt");
+            }
+          } catch (err) {
+            console.log(err.stack);
           }
-        }
-        /*  
-        When i will work with mongoDB
-             promises (.then.catch)
-
-        */
+          // Close connection
+          client.close();
+        })();
       },
     },
   },
