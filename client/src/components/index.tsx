@@ -4,7 +4,7 @@ import { Row, Button } from "antd";
 import { v4 } from "uuid";
 
 // Import const values to connect with graphQL
-import { GET_HALTESTELLE_QUERY, GRAPHQL_API } from "../config/config";
+import { GET_HALTESTELLE_QUERY, GRAPHQL_API, TEST_API } from "../config/config";
 
 // Import composents
 import OnMap from "./map/OnMap";
@@ -27,8 +27,18 @@ import { getProperty } from "../utils/getPropertyKey";
 // get the function to compare the distance between a point fix and a banch of punkt
 import { calculateDistanceAndSort } from "../utils/getDistanceFromLatLonInKm";
 
+/*
 const authAxios = axios.create({
   baseURL: GRAPHQL_API,
+  headers: {
+    authorization: "Bearer " + process.env.REACT_APP_JSON_SECRET_KEY,
+  },
+});
+*/
+
+// Test api
+const testAxios = axios.create({
+  baseURL: TEST_API,
   headers: {
     authorization: "Bearer " + process.env.REACT_APP_JSON_SECRET_KEY,
   },
@@ -62,13 +72,18 @@ const Aufgabe: React.FC = () => {
     // send the actual request
     try {
       console.log("start fetching");
+      const testResult = await testAxios.get("");
+      console.log("testResult", testResult);
       // GraphQl
-      const queryResult = await authAxios.post("/graphql", {
+      /*
+      const queryResult = await testAxios.post("/graphql", {
         query: GET_HALTESTELLE_QUERY,
       });
-      if (queryResult) {
-        const result = queryResult.data.data.haltestelles;
-        setStations(result);
+      */
+      if (testResult) {
+        // const result = queryResult.data.data.haltestelles;
+        const result = testResult.data;
+        setStations([...result]);
         setUpdateDate(Date().toString().substr(4, 24));
         setLoading(false);
       } else {
@@ -85,7 +100,7 @@ const Aufgabe: React.FC = () => {
   useEffect(() => {
     if (lastAutoSelectElem) {
       const vorschläge = calculateDistanceAndSort(lastAutoSelectElem, stations);
-      setDistance(vorschläge);
+      setDistance([...vorschläge]);
 
       setStateDND((prev: any) => {
         return {
@@ -117,18 +132,12 @@ const Aufgabe: React.FC = () => {
     e: { id: string | number; name: string },
     index: number
   ) => {
-    console.log("1");
-    const response = await stations.filter((el) => el.name === e.name)[0];
-    console.log("2");
-    await setSelected({ ...response, index });
-    console.log("3");
-    await setlastAutoSelectElem(undefined);
-    console.log("4");
-    const vorschläge = await calculateDistanceAndSort(response, stations);
-    console.log("5");
-    await setDistance(vorschläge);
-    console.log("6");
-    await setStateDND((prev: any) => {
+    const response = stations.filter((el) => el.name === e.name)[0];
+    setSelected({ ...response, index });
+    setlastAutoSelectElem(undefined);
+    const vorschläge = calculateDistanceAndSort(response, stations);
+    setDistance([...vorschläge]);
+    setStateDND((prev: any) => {
       return {
         ...prev,
         vorschlag: {
@@ -150,7 +159,6 @@ const Aufgabe: React.FC = () => {
         },
       };
     });
-    console.log("7");
   };
 
   // Delete the button from Drag and drop
@@ -217,19 +225,20 @@ const Aufgabe: React.FC = () => {
   };
 
   // to choose the station from the input options
-  const onEvent = async (e: string) => {
-    console.log("1");
-    const response = await stations.filter((el) => el.name === e)[0];
-    console.log("2");
-    await setlastAutoSelectElem(response);
+  const onEvent = async (elementSelected: Tstations) => {
+    console.log("1", elementSelected);
+    await setlastAutoSelectElem({ ...elementSelected });
     console.log("3");
     await setSelected(undefined);
     console.log("4");
-    const vorschläge = await calculateDistanceAndSort(response, stations);
-    console.log("5");
-    await setDistance(vorschläge);
+    const vorschläge = await calculateDistanceAndSort(
+      elementSelected,
+      stations
+    );
+    console.log("5", vorschläge);
+    await setDistance([...vorschläge]);
     console.log("6");
-    await setChoose(e);
+    await setChoose(elementSelected.name);
     console.log("7");
     await setStateDND((prev: any) => {
       return {
@@ -240,7 +249,7 @@ const Aufgabe: React.FC = () => {
             ...prev.trajekt.items,
             {
               id: v4(),
-              name: e,
+              name: elementSelected.name,
             },
           ],
         },
@@ -308,11 +317,11 @@ const Aufgabe: React.FC = () => {
 
   const handleAddAfterSelected = (e: string) => {
     const response = stations.filter((el, i) => el.name === e)[0];
-    setlastAutoSelectElem(response);
+    setlastAutoSelectElem({ ...response });
     setSelected(undefined);
 
     const vorschläge = calculateDistanceAndSort(response, stations);
-    setDistance(vorschläge);
+    setDistance([...vorschläge]);
 
     setStateDND((prev: any) => {
       return {
@@ -370,7 +379,7 @@ const Aufgabe: React.FC = () => {
   const clickOnMapMarker = async (el: Tstations, index: number) => {
     setSelected({ ...el, index });
     const vorschläge = calculateDistanceAndSort(el, stations);
-    setDistance(vorschläge);
+    setDistance([...vorschläge]);
     setStateDND((prev: any) => {
       return {
         ...prev,
@@ -410,7 +419,7 @@ const Aufgabe: React.FC = () => {
           <p style={{ margin: 20 }}>
             <strong>Update at : </strong>
             {updateDate}
-          </p>
+          </p>{" "}
           <Button
             type="primary"
             style={{ margin: 20 }}
@@ -420,7 +429,6 @@ const Aufgabe: React.FC = () => {
             Get the Data
           </Button>
         </div>
-
         <DragDrop
           choose={choose}
           stateDND={stateDND}

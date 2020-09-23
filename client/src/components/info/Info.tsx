@@ -121,4 +121,4 @@ const Info = ({ selected, distance, lastAutoSelectElem }: TpropsInfo) => {
   );
 };
 
-export default Info;
+export default React.memo(Info);

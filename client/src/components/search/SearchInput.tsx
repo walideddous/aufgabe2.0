@@ -6,7 +6,7 @@ import { Tstations } from "../type/Types";
 
 interface TporpsSearchInput {
   stations: Tstations[];
-  handleEvent: (data: string) => void;
+  handleEvent: (elementSelected: Tstations) => void;
 }
 
 const SearchInput = ({ stations, handleEvent }: TporpsSearchInput) => {
@@ -26,7 +26,8 @@ const SearchInput = ({ stations, handleEvent }: TporpsSearchInput) => {
 
   const onSelect = (data: string) => {
     setSearch("");
-    handleEvent(data);
+    const elementSelected = stations.filter((el) => el.name === data)[0];
+    handleEvent(elementSelected);
   };
 
   return (
@@ -59,4 +60,4 @@ const SearchInput = ({ stations, handleEvent }: TporpsSearchInput) => {
   );
 };
 
-export default SearchInput;
+export default React.memo(SearchInput);
