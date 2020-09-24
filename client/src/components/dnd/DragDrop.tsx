@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { Card, Col, Button } from "antd";
+import { Card, Col } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 
 // Import types
@@ -32,21 +32,24 @@ const DragDrop = ({
 }: TporpsDND) => {
   const [clicked, setClicked] = useState(false);
 
-  const handleClick = (
-    e: { id: string | number; name: string },
-    index: number
-  ) => {
-    onclick(e, index);
-    setClicked(!clicked);
-  };
+  const handleClick = useCallback(
+    (e: { id: string | number; name: string }, index: number) => {
+      onclick(e, index);
+      setClicked(!clicked);
+    },
+    [onclick, setClicked, clicked]
+  );
 
-  const handleDelete = (
-    e: { id: string | number; name: string },
-    SourceOrTarget: string,
-    index: number
-  ) => {
-    onDelete(e, SourceOrTarget, index);
-  };
+  const handleDelete = useCallback(
+    (
+      e: { id: string | number; name: string },
+      SourceOrTarget: string,
+      index: number
+    ) => {
+      onDelete(e, SourceOrTarget, index);
+    },
+    [onDelete]
+  );
 
   return (
     <div className="App">
@@ -150,10 +153,15 @@ const DragDrop = ({
                                 >
                                   {el.name}
                                 </span>
-                                <Button
-                                  type="dashed"
-                                  shape="round"
-                                  icon={<DeleteOutlined />}
+                                <button
+                                  style={{
+                                    backgroundColor: "white",
+                                    color: "#3949ab",
+                                    borderRadius: "5px",
+                                    outline: "0",
+                                    cursor: "pointer",
+                                    boxShadow: "0px 2px 2px lightgray",
+                                  }}
                                   onClick={() => {
                                     handleDelete(
                                       el,
@@ -161,7 +169,9 @@ const DragDrop = ({
                                       index
                                     );
                                   }}
-                                />
+                                >
+                                  <DeleteOutlined />
+                                </button>
                               </div>
                             );
                           }}
@@ -180,4 +190,4 @@ const DragDrop = ({
   );
 };
 
-export default DragDrop;
+export default React.memo(DragDrop);

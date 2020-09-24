@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
-import { Row, Button } from "antd";
+import { Row } from "antd";
 import { v4 } from "uuid";
 
 // Import const values to connect with graphQL
@@ -27,22 +27,22 @@ import { getProperty } from "../utils/getPropertyKey";
 // get the function to compare the distance between a point fix and a banch of punkt
 import { calculateDistanceAndSort } from "../utils/getDistanceFromLatLonInKm";
 
-/*
 const authAxios = axios.create({
   baseURL: GRAPHQL_API,
   headers: {
     authorization: "Bearer " + process.env.REACT_APP_JSON_SECRET_KEY,
   },
 });
-*/
 
 // Test api
+/*
 const testAxios = axios.create({
   baseURL: TEST_API,
   headers: {
     authorization: "Bearer " + process.env.REACT_APP_JSON_SECRET_KEY,
   },
 });
+*/
 
 const Aufgabe: React.FC = () => {
   const [stations, setStations] = useState<Tstations[]>([]);
@@ -72,17 +72,18 @@ const Aufgabe: React.FC = () => {
     // send the actual request
     try {
       console.log("start fetching");
-      const testResult = await testAxios.get("");
-      // GraphQl
       /*
-      const queryResult = await testAxios.post("/graphql", {
+      const testResult = await testAxios.get("");
+      */
+      // GraphQl
+      const queryResult = await authAxios.post("/graphql", {
         query: GET_HALTESTELLE_QUERY,
       });
-      */
+
       console.log("end fetching");
-      if (testResult) {
-        // const result = queryResult.data.data.haltestelles;
-        const result = testResult.data;
+      if (queryResult) {
+        const result = queryResult.data.data.haltestelles;
+        //const result = testResult.data;
         setStations([...result]);
         setUpdateDate(Date().toString().substr(4, 24));
         setLoading(false);
@@ -128,282 +129,305 @@ const Aufgabe: React.FC = () => {
   }, [lastAutoSelectElem, stations]);
 
   // Select the Station when you click on the button to show the suggestion
-  const clickOnDrop = async (
-    e: { id: string | number; name: string },
-    index: number
-  ) => {
-    const response = stations.filter((el) => el.name === e.name)[0];
-    setSelected({ ...response, index });
-    setlastAutoSelectElem(undefined);
-    const vorschläge = calculateDistanceAndSort(response, stations);
-    setDistance([...vorschläge]);
-    setStateDND((prev: any) => {
-      return {
-        ...prev,
-        vorschlag: {
-          title: "Suggestion",
-          items: [
-            {
-              id: v4(),
-              name: vorschläge[0].to.name,
-            },
-            {
-              id: v4(),
-              name: vorschläge[1].to.name,
-            },
-            {
-              id: v4(),
-              name: vorschläge[2].to.name,
-            },
-          ],
-        },
-      };
-    });
-  };
+  const clickOnDrop = useCallback(
+    (e: { id: string | number; name: string }, index: number) => {
+      const response = stations.filter((el) => el.name === e.name)[0];
+      setSelected({ ...response, index });
+      setlastAutoSelectElem(undefined);
+      const vorschläge = calculateDistanceAndSort(response, stations);
+      setDistance([...vorschläge]);
+      setStateDND((prev: any) => {
+        return {
+          ...prev,
+          vorschlag: {
+            title: "Suggestion",
+            items: [
+              {
+                id: v4(),
+                name: vorschläge[0].to.name,
+              },
+              {
+                id: v4(),
+                name: vorschläge[1].to.name,
+              },
+              {
+                id: v4(),
+                name: vorschläge[2].to.name,
+              },
+            ],
+          },
+        };
+      });
+    },
+    [stations]
+  );
 
   // Delete the button from Drag and drop
-  const handleDeleteOnDND = (
-    e: { id: string | number; name: string },
-    SourceOrTarget: string,
-    index: number
-  ) => {
-    if (SourceOrTarget === "Road") {
-      if (
-        (e.name === lastAutoSelectElem?.name || e.name === selected?.name) &&
-        stateDND.trajekt.items[index] === e &&
-        stateDND.trajekt.items.length > 1
-      ) {
-        let newValue =
-          stateDND.trajekt.items[stateDND.trajekt.items.length - 2];
-        setlastAutoSelectElem(
-          stations.filter((el) => el.name === newValue.name)[0]
-        );
-        setSelected(undefined);
+  const handleDeleteOnDND = useCallback(
+    (
+      e: { id: string | number; name: string },
+      SourceOrTarget: string,
+      index: number
+    ) => {
+      if (SourceOrTarget === "Road") {
+        if (
+          (e.name === lastAutoSelectElem?.name || e.name === selected?.name) &&
+          stateDND.trajekt.items[index] === e &&
+          stateDND.trajekt.items.length > 1
+        ) {
+          let newValue =
+            stateDND.trajekt.items[stateDND.trajekt.items.length - 2];
+          setlastAutoSelectElem(
+            stations.filter((el) => el.name === newValue.name)[0]
+          );
+          setSelected(undefined);
+        }
+        if (stateDND.trajekt.items.length === 1) {
+          setlastAutoSelectElem(undefined);
+          setSelected(undefined);
+        }
+        setStateDND((prev: any) => {
+          return {
+            ...prev,
+            trajekt: {
+              title: "Road",
+              items: stateDND.trajekt.items.filter(
+                (item: any) => item.id !== e.id
+              ),
+            },
+          };
+        });
+      }
+      if (SourceOrTarget === "Suggestion") {
+        setStateDND((prev: any) => {
+          return {
+            ...prev,
+            vorschlag: {
+              title: "Suggestion",
+              items: stateDND.vorschlag.items.filter(
+                (item: any) => item.id !== e.id
+              ),
+            },
+          };
+        });
       }
       if (stateDND.trajekt.items.length === 1) {
         setlastAutoSelectElem(undefined);
         setSelected(undefined);
+        setStateDND((prev: any) => {
+          return {
+            ...prev,
+            vorschlag: {
+              title: "Suggestion",
+              items: [],
+            },
+          };
+        });
       }
+    },
+    [
+      stations,
+      lastAutoSelectElem,
+      selected,
+      stateDND.trajekt.items,
+      stateDND.vorschlag.items,
+    ]
+  );
+
+  // to choose the station from the input options
+  const onEvent = useCallback(
+    async (elementSelected: Tstations) => {
+      console.log("1", elementSelected);
+      await setlastAutoSelectElem({ ...elementSelected });
+      console.log("3");
+      await setSelected(undefined);
+      console.log("4");
+      const vorschläge = await calculateDistanceAndSort(
+        elementSelected,
+        stations
+      );
+      console.log("5", vorschläge);
+      await setDistance([...vorschläge]);
+      console.log("6");
+      await setChoose(elementSelected.name);
+      console.log("7");
+      await setStateDND((prev: any) => {
+        return {
+          ...prev,
+          trajekt: {
+            title: "Road",
+            items: [
+              ...prev.trajekt.items,
+              {
+                id: v4(),
+                name: elementSelected.name,
+              },
+            ],
+          },
+          vorschlag: {
+            title: "Suggestion",
+            items: [
+              {
+                id: v4(),
+                name: vorschläge[0].to.name,
+              },
+              {
+                id: v4(),
+                name: vorschläge[1].to.name,
+              },
+              {
+                id: v4(),
+                name: vorschläge[2].to.name,
+              },
+            ],
+          },
+        };
+      });
+      console.log("8");
+    },
+    [stations]
+  );
+
+  // To Drag and Drop from source to the destination
+  const handleDragEnd = useCallback(
+    ({ destination, source }: any) => {
+      if (!destination) {
+        return;
+      }
+      if (
+        destination.droppableId === source.droppableId &&
+        destination.index === source.index
+      ) {
+        return;
+      }
+
+      const itemCopy = {
+        ...getProperty(stateDND, source.droppableId).items[source.index],
+      };
+      setStateDND((prev) => {
+        prev = { ...prev };
+        // Remove from previous items array
+        getProperty(prev, source.droppableId).items.splice(source.index, 1);
+
+        // Adding to new items array location
+        getProperty(prev, destination.droppableId).items.splice(
+          destination.index,
+          0,
+          itemCopy
+        );
+
+        return prev;
+      });
+      setSelected(undefined);
+      let lastElem: any;
+      if (stateDND.trajekt.items.length) {
+        lastElem = stateDND.trajekt.items[stateDND.trajekt.items.length - 1];
+        if (lastElem.name) {
+          lastElem = stations.filter((el) => el.name === lastElem.name)[0];
+          setlastAutoSelectElem({ ...lastElem });
+        }
+      }
+    },
+    [stations, stateDND]
+  );
+
+  const handleAddAfterSelected = useCallback(
+    (e: string) => {
+      const response = stations.filter((el, i) => el.name === e)[0];
+      setlastAutoSelectElem({ ...response });
+      setSelected(undefined);
+      const vorschläge = calculateDistanceAndSort(response, stations);
+      setDistance([...vorschläge]);
+
       setStateDND((prev: any) => {
         return {
           ...prev,
           trajekt: {
             title: "Road",
-            items: stateDND.trajekt.items.filter(
-              (item: any) => item.id !== e.id
-            ),
+            items: [
+              ...prev.trajekt.items,
+              {
+                id: v4(),
+                name: e,
+              },
+            ],
+          },
+          vorschlag: {
+            title: "Suggestion",
+            items: [
+              {
+                id: v4(),
+                name: vorschläge[0].to.name,
+              },
+              {
+                id: v4(),
+                name: vorschläge[1].to.name,
+              },
+              {
+                id: v4(),
+                name: vorschläge[2].to.name,
+              },
+            ],
           },
         };
       });
-    }
-    if (SourceOrTarget === "Suggestion") {
+    },
+    [stations]
+  );
+
+  const handleAddBeforSelected = useCallback(
+    (e: string) => {
+      console.log("last auto inside the function", e);
+      setStateDND((prev: any) => {
+        return {
+          ...prev,
+          trajekt: {
+            title: "Road",
+            items: [
+              {
+                id: v4(),
+                name: e,
+              },
+              ...prev.trajekt.items,
+            ],
+          },
+        };
+      });
+    },
+    [lastAutoSelectElem]
+  );
+
+  const clickOnMapMarker = useCallback(
+    async (el: Tstations, index: number) => {
+      setSelected({ ...el, index });
+      const vorschläge = calculateDistanceAndSort(el, stations);
+      setDistance([...vorschläge]);
       setStateDND((prev: any) => {
         return {
           ...prev,
           vorschlag: {
             title: "Suggestion",
-            items: stateDND.vorschlag.items.filter(
-              (item: any) => item.id !== e.id
-            ),
+            items: [
+              {
+                id: v4(),
+                name: vorschläge[0].to.name,
+              },
+              {
+                id: v4(),
+                name: vorschläge[1].to.name,
+              },
+              {
+                id: v4(),
+                name: vorschläge[2].to.name,
+              },
+            ],
           },
         };
       });
-    }
-    if (stateDND.trajekt.items.length === 1) {
       setlastAutoSelectElem(undefined);
-      setSelected(undefined);
-      setStateDND((prev: any) => {
-        return {
-          ...prev,
-          vorschlag: {
-            title: "Suggestion",
-            items: [],
-          },
-        };
-      });
-    }
-  };
-
-  // to choose the station from the input options
-  const onEvent = async (elementSelected: Tstations) => {
-    console.log("1", elementSelected);
-    await setlastAutoSelectElem({ ...elementSelected });
-    console.log("3");
-    await setSelected(undefined);
-    console.log("4");
-    const vorschläge = await calculateDistanceAndSort(
-      elementSelected,
-      stations
-    );
-    console.log("5", vorschläge);
-    await setDistance([...vorschläge]);
-    console.log("6");
-    await setChoose(elementSelected.name);
-    console.log("7");
-    await setStateDND((prev: any) => {
-      return {
-        ...prev,
-        trajekt: {
-          title: "Road",
-          items: [
-            ...prev.trajekt.items,
-            {
-              id: v4(),
-              name: elementSelected.name,
-            },
-          ],
-        },
-        vorschlag: {
-          title: "Suggestion",
-          items: [
-            {
-              id: v4(),
-              name: vorschläge[0].to.name,
-            },
-            {
-              id: v4(),
-              name: vorschläge[1].to.name,
-            },
-            {
-              id: v4(),
-              name: vorschläge[2].to.name,
-            },
-          ],
-        },
-      };
-    });
-    console.log("8");
-  };
-
-  // To Drag and Drop from source to the destination
-  const handleDragEnd = ({ destination, source }: any) => {
-    if (!destination) {
-      return;
-    }
-    if (
-      destination.droppableId === source.droppableId &&
-      destination.index === source.index
-    ) {
-      return;
-    }
-
-    const itemCopy = {
-      ...getProperty(stateDND, source.droppableId).items[source.index],
-    };
-    setStateDND((prev) => {
-      prev = { ...prev };
-      // Remove from previous items array
-      getProperty(prev, source.droppableId).items.splice(source.index, 1);
-
-      // Adding to new items array location
-      getProperty(prev, destination.droppableId).items.splice(
-        destination.index,
-        0,
-        itemCopy
-      );
-
-      return prev;
-    });
-    setSelected(undefined);
-    let lastElem: any;
-    if (stateDND.trajekt.items.length) {
-      lastElem = stateDND.trajekt.items[stateDND.trajekt.items.length - 1];
-      if (lastElem.name) {
-        lastElem = stations.filter((el) => el.name === lastElem.name)[0];
-        setlastAutoSelectElem({ ...lastElem });
-      }
-    }
-  };
-
-  const handleAddAfterSelected = (e: string) => {
-    const response = stations.filter((el, i) => el.name === e)[0];
-    setlastAutoSelectElem({ ...response });
-    setSelected(undefined);
-
-    const vorschläge = calculateDistanceAndSort(response, stations);
-    setDistance([...vorschläge]);
-
-    setStateDND((prev: any) => {
-      return {
-        ...prev,
-        trajekt: {
-          title: "Road",
-          items: [
-            ...prev.trajekt.items,
-            {
-              id: v4(),
-              name: e,
-            },
-          ],
-        },
-        vorschlag: {
-          title: "Suggestion",
-          items: [
-            {
-              id: v4(),
-              name: vorschläge[0].to.name,
-            },
-            {
-              id: v4(),
-              name: vorschläge[1].to.name,
-            },
-            {
-              id: v4(),
-              name: vorschläge[2].to.name,
-            },
-          ],
-        },
-      };
-    });
-  };
-
-  const handleAddBeforSelected = () => {
-    console.log("last auto inside the function", lastAutoSelectElem);
-    // setStateDND((prev: any) => {
-    //   return {
-    //     ...prev,
-    //     trajekt: {
-    //       title: "Road",
-    //       items: [
-    //         {
-    //           id: v4(),
-    //           name: e,
-    //         },
-    //         ...prev.trajekt.items,
-    //       ],
-    //     },
-    //   };
-    // });
-  };
-
-  const clickOnMapMarker = async (el: Tstations, index: number) => {
-    setSelected({ ...el, index });
-    const vorschläge = calculateDistanceAndSort(el, stations);
-    setDistance([...vorschläge]);
-    setStateDND((prev: any) => {
-      return {
-        ...prev,
-        vorschlag: {
-          title: "Suggestion",
-          items: [
-            {
-              id: v4(),
-              name: vorschläge[0].to.name,
-            },
-            {
-              id: v4(),
-              name: vorschläge[1].to.name,
-            },
-            {
-              id: v4(),
-              name: vorschläge[2].to.name,
-            },
-          ],
-        },
-      };
-    });
-    setlastAutoSelectElem(undefined);
-  };
+    },
+    [stations]
+  );
 
   return (
     <div className="site-card-wrapper">
@@ -420,14 +444,21 @@ const Aufgabe: React.FC = () => {
             <strong>Update at : </strong>
             {updateDate}
           </p>{" "}
-          <Button
-            type="primary"
-            style={{ margin: 20 }}
+          <button
+            style={{
+              margin: 20,
+              backgroundColor: "#3949ab",
+              color: "white",
+              borderRadius: "5px",
+              outline: "0",
+              cursor: "pointer",
+              boxShadow: "0px 2px 2px lightgray",
+            }}
             disabled={isSending}
             onClick={sendRequest}
           >
             Get the Data
-          </Button>
+          </button>
         </div>
         <DragDrop
           choose={choose}
@@ -458,4 +489,4 @@ const Aufgabe: React.FC = () => {
   );
 };
 
-export default Aufgabe;
+export default React.memo(Aufgabe);

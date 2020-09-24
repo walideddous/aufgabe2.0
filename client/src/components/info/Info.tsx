@@ -33,7 +33,7 @@ const Info = ({ selected, distance, lastAutoSelectElem }: TpropsInfo) => {
                   {" : "}
                   {"Latitude :"}{" "}
                   {selected.coord.WGS84 && selected.coord.WGS84.lat}{" "}
-                  {", Longitude :"}
+                  {", Longitude : "}
                   {selected.coord.WGS84 && selected.coord.WGS84.lon}
                 </p>
                 {distance.length && (
@@ -84,7 +84,7 @@ const Info = ({ selected, distance, lastAutoSelectElem }: TpropsInfo) => {
                   {"Latitude :"}{" "}
                   {lastAutoSelectElem.coord.WGS84 &&
                     lastAutoSelectElem.coord.WGS84.lat}{" "}
-                  {", Longitude :"}
+                  {", Longitude : "}
                   {lastAutoSelectElem.coord.WGS84 &&
                     lastAutoSelectElem.coord.WGS84.lon}
                 </p>

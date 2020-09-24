@@ -1,12 +1,11 @@
-import React, { Fragment } from "react";
-import {
-  Map,
-  TileLayer,
-  CircleMarker,
-  Tooltip,
-  Polyline,
-  Popup,
-} from "react-leaflet";
+import React, {
+  Fragment,
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+} from "react";
+import { Map, TileLayer, CircleMarker, Tooltip, Polyline } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import { Spin, Card, Col } from "antd";
 import L from "leaflet";
@@ -42,27 +41,81 @@ const OnMap = ({
   onAddBeforSelected,
   selectMarkerOnMap,
 }: TpropsOnMap) => {
+  const [markers, setMarkers] = useState<Tstations[]>();
+
+  useEffect(() => {
+    setMarkers(stations);
+  }, [stations]);
   // Icon per default
   L.Icon.Default.imagePath = "https://unpkg.com/leaflet@1.5.0/dist/images/";
-
   // Center the Map
-  const position = {
-    lat: 46.8155135,
-    lng: 8.224471999999992,
-    zoom: 5,
-  };
+  const position = useMemo(() => {
+    return {
+      lat: 46.8155135,
+      lng: 8.224471999999992,
+      zoom: 5,
+    };
+  }, []);
 
-  const clickOnMarker = (el: any, index: number) => {
-    selectMarkerOnMap(el, index);
-  };
+  const clickOnMarker = useCallback(
+    (el: any, index: number) => {
+      selectMarkerOnMap(el, index);
+    },
+    [selectMarkerOnMap]
+  );
 
-  const addBeforSelected = (e: any) => {
-    onAddBeforSelected(e.relatedTarget._tooltip.options.children);
-  };
+  const addBeforSelected = useCallback(
+    (e: any) => {
+      onAddBeforSelected(e.relatedTarget._tooltip.options.children);
+    },
+    [onAddBeforSelected]
+  );
 
-  const addAfterSelected = (e: any) => {
-    onAddAfterSelected(e.relatedTarget._popup.options.children);
-  };
+  const addAfterSelected = useCallback(
+    (e: any) => {
+      onAddAfterSelected(e.relatedTarget._tooltip.options.children);
+    },
+    [onAddAfterSelected]
+  );
+
+  const allMarkers = useMemo(() => {
+    return markers?.map((el: Tstations, index: number) => (
+      <CircleMarker
+        id="map"
+        contextmenu={true}
+        contextmenuWidth={200}
+        contextmenuInheritItems={false}
+        contextmenuItems={[
+          {
+            text: "Add before the highlighted stations",
+            callback: addBeforSelected,
+          },
+          {
+            text: "Add after the highlighted stations",
+            callback: addAfterSelected,
+          },
+        ]}
+        center={[el.coord.WGS84.lat, el.coord.WGS84.lon]}
+        key={el._id}
+        color={
+          (lastAutoSelectElem &&
+            !selected &&
+            lastAutoSelectElem.name === el.name) ||
+          (lastAutoSelectElem && selected && selected.name === el.name) ||
+          (selected && !lastAutoSelectElem && selected.name === el.name)
+            ? "red"
+            : stateDND.vorschlag.items.length &&
+              stateDND.vorschlag.items.map((el) => el.name).includes(el.name)
+            ? "green"
+            : "blue"
+        }
+        radius={15}
+        onclick={() => clickOnMarker(el, index)}
+      >
+        <Tooltip>{el.name}</Tooltip>
+      </CircleMarker>
+    ));
+  }, [markers]);
 
   return (
     <Fragment>
@@ -78,6 +131,7 @@ const OnMap = ({
             />
           ) : (
             <Map
+              preferCanvas={true}
               center={
                 lastAutoSelectElem && !selected
                   ? [
@@ -106,49 +160,7 @@ const OnMap = ({
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
               <MarkerClusterGroup disableClusteringAtZoom={20}>
-                {stations &&
-                  stations.map((el: Tstations, index: number) => (
-                    <CircleMarker
-                      id="map"
-                      contextmenu={true}
-                      contextmenuWidth={200}
-                      contextmenuInheritItems={false}
-                      contextmenuItems={[
-                        {
-                          text: "Add before the highlighted stations",
-                          callback: addBeforSelected,
-                        },
-                        {
-                          text: "Add after the highlighted stations",
-                          callback: addAfterSelected,
-                        },
-                      ]}
-                      center={[el.coord.WGS84.lat, el.coord.WGS84.lon]}
-                      key={el._id}
-                      color={
-                        (lastAutoSelectElem &&
-                          !selected &&
-                          lastAutoSelectElem.name === el.name) ||
-                        (lastAutoSelectElem &&
-                          selected &&
-                          selected.name === el.name) ||
-                        (selected &&
-                          !lastAutoSelectElem &&
-                          selected.name === el.name)
-                          ? "red"
-                          : stateDND.vorschlag.items.length &&
-                            stateDND.vorschlag.items
-                              .map((el) => el.name)
-                              .includes(el.name)
-                          ? "green"
-                          : "blue"
-                      }
-                      radius={15}
-                      onclick={() => clickOnMarker(el, index)}
-                    >
-                      <Popup>{el.name}</Popup>
-                    </CircleMarker>
-                  ))}
+                {allMarkers}
               </MarkerClusterGroup>
               {stateDND.trajekt.items.length && (
                 <Polyline
@@ -164,4 +176,18 @@ const OnMap = ({
   );
 };
 
-export default OnMap;
+export default React.memo(OnMap);
+
+/*
+          (lastAutoSelectElem &&
+            !selected &&
+            lastAutoSelectElem.name === el.name) ||
+          (lastAutoSelectElem && selected && selected.name === el.name) ||
+          (selected && !lastAutoSelectElem && selected.name === el.name)
+            ? "red"
+            : stateDND.vorschlag.items.length &&
+              stateDND.vorschlag.items.map((el) => el.name).includes(el.name)
+            ? "green"
+            :
+
+*/
