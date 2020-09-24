@@ -1,5 +1,12 @@
 import React, { Fragment } from "react";
-import { Map, TileLayer, CircleMarker, Tooltip, Polyline } from "react-leaflet";
+import {
+  Map,
+  TileLayer,
+  CircleMarker,
+  Tooltip,
+  Polyline,
+  Popup,
+} from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import { Spin, Card, Col } from "antd";
 import L from "leaflet";
@@ -54,7 +61,7 @@ const OnMap = ({
   };
 
   const addAfterSelected = (e: any) => {
-    onAddAfterSelected(e.relatedTarget._tooltip.options.children);
+    onAddAfterSelected(e.relatedTarget._popup.options.children);
   };
 
   return (
@@ -139,7 +146,7 @@ const OnMap = ({
                       radius={15}
                       onclick={() => clickOnMarker(el, index)}
                     >
-                      <Tooltip>{el.name}</Tooltip>
+                      <Popup>{el.name}</Popup>
                     </CircleMarker>
                   ))}
               </MarkerClusterGroup>

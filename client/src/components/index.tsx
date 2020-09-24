@@ -73,13 +73,13 @@ const Aufgabe: React.FC = () => {
     try {
       console.log("start fetching");
       const testResult = await testAxios.get("");
-      console.log("testResult", testResult);
       // GraphQl
       /*
       const queryResult = await testAxios.post("/graphql", {
         query: GET_HALTESTELLE_QUERY,
       });
       */
+      console.log("end fetching");
       if (testResult) {
         // const result = queryResult.data.data.haltestelles;
         const result = testResult.data;
