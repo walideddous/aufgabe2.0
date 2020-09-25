@@ -1,11 +1,13 @@
-import React, {
-  Fragment,
-  useState,
-  useEffect,
-  useCallback,
-  useMemo,
-} from "react";
-import { Map, TileLayer, CircleMarker, Tooltip, Polyline } from "react-leaflet";
+import React, { Fragment, useEffect, useCallback, useMemo } from "react";
+import {
+  Map,
+  TileLayer,
+  CircleMarker,
+  Tooltip,
+  Polyline,
+  GeoJSON,
+  useLeaflet,
+} from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import { Spin, Card, Col } from "antd";
 import L from "leaflet";
@@ -31,6 +33,31 @@ interface TpropsOnMap {
   selectMarkerOnMap: (el: Tstations, index: number) => void;
 }
 
+function DirectionsRoute(props: any) {
+  const ctx = useLeaflet();
+  const { coords } = props;
+  const { map } = ctx;
+
+  function handleEachFeature(feature: any, layer: any) {
+    //@ts-ignore
+    L.polylineDecorator(layer, {
+      patterns: [
+        {
+          offset: "10%",
+          repeat: "20%",
+          //@ts-ignore
+          symbol: L.Symbol.arrowHead({
+            pixelSize: 15,
+            pathOptions: { fillOpacity: 1, weight: 0 },
+          }),
+        },
+      ],
+    }).addTo(map);
+  }
+
+  return <GeoJSON data={coords} onEachFeature={handleEachFeature} />;
+}
+
 const OnMap = ({
   loading,
   stations,
@@ -41,11 +68,8 @@ const OnMap = ({
   onAddBeforSelected,
   selectMarkerOnMap,
 }: TpropsOnMap) => {
-  const [markers, setMarkers] = useState<Tstations[]>();
+  const mapRef = React.useRef();
 
-  useEffect(() => {
-    setMarkers(stations);
-  }, [stations]);
   // Icon per default
   L.Icon.Default.imagePath = "https://unpkg.com/leaflet@1.5.0/dist/images/";
   // Center the Map
@@ -79,13 +103,15 @@ const OnMap = ({
   );
 
   const allMarkers = useMemo(() => {
-    return markers?.map((el: Tstations, index: number) => (
+    return stations.map((el: Tstations, index: number) => (
       <CircleMarker
         id="map"
         contextmenu={true}
+        disabled={true}
         contextmenuWidth={200}
         contextmenuInheritItems={false}
         contextmenuItems={[
+          { text: "Close" },
           {
             text: "Add before the highlighted stations",
             callback: addBeforSelected,
@@ -115,7 +141,22 @@ const OnMap = ({
         <Tooltip>{el.name}</Tooltip>
       </CircleMarker>
     ));
-  }, [markers]);
+  }, [stations]);
+
+  useEffect(() => {
+    //@ts-ignore
+    console.log("mapRef", mapRef?.current);
+  }, [mapRef]);
+
+  setTimeout(() => {
+    //@ts-ignore
+    console.log("mapRef", mapRef?.current);
+  }, 6000);
+
+  const onViewportChanged = (viewport: any) => {
+    // The viewport got changed by the user, keep track in state
+    console.log("viewport", viewport);
+  };
 
   return (
     <Fragment>
@@ -131,7 +172,10 @@ const OnMap = ({
             />
           ) : (
             <Map
+              //@ts-ignore
+              ref={mapRef}
               preferCanvas={true}
+              onViewportChanged={onViewportChanged}
               center={
                 lastAutoSelectElem && !selected
                   ? [
@@ -144,15 +188,7 @@ const OnMap = ({
                   ? [selected.coord.WGS84.lat, selected.coord.WGS84.lon]
                   : [position.lat, position.lng]
               }
-              zoom={
-                lastAutoSelectElem && !selected
-                  ? 14
-                  : selected && lastAutoSelectElem
-                  ? 14
-                  : selected && !lastAutoSelectElem
-                  ? 14
-                  : position.zoom
-              }
+              zoom={!lastAutoSelectElem && !selected ? position.zoom : 14}
               style={{ height: "60vh" }}
             >
               <TileLayer
@@ -168,6 +204,9 @@ const OnMap = ({
                   color="red"
                 ></Polyline>
               )}
+              <DirectionsRoute
+                coords={getPathFromTrajekt(stateDND, stations)}
+              />
             </Map>
           )}
         </Card>

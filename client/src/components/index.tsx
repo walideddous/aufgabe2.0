@@ -4,7 +4,7 @@ import { Row } from "antd";
 import { v4 } from "uuid";
 
 // Import const values to connect with graphQL
-import { GET_HALTESTELLE_QUERY, GRAPHQL_API, TEST_API } from "../config/config";
+import { GET_HALTESTELLE_QUERY, GRAPHQL_API } from "../config/config";
 
 // Import composents
 import OnMap from "./map/OnMap";
@@ -378,23 +378,25 @@ const Aufgabe: React.FC = () => {
   const handleAddBeforSelected = useCallback(
     (e: string) => {
       console.log("last auto inside the function", e);
+      console.log("selected", selected);
+      console.log("lastautoselected", lastAutoSelectElem);
       setStateDND((prev: any) => {
         return {
           ...prev,
           trajekt: {
             title: "Road",
             items: [
+              ...prev.trajekt.items,
               {
                 id: v4(),
                 name: e,
               },
-              ...prev.trajekt.items,
             ],
           },
         };
       });
     },
-    [lastAutoSelectElem]
+    [lastAutoSelectElem, selected]
   );
 
   const clickOnMapMarker = useCallback(
