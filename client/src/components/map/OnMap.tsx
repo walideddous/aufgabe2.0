@@ -102,6 +102,43 @@ const OnMap = ({
     [onAddAfterSelected]
   );
 
+  const getMarkerColor = (
+    stations: any,
+    lastAutoSelectElem: any,
+    selected: any,
+    stateDND: any
+  ) => {
+    let result;
+    for (let i = 0; i < stations.length; i++) {
+      if (
+        (lastAutoSelectElem &&
+          !selected &&
+          lastAutoSelectElem.name === stations[i].name) ||
+        (lastAutoSelectElem &&
+          selected &&
+          selected.name === stations[i].name) ||
+        (selected && !lastAutoSelectElem && selected.name === stations[i].name)
+      ) {
+        result = "red";
+      } else if (
+        stateDND.vorschlag.items.length &&
+        stateDND.vorschlag.items
+          .map((el: any) => el.name)
+          .includes(stations[i].name)
+      ) {
+        result = "green";
+      } else {
+        result = "blue";
+      }
+    }
+    return result;
+  };
+
+  console.log(
+    "getMarkerColor",
+    getMarkerColor(stations, lastAutoSelectElem, selected, stateDND)
+  );
+
   const allMarkers = useMemo(() => {
     return stations.map((el: Tstations, index: number) => (
       <CircleMarker
