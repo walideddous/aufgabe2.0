@@ -1,17 +1,8 @@
-import React, { Fragment, useEffect, useCallback, useMemo } from "react";
-import {
-  Map,
-  TileLayer,
-  CircleMarker,
-  Tooltip,
-  Polyline,
-  GeoJSON,
-  useLeaflet,
-} from "react-leaflet";
+import React, { Fragment, useCallback, useMemo } from "react";
+import { Map, TileLayer, CircleMarker, Tooltip, Polyline } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import { Spin, Card, Col } from "antd";
 import L from "leaflet";
-import "leaflet-polylinedecorator";
 // Import leaflet context menu
 import "leaflet-contextmenu";
 import "leaflet-contextmenu/dist/leaflet.contextmenu.css";
@@ -31,31 +22,6 @@ interface TpropsOnMap {
   onAddBeforSelected: (e: string) => void;
   onAddAfterSelected: (e: string) => void;
   selectMarkerOnMap: (el: Tstations, index: number) => void;
-}
-
-function DirectionsRoute(props: any) {
-  const ctx = useLeaflet();
-  const { coords } = props;
-  const { map } = ctx;
-
-  function handleEachFeature(feature: any, layer: any) {
-    //@ts-ignore
-    L.polylineDecorator(layer, {
-      patterns: [
-        {
-          offset: "10%",
-          repeat: "20%",
-          //@ts-ignore
-          symbol: L.Symbol.arrowHead({
-            pixelSize: 15,
-            pathOptions: { fillOpacity: 1, weight: 0 },
-          }),
-        },
-      ],
-    }).addTo(map);
-  }
-
-  return <GeoJSON data={coords} onEachFeature={handleEachFeature} />;
 }
 
 const OnMap = ({
@@ -102,43 +68,6 @@ const OnMap = ({
     [onAddAfterSelected]
   );
 
-  const getMarkerColor = (
-    stations: any,
-    lastAutoSelectElem: any,
-    selected: any,
-    stateDND: any
-  ) => {
-    let result;
-    for (let i = 0; i < stations.length; i++) {
-      if (
-        (lastAutoSelectElem &&
-          !selected &&
-          lastAutoSelectElem.name === stations[i].name) ||
-        (lastAutoSelectElem &&
-          selected &&
-          selected.name === stations[i].name) ||
-        (selected && !lastAutoSelectElem && selected.name === stations[i].name)
-      ) {
-        result = "red";
-      } else if (
-        stateDND.vorschlag.items.length &&
-        stateDND.vorschlag.items
-          .map((el: any) => el.name)
-          .includes(stations[i].name)
-      ) {
-        result = "green";
-      } else {
-        result = "blue";
-      }
-    }
-    return result;
-  };
-
-  console.log(
-    "getMarkerColor",
-    getMarkerColor(stations, lastAutoSelectElem, selected, stateDND)
-  );
-
   const allMarkers = useMemo(() => {
     return stations.map((el: Tstations, index: number) => (
       <CircleMarker
@@ -168,7 +97,9 @@ const OnMap = ({
           (selected && !lastAutoSelectElem && selected.name === el.name)
             ? "red"
             : stateDND.vorschlag.items.length &&
-              stateDND.vorschlag.items.map((el) => el.name).includes(el.name)
+              stateDND.vorschlag.items
+                .map((el) => el.name.toLowerCase())
+                .includes(el.name.toLowerCase())
             ? "green"
             : "blue"
         }
@@ -179,21 +110,6 @@ const OnMap = ({
       </CircleMarker>
     ));
   }, [stations]);
-
-  useEffect(() => {
-    //@ts-ignore
-    console.log("mapRef", mapRef?.current);
-  }, [mapRef]);
-
-  setTimeout(() => {
-    //@ts-ignore
-    console.log("mapRef", mapRef?.current);
-  }, 6000);
-
-  const onViewportChanged = (viewport: any) => {
-    // The viewport got changed by the user, keep track in state
-    console.log("viewport", viewport);
-  };
 
   return (
     <Fragment>
@@ -212,7 +128,7 @@ const OnMap = ({
               //@ts-ignore
               ref={mapRef}
               preferCanvas={true}
-              onViewportChanged={onViewportChanged}
+              // onViewportChanged={onViewportChanged}
               center={
                 lastAutoSelectElem && !selected
                   ? [
@@ -225,7 +141,7 @@ const OnMap = ({
                   ? [selected.coord.WGS84.lat, selected.coord.WGS84.lon]
                   : [position.lat, position.lng]
               }
-              zoom={!lastAutoSelectElem && !selected ? position.zoom : 14}
+              zoom={!lastAutoSelectElem && !selected ? position.zoom : 17}
               style={{ height: "60vh" }}
             >
               <TileLayer
@@ -241,9 +157,6 @@ const OnMap = ({
                   color="red"
                 ></Polyline>
               )}
-              <DirectionsRoute
-                coords={getPathFromTrajekt(stateDND, stations)}
-              />
             </Map>
           )}
         </Card>
@@ -253,17 +166,3 @@ const OnMap = ({
 };
 
 export default React.memo(OnMap);
-
-/*
-          (lastAutoSelectElem &&
-            !selected &&
-            lastAutoSelectElem.name === el.name) ||
-          (lastAutoSelectElem && selected && selected.name === el.name) ||
-          (selected && !lastAutoSelectElem && selected.name === el.name)
-            ? "red"
-            : stateDND.vorschlag.items.length &&
-              stateDND.vorschlag.items.map((el) => el.name).includes(el.name)
-            ? "green"
-            :
-
-*/

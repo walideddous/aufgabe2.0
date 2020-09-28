@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import axios from "axios";
-import { Row } from "antd";
+import { Row, Menu, Dropdown } from "antd";
+import { DownOutlined } from "@ant-design/icons";
 import { v4 } from "uuid";
 
 // Import const values to connect with graphQL
@@ -45,6 +46,7 @@ const testAxios = axios.create({
 */
 
 const Aufgabe: React.FC = () => {
+  const [fetchedData, setFetchedData] = useState<Tstations[]>([]);
   const [stations, setStations] = useState<Tstations[]>([]);
   const [loading, setLoading] = useState<Tloading>(true);
   const [selected, setSelected] = useState<Tstations>();
@@ -63,6 +65,9 @@ const Aufgabe: React.FC = () => {
   const [lastAutoSelectElem, setlastAutoSelectElem] = useState<Tstations>();
   const [isSending, setIsSending] = useState<boolean>(false);
   const [updateDate, setUpdateDate] = useState<string>();
+  const [modes, setModes] = useState({
+    value: "Choose a Mode",
+  });
 
   // Send the request when you click on get the Data button
   const sendRequest = useCallback(async () => {
@@ -84,7 +89,15 @@ const Aufgabe: React.FC = () => {
       if (queryResult) {
         const result = queryResult.data.data.haltestelles;
         //const result = testResult.data;
-        setStations([...result]);
+        if (modes.value === "All") {
+          setStations([...result]);
+        } else {
+          const filteredResult = result.filter((el: any) =>
+            el.modes.includes(modes.value)
+          );
+          setStations(filteredResult);
+        }
+        setFetchedData([...result]);
         setUpdateDate(Date().toString().substr(4, 24));
         setLoading(false);
       } else {
@@ -95,7 +108,7 @@ const Aufgabe: React.FC = () => {
     }
     // once the request is sent, update state again
     setIsSending(false);
-  }, [isSending]);
+  }, [isSending, modes.value]);
 
   // Update the state of stateDND when you drag and drop
   useEffect(() => {
@@ -162,7 +175,7 @@ const Aufgabe: React.FC = () => {
     [stations]
   );
 
-  // Delete the button from Drag and drop
+  // Delete the button from Drop Part
   const handleDeleteOnDND = useCallback(
     (
       e: { id: string | number; name: string },
@@ -236,22 +249,13 @@ const Aufgabe: React.FC = () => {
 
   // to choose the station from the input options
   const onEvent = useCallback(
-    async (elementSelected: Tstations) => {
-      console.log("1", elementSelected);
-      await setlastAutoSelectElem({ ...elementSelected });
-      console.log("3");
-      await setSelected(undefined);
-      console.log("4");
-      const vorschläge = await calculateDistanceAndSort(
-        elementSelected,
-        stations
-      );
-      console.log("5", vorschläge);
-      await setDistance([...vorschläge]);
-      console.log("6");
-      await setChoose(elementSelected.name);
-      console.log("7");
-      await setStateDND((prev: any) => {
+    (elementSelected: Tstations) => {
+      setlastAutoSelectElem({ ...elementSelected });
+      setSelected(undefined);
+      const vorschläge = calculateDistanceAndSort(elementSelected, stations);
+      setDistance([...vorschläge]);
+      setChoose(elementSelected.name);
+      setStateDND((prev: any) => {
         return {
           ...prev,
           trajekt: {
@@ -283,7 +287,6 @@ const Aufgabe: React.FC = () => {
           },
         };
       });
-      console.log("8");
     },
     [stations]
   );
@@ -331,6 +334,7 @@ const Aufgabe: React.FC = () => {
     [stations, stateDND]
   );
 
+  // Context menu to add the stop After the selected stops in the drop Menu
   const handleAddAfterSelected = useCallback(
     (e: string) => {
       const response = stations.filter((el, i) => el.name === e)[0];
@@ -375,30 +379,28 @@ const Aufgabe: React.FC = () => {
     [stations]
   );
 
-  const handleAddBeforSelected = useCallback(
-    (e: string) => {
-      console.log("last auto inside the function", e);
-      console.log("selected", selected);
-      console.log("lastautoselected", lastAutoSelectElem);
-      setStateDND((prev: any) => {
-        return {
-          ...prev,
-          trajekt: {
-            title: "Road",
-            items: [
-              ...prev.trajekt.items,
-              {
-                id: v4(),
-                name: e,
-              },
-            ],
-          },
-        };
-      });
-    },
-    [lastAutoSelectElem, selected]
-  );
+  // Context menu to add the stop before the selected stops in the drop Menu
+  const handleAddBeforSelected = useCallback((e: string) => {
+    setStateDND((prev: any) => {
+      return {
+        ...prev,
+        trajekt: {
+          title: "Road",
+          items: prev.trajekt.items
+            .filter(
+              (el: any, index: number, tab: any) => index !== tab.length - 1
+            )
+            .concat({
+              id: v4(),
+              name: e,
+            })
+            .concat(prev.trajekt.items[prev.trajekt.items.length - 1]),
+        },
+      };
+    });
+  }, []);
 
+  // Click on Marker
   const clickOnMapMarker = useCallback(
     async (el: Tstations, index: number) => {
       setSelected({ ...el, index });
@@ -431,6 +433,53 @@ const Aufgabe: React.FC = () => {
     [stations]
   );
 
+  // handle the drop menu to display the choosed Modes on Map
+  const handleDropDownMenu = useCallback(
+    (event: any) => {
+      setModes({
+        value: event.item.props.children[1],
+      });
+
+      if (event.item.props.children[1] === "All") {
+        setStations([...fetchedData]);
+      } else {
+        const filteredResult = fetchedData.filter((el: any) =>
+          el.modes.includes(event.item.props.children[1])
+        );
+        setStations(filteredResult);
+        setSelected(undefined);
+        setlastAutoSelectElem(undefined);
+        setStateDND({
+          vorschlag: {
+            title: "Suggestion",
+            items: [],
+          },
+          trajekt: {
+            title: "Road",
+            items: [],
+          },
+        });
+      }
+    },
+    [fetchedData]
+  );
+  // Menu of the drop menu
+  const menu = useMemo(
+    () => (
+      //@ts-ignore
+      <Menu onClick={handleDropDownMenu}>
+        <Menu.Item key="1">Choose a Mode</Menu.Item>
+        <Menu.Item key="2">13</Menu.Item>
+        <Menu.Item key="3">5</Menu.Item>
+        <Menu.Item key="4">8</Menu.Item>
+        <Menu.Item key="5">9</Menu.Item>
+        <Menu.Item key="6">2</Menu.Item>
+        <Menu.Item key="7">4</Menu.Item>
+      </Menu>
+    ),
+    [handleDropDownMenu]
+  );
+
   return (
     <div className="site-card-wrapper">
       <Row gutter={[14, 14]}>
@@ -442,21 +491,44 @@ const Aufgabe: React.FC = () => {
           }}
         >
           <SearchInput stations={stations} handleEvent={onEvent} />
+          <Dropdown overlay={menu}>
+            <p
+              className="ant-dropdown-link"
+              style={{ margin: 20, cursor: "pointer" }}
+            >
+              <strong>Modes : </strong>
+              {modes.value} <DownOutlined />
+            </p>
+          </Dropdown>
+          ,
           <p style={{ margin: 20 }}>
             <strong>Update at : </strong>
             {updateDate}
-          </p>{" "}
+          </p>
           <button
-            style={{
-              margin: 20,
-              backgroundColor: "#3949ab",
-              color: "white",
-              borderRadius: "5px",
-              outline: "0",
-              cursor: "pointer",
-              boxShadow: "0px 2px 2px lightgray",
-            }}
-            disabled={isSending}
+            style={
+              isSending || modes.value !== "Choose a Mode"
+                ? {
+                    margin: 20,
+                    backgroundColor: "#3949ab",
+                    color: "white",
+                    borderRadius: "5px",
+                    outline: "0",
+                    cursor: "pointer",
+                    boxShadow: "0px 2px 2px lightgray",
+                  }
+                : {
+                    margin: 20,
+                    backgroundColor: "white",
+                    color: "black",
+                    borderRadius: "5px",
+                    outline: "0",
+                    boxShadow: "0px 2px 2px lightgray",
+                  }
+            }
+            disabled={
+              isSending || modes.value === "Choose a Mode" ? true : false
+            }
             onClick={sendRequest}
           >
             Get the Data

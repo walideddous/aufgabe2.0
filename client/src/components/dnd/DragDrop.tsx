@@ -134,10 +134,10 @@ const DragDrop = ({
                                       index) ||
                                   (lastAutoSelectElem &&
                                     selected &&
-                                    selected.index === index) ||
+                                    selected.name === el.name) ||
                                   (selected &&
                                     !lastAutoSelectElem &&
-                                    selected.index === index)
+                                    selected.name === el.name)
                                     ? "item-highlighted"
                                     : "item"
                                 }

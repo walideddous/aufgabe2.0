@@ -23,11 +23,22 @@ const Info = ({ selected, distance, lastAutoSelectElem }: TpropsInfo) => {
                   {" : "}
                   {selected.name}
                 </p>
-                <p>
-                  <strong>modes</strong>
+                <div
+                  style={{
+                    display: "flex",
+                  }}
+                >
+                  <strong>modes </strong>
                   {" : "}
-                  {selected.modes ? selected.modes : "Modes is empty"}
-                </p>
+                  {selected.modes
+                    ? selected.modes.map((el: any, index: number) => (
+                        <p key={index}>
+                          {el}
+                          {", "}
+                        </p>
+                      ))
+                    : "Modes is empty"}
+                </div>
                 <p>
                   <strong>Location</strong>
                   {" : "}
@@ -71,13 +82,28 @@ const Info = ({ selected, distance, lastAutoSelectElem }: TpropsInfo) => {
                   {" : "}
                   {lastAutoSelectElem.name}
                 </p>
-                <p>
-                  <strong>modes</strong>
+                <div
+                  style={{
+                    display: "flex",
+                  }}
+                >
+                  <strong>modes </strong>
                   {" : "}
                   {lastAutoSelectElem.modes
-                    ? lastAutoSelectElem.modes
+                    ? lastAutoSelectElem.modes.map((el: any, index: number) => (
+                        <p
+                          key={index}
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          {el}
+                          {", "}
+                        </p>
+                      ))
                     : "Modes is empty"}
-                </p>
+                </div>
                 <p>
                   <strong>Location</strong>
                   {" : "}
