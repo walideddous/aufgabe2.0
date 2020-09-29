@@ -435,7 +435,6 @@ const Aufgabe: React.FC = () => {
     () => (
       //@ts-ignore
       <Menu onClick={handleDropDownMenu}>
-        <Menu.Item key="1">Choose Mode</Menu.Item>
         <Menu.Item key="2">13</Menu.Item>
         <Menu.Item key="3">5</Menu.Item>
         <Menu.Item key="4">8</Menu.Item>
