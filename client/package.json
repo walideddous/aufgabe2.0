@@ -24,6 +24,7 @@
     "graphql": "^15.3.0",
     "leaflet": "^1.6.0",
     "leaflet-contextmenu": "^1.4.0",
+    "leaflet.markercluster": "^1.4.1",
     "react": "^16.13.1",
     "react-beautiful-dnd": "^13.0.0",
     "react-dom": "^16.13.1",

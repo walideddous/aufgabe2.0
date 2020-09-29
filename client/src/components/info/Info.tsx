@@ -11,6 +11,8 @@ interface TpropsInfo {
 }
 
 const Info = ({ selected, distance, lastAutoSelectElem }: TpropsInfo) => {
+  console.log("last auto selected eleme", lastAutoSelectElem);
+  console.log("selected", selected);
   return (
     <Fragment>
       {(selected && lastAutoSelectElem) || (selected && !lastAutoSelectElem) ? (

@@ -32,8 +32,6 @@ const OnMap = ({
   onAddBeforSelected,
   selectMarkerOnMap,
 }: TpropsOnMap) => {
-  const mapRef = React.useRef();
-
   // Icon per default
   L.Icon.Default.imagePath = "https://unpkg.com/leaflet@1.5.0/dist/images/";
   // Center the Map
@@ -115,10 +113,6 @@ const OnMap = ({
         <Card bordered={true} title="Map">
           {
             <Map
-              //@ts-ignore
-              ref={mapRef}
-              preferCanvas={true}
-              // onViewportChanged={onViewportChanged}
               center={
                 lastAutoSelectElem && !selected
                   ? [

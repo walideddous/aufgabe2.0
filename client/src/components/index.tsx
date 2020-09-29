@@ -20,6 +20,9 @@ import Info from "./info/Info";
 import SearchInput from "./search/SearchInput";
 import DragDrop from "./dnd/DragDrop";
 
+// The new map to test map without react-leaflet
+import NewMap from "./map/newMap";
+
 // Import the types of the state
 import { Tstations, TstateDND, Tchoose, Tdistance } from "./type/Types";
 
@@ -533,7 +536,16 @@ const Aufgabe: React.FC = () => {
               onclick={clickOnDrop}
               onDelete={handleDeleteOnDND}
             />
-            <OnMap
+            {/*<OnMap
+              stations={stations}
+              stateDND={stateDND}
+              selected={selected}
+              onAddBeforSelected={handleAddBeforSelected}
+              onAddAfterSelected={handleAddAfterSelected}
+              lastAutoSelectElem={lastAutoSelectElem}
+              selectMarkerOnMap={clickOnMapMarker}
+            />*/}
+            <NewMap
               stations={stations}
               stateDND={stateDND}
               selected={selected}
@@ -546,7 +558,7 @@ const Aufgabe: React.FC = () => {
               selected={selected}
               distance={distance}
               lastAutoSelectElem={lastAutoSelectElem}
-            />{" "}
+            />
           </Fragment>
         )}
       </Row>
