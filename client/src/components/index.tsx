@@ -5,7 +5,7 @@ import { DownOutlined } from "@ant-design/icons";
 import { v4 } from "uuid";
 
 // Import const values to connect with graphQL
-import { GET_HALTESTELLE_QUERY, GRAPHQL_API } from "../config/config";
+import { GRAPHQL_API, GET_STOPS_BY_MODES } from "../config/config";
 
 // Import composents
 import OnMap from "./map/OnMap";
@@ -14,13 +14,7 @@ import SearchInput from "./search/SearchInput";
 import DragDrop from "./dnd/DragDrop";
 
 // Import the types of the state
-import {
-  Tstations,
-  TstateDND,
-  Tloading,
-  Tchoose,
-  Tdistance,
-} from "./type/Types";
+import { Tstations, TstateDND, Tchoose, Tdistance } from "./type/Types";
 
 // Get the property from Utils
 import { getProperty } from "../utils/getPropertyKey";
@@ -35,20 +29,8 @@ const authAxios = axios.create({
   },
 });
 
-// Test api
-/*
-const testAxios = axios.create({
-  baseURL: TEST_API,
-  headers: {
-    authorization: "Bearer " + process.env.REACT_APP_JSON_SECRET_KEY,
-  },
-});
-*/
-
 const Aufgabe: React.FC = () => {
-  const [fetchedData, setFetchedData] = useState<Tstations[]>([]);
   const [stations, setStations] = useState<Tstations[]>([]);
-  const [loading, setLoading] = useState<Tloading>(true);
   const [selected, setSelected] = useState<Tstations>();
   const [choose, setChoose] = useState<Tchoose>("");
   const [distance, setDistance] = useState<Tdistance[]>([]);
@@ -65,41 +47,43 @@ const Aufgabe: React.FC = () => {
   const [lastAutoSelectElem, setlastAutoSelectElem] = useState<Tstations>();
   const [isSending, setIsSending] = useState<boolean>(false);
   const [updateDate, setUpdateDate] = useState<string>();
-  const [modes, setModes] = useState({
-    value: "Choose a Mode",
-  });
+  const [modes, setModes] = useState<string>("Choose Mode");
+  const [currentMode, setCurrentMode] = useState<string>("");
 
   // Send the request when you click on get the Data button
   const sendRequest = useCallback(async () => {
     if (isSending) return;
+    if (modes === currentMode) return;
     // update state
     setIsSending(true);
+    setStations([]);
     // send the actual request
     try {
       console.log("start fetching");
-      /*
-      const testResult = await testAxios.get("");
-      */
       // GraphQl
       const queryResult = await authAxios.post("/graphql", {
-        query: GET_HALTESTELLE_QUERY,
+        query: GET_STOPS_BY_MODES(modes),
       });
 
       console.log("end fetching");
       if (queryResult) {
-        const result = queryResult.data.data.haltestelles;
+        const result = queryResult.data.data.haltestelleByMode;
         //const result = testResult.data;
-        if (modes.value === "All") {
-          setStations([...result]);
-        } else {
-          const filteredResult = result.filter((el: any) =>
-            el.modes.includes(modes.value)
-          );
-          setStations(filteredResult);
-        }
-        setFetchedData([...result]);
+        setStations([...result]);
         setUpdateDate(Date().toString().substr(4, 24));
-        setLoading(false);
+        setCurrentMode(modes);
+        setSelected(undefined);
+        setlastAutoSelectElem(undefined);
+        setStateDND({
+          vorschlag: {
+            title: "Suggestion",
+            items: [],
+          },
+          trajekt: {
+            title: "Road",
+            items: [],
+          },
+        });
       } else {
         console.log("not aithorized provid a token");
       }
@@ -108,7 +92,7 @@ const Aufgabe: React.FC = () => {
     }
     // once the request is sent, update state again
     setIsSending(false);
-  }, [isSending, modes.value]);
+  }, [isSending, modes, currentMode]);
 
   // Update the state of stateDND when you drag and drop
   useEffect(() => {
@@ -434,41 +418,15 @@ const Aufgabe: React.FC = () => {
   );
 
   // handle the drop menu to display the choosed Modes on Map
-  const handleDropDownMenu = useCallback(
-    (event: any) => {
-      setModes({
-        value: event.item.props.children[1],
-      });
-
-      if (event.item.props.children[1] === "All") {
-        setStations([...fetchedData]);
-      } else {
-        const filteredResult = fetchedData.filter((el: any) =>
-          el.modes.includes(event.item.props.children[1])
-        );
-        setStations(filteredResult);
-        setSelected(undefined);
-        setlastAutoSelectElem(undefined);
-        setStateDND({
-          vorschlag: {
-            title: "Suggestion",
-            items: [],
-          },
-          trajekt: {
-            title: "Road",
-            items: [],
-          },
-        });
-      }
-    },
-    [fetchedData]
-  );
+  const handleDropDownMenu = useCallback((event: any) => {
+    setModes(event.item.props.children[1]);
+  }, []);
   // Menu of the drop menu
   const menu = useMemo(
     () => (
       //@ts-ignore
       <Menu onClick={handleDropDownMenu}>
-        <Menu.Item key="1">Choose a Mode</Menu.Item>
+        <Menu.Item key="1">Choose Mode</Menu.Item>
         <Menu.Item key="2">13</Menu.Item>
         <Menu.Item key="3">5</Menu.Item>
         <Menu.Item key="4">8</Menu.Item>
@@ -497,17 +455,20 @@ const Aufgabe: React.FC = () => {
               style={{ margin: 20, cursor: "pointer" }}
             >
               <strong>Modes : </strong>
-              {modes.value} <DownOutlined />
+              {modes} <DownOutlined />
             </p>
           </Dropdown>
           ,
           <p style={{ margin: 20 }}>
+            <strong>Current mode : </strong>
+            {currentMode}
+            <br />
             <strong>Update at : </strong>
             {updateDate}
           </p>
           <button
             style={
-              isSending || modes.value !== "Choose a Mode"
+              isSending || modes !== "Choose Mode"
                 ? {
                     margin: 20,
                     backgroundColor: "#3949ab",
@@ -526,12 +487,12 @@ const Aufgabe: React.FC = () => {
                     boxShadow: "0px 2px 2px lightgray",
                   }
             }
-            disabled={
-              isSending || modes.value === "Choose a Mode" ? true : false
-            }
+            disabled={isSending || modes === "Choose Mode" ? true : false}
             onClick={sendRequest}
           >
-            Get the Data
+            {modes === "Choose Mode"
+              ? "Select a Mode"
+              : `Get the Data with modes ${modes}`}
           </button>
         </div>
         <DragDrop
@@ -544,7 +505,6 @@ const Aufgabe: React.FC = () => {
           onDelete={handleDeleteOnDND}
         />
         <OnMap
-          loading={loading}
           stations={stations}
           stateDND={stateDND}
           selected={selected}

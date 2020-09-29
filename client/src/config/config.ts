@@ -10,3 +10,8 @@ export const GET_HALTESTELLE_QUERY = ` query {haltestelles {
     coord{WGS84{lat,lon}},
     modes
   }}`;
+
+export const GET_STOPS_BY_MODES = (modes: String) => {
+  return ` query {haltestelleByMode(modes:"${modes}"){_id,name,modes,coord{WGS84{lat,lon}}}}
+  `;
+};

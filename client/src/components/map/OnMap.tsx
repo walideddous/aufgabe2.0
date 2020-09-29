@@ -11,10 +11,9 @@ import "leaflet-contextmenu/dist/leaflet.contextmenu.css";
 import { getPathFromTrajekt } from "../../utils/getPathFromTrajekt";
 
 // Import type
-import { Tloading, Tstations, TstateDND } from "../type/Types";
+import { Tstations, TstateDND } from "../type/Types";
 
 interface TpropsOnMap {
-  loading: Tloading;
   stations: Tstations[];
   stateDND: TstateDND;
   selected: Tstations | undefined;
@@ -25,7 +24,6 @@ interface TpropsOnMap {
 }
 
 const OnMap = ({
-  loading,
   stations,
   stateDND,
   selected,
@@ -109,13 +107,13 @@ const OnMap = ({
         <Tooltip>{el.name}</Tooltip>
       </CircleMarker>
     ));
-  }, [stations]);
+  }, [stations, lastAutoSelectElem, selected, stateDND.vorschlag.items]);
 
   return (
     <Fragment>
       <Col span={12}>
         <Card bordered={true} title="Map">
-          {loading ? (
+          {stations.length === 0 ? (
             <Spin
               style={{
                 display: "flex",
