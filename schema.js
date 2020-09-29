@@ -76,6 +76,38 @@ const RootQuery = new GraphQLObjectType({
         })();
       },
     },
+    haltestelleByMode: {
+      type: new GraphQLList(HaltestelleType),
+      args: { modes: { type: GraphQLString } },
+      resolve(parentValue, args) {
+        return (async function () {
+          let client;
+          let result;
+          try {
+            if (process.env.MONGO_URI) {
+              client = await MongoClient.connect(process.env.MONGO_URI);
+              console.log("Connected successfully to server");
+
+              // Get the dataBase
+              const db = client.db(dbName);
+
+              // Get the documents collection
+              const collection = db.collection("mdv.ojp.stops");
+
+              result = await collection.find({ modes: args.modes }).toArray();
+            } else {
+              console.log("Mongo URI fehlt");
+            }
+          } catch (err) {
+            console.log(err.stack);
+          }
+          // Close connection
+          client.close();
+          console.log("data fetched and database closed ");
+          return result;
+        })();
+      },
+    },
   },
 });
 

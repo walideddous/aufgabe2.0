@@ -9,9 +9,8 @@ const { verify } = require("jsonwebtoken");
 const schema = require("./schema.js");
 
 // Import the data to test
-const result = fs.readFileSync(
-  `${__dirname}/client/src/data/data.json`,
-  "utf-8"
+const result = JSON.parse(
+  fs.readFileSync(`${__dirname}/client/src/data/data.json`, "utf-8")
 );
 
 const app = express();
@@ -29,7 +28,6 @@ app.use(express.json());
 app.use(cors());
 
 // Middelware for the jsonwebtoken
-
 app.use((req, _, next) => {
   let accessToken;
   if (
@@ -49,7 +47,6 @@ app.use((req, _, next) => {
     console.log("No token Provided");
   }
 });
-
 // use GraphQl
 app.use(
   "/graphql",
@@ -88,6 +85,9 @@ app.get("/data", (req, res) => {
   } else {
     console.log("Mongo URI fehlt");
   }
+});
+app.get("/result", (rea, res) => {
+  res.json(result);
 });
 
 const PORT = process.env.PORT || 5000;
