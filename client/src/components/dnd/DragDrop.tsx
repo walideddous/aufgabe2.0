@@ -4,12 +4,13 @@ import { Card, Col } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 
 // Import types
-import { TstateDND, Tchoose, Tstations } from "../type/Types";
+import { TstateDND, Tchoose, Tstations, Tdistance } from "../type/Types";
 
 // Declare Types
 interface TporpsDND {
   choose: Tchoose;
   stateDND: TstateDND;
+  distance: Tdistance[];
   selected: Tstations | undefined;
   lastAutoSelectElem: Tstations | undefined;
   onclick: (e: { id: string | number; name: string }, index: number) => void;
@@ -23,6 +24,7 @@ interface TporpsDND {
 
 const DragDrop = ({
   choose,
+  distance,
   stateDND,
   selected,
   lastAutoSelectElem,

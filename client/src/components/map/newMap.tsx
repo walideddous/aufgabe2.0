@@ -95,7 +95,7 @@ const NewMap = ({
     }).addTo(myMap);
 
     var markers = new L.MarkerClusterGroup();
-    MarkerPositions.forEach((el: any) => {
+    MarkerPositions.forEach((el: any, index: number) => {
       const marker = L.circleMarker(el.coord.WGS84, {
         //@ts-ignore
         contextmenu: true,
@@ -126,13 +126,15 @@ const NewMap = ({
             ? "green"
             : "blue",
       });
+
       marker.bindTooltip(el.name);
+      marker.on("click", () => clickOnMarker(el, index));
 
       markers.addLayer(marker);
     });
     myMap.addLayer(markers);
 
-    var polyline = L.polyline(getPathFromTrajekt(stateDND, stations), {
+    L.polyline(getPathFromTrajekt(stateDND, stations), {
       color: "red",
     }).addTo(myMap);
   }, [stations, selected, lastAutoSelectElem, stateDND]);

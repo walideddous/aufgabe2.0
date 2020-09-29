@@ -130,6 +130,14 @@ const Aufgabe: React.FC = () => {
                 id: v4(),
                 name: vorschläge[2].to.name,
               },
+              {
+                id: v4(),
+                name: vorschläge[3].to.name,
+              },
+              {
+                id: v4(),
+                name: vorschläge[4].to.name,
+              },
             ],
           },
         };
@@ -162,6 +170,14 @@ const Aufgabe: React.FC = () => {
               {
                 id: v4(),
                 name: vorschläge[2].to.name,
+              },
+              {
+                id: v4(),
+                name: vorschläge[3].to.name,
+              },
+              {
+                id: v4(),
+                name: vorschläge[4].to.name,
               },
             ],
           },
@@ -279,6 +295,14 @@ const Aufgabe: React.FC = () => {
                 id: v4(),
                 name: vorschläge[2].to.name,
               },
+              {
+                id: v4(),
+                name: vorschläge[3].to.name,
+              },
+              {
+                id: v4(),
+                name: vorschläge[4].to.name,
+              },
             ],
           },
         };
@@ -367,6 +391,14 @@ const Aufgabe: React.FC = () => {
                 id: v4(),
                 name: vorschläge[2].to.name,
               },
+              {
+                id: v4(),
+                name: vorschläge[3].to.name,
+              },
+              {
+                id: v4(),
+                name: vorschläge[4].to.name,
+              },
             ],
           },
         };
@@ -399,8 +431,16 @@ const Aufgabe: React.FC = () => {
   // Click on Marker
   const clickOnMapMarker = useCallback(
     async (el: Tstations, index: number) => {
-      setSelected({ ...el, index });
-      const vorschläge = calculateDistanceAndSort(el, stations);
+      const newValue = {
+        ...el,
+        coord: {
+          //@ts-ignore
+          WGS84: { lat: el.coord.WGS84[0], lon: el.coord.WGS84[1] },
+        },
+      };
+      setSelected({ ...newValue, index });
+
+      const vorschläge = calculateDistanceAndSort(newValue, stations);
       setDistance([...vorschläge]);
       setStateDND((prev: any) => {
         return {
@@ -419,6 +459,14 @@ const Aufgabe: React.FC = () => {
               {
                 id: v4(),
                 name: vorschläge[2].to.name,
+              },
+              {
+                id: v4(),
+                name: vorschläge[3].to.name,
+              },
+              {
+                id: v4(),
+                name: vorschläge[4].to.name,
               },
             ],
           },
@@ -529,6 +577,7 @@ const Aufgabe: React.FC = () => {
           <Fragment>
             <DragDrop
               choose={choose}
+              distance={distance}
               stateDND={stateDND}
               selected={selected}
               lastAutoSelectElem={lastAutoSelectElem}
