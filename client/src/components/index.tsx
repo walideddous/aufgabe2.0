@@ -1,6 +1,13 @@
-import React, { useEffect, useState, useCallback, useMemo } from "react";
+import React, {
+  useEffect,
+  useState,
+  useCallback,
+  useMemo,
+  Fragment,
+} from "react";
 import axios from "axios";
-import { Row, Menu, Dropdown } from "antd";
+import { Row, Menu, Dropdown, Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 import { DownOutlined } from "@ant-design/icons";
 import { v4 } from "uuid";
 
@@ -29,6 +36,9 @@ const authAxios = axios.create({
   },
 });
 
+// Custom Loader
+const antIcon = <LoadingOutlined style={{ fontSize: 100 }} spin />;
+
 const Aufgabe: React.FC = () => {
   const [stations, setStations] = useState<Tstations[]>([]);
   const [selected, setSelected] = useState<Tstations>();
@@ -56,7 +66,19 @@ const Aufgabe: React.FC = () => {
     if (modes === currentMode) return;
     // update state
     setIsSending(true);
-    setStations([]);
+    setSelected(undefined);
+    setlastAutoSelectElem(undefined);
+    setCurrentMode(modes);
+    setStateDND({
+      vorschlag: {
+        title: "Suggestion",
+        items: [],
+      },
+      trajekt: {
+        title: "Road",
+        items: [],
+      },
+    });
     // send the actual request
     try {
       console.log("start fetching");
@@ -71,19 +93,6 @@ const Aufgabe: React.FC = () => {
         //const result = testResult.data;
         setStations([...result]);
         setUpdateDate(Date().toString().substr(4, 24));
-        setCurrentMode(modes);
-        setSelected(undefined);
-        setlastAutoSelectElem(undefined);
-        setStateDND({
-          vorschlag: {
-            title: "Suggestion",
-            items: [],
-          },
-          trajekt: {
-            title: "Road",
-            items: [],
-          },
-        });
       } else {
         console.log("not aithorized provid a token");
       }
@@ -439,7 +448,7 @@ const Aufgabe: React.FC = () => {
   );
 
   return (
-    <div className="site-card-wrapper">
+    <div className="Prototyp" style={{ position: "relative" }}>
       <Row gutter={[14, 14]}>
         <div
           style={{
@@ -487,7 +496,7 @@ const Aufgabe: React.FC = () => {
                     boxShadow: "0px 2px 2px lightgray",
                   }
             }
-            disabled={isSending || modes === "Choose Mode" ? true : false}
+            disabled={isSending || modes !== "Choose Mode" ? false : true}
             onClick={sendRequest}
           >
             {modes === "Choose Mode"
@@ -495,29 +504,52 @@ const Aufgabe: React.FC = () => {
               : `Get the Data with modes ${modes}`}
           </button>
         </div>
-        <DragDrop
-          choose={choose}
-          stateDND={stateDND}
-          selected={selected}
-          lastAutoSelectElem={lastAutoSelectElem}
-          handleDragEnd={handleDragEnd}
-          onclick={clickOnDrop}
-          onDelete={handleDeleteOnDND}
-        />
-        <OnMap
-          stations={stations}
-          stateDND={stateDND}
-          selected={selected}
-          onAddBeforSelected={handleAddBeforSelected}
-          onAddAfterSelected={handleAddAfterSelected}
-          lastAutoSelectElem={lastAutoSelectElem}
-          selectMarkerOnMap={clickOnMapMarker}
-        />
-        <Info
-          selected={selected}
-          distance={distance}
-          lastAutoSelectElem={lastAutoSelectElem}
-        />
+
+        {isSending ? (
+          <div
+            style={{
+              margin: "0",
+              position: "absolute",
+              marginTop: "25%",
+              left: "50%",
+              marginRight: " -50%",
+              transform: "translate(-50%, -50%)",
+            }}
+          >
+            <Spin
+              indicator={antIcon}
+              style={{
+                display: "flex",
+              }}
+            />
+          </div>
+        ) : (
+          <Fragment>
+            <DragDrop
+              choose={choose}
+              stateDND={stateDND}
+              selected={selected}
+              lastAutoSelectElem={lastAutoSelectElem}
+              handleDragEnd={handleDragEnd}
+              onclick={clickOnDrop}
+              onDelete={handleDeleteOnDND}
+            />
+            <OnMap
+              stations={stations}
+              stateDND={stateDND}
+              selected={selected}
+              onAddBeforSelected={handleAddBeforSelected}
+              onAddAfterSelected={handleAddAfterSelected}
+              lastAutoSelectElem={lastAutoSelectElem}
+              selectMarkerOnMap={clickOnMapMarker}
+            />
+            <Info
+              selected={selected}
+              distance={distance}
+              lastAutoSelectElem={lastAutoSelectElem}
+            />{" "}
+          </Fragment>
+        )}
       </Row>
     </div>
   );

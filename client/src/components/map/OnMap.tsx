@@ -1,7 +1,7 @@
 import React, { Fragment, useCallback, useMemo } from "react";
 import { Map, TileLayer, CircleMarker, Tooltip, Polyline } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
-import { Spin, Card, Col } from "antd";
+import { Card, Col } from "antd";
 import L from "leaflet";
 // Import leaflet context menu
 import "leaflet-contextmenu";
@@ -113,15 +113,7 @@ const OnMap = ({
     <Fragment>
       <Col span={12}>
         <Card bordered={true} title="Map">
-          {stations.length === 0 ? (
-            <Spin
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                margin: "30px",
-              }}
-            />
-          ) : (
+          {
             <Map
               //@ts-ignore
               ref={mapRef}
@@ -156,7 +148,7 @@ const OnMap = ({
                 ></Polyline>
               )}
             </Map>
-          )}
+          }
         </Card>
       </Col>
     </Fragment>
