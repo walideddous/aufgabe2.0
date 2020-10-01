@@ -4,16 +4,19 @@ import { Card, Col } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 
 // Import types
-import { TstateDND, Tchoose, Tstations, Tdistance } from "../type/Types";
+import { TstateDND, Tchoose, Tstations } from "../type/Types";
 
 // Declare Types
 interface TporpsDND {
   choose: Tchoose;
   stateDND: TstateDND;
-  distance: Tdistance[];
   selected: Tstations | undefined;
   lastAutoSelectElem: Tstations | undefined;
   onclick: (e: { id: string | number; name: string }, index: number) => void;
+  handleAddStopsOnCLick: (
+    e: { id: string | number; name: string },
+    index: number
+  ) => void;
   onDelete: (
     e: { id: string | number; name: string },
     SourceOrTarget: string,
@@ -24,10 +27,10 @@ interface TporpsDND {
 
 const DragDrop = ({
   choose,
-  distance,
   stateDND,
   selected,
   lastAutoSelectElem,
+  handleAddStopsOnCLick,
   handleDragEnd,
   onclick,
   onDelete,
@@ -51,6 +54,13 @@ const DragDrop = ({
       onDelete(e, SourceOrTarget, index);
     },
     [onDelete]
+  );
+
+  const addStopsOnCLick = useCallback(
+    (el: { id: string | number; name: string }, index: number) => {
+      handleAddStopsOnCLick(el, index);
+    },
+    [handleAddStopsOnCLick]
   );
 
   return (
@@ -81,7 +91,12 @@ const DragDrop = ({
                                 {...provided.draggableProps}
                                 {...provided.dragHandleProps}
                               >
-                                <span style={{ width: "90%", height: "30px" }}>
+                                <span
+                                  style={{ width: "90%", height: "30px" }}
+                                  onClick={() => {
+                                    addStopsOnCLick(el, index);
+                                  }}
+                                >
                                   {el.name}
                                 </span>
                                 {/*<Button

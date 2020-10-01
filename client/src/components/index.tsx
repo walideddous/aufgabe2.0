@@ -15,7 +15,6 @@ import { v4 } from "uuid";
 import { GRAPHQL_API, GET_STOPS_BY_MODES } from "../config/config";
 
 // Import composents
-import OnMap from "./map/OnMap";
 import Info from "./info/Info";
 import SearchInput from "./search/SearchInput";
 import DragDrop from "./dnd/DragDrop";
@@ -109,7 +108,13 @@ const Aufgabe: React.FC = () => {
   // Update the state of stateDND when you drag and drop
   useEffect(() => {
     if (lastAutoSelectElem) {
-      const vorschläge = calculateDistanceAndSort(lastAutoSelectElem, stations);
+      var vorschläge = calculateDistanceAndSort(lastAutoSelectElem, stations);
+      // Delete the repetition from the Suggestion Field
+      vorschläge = vorschläge.filter(
+        (el: any) =>
+          !stateDND.trajekt.items.map((el: any) => el.name).includes(el.to.name)
+      );
+
       setDistance([...vorschläge]);
 
       setStateDND((prev: any) => {
@@ -143,7 +148,7 @@ const Aufgabe: React.FC = () => {
         };
       });
     }
-  }, [lastAutoSelectElem, stations]);
+  }, [lastAutoSelectElem, stations, stateDND.trajekt.items]);
 
   // Select the Station when you click on the button to show the suggestion
   const clickOnDrop = useCallback(
@@ -151,7 +156,13 @@ const Aufgabe: React.FC = () => {
       const response = stations.filter((el) => el.name === e.name)[0];
       setSelected({ ...response, index });
       setlastAutoSelectElem(undefined);
-      const vorschläge = calculateDistanceAndSort(response, stations);
+      var vorschläge = calculateDistanceAndSort(response, stations);
+      // Delete the repetition from the Suggestion Field
+      vorschläge = vorschläge.filter(
+        (el: any) =>
+          !stateDND.trajekt.items.map((el: any) => el.name).includes(el.to.name)
+      );
+
       setDistance([...vorschläge]);
       setStateDND((prev: any) => {
         return {
@@ -184,7 +195,65 @@ const Aufgabe: React.FC = () => {
         };
       });
     },
-    [stations]
+    [stations, stateDND.trajekt.items]
+  );
+
+  // add the stations on Road Field when you click on button suggestion
+  const handleAddStopsOnCLick = useCallback(
+    (e: { id: string | number; name: string }, index: number) => {
+      const response = stations.filter((el, i) => el.name === e.name)[0];
+      setlastAutoSelectElem({ ...response });
+      setSelected(undefined);
+      var vorschläge = calculateDistanceAndSort(response, stations);
+      // Delete the repetition from the Suggestion Field
+      vorschläge = vorschläge.filter(
+        (el: any) =>
+          !stateDND.trajekt.items.map((el: any) => el.name).includes(el.to.name)
+      );
+      setDistance([...vorschläge]);
+
+      setStateDND((prev: any) => {
+        return {
+          ...prev,
+          trajekt: {
+            title: "Road",
+            items: [
+              ...prev.trajekt.items,
+              {
+                id: v4(),
+                name: e.name,
+              },
+            ],
+          },
+          vorschlag: {
+            title: "Suggestion",
+            items: [
+              {
+                id: v4(),
+                name: vorschläge[0].to.name,
+              },
+              {
+                id: v4(),
+                name: vorschläge[1].to.name,
+              },
+              {
+                id: v4(),
+                name: vorschläge[2].to.name,
+              },
+              {
+                id: v4(),
+                name: vorschläge[3].to.name,
+              },
+              {
+                id: v4(),
+                name: vorschläge[4].to.name,
+              },
+            ],
+          },
+        };
+      });
+    },
+    [stations, stateDND.trajekt.items]
   );
 
   // Delete the button from Drop Part
@@ -264,9 +333,14 @@ const Aufgabe: React.FC = () => {
     (elementSelected: Tstations) => {
       setlastAutoSelectElem({ ...elementSelected });
       setSelected(undefined);
-      const vorschläge = calculateDistanceAndSort(elementSelected, stations);
-      setDistance([...vorschläge]);
       setChoose(elementSelected.name);
+      var vorschläge = calculateDistanceAndSort(elementSelected, stations);
+      // Delete the repetition from the Suggestion Field
+      vorschläge = vorschläge.filter(
+        (el: any) =>
+          !stateDND.trajekt.items.map((el: any) => el.name).includes(el.to.name)
+      );
+      setDistance([...vorschläge]);
       setStateDND((prev: any) => {
         return {
           ...prev,
@@ -308,7 +382,7 @@ const Aufgabe: React.FC = () => {
         };
       });
     },
-    [stations]
+    [stations, stateDND.trajekt.items]
   );
 
   // To Drag and Drop from source to the destination
@@ -360,7 +434,12 @@ const Aufgabe: React.FC = () => {
       const response = stations.filter((el, i) => el.name === e)[0];
       setlastAutoSelectElem({ ...response });
       setSelected(undefined);
-      const vorschläge = calculateDistanceAndSort(response, stations);
+      var vorschläge = calculateDistanceAndSort(response, stations);
+      // Delete the repetition from the Suggestion Field
+      vorschläge = vorschläge.filter(
+        (el: any) =>
+          !stateDND.trajekt.items.map((el: any) => el.name).includes(el.to.name)
+      );
       setDistance([...vorschläge]);
 
       setStateDND((prev: any) => {
@@ -404,7 +483,7 @@ const Aufgabe: React.FC = () => {
         };
       });
     },
-    [stations]
+    [stations, stateDND.trajekt.items]
   );
 
   // Context menu to add the stop before the selected stops in the drop Menu
@@ -440,7 +519,12 @@ const Aufgabe: React.FC = () => {
       };
       setSelected({ ...newValue, index });
 
-      const vorschläge = calculateDistanceAndSort(newValue, stations);
+      var vorschläge = calculateDistanceAndSort(newValue, stations);
+      // Delete the repetition from the Suggestion Field
+      vorschläge = vorschläge.filter(
+        (el: any) =>
+          !stateDND.trajekt.items.map((el: any) => el.name).includes(el.to.name)
+      );
       setDistance([...vorschläge]);
       setStateDND((prev: any) => {
         return {
@@ -474,7 +558,7 @@ const Aufgabe: React.FC = () => {
       });
       setlastAutoSelectElem(undefined);
     },
-    [stations]
+    [stations, stateDND.trajekt.items]
   );
 
   // handle the drop menu to display the choosed Modes on Map
@@ -496,6 +580,22 @@ const Aufgabe: React.FC = () => {
     ),
     [handleDropDownMenu]
   );
+
+  // Reset and delete all
+  const clearAll = () => {
+    setSelected(undefined);
+    setlastAutoSelectElem(undefined);
+    setStateDND({
+      vorschlag: {
+        title: "Suggestion",
+        items: [],
+      },
+      trajekt: {
+        title: "Road",
+        items: [],
+      },
+    });
+  };
 
   return (
     <div className="Prototyp" style={{ position: "relative" }}>
@@ -553,6 +653,31 @@ const Aufgabe: React.FC = () => {
               ? "Select a Mode"
               : `Get the Data with modes ${modes}`}
           </button>
+          <button
+            style={
+              stateDND.trajekt.items.length
+                ? {
+                    margin: 20,
+                    backgroundColor: "red",
+                    color: "white",
+                    borderRadius: "5px",
+                    outline: "0",
+                    boxShadow: "0px 2px 2px lightgray",
+                  }
+                : {
+                    margin: 20,
+                    backgroundColor: "white",
+                    color: "black",
+                    borderRadius: "5px",
+                    outline: "0",
+                    boxShadow: "0px 2px 2px lightgray",
+                  }
+            }
+            disabled={stateDND.trajekt.items.length ? false : true}
+            onClick={clearAll}
+          >
+            Reset
+          </button>
         </div>
 
         {isSending ? (
@@ -577,30 +702,21 @@ const Aufgabe: React.FC = () => {
           <Fragment>
             <DragDrop
               choose={choose}
-              distance={distance}
               stateDND={stateDND}
               selected={selected}
               lastAutoSelectElem={lastAutoSelectElem}
+              handleAddStopsOnCLick={handleAddStopsOnCLick}
               handleDragEnd={handleDragEnd}
               onclick={clickOnDrop}
               onDelete={handleDeleteOnDND}
             />
-            {/*<OnMap
-              stations={stations}
-              stateDND={stateDND}
-              selected={selected}
-              onAddBeforSelected={handleAddBeforSelected}
-              onAddAfterSelected={handleAddAfterSelected}
-              lastAutoSelectElem={lastAutoSelectElem}
-              selectMarkerOnMap={clickOnMapMarker}
-            />*/}
             <NewMap
               stations={stations}
               stateDND={stateDND}
               selected={selected}
+              lastAutoSelectElem={lastAutoSelectElem}
               onAddBeforSelected={handleAddBeforSelected}
               onAddAfterSelected={handleAddAfterSelected}
-              lastAutoSelectElem={lastAutoSelectElem}
               selectMarkerOnMap={clickOnMapMarker}
             />
             <Info

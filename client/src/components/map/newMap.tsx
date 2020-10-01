@@ -86,7 +86,7 @@ const NewMap = ({
         : selected && !lastAutoSelectElem
         ? [selected.coord.WGS84.lat, selected.coord.WGS84.lon]
         : [position.lat, position.lng],
-      !lastAutoSelectElem && !selected ? position.zoom : 17
+      !lastAutoSelectElem && !selected ? position.zoom : 15
     );
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution:

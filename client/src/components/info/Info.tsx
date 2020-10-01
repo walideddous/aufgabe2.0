@@ -64,6 +64,14 @@ const Info = ({ selected, distance, lastAutoSelectElem }: TpropsInfo) => {
                       Between {selected.name} and {distance[2].to.name} is{" "}
                       {distance[2].distance.toFixed(3)} Km
                     </p>
+                    <p>
+                      Between {selected.name} and {distance[3].to.name} is{" "}
+                      {distance[3].distance.toFixed(3)} Km
+                    </p>
+                    <p>
+                      Between {selected.name} and {distance[4].to.name} is{" "}
+                      {distance[4].distance.toFixed(3)} Km
+                    </p>
                   </div>
                 )}
               </Fragment>
@@ -132,6 +140,16 @@ const Info = ({ selected, distance, lastAutoSelectElem }: TpropsInfo) => {
                     <p>
                       Between {lastAutoSelectElem.name} and{" "}
                       {distance[2].to.name} is {distance[2].distance.toFixed(3)}{" "}
+                      Km
+                    </p>
+                    <p>
+                      Between {lastAutoSelectElem.name} and{" "}
+                      {distance[3].to.name} is {distance[3].distance.toFixed(3)}{" "}
+                      Km
+                    </p>
+                    <p>
+                      Between {lastAutoSelectElem.name} and{" "}
+                      {distance[4].to.name} is {distance[4].distance.toFixed(3)}{" "}
                       Km
                     </p>
                   </div>
