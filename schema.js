@@ -1,6 +1,4 @@
 const MongoClient = require("mongodb").MongoClient;
-const assert = require("assert");
-const fs = require("fs");
 const {
   GraphQLObjectType,
   GraphQLString,

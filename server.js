@@ -8,11 +8,6 @@ const dotenv = require("dotenv");
 const { verify } = require("jsonwebtoken");
 const schema = require("./schema.js");
 
-// Import the data to test
-const result = JSON.parse(
-  fs.readFileSync(`${__dirname}/client/src/data/data.json`, "utf-8")
-);
-
 const app = express();
 
 // Load env vars
@@ -86,8 +81,23 @@ app.get("/data", (req, res) => {
     console.log("Mongo URI fehlt");
   }
 });
-app.get("/result", (rea, res) => {
-  res.json(result);
+app.post("/savedRoad", (req, res) => {
+  if (!req.body) {
+    return console.error("Req body not found");
+  }
+  var roadStringify = JSON.stringify(req.body);
+
+  fs.writeFile(`${__dirname}/data/savedRoad.json`, roadStringify, function (
+    err,
+    result
+  ) {
+    if (err) console.log("error", err);
+  });
+
+  res.json({
+    msg: "saved",
+    roadStringify,
+  });
 });
 
 const PORT = process.env.PORT || 5000;
