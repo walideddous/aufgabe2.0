@@ -662,6 +662,7 @@ const Aufgabe: React.FC = () => {
                     color: "white",
                     borderRadius: "5px",
                     outline: "0",
+                    cursor: "pointer",
                     boxShadow: "0px 2px 2px lightgray",
                   }
                 : {
