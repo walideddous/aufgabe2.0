@@ -115,14 +115,12 @@ const NewMap = ({
         color:
           (lastAutoSelectElem &&
             !selected &&
-            lastAutoSelectElem.name === el.name) ||
-          (lastAutoSelectElem && selected && selected.name === el.name) ||
-          (selected && !lastAutoSelectElem && selected.name === el.name)
+            lastAutoSelectElem._id === el._id) ||
+          (lastAutoSelectElem && selected && selected._id === el._id) ||
+          (selected && !lastAutoSelectElem && selected._id === el._id)
             ? "red"
             : stateDND.vorschlag.items.length &&
-              stateDND.vorschlag.items
-                .map((el) => el.name.toLowerCase())
-                .includes(el.name.toLowerCase())
+              stateDND.vorschlag.items.map((el) => el._id).includes(el._id)
             ? "green"
             : "blue",
       });
@@ -134,6 +132,7 @@ const NewMap = ({
     });
     myMap.addLayer(markers);
 
+    L.control.layers(undefined, { "Show the Marker": markers }).addTo(myMap);
     L.polyline(getPathFromTrajekt(stateDND, stations), {
       color: "red",
     }).addTo(myMap);

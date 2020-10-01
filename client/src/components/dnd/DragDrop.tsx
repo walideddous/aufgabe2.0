@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { Card, Col } from "antd";
-import { DeleteOutlined } from "@ant-design/icons";
+import { DeleteOutlined, ArrowUpOutlined } from "@ant-design/icons";
 
 // Import types
 import { TstateDND, Tchoose, Tstations } from "../type/Types";
@@ -12,16 +12,9 @@ interface TporpsDND {
   stateDND: TstateDND;
   selected: Tstations | undefined;
   lastAutoSelectElem: Tstations | undefined;
-  onclick: (e: { id: string | number; name: string }, index: number) => void;
-  handleAddStopsOnCLick: (
-    e: { id: string | number; name: string },
-    index: number
-  ) => void;
-  onDelete: (
-    e: { id: string | number; name: string },
-    SourceOrTarget: string,
-    index: number
-  ) => void;
+  onclick: (e: any, index: number) => void;
+  handleAddStopsOnCLick: (e: any) => void;
+  onDelete: (e: any, SourceOrTarget: string, index: number) => void;
   handleDragEnd: (e: any) => void;
 }
 
@@ -38,7 +31,7 @@ const DragDrop = ({
   const [clicked, setClicked] = useState(false);
 
   const handleClick = useCallback(
-    (e: { id: string | number; name: string }, index: number) => {
+    (e: any, index: number) => {
       onclick(e, index);
       setClicked(!clicked);
     },
@@ -46,19 +39,15 @@ const DragDrop = ({
   );
 
   const handleDelete = useCallback(
-    (
-      e: { id: string | number; name: string },
-      SourceOrTarget: string,
-      index: number
-    ) => {
+    (e: any, SourceOrTarget: string, index: number) => {
       onDelete(e, SourceOrTarget, index);
     },
     [onDelete]
   );
 
   const addStopsOnCLick = useCallback(
-    (el: { id: string | number; name: string }, index: number) => {
-      handleAddStopsOnCLick(el, index);
+    (el: any) => {
+      handleAddStopsOnCLick(el);
     },
     [handleAddStopsOnCLick]
   );
@@ -67,7 +56,11 @@ const DragDrop = ({
     <div className="App">
       <DragDropContext onDragEnd={handleDragEnd}>
         <Col span={12}>
-          <Card bordered={true} title={stateDND.vorschlag.title}>
+          <Card
+            bordered={true}
+            title={stateDND.vorschlag.title}
+            style={{ height: "35vh" }}
+          >
             <Droppable droppableId={"vorschlag"}>
               {(provided: any) => {
                 return (
@@ -94,23 +87,25 @@ const DragDrop = ({
                                 <span
                                   style={{ width: "90%", height: "30px" }}
                                   onClick={() => {
-                                    addStopsOnCLick(el, index);
+                                    addStopsOnCLick(el);
                                   }}
                                 >
-                                  {el.name}
+                                  {el.name} "{el.distance.toFixed(3)} Km"
                                 </span>
-                                {/*<Button
-                                  type="dashed"
-                                  shape="round"
-                                  icon={<DeleteOutlined />}
-                                  onClick={() => {
-                                    handleDelete(
-                                      el,
-                                      stateDND.vorschlag.title,
-                                      index
-                                    );
+                                <button
+                                  style={{
+                                    backgroundColor: "white",
+                                    color: "#3949ab",
+                                    borderRadius: "5px",
+                                    outline: "0",
                                   }}
-                                />*/}
+                                >
+                                  <ArrowUpOutlined
+                                    style={{
+                                      transform: `rotate(${el.angle}deg)`,
+                                    }}
+                                  />
+                                </button>
                               </div>
                             );
                           }}
@@ -125,7 +120,11 @@ const DragDrop = ({
           </Card>
         </Col>
         <Col span={12}>
-          <Card bordered={true} title={stateDND.trajekt.title}>
+          <Card
+            bordered={true}
+            title={stateDND.trajekt.title}
+            style={{ height: "35vh", overflowY: "scroll" }}
+          >
             <Droppable droppableId={"trajekt"}>
               {(provided: any) => {
                 return (
@@ -151,10 +150,10 @@ const DragDrop = ({
                                       index) ||
                                   (lastAutoSelectElem &&
                                     selected &&
-                                    selected.name === el.name) ||
+                                    selected._id === el._id) ||
                                   (selected &&
                                     !lastAutoSelectElem &&
-                                    selected.name === el.name)
+                                    selected._id === el._id)
                                     ? "item-highlighted"
                                     : "item"
                                 }

@@ -1,10 +1,4 @@
-import {
-  GET_SUCCESS,
-  SELECT_BUTTON,
-  getDataActions,
-  selectButtonActions,
-} from "./types";
-import { data } from "../data/data";
+import { SELECT_BUTTON, selectButtonActions } from "./types";
 /*
 export function getData(): getDataActions {
   return {

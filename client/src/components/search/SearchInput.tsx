@@ -43,11 +43,11 @@ const SearchInput = ({ stations, handleEvent }: TporpsSearchInput) => {
       >
         {stations &&
           stations
-            .filter((el: any) =>
+            .filter((el: Tstations) =>
               el.name.toLowerCase().includes(search.toLowerCase())
             )
-            .map((el: { name: string }, i: number) => (
-              <Option value={el.name} key={i}>
+            .map((el: Tstations) => (
+              <Option value={el.name} key={el._id}>
                 <i
                   className="fas fa-subway"
                   style={{ color: "#1890ff", margin: "0 10px" }}

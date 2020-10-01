@@ -5,11 +5,11 @@ export const getPathFromTrajekt = (
   stateDND: TstateDND,
   stations: Tstations[]
 ) => {
-  const getTrajekt = stateDND.trajekt.items.map((el: any) => el.name);
+  const getTrajekt = stateDND.trajekt.items.map((el: any) => el._id);
   let result = [];
   for (let i = 0; i < getTrajekt.length; i++) {
     for (let j = 0; j < stations.length; j++) {
-      if (getTrajekt[i] === stations[j].name) {
+      if (getTrajekt[i] === stations[j]._id) {
         result.push(stations[j]);
       }
     }

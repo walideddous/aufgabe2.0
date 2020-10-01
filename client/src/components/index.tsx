@@ -18,7 +18,7 @@ import Info from "./info/Info";
 import SearchInput from "./search/SearchInput";
 import DragDrop from "./dnd/DragDrop";
 
-// The new map to test map without react-leaflet
+// The new map created with leaflet
 import NewMap from "./map/newMap";
 
 // Import the types of the state
@@ -111,7 +111,7 @@ const Aufgabe: React.FC = () => {
       // Delete the repetition from the Suggestion Field
       vorschläge = vorschläge.filter(
         (el: any) =>
-          !stateDND.trajekt.items.map((el: any) => el.name).includes(el.to.name)
+          !stateDND.trajekt.items.map((el: any) => el._id).includes(el.to._id)
       );
 
       setDistance([...vorschläge]);
@@ -124,18 +124,28 @@ const Aufgabe: React.FC = () => {
             items: [
               {
                 ...vorschläge[0].to,
+                angle: vorschläge[0].angle,
+                distance: vorschläge[0].distance,
               },
               {
                 ...vorschläge[1].to,
+                angle: vorschläge[1].angle,
+                distance: vorschläge[1].distance,
               },
               {
                 ...vorschläge[2].to,
+                angle: vorschläge[2].angle,
+                distance: vorschläge[2].distance,
               },
               {
                 ...vorschläge[3].to,
+                angle: vorschläge[3].angle,
+                distance: vorschläge[3].distance,
               },
               {
                 ...vorschläge[4].to,
+                angle: vorschläge[4].angle,
+                distance: vorschläge[4].distance,
               },
             ],
           },
@@ -146,15 +156,15 @@ const Aufgabe: React.FC = () => {
 
   // Select the Station when you click on the button to show the suggestion
   const clickOnDrop = useCallback(
-    (e: { id: string | number; name: string }, index: number) => {
-      const response = stations.filter((el) => el.name === e.name)[0];
+    (e: any, index: number) => {
+      const response = stations.filter((el) => el._id === e._id)[0];
       setSelected({ ...response, index });
       setlastAutoSelectElem(undefined);
       var vorschläge = calculateDistanceAndSort(response, stations);
       // Delete the repetition from the Suggestion Field
       vorschläge = vorschläge.filter(
         (el: any) =>
-          !stateDND.trajekt.items.map((el: any) => el.name).includes(el.to.name)
+          !stateDND.trajekt.items.map((el: any) => el._id).includes(el.to._id)
       );
 
       setDistance([...vorschläge]);
@@ -166,18 +176,28 @@ const Aufgabe: React.FC = () => {
             items: [
               {
                 ...vorschläge[0].to,
+                angle: vorschläge[0].angle,
+                distance: vorschläge[0].distance,
               },
               {
                 ...vorschläge[1].to,
+                angle: vorschläge[1].angle,
+                distance: vorschläge[1].distance,
               },
               {
                 ...vorschläge[2].to,
+                angle: vorschläge[2].angle,
+                distance: vorschläge[2].distance,
               },
               {
                 ...vorschläge[3].to,
+                angle: vorschläge[3].angle,
+                distance: vorschläge[3].distance,
               },
               {
                 ...vorschläge[4].to,
+                angle: vorschläge[4].angle,
+                distance: vorschläge[4].distance,
               },
             ],
           },
@@ -189,15 +209,15 @@ const Aufgabe: React.FC = () => {
 
   // add the stations on Road Field when you click on button suggestion
   const handleAddStopsOnCLick = useCallback(
-    (e: { id: string | number; name: string }, index: number) => {
-      const response = stations.filter((el, i) => el.name === e.name)[0];
+    (e: any) => {
+      const response = stations.filter((el) => el._id === e._id)[0];
       setlastAutoSelectElem({ ...response });
       setSelected(undefined);
       var vorschläge = calculateDistanceAndSort(response, stations);
       // Delete the repetition from the Suggestion Field
       vorschläge = vorschläge.filter(
         (el: any) =>
-          !stateDND.trajekt.items.map((el: any) => el.name).includes(el.to.name)
+          !stateDND.trajekt.items.map((el: any) => el._id).includes(el.to._id)
       );
       setDistance([...vorschläge]);
 
@@ -218,18 +238,28 @@ const Aufgabe: React.FC = () => {
             items: [
               {
                 ...vorschläge[0].to,
+                angle: vorschläge[0].angle,
+                distance: vorschläge[0].distance,
               },
               {
                 ...vorschläge[1].to,
+                angle: vorschläge[1].angle,
+                distance: vorschläge[1].distance,
               },
               {
                 ...vorschläge[2].to,
+                angle: vorschläge[2].angle,
+                distance: vorschläge[2].distance,
               },
               {
                 ...vorschläge[3].to,
+                angle: vorschläge[3].angle,
+                distance: vorschläge[3].distance,
               },
               {
                 ...vorschläge[4].to,
+                angle: vorschläge[4].angle,
+                distance: vorschläge[4].distance,
               },
             ],
           },
@@ -241,21 +271,17 @@ const Aufgabe: React.FC = () => {
 
   // Delete the button from Drop Part
   const handleDeleteOnDND = useCallback(
-    (
-      e: { id: string | number; name: string },
-      SourceOrTarget: string,
-      index: number
-    ) => {
+    (e: any, SourceOrTarget: string, index: number) => {
       if (SourceOrTarget === "Road") {
         if (
-          (e.name === lastAutoSelectElem?.name || e.name === selected?.name) &&
+          (e._id === lastAutoSelectElem?._id || e._id === selected?._id) &&
           stateDND.trajekt.items[index] === e &&
           stateDND.trajekt.items.length > 1
         ) {
           let newValue =
             stateDND.trajekt.items[stateDND.trajekt.items.length - 2];
           setlastAutoSelectElem(
-            stations.filter((el) => el.name === newValue.name)[0]
+            stations.filter((el) => el._id === newValue._id)[0]
           );
           setSelected(undefined);
         }
@@ -269,20 +295,7 @@ const Aufgabe: React.FC = () => {
             trajekt: {
               title: "Road",
               items: stateDND.trajekt.items.filter(
-                (item: any) => item.id !== e.id
-              ),
-            },
-          };
-        });
-      }
-      if (SourceOrTarget === "Suggestion") {
-        setStateDND((prev: any) => {
-          return {
-            ...prev,
-            vorschlag: {
-              title: "Suggestion",
-              items: stateDND.vorschlag.items.filter(
-                (item: any) => item.id !== e.id
+                (item: any) => item._id !== e._id
               ),
             },
           };
@@ -302,13 +315,7 @@ const Aufgabe: React.FC = () => {
         });
       }
     },
-    [
-      stations,
-      lastAutoSelectElem,
-      selected,
-      stateDND.trajekt.items,
-      stateDND.vorschlag.items,
-    ]
+    [stations, lastAutoSelectElem, selected, stateDND.trajekt.items]
   );
 
   // to choose the station from the input options
@@ -321,7 +328,7 @@ const Aufgabe: React.FC = () => {
       // Delete the repetition from the Suggestion Field
       vorschläge = vorschläge.filter(
         (el: any) =>
-          !stateDND.trajekt.items.map((el: any) => el.name).includes(el.to.name)
+          !stateDND.trajekt.items.map((el: any) => el._id).includes(el.to._id)
       );
       setDistance([...vorschläge]);
       setStateDND((prev: any) => {
@@ -341,18 +348,28 @@ const Aufgabe: React.FC = () => {
             items: [
               {
                 ...vorschläge[0].to,
+                angle: vorschläge[0].angle,
+                distance: vorschläge[0].distance,
               },
               {
                 ...vorschläge[1].to,
+                angle: vorschläge[1].angle,
+                distance: vorschläge[1].distance,
               },
               {
                 ...vorschläge[2].to,
+                angle: vorschläge[2].angle,
+                distance: vorschläge[2].distance,
               },
               {
                 ...vorschläge[3].to,
+                angle: vorschläge[3].angle,
+                distance: vorschläge[3].distance,
               },
               {
                 ...vorschläge[4].to,
+                angle: vorschläge[4].angle,
+                distance: vorschläge[4].distance,
               },
             ],
           },
@@ -396,8 +413,8 @@ const Aufgabe: React.FC = () => {
       let lastElem: any;
       if (stateDND.trajekt.items.length) {
         lastElem = stateDND.trajekt.items[stateDND.trajekt.items.length - 1];
-        if (lastElem.name) {
-          lastElem = stations.filter((el) => el.name === lastElem.name)[0];
+        if (lastElem._id) {
+          lastElem = stations.filter((el) => el._id === lastElem._id)[0];
           setlastAutoSelectElem({ ...lastElem });
         }
       }
@@ -408,14 +425,14 @@ const Aufgabe: React.FC = () => {
   // Context menu to add the stop After the selected stops in the drop Menu
   const handleAddAfterSelected = useCallback(
     (e: string) => {
-      const response = stations.filter((el, i) => el.name === e)[0];
+      const response = stations.filter((el) => el.name === e)[0];
       setlastAutoSelectElem({ ...response });
       setSelected(undefined);
-      var vorschläge = calculateDistanceAndSort(response, stations);
+      var vorschläge = calculateDistanceAndSort(lastAutoSelectElem, stations);
       // Delete the repetition from the Suggestion Field
       vorschläge = vorschläge.filter(
         (el: any) =>
-          !stateDND.trajekt.items.map((el: any) => el.name).includes(el.to.name)
+          !stateDND.trajekt.items.map((el: any) => el._id).includes(el.to._id)
       );
       setDistance([...vorschläge]);
 
@@ -436,25 +453,35 @@ const Aufgabe: React.FC = () => {
             items: [
               {
                 ...vorschläge[0].to,
+                angle: vorschläge[0].angle,
+                distance: vorschläge[0].distance,
               },
               {
                 ...vorschläge[1].to,
+                angle: vorschläge[1].angle,
+                distance: vorschläge[1].distance,
               },
               {
                 ...vorschläge[2].to,
+                angle: vorschläge[2].angle,
+                distance: vorschläge[2].distance,
               },
               {
                 ...vorschläge[3].to,
+                angle: vorschläge[3].angle,
+                distance: vorschläge[3].distance,
               },
               {
                 ...vorschläge[4].to,
+                angle: vorschläge[4].angle,
+                distance: vorschläge[4].distance,
               },
             ],
           },
         };
       });
     },
-    [stations, stateDND.trajekt.items]
+    [stations, stateDND.trajekt.items, lastAutoSelectElem]
   );
 
   // Context menu to add the stop before the selected stops in the drop Menu
@@ -497,7 +524,7 @@ const Aufgabe: React.FC = () => {
       // Delete the repetition from the Suggestion Field
       vorschläge = vorschläge.filter(
         (el: any) =>
-          !stateDND.trajekt.items.map((el: any) => el.name).includes(el.to.name)
+          !stateDND.trajekt.items.map((el: any) => el._id).includes(el.to._id)
       );
       setDistance([...vorschläge]);
       setStateDND((prev: any) => {
@@ -508,18 +535,28 @@ const Aufgabe: React.FC = () => {
             items: [
               {
                 ...vorschläge[0].to,
+                angle: vorschläge[0].angle,
+                distance: vorschläge[0].distance,
               },
               {
                 ...vorschläge[1].to,
+                angle: vorschläge[1].angle,
+                distance: vorschläge[1].distance,
               },
               {
                 ...vorschläge[2].to,
+                angle: vorschläge[2].angle,
+                distance: vorschläge[2].distance,
               },
               {
                 ...vorschläge[3].to,
+                angle: vorschläge[3].angle,
+                distance: vorschläge[3].distance,
               },
               {
                 ...vorschläge[4].to,
+                angle: vorschläge[4].angle,
+                distance: vorschläge[4].distance,
               },
             ],
           },
@@ -551,7 +588,7 @@ const Aufgabe: React.FC = () => {
   );
 
   // Reset and delete all
-  const clearAll = () => {
+  const clearAll = useCallback(() => {
     setSelected(undefined);
     setlastAutoSelectElem(undefined);
     setStateDND({
@@ -564,11 +601,34 @@ const Aufgabe: React.FC = () => {
         items: [],
       },
     });
-  };
+  }, []);
+
+  // Save the road
+  const saveRoad = useCallback(async () => {
+    if (isSending) return;
+    // update state
+    setIsSending(true);
+    // send the actual request
+    try {
+      console.log("send the saved Road");
+      // REST_API
+      const result = await authAxios.post("/savedRoad", stateDND.trajekt.items);
+
+      if (!result) {
+        console.error("Result not found");
+      }
+
+      console.log(result.data.msg);
+    } catch (error) {
+      console.error(error, "error from trycatch");
+    }
+    // once the request is sent, update state again
+    setIsSending(false);
+  }, [stateDND.trajekt.items, isSending]);
 
   return (
     <div className="Prototyp" style={{ position: "relative" }}>
-      <Row gutter={[14, 14]}>
+      <Row gutter={[8, 8]}>
         <div
           style={{
             width: "100%",
@@ -648,8 +708,33 @@ const Aufgabe: React.FC = () => {
           >
             Reset
           </button>
+          <button
+            style={
+              stateDND.trajekt.items.length
+                ? {
+                    margin: 20,
+                    backgroundColor: "green",
+                    color: "white",
+                    borderRadius: "5px",
+                    outline: "0",
+                    cursor: "pointer",
+                    boxShadow: "0px 2px 2px lightgray",
+                  }
+                : {
+                    margin: 20,
+                    backgroundColor: "white",
+                    color: "black",
+                    borderRadius: "5px",
+                    outline: "0",
+                    boxShadow: "0px 2px 2px lightgray",
+                  }
+            }
+            disabled={stateDND.trajekt.items.length ? false : true}
+            onClick={saveRoad}
+          >
+            Save the road
+          </button>
         </div>
-
         {isSending ? (
           <div
             style={{

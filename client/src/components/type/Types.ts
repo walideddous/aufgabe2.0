@@ -34,14 +34,14 @@ export interface TstateDND {
   vorschlag: {
     title: string;
     items: {
-      id: number;
+      _id: string;
       name: string;
     }[];
   };
   trajekt: {
     title: string;
     items: {
-      id: number;
+      _id: string;
       name: string;
     }[];
   };
