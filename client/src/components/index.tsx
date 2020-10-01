@@ -9,7 +9,6 @@ import axios from "axios";
 import { Row, Menu, Dropdown, Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { DownOutlined } from "@ant-design/icons";
-import { v4 } from "uuid";
 
 // Import const values to connect with graphQL
 import { GRAPHQL_API, GET_STOPS_BY_MODES } from "../config/config";
@@ -124,24 +123,19 @@ const Aufgabe: React.FC = () => {
             title: "Suggestion",
             items: [
               {
-                id: v4(),
-                name: vorschläge[0].to.name,
+                ...vorschläge[0].to,
               },
               {
-                id: v4(),
-                name: vorschläge[1].to.name,
+                ...vorschläge[1].to,
               },
               {
-                id: v4(),
-                name: vorschläge[2].to.name,
+                ...vorschläge[2].to,
               },
               {
-                id: v4(),
-                name: vorschläge[3].to.name,
+                ...vorschläge[3].to,
               },
               {
-                id: v4(),
-                name: vorschläge[4].to.name,
+                ...vorschläge[4].to,
               },
             ],
           },
@@ -171,24 +165,19 @@ const Aufgabe: React.FC = () => {
             title: "Suggestion",
             items: [
               {
-                id: v4(),
-                name: vorschläge[0].to.name,
+                ...vorschläge[0].to,
               },
               {
-                id: v4(),
-                name: vorschläge[1].to.name,
+                ...vorschläge[1].to,
               },
               {
-                id: v4(),
-                name: vorschläge[2].to.name,
+                ...vorschläge[2].to,
               },
               {
-                id: v4(),
-                name: vorschläge[3].to.name,
+                ...vorschläge[3].to,
               },
               {
-                id: v4(),
-                name: vorschläge[4].to.name,
+                ...vorschläge[4].to,
               },
             ],
           },
@@ -220,8 +209,7 @@ const Aufgabe: React.FC = () => {
             items: [
               ...prev.trajekt.items,
               {
-                id: v4(),
-                name: e.name,
+                ...response,
               },
             ],
           },
@@ -229,24 +217,19 @@ const Aufgabe: React.FC = () => {
             title: "Suggestion",
             items: [
               {
-                id: v4(),
-                name: vorschläge[0].to.name,
+                ...vorschläge[0].to,
               },
               {
-                id: v4(),
-                name: vorschläge[1].to.name,
+                ...vorschläge[1].to,
               },
               {
-                id: v4(),
-                name: vorschläge[2].to.name,
+                ...vorschläge[2].to,
               },
               {
-                id: v4(),
-                name: vorschläge[3].to.name,
+                ...vorschläge[3].to,
               },
               {
-                id: v4(),
-                name: vorschläge[4].to.name,
+                ...vorschläge[4].to,
               },
             ],
           },
@@ -349,8 +332,7 @@ const Aufgabe: React.FC = () => {
             items: [
               ...prev.trajekt.items,
               {
-                id: v4(),
-                name: elementSelected.name,
+                ...elementSelected,
               },
             ],
           },
@@ -358,24 +340,19 @@ const Aufgabe: React.FC = () => {
             title: "Suggestion",
             items: [
               {
-                id: v4(),
-                name: vorschläge[0].to.name,
+                ...vorschläge[0].to,
               },
               {
-                id: v4(),
-                name: vorschläge[1].to.name,
+                ...vorschläge[1].to,
               },
               {
-                id: v4(),
-                name: vorschläge[2].to.name,
+                ...vorschläge[2].to,
               },
               {
-                id: v4(),
-                name: vorschläge[3].to.name,
+                ...vorschläge[3].to,
               },
               {
-                id: v4(),
-                name: vorschläge[4].to.name,
+                ...vorschläge[4].to,
               },
             ],
           },
@@ -450,8 +427,7 @@ const Aufgabe: React.FC = () => {
             items: [
               ...prev.trajekt.items,
               {
-                id: v4(),
-                name: e,
+                ...response,
               },
             ],
           },
@@ -459,24 +435,19 @@ const Aufgabe: React.FC = () => {
             title: "Suggestion",
             items: [
               {
-                id: v4(),
-                name: vorschläge[0].to.name,
+                ...vorschläge[0].to,
               },
               {
-                id: v4(),
-                name: vorschläge[1].to.name,
+                ...vorschläge[1].to,
               },
               {
-                id: v4(),
-                name: vorschläge[2].to.name,
+                ...vorschläge[2].to,
               },
               {
-                id: v4(),
-                name: vorschläge[3].to.name,
+                ...vorschläge[3].to,
               },
               {
-                id: v4(),
-                name: vorschläge[4].to.name,
+                ...vorschläge[4].to,
               },
             ],
           },
@@ -487,25 +458,28 @@ const Aufgabe: React.FC = () => {
   );
 
   // Context menu to add the stop before the selected stops in the drop Menu
-  const handleAddBeforSelected = useCallback((e: string) => {
-    setStateDND((prev: any) => {
-      return {
-        ...prev,
-        trajekt: {
-          title: "Road",
-          items: prev.trajekt.items
-            .filter(
-              (el: any, index: number, tab: any) => index !== tab.length - 1
-            )
-            .concat({
-              id: v4(),
-              name: e,
-            })
-            .concat(prev.trajekt.items[prev.trajekt.items.length - 1]),
-        },
-      };
-    });
-  }, []);
+  const handleAddBeforSelected = useCallback(
+    (e: string) => {
+      const response = stations.filter((el, i) => el.name === e)[0];
+      setStateDND((prev: any) => {
+        return {
+          ...prev,
+          trajekt: {
+            title: "Road",
+            items: prev.trajekt.items
+              .filter(
+                (el: any, index: number, tab: any) => index !== tab.length - 1
+              )
+              .concat({
+                ...response,
+              })
+              .concat(prev.trajekt.items[prev.trajekt.items.length - 1]),
+          },
+        };
+      });
+    },
+    [stations]
+  );
 
   // Click on Marker
   const clickOnMapMarker = useCallback(
@@ -533,24 +507,19 @@ const Aufgabe: React.FC = () => {
             title: "Suggestion",
             items: [
               {
-                id: v4(),
-                name: vorschläge[0].to.name,
+                ...vorschläge[0].to,
               },
               {
-                id: v4(),
-                name: vorschläge[1].to.name,
+                ...vorschläge[1].to,
               },
               {
-                id: v4(),
-                name: vorschläge[2].to.name,
+                ...vorschläge[2].to,
               },
               {
-                id: v4(),
-                name: vorschläge[3].to.name,
+                ...vorschläge[3].to,
               },
               {
-                id: v4(),
-                name: vorschläge[4].to.name,
+                ...vorschläge[4].to,
               },
             ],
           },

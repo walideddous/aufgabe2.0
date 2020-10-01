@@ -79,9 +79,9 @@ const DragDrop = ({
                     {stateDND.vorschlag.items.map((el: any, index: number) => {
                       return (
                         <Draggable
-                          key={el.id}
+                          key={el._id}
                           index={index}
-                          draggableId={el.id}
+                          draggableId={el._id}
                         >
                           {(provided) => {
                             return (
@@ -137,9 +137,9 @@ const DragDrop = ({
                     {stateDND.trajekt.items.map((el: any, index: number) => {
                       return (
                         <Draggable
-                          key={el.id}
+                          key={el._id}
                           index={index}
-                          draggableId={el.id}
+                          draggableId={el._id}
                         >
                           {(provided) => {
                             return (
