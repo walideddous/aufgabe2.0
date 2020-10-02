@@ -21,6 +21,7 @@ interface TpropsOnMap {
   lastAutoSelectElem: Tstations | undefined;
   onAddBeforSelected: (e: string) => void;
   onAddAfterSelected: (e: string) => void;
+  onDeleteMarkerFromRoad: (e: string) => void;
   selectMarkerOnMap: (el: Tstations, index: number) => void;
 }
 
@@ -31,6 +32,7 @@ const NewMap = ({
   lastAutoSelectElem,
   onAddAfterSelected,
   onAddBeforSelected,
+  onDeleteMarkerFromRoad,
   selectMarkerOnMap,
 }: TpropsOnMap) => {
   // Icon per default
@@ -64,6 +66,13 @@ const NewMap = ({
     [onAddAfterSelected]
   );
 
+  const deleteMarkerFromRoad = useCallback(
+    (e: any) => {
+      onDeleteMarkerFromRoad(e.relatedTarget._tooltip._content);
+    },
+    [onDeleteMarkerFromRoad]
+  );
+
   // Showing the map
   useEffect(() => {
     const MarkerPositions = stations.map((el: any) => {
@@ -86,7 +95,7 @@ const NewMap = ({
         : selected && !lastAutoSelectElem
         ? [selected.coord.WGS84.lat, selected.coord.WGS84.lon]
         : [position.lat, position.lng],
-      !lastAutoSelectElem && !selected ? position.zoom : 15
+      !lastAutoSelectElem && !selected ? position.zoom : 14
     );
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution:
@@ -110,6 +119,11 @@ const NewMap = ({
           {
             text: "Add after the highlighted stations",
             callback: addAfterSelected,
+          },
+          {
+            text: "Delete",
+            color: "red",
+            callback: deleteMarkerFromRoad,
           },
         ],
         color:
@@ -140,9 +154,9 @@ const NewMap = ({
 
   return (
     <Fragment>
-      <Col span={12}>
+      <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
         <Card bordered={true} title="Map">
-          <div id="mapId" style={{ height: "60vh" }}></div>
+          <div id="mapId" style={{ height: "700px" }}></div>
         </Card>
       </Col>
     </Fragment>

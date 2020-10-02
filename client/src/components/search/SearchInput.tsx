@@ -33,7 +33,7 @@ const SearchInput = ({ stations, handleEvent }: TporpsSearchInput) => {
   return (
     <Fragment>
       <AutoComplete
-        style={{ width: "48%", margin: 20 }}
+        style={{ width: "98%", margin: 20 }}
         onSearch={handleSearch}
         onSelect={onSelect}
         onChange={(e) => handleChange(e)}
