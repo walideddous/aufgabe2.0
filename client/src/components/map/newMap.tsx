@@ -1,4 +1,10 @@
-import React, { Fragment, useMemo, useEffect, useCallback } from "react";
+import React, {
+  Fragment,
+  useMemo,
+  useEffect,
+  useCallback,
+  useRef,
+} from "react";
 import { Card, Col } from "antd";
 import * as L from "leaflet";
 
@@ -35,8 +41,8 @@ const NewMap = ({
   onDeleteMarkerFromRoad,
   selectMarkerOnMap,
 }: TpropsOnMap) => {
-  // Icon per default
-  L.Icon.Default.imagePath = "https://unpkg.com/leaflet@1.5.0/dist/images/";
+  const stationsRef = useRef();
+
   // Center the Map
   const position = useMemo(() => {
     return {
@@ -75,7 +81,24 @@ const NewMap = ({
 
   // Showing the map
   useEffect(() => {
-    const MarkerPositions = stations.map((el: any) => {
+    //@ts-ignore
+    stationsRef.current = stations;
+    if (stationsRef.current) {
+      //@ts-ignore
+      stationsRef.current = stationsRef.current
+        .filter(
+          (el: any) =>
+            !stateDND.trajekt.items.map((el: any) => el._id).includes(el._id)
+        )
+        .map((el: any) => {
+          return {
+            ...el,
+            coord: { WGS84: [el.coord.WGS84.lat, el.coord.WGS84.lon] },
+          };
+        });
+    }
+
+    const RoadMarkers = stateDND.trajekt.items.map((el: any) => {
       return {
         ...el,
         coord: { WGS84: [el.coord.WGS84.lat, el.coord.WGS84.lon] },
@@ -104,7 +127,8 @@ const NewMap = ({
     }).addTo(myMap);
 
     var markers = new L.MarkerClusterGroup();
-    MarkerPositions.forEach((el: any, index: number) => {
+    //@ts-ignore
+    stationsRef.current.forEach((el: any, index: number) => {
       const marker = L.circleMarker(el.coord.WGS84, {
         //@ts-ignore
         contextmenu: true,
@@ -144,12 +168,60 @@ const NewMap = ({
 
       markers.addLayer(marker);
     });
-    myMap.addLayer(markers);
 
-    L.control.layers(undefined, { "Show the Marker": markers }).addTo(myMap);
-    L.polyline(getPathFromTrajekt(stateDND, stations), {
+    const Polyline = L.polyline(getPathFromTrajekt(RoadMarkers), {
       color: "red",
     }).addTo(myMap);
+
+    var markers2 = new L.MarkerClusterGroup();
+    RoadMarkers.forEach((el: any, index: number) => {
+      const marker = L.circleMarker(el.coord.WGS84, {
+        //@ts-ignore
+        contextmenu: true,
+        contextmenuWidth: "200",
+        contextmenuInheritItems: false,
+        contextmenuItems: [
+          { text: "Close" },
+          {
+            text: "Add before the highlighted stations",
+            callback: addBeforSelected,
+          },
+          {
+            text: "Add after the highlighted stations",
+            callback: addAfterSelected,
+          },
+          {
+            text: "Delete",
+            color: "red",
+            callback: deleteMarkerFromRoad,
+          },
+        ],
+        color:
+          (lastAutoSelectElem &&
+            !selected &&
+            lastAutoSelectElem._id === el._id) ||
+          (lastAutoSelectElem && selected && selected._id === el._id) ||
+          (selected && !lastAutoSelectElem && selected._id === el._id)
+            ? "red"
+            : stateDND.vorschlag.items.length &&
+              stateDND.vorschlag.items.map((el) => el._id).includes(el._id)
+            ? "green"
+            : "blue",
+      });
+
+      marker.bindTooltip(el.name);
+      marker.on("click", () => clickOnMarker(el, index));
+
+      markers2.addLayer(marker);
+    });
+
+    L.layerGroup([markers, markers2]).addLayer(Polyline).addTo(myMap);
+
+    L.control
+      .layers(undefined, {
+        "Show the Road": markers,
+      })
+      .addTo(myMap);
   }, [stations, selected, lastAutoSelectElem, stateDND]);
 
   return (

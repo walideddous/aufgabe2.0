@@ -137,7 +137,7 @@ const OnMap = ({
               </MarkerClusterGroup>
               {stateDND.trajekt.items.length && (
                 <Polyline
-                  positions={getPathFromTrajekt(stateDND, stations)}
+                  positions={getPathFromTrajekt(stateDND)}
                   color="red"
                 ></Polyline>
               )}

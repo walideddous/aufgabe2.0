@@ -315,12 +315,13 @@ const Aufgabe: React.FC = () => {
       ) {
         return;
       }
-
       const itemCopy = {
         ...getProperty(stateDND, source.droppableId).items[source.index],
       };
+
       setStateDND((prev) => {
         prev = { ...prev };
+
         // Remove from previous items array
         getProperty(prev, source.droppableId).items.splice(source.index, 1);
 
@@ -330,20 +331,12 @@ const Aufgabe: React.FC = () => {
           0,
           itemCopy
         );
-
         return prev;
       });
-      setSelected(undefined);
-      let lastElem: any;
-      if (stateDND.trajekt.items.length) {
-        lastElem = stateDND.trajekt.items[stateDND.trajekt.items.length - 1];
-        if (lastElem._id) {
-          lastElem = stations.filter((el) => el._id === lastElem._id)[0];
-          setlastAutoSelectElem({ ...lastElem });
-        }
-      }
+      setSelected(itemCopy);
+      setlastAutoSelectElem(undefined);
     },
-    [stations, stateDND]
+    [stateDND]
   );
 
   // Context menu to add the stop After the selected stops in the drop Menu
@@ -589,9 +582,13 @@ const Aufgabe: React.FC = () => {
           .map((el: any) => el._id)
           .indexOf(response._id);
         handleDeleteOnDND(response, index);
+        if (index === stateDND.trajekt.items.length - 1) {
+          //@ts-ignore
+          setlastAutoSelectElem(stateDND.trajekt.items[index - 1]);
+        }
       }
     },
-    [stations, stateDND.trajekt.items]
+    [stations, stateDND.trajekt.items, handleDeleteOnDND]
   );
 
   return (
@@ -600,14 +597,7 @@ const Aufgabe: React.FC = () => {
         <Col span={12}>
           <SearchInput stations={stations} handleEvent={onEvent} />
         </Col>
-        <Col
-          span={6}
-          style={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-        >
+        <Col xxl={3} xl={3} lg={3} md={12} sm={12} xs={12}>
           <Dropdown overlay={menu}>
             <p
               className="ant-dropdown-link"
@@ -617,7 +607,8 @@ const Aufgabe: React.FC = () => {
               {modes} <DownOutlined />
             </p>
           </Dropdown>
-          ,
+        </Col>
+        <Col xxl={3} xl={3} lg={3} md={12} sm={12} xs={12}>
           <p style={{ margin: 20 }}>
             <strong>Current mode : </strong>
             {currentMode}
@@ -627,18 +618,23 @@ const Aufgabe: React.FC = () => {
           </p>
         </Col>
         <Col
-          span={6}
+          xxl={6}
+          xl={6}
+          lg={6}
+          md={12}
+          sm={12}
+          xs={12}
           style={{
-            width: "100%",
             display: "flex",
-            justifyContent: "center",
+            flexDirection: "column",
           }}
         >
           <button
             style={
               isSending || modes !== "Choose Mode"
                 ? {
-                    margin: 20,
+                    width: "80%",
+                    margin: 1,
                     backgroundColor: "#3949ab",
                     color: "white",
                     borderRadius: "5px",
@@ -647,7 +643,8 @@ const Aufgabe: React.FC = () => {
                     boxShadow: "0px 2px 2px lightgray",
                   }
                 : {
-                    margin: 20,
+                    width: "80%",
+                    margin: 1,
                     backgroundColor: "white",
                     color: "black",
                     borderRadius: "5px",
@@ -666,7 +663,8 @@ const Aufgabe: React.FC = () => {
             style={
               stateDND.trajekt.items.length
                 ? {
-                    margin: 20,
+                    width: "80%",
+                    margin: 1,
                     backgroundColor: "red",
                     color: "white",
                     borderRadius: "5px",
@@ -675,7 +673,8 @@ const Aufgabe: React.FC = () => {
                     boxShadow: "0px 2px 2px lightgray",
                   }
                 : {
-                    margin: 20,
+                    width: "80%",
+                    margin: 1,
                     backgroundColor: "white",
                     color: "black",
                     borderRadius: "5px",
@@ -692,7 +691,8 @@ const Aufgabe: React.FC = () => {
             style={
               stateDND.trajekt.items.length
                 ? {
-                    margin: 20,
+                    width: "80%",
+                    margin: 1,
                     backgroundColor: "green",
                     color: "white",
                     borderRadius: "5px",
@@ -701,7 +701,8 @@ const Aufgabe: React.FC = () => {
                     boxShadow: "0px 2px 2px lightgray",
                   }
                 : {
-                    margin: 20,
+                    width: "80%",
+                    margin: 1,
                     backgroundColor: "white",
                     color: "black",
                     borderRadius: "5px",
