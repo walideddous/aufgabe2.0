@@ -81,22 +81,23 @@ app.get("/data", (req, res) => {
     console.log("Mongo URI fehlt");
   }
 });
-app.post("/savedRoad", (req, res) => {
+app.post("/savedStopSequence", (req, res) => {
   if (!req.body) {
     return console.error("Req body not found");
   }
-  var roadStringify = JSON.stringify(req.body);
+  var stopSeqenceStringify = JSON.stringify(req.body);
 
-  fs.writeFile(`${__dirname}/data/savedRoad.json`, roadStringify, function (
-    err,
-    result
-  ) {
-    if (err) console.log("error", err);
-  });
+  fs.writeFile(
+    `${__dirname}/data/savedStopSequence.json`,
+    stopSeqenceStringify,
+    function (err, result) {
+      if (err) console.log("error", err);
+    }
+  );
 
   res.json({
     msg: "saved",
-    roadStringify,
+    stopSeqenceStringify,
   });
 });
 

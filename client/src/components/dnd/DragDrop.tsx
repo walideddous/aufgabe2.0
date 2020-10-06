@@ -36,10 +36,25 @@ const DragDrop = ({
 }: TporpsDND) => {
   const [clicked, setClicked] = useState(false);
   const AddStops = useRef(null);
+  const [hide, setHide] = useState(false);
+
+  const resize = () => {
+    //@ts-ignore
+    if (window.innerWidth < 992) {
+      setHide(true);
+    } else {
+      setHide(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", resize);
+    resize();
+  });
   const scrollToBottom = useCallback(() => {
     if (AddStops.current) {
       //@ts-ignore
-      AddStops.current.scrollIntoView({ behavior: "smooth" });
+      //AddStops.current.scrollIntoView({ behavior: "smooth" });
     }
   }, []);
   useEffect(() => {
@@ -71,67 +86,141 @@ const DragDrop = ({
   return (
     <Fragment>
       <DragDropContext onDragEnd={handleDragEnd}>
-        <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
+        <Col lg={12} xs={24}>
           <Card bordered={true} title={stateDND.vorschlag.title}>
             <Droppable droppableId={"vorschlag"}>
               {(provided: any) => {
                 return (
                   <div
-                    ref={provided.innerRef}
-                    {...provided.droppableProps}
-                    className={"droppable-col"}
+                    style={{
+                      display: "flex",
+                    }}
                   >
-                    {stateDND.vorschlag.items.map((el: any, index: number) => {
-                      return (
-                        <Draggable
-                          key={el._id}
-                          index={index}
-                          draggableId={el._id}
-                        >
-                          {(provided) => {
+                    <Col lg={12} xs={24}>
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.droppableProps}
+                        className={"droppable-col"}
+                      >
+                        {stateDND.vorschlag.items
+                          .slice(0, 8)
+                          .map((el: any, index: number) => {
                             return (
-                              <div
-                                className="item-suggestion "
-                                ref={provided.innerRef}
-                                {...provided.draggableProps}
-                                {...provided.dragHandleProps}
+                              <Draggable
+                                key={el._id}
+                                index={index}
+                                draggableId={el._id}
                               >
-                                <span
-                                  style={{ width: "90%", height: "30px" }}
-                                  onClick={() => {
-                                    addStopsOnCLick(el);
-                                  }}
-                                >
-                                  {el.name} "{el.distance.toFixed(3)} Km"
-                                </span>
-                                <button
-                                  style={{
-                                    backgroundColor: "white",
-                                    color: "#3949ab",
-                                    borderRadius: "5px",
-                                    outline: "0",
-                                  }}
-                                >
-                                  <ArrowUpOutlined
-                                    style={{
-                                      transform: `rotate(${el.angle}deg)`,
-                                    }}
-                                  />
-                                </button>
-                              </div>
+                                {(provided) => {
+                                  return (
+                                    <div
+                                      className="item-suggestion "
+                                      ref={provided.innerRef}
+                                      {...provided.draggableProps}
+                                      {...provided.dragHandleProps}
+                                    >
+                                      <span
+                                        style={{ width: "90%" }}
+                                        onClick={() => {
+                                          addStopsOnCLick(el);
+                                        }}
+                                      >
+                                        {el.name} "{el.distance.toFixed(3)} Km"
+                                      </span>
+                                      <button
+                                        style={{
+                                          backgroundColor: "white",
+                                          color: "#3949ab",
+                                          borderRadius: "5px",
+                                          outline: "0",
+                                        }}
+                                      >
+                                        <ArrowUpOutlined
+                                          style={{
+                                            transform: `rotate(${el.angle}deg)`,
+                                          }}
+                                        />
+                                      </button>
+                                    </div>
+                                  );
+                                }}
+                              </Draggable>
                             );
-                          }}
-                        </Draggable>
-                      );
-                    })}
-                    {provided.placeholder}
+                          })}
+                        {provided.placeholder}
+                      </div>
+                    </Col>
+                    {!hide ? (
+                      <Col lg={12}>
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.droppableProps}
+                          className={"droppable-col"}
+                        >
+                          {stateDND.vorschlag.items
+                            .slice(8, 16)
+                            .map((el: any, index: number) => {
+                              return (
+                                <Draggable
+                                  key={el._id}
+                                  index={index + 8}
+                                  draggableId={el._id}
+                                >
+                                  {(provided) => {
+                                    return (
+                                      <div
+                                        className="item-suggestion "
+                                        ref={provided.innerRef}
+                                        {...provided.draggableProps}
+                                        {...provided.dragHandleProps}
+                                      >
+                                        <span
+                                          style={{
+                                            width: "90%",
+                                          }}
+                                          onClick={() => {
+                                            addStopsOnCLick(el);
+                                          }}
+                                        >
+                                          {el.name} "{el.distance.toFixed(3)}{" "}
+                                          Km"
+                                        </span>
+                                        <button
+                                          style={{
+                                            backgroundColor: "white",
+                                            color: "#3949ab",
+                                            borderRadius: "5px",
+                                            outline: "0",
+                                          }}
+                                        >
+                                          <ArrowUpOutlined
+                                            style={{
+                                              transform: `rotate(${el.angle}deg)`,
+                                            }}
+                                          />
+                                        </button>
+                                      </div>
+                                    );
+                                  }}
+                                </Draggable>
+                              );
+                            })}
+                          {provided.placeholder}
+                        </div>
+                      </Col>
+                    ) : (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.droppableProps}
+                      ></div>
+                    )}
                   </div>
                 );
               }}
             </Droppable>
           </Card>
         </Col>
-        <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
+        <Col lg={12} xs={24}>
           <Card bordered={true} title={stateDND.trajekt.title}>
             <div style={{ height: "535px", overflowY: "scroll" }}>
               <Droppable droppableId={"trajekt"}>

@@ -6,6 +6,7 @@ import React, {
   Fragment,
 } from "react";
 import axios from "axios";
+import { uuid } from "uuidv4";
 import { Row, Menu, Dropdown, Spin, Col } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { DownOutlined } from "@ant-design/icons";
@@ -17,9 +18,8 @@ import { GRAPHQL_API, GET_STOPS_BY_MODES } from "../config/config";
 import Info from "./info/Info";
 import SearchInput from "./search/SearchInput";
 import DragDrop from "./dnd/DragDrop";
-
-// The new map created with leaflet
-import NewMap from "./map/newMap";
+import Map from "./map/Map";
+import SaveStopsSequenceForm from "./form/SaveStopsSequenceForm";
 
 // Import the types of the state
 import { Tstations, TstateDND, Tchoose, Tdistance } from "./type/Types";
@@ -51,7 +51,7 @@ const Aufgabe: React.FC = () => {
       items: [],
     },
     trajekt: {
-      title: "Road",
+      title: "Stop sequence",
       items: [],
     },
   });
@@ -76,7 +76,7 @@ const Aufgabe: React.FC = () => {
         items: [],
       },
       trajekt: {
-        title: "Road",
+        title: "Stop sequence",
         items: [],
       },
     });
@@ -128,7 +128,7 @@ const Aufgabe: React.FC = () => {
                   distance: el.distance,
                 };
               })
-              .slice(0, 8),
+              .slice(0, 16),
           },
         };
       });
@@ -162,7 +162,7 @@ const Aufgabe: React.FC = () => {
                   distance: el.distance,
                 };
               })
-              .slice(0, 8),
+              .slice(0, 16),
           },
         };
       });
@@ -170,7 +170,7 @@ const Aufgabe: React.FC = () => {
     [stations, stateDND.trajekt.items]
   );
 
-  // add the stations on Road Field when you click on button suggestion
+  // add the stations to the Stop sequence Field when you click on button suggestion
   const handleAddStopsOnCLick = useCallback(
     (e: any) => {
       const response = stations.filter((el) => el._id === e._id)[0];
@@ -187,7 +187,7 @@ const Aufgabe: React.FC = () => {
         return {
           ...prev,
           trajekt: {
-            title: "Road",
+            title: "Stop sequence",
             items: [
               ...prev.trajekt.items,
               {
@@ -205,7 +205,7 @@ const Aufgabe: React.FC = () => {
                   distance: el.distance,
                 };
               })
-              .slice(0, 8),
+              .slice(0, 16),
           },
         };
       });
@@ -236,7 +236,7 @@ const Aufgabe: React.FC = () => {
         return {
           ...prev,
           trajekt: {
-            title: "Road",
+            title: "Stop sequence",
             items: stateDND.trajekt.items.filter(
               (item: any) => item._id !== e._id
             ),
@@ -277,7 +277,7 @@ const Aufgabe: React.FC = () => {
         return {
           ...prev,
           trajekt: {
-            title: "Road",
+            title: "Stop sequence",
             items: [
               ...prev.trajekt.items,
               {
@@ -295,7 +295,7 @@ const Aufgabe: React.FC = () => {
                   distance: el.distance,
                 };
               })
-              .slice(0, 8),
+              .slice(0, 16),
           },
         };
       });
@@ -361,7 +361,7 @@ const Aufgabe: React.FC = () => {
           return {
             ...prev,
             trajekt: {
-              title: "Road",
+              title: "Stop sequence",
               items: [
                 ...prev.trajekt.items,
                 {
@@ -379,7 +379,7 @@ const Aufgabe: React.FC = () => {
                     distance: el.distance,
                   };
                 })
-                .slice(0, 8),
+                .slice(0, 16),
             },
           };
         });
@@ -398,7 +398,7 @@ const Aufgabe: React.FC = () => {
           return {
             ...prev,
             trajekt: {
-              title: "Road",
+              title: "Stop sequence",
               items: prev.trajekt.items
                 .slice(0, index + 1)
                 .concat({ ...response })
@@ -424,7 +424,7 @@ const Aufgabe: React.FC = () => {
           return {
             ...prev,
             trajekt: {
-              title: "Road",
+              title: "Stop sequence",
               items: prev.trajekt.items
                 .filter(
                   (el: any, index: number, tab: any) => index !== tab.length - 1
@@ -452,7 +452,7 @@ const Aufgabe: React.FC = () => {
           return {
             ...prev,
             trajekt: {
-              title: "Road",
+              title: "Stop sequence",
               items: prev.trajekt.items
                 .slice(0, index)
                 .concat({ ...response })
@@ -497,7 +497,7 @@ const Aufgabe: React.FC = () => {
                   distance: el.distance,
                 };
               })
-              .slice(0, 8),
+              .slice(0, 16),
           },
         };
       });
@@ -542,36 +542,45 @@ const Aufgabe: React.FC = () => {
         items: [],
       },
       trajekt: {
-        title: "Road",
+        title: "Stop sequence",
         items: [],
       },
     });
   }, []);
 
-  // Save the road
-  const saveRoad = useCallback(async () => {
-    if (isSending) return;
-    // update state
-    setIsSending(true);
-    // send the actual request
-    try {
-      console.log("send the saved Road");
-      // REST_API
-      const result = await authAxios.post("/savedRoad", stateDND.trajekt.items);
+  // Save the stop sequence
+  const saveStopSequence = useCallback(
+    async (formInput: any) => {
+      const { name, valid, time } = formInput;
+      const { items } = stateDND.trajekt;
+      if (isSending) return;
+      // update state
+      setIsSending(true);
+      // send the actual request
+      try {
+        console.log("send the saved Stop sequence");
+        // REST_API
+        const result = await authAxios.post(
+          "/savedStopSequence",
 
-      if (!result) {
-        console.error("Result not found");
+          { _id: uuid(), name, valid, time, stopSequence: items }
+        );
+
+        if (!result) {
+          console.error("Result not found");
+        }
+
+        console.log(result.data.msg);
+      } catch (error) {
+        console.error(error, "error from trycatch");
       }
+      // once the request is sent, update state again
+      setIsSending(false);
+    },
+    [stateDND.trajekt.items, isSending]
+  );
 
-      console.log(result.data.msg);
-    } catch (error) {
-      console.error(error, "error from trycatch");
-    }
-    // once the request is sent, update state again
-    setIsSending(false);
-  }, [stateDND.trajekt.items, isSending]);
-
-  const handleDeleteMarkerFromRoad = useCallback(
+  const handleDeleteMarkerFromMap = useCallback(
     (e: any) => {
       const response = stations.filter((el, i) => el.name === e)[0];
       if (
@@ -597,7 +606,7 @@ const Aufgabe: React.FC = () => {
         <Col span={12}>
           <SearchInput stations={stations} handleEvent={onEvent} />
         </Col>
-        <Col xxl={3} xl={3} lg={3} md={12} sm={12} xs={12}>
+        <Col lg={3} xs={12}>
           <Dropdown overlay={menu}>
             <p
               className="ant-dropdown-link"
@@ -608,7 +617,7 @@ const Aufgabe: React.FC = () => {
             </p>
           </Dropdown>
         </Col>
-        <Col xxl={3} xl={3} lg={3} md={12} sm={12} xs={12}>
+        <Col lg={3} xs={12}>
           <p style={{ margin: 20 }}>
             <strong>Current mode : </strong>
             {currentMode}
@@ -618,13 +627,10 @@ const Aufgabe: React.FC = () => {
           </p>
         </Col>
         <Col
-          xxl={6}
-          xl={6}
           lg={6}
-          md={12}
-          sm={12}
           xs={12}
           style={{
+            marginTop: "10px",
             display: "flex",
             flexDirection: "column",
           }}
@@ -687,36 +693,7 @@ const Aufgabe: React.FC = () => {
           >
             Reset
           </button>
-          <button
-            style={
-              stateDND.trajekt.items.length
-                ? {
-                    width: "80%",
-                    margin: 1,
-                    backgroundColor: "green",
-                    color: "white",
-                    borderRadius: "5px",
-                    outline: "0",
-                    cursor: "pointer",
-                    boxShadow: "0px 2px 2px lightgray",
-                  }
-                : {
-                    width: "80%",
-                    margin: 1,
-                    backgroundColor: "white",
-                    color: "black",
-                    borderRadius: "5px",
-                    outline: "0",
-                    boxShadow: "0px 2px 2px lightgray",
-                  }
-            }
-            disabled={stateDND.trajekt.items.length ? false : true}
-            onClick={saveRoad}
-          >
-            Save the road
-          </button>
         </Col>
-
         {isSending ? (
           <div
             style={{
@@ -747,21 +724,27 @@ const Aufgabe: React.FC = () => {
               onclick={clickOnDrop}
               onDelete={handleDeleteOnDND}
             />
-            <NewMap
+            <Map
               stations={stations}
               stateDND={stateDND}
               selected={selected}
               lastAutoSelectElem={lastAutoSelectElem}
               onAddBeforSelected={handleAddBeforSelected}
               onAddAfterSelected={handleAddAfterSelected}
-              onDeleteMarkerFromRoad={handleDeleteMarkerFromRoad}
+              onDeleteMarkerFromMap={handleDeleteMarkerFromMap}
               selectMarkerOnMap={clickOnMapMarker}
             />
-            <Info
-              selected={selected}
-              distance={distance}
-              lastAutoSelectElem={lastAutoSelectElem}
-            />
+            <Col lg={12} xs={24}>
+              <Info
+                selected={selected}
+                distance={distance}
+                lastAutoSelectElem={lastAutoSelectElem}
+              />
+              <SaveStopsSequenceForm
+                handleSaveStopSequence={saveStopSequence}
+                stateDND={stateDND}
+              />
+            </Col>
           </Fragment>
         )}
       </Row>

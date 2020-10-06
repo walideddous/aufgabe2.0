@@ -20,11 +20,7 @@ const SearchInput = ({ stations, handleEvent }: TporpsSearchInput) => {
     setSearch(input);
   };
 
-  const handleSearch = (value: string) => {
-    setSearch(value);
-  };
-
-  const onSelect = (data: string) => {
+  const handleSelect = (data: string) => {
     setSearch("");
     const elementSelected = stations.filter((el) => el.name === data)[0];
     handleEvent(elementSelected);
@@ -34,11 +30,10 @@ const SearchInput = ({ stations, handleEvent }: TporpsSearchInput) => {
     <Fragment>
       <AutoComplete
         style={{ width: "90%", margin: 20 }}
-        onSearch={handleSearch}
-        onSelect={onSelect}
-        onChange={(e) => handleChange(e)}
+        onSelect={handleSelect}
+        onChange={handleChange}
         value={search}
-        placeholder="Stationsname eingeben"
+        placeholder="Enter stops name"
         open={search ? true : false}
       >
         {stations &&

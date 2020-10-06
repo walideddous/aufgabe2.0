@@ -27,18 +27,18 @@ interface TpropsOnMap {
   lastAutoSelectElem: Tstations | undefined;
   onAddBeforSelected: (e: string) => void;
   onAddAfterSelected: (e: string) => void;
-  onDeleteMarkerFromRoad: (e: string) => void;
+  onDeleteMarkerFromMap: (e: string) => void;
   selectMarkerOnMap: (el: Tstations, index: number) => void;
 }
 
-const NewMap = ({
+const Map = ({
   stations,
   stateDND,
   selected,
   lastAutoSelectElem,
   onAddAfterSelected,
   onAddBeforSelected,
-  onDeleteMarkerFromRoad,
+  onDeleteMarkerFromMap,
   selectMarkerOnMap,
 }: TpropsOnMap) => {
   const stationsRef = useRef();
@@ -72,11 +72,11 @@ const NewMap = ({
     [onAddAfterSelected]
   );
 
-  const deleteMarkerFromRoad = useCallback(
+  const deleteMarkerFromMap = useCallback(
     (e: any) => {
-      onDeleteMarkerFromRoad(e.relatedTarget._tooltip._content);
+      onDeleteMarkerFromMap(e.relatedTarget._tooltip._content);
     },
-    [onDeleteMarkerFromRoad]
+    [onDeleteMarkerFromMap]
   );
 
   // Showing the map
@@ -98,7 +98,7 @@ const NewMap = ({
         });
     }
 
-    const RoadMarkers = stateDND.trajekt.items.map((el: any) => {
+    const stopSequenceMarkers = stateDND.trajekt.items.map((el: any) => {
       return {
         ...el,
         coord: { WGS84: [el.coord.WGS84.lat, el.coord.WGS84.lon] },
@@ -118,7 +118,7 @@ const NewMap = ({
         : selected && !lastAutoSelectElem
         ? [selected.coord.WGS84.lat, selected.coord.WGS84.lon]
         : [position.lat, position.lng],
-      !lastAutoSelectElem && !selected ? position.zoom : 14
+      !lastAutoSelectElem && !selected ? position.zoom : 13
     );
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution:
@@ -146,8 +146,7 @@ const NewMap = ({
           },
           {
             text: "Delete",
-            color: "red",
-            callback: deleteMarkerFromRoad,
+            callback: deleteMarkerFromMap,
           },
         ],
         color:
@@ -169,12 +168,12 @@ const NewMap = ({
       markers.addLayer(marker);
     });
 
-    const Polyline = L.polyline(getPathFromTrajekt(RoadMarkers), {
+    const Polyline = L.polyline(getPathFromTrajekt(stopSequenceMarkers), {
       color: "red",
     }).addTo(myMap);
 
     var markers2 = new L.MarkerClusterGroup();
-    RoadMarkers.forEach((el: any, index: number) => {
+    stopSequenceMarkers.forEach((el: any, index: number) => {
       const marker = L.circleMarker(el.coord.WGS84, {
         //@ts-ignore
         contextmenu: true,
@@ -183,17 +182,16 @@ const NewMap = ({
         contextmenuItems: [
           { text: "Close" },
           {
-            text: "Add before the highlighted stations",
+            text: "Add before the highlighted stop",
             callback: addBeforSelected,
           },
           {
-            text: "Add after the highlighted stations",
+            text: "Add after the highlighted stop",
             callback: addAfterSelected,
           },
           {
             text: "Delete",
-            color: "red",
-            callback: deleteMarkerFromRoad,
+            callback: deleteMarkerFromMap,
           },
         ],
         color:
@@ -219,14 +217,14 @@ const NewMap = ({
 
     L.control
       .layers(undefined, {
-        "Show the Road": markers,
+        "Show the Stop sequence": markers,
       })
       .addTo(myMap);
   }, [stations, selected, lastAutoSelectElem, stateDND]);
 
   return (
     <Fragment>
-      <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
+      <Col lg={12} xs={24}>
         <Card bordered={true} title="Map">
           <div id="mapId" style={{ height: "700px" }}></div>
         </Card>
@@ -235,4 +233,4 @@ const NewMap = ({
   );
 };
 
-export default React.memo(NewMap);
+export default React.memo(Map);
