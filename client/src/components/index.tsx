@@ -406,6 +406,7 @@ const Aufgabe: React.FC = () => {
             },
           };
         });
+        setSelected({ ...response });
       }
     },
     [stations, stateDND.trajekt.items, lastAutoSelectElem, selected]

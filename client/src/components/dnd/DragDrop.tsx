@@ -59,7 +59,7 @@ const DragDrop = ({
   }, []);
   useEffect(() => {
     scrollToBottom();
-  }, [stateDND.trajekt.items]);
+  });
 
   const handleClick = useCallback(
     (e: any, index: number) => {

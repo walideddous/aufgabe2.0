@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Form, Input, Checkbox, TimePicker, Button } from "antd";
+import { Card, Form, Input, Checkbox, TimePicker } from "antd";
 
 // Import types
 import { TstateDND } from "../type/Types";
@@ -83,13 +83,12 @@ const SaveStopsSequenceForm = ({
         </Form.Item>
 
         <Form.Item {...tailLayout}>
-          <Button
-            type="primary"
-            htmlType="submit"
+          <button
+            type="submit"
             disabled={stateDND.trajekt.items.length ? false : true}
           >
             Save the stop sequence
-          </Button>
+          </button>
         </Form.Item>
       </Form>
     </Card>
