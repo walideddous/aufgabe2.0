@@ -75,10 +75,20 @@ const SaveStopsSequenceForm = ({
           <Input />
         </Form.Item>
 
-        <Form.Item {...tailLayout} label="Valid">
+        <Form.Item
+          {...tailLayout}
+          label="Valid"
+          name="Valid"
+          rules={[{ required: true, message: "Ckeck" }]}
+        >
           <Checkbox.Group options={options} onChange={onCheckBox} />
         </Form.Item>
-        <Form.Item {...tailLayout} label="Time">
+        <Form.Item
+          {...tailLayout}
+          label="Time"
+          name="Time"
+          rules={[{ required: true, message: "Select the time" }]}
+        >
           <RangePicker format="HH:mm" onChange={onRangePiker} />
         </Form.Item>
 

@@ -81,24 +81,19 @@ app.get("/data", (req, res) => {
     console.log("Mongo URI fehlt");
   }
 });
-app.post("/savedStopSequence", (req, res) => {
-  if (!req.body) {
-    return console.error("Req body not found");
-  }
-  var stopSeqenceStringify = JSON.stringify(req.body);
-
-  fs.writeFile(
-    `${__dirname}/data/savedStopSequence.json`,
-    stopSeqenceStringify,
-    function (err, result) {
-      if (err) console.log("error", err);
+app.put("/savedStopSequence", async (req, res) => {
+  try {
+    if (!req.body) {
+      return console.error("Req body not found");
     }
-  );
 
-  res.json({
-    msg: "saved",
-    stopSequence: req.body,
-  });
+    res.json({
+      msg: "saved",
+      stopSequence: req.body,
+    });
+  } catch (err) {
+    console.error(err);
+  }
 });
 
 const PORT = process.env.PORT || 5000;
@@ -116,3 +111,17 @@ process.on("unhandledRejection", (err, promise) => {
 });
 
 module.exports = server;
+
+/*
+
+
+
+  fs.writeFile(
+    `${__dirname}/data/savedStopSequence.json`,
+    stopSeqenceStringify,
+    function (err, result) {
+      if (err) console.log("error", err);
+    }
+  );
+
+*/

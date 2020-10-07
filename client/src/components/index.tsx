@@ -604,7 +604,7 @@ const Aufgabe: React.FC = () => {
       try {
         console.log("send the saved Stop sequence");
         // REST_API
-        const result = await authAxios.post(
+        const result = await authAxios.put(
           "/savedStopSequence",
 
           body,
