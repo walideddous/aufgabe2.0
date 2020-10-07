@@ -585,6 +585,18 @@ const Aufgabe: React.FC = () => {
     async (formInput: any) => {
       const { name, valid, time } = formInput;
       const { items } = stateDND.trajekt;
+      const config = {
+        headers: {
+          "Content-Type": "appication/json",
+        },
+      };
+      const body = JSON.stringify({
+        _id: uuid(),
+        name,
+        valid,
+        time,
+        stopSequence: items,
+      });
       if (isSending) return;
       // update state
       setIsSending(true);
@@ -595,7 +607,8 @@ const Aufgabe: React.FC = () => {
         const result = await authAxios.post(
           "/savedStopSequence",
 
-          { _id: uuid(), name, valid, time, stopSequence: items }
+          body,
+          config
         );
 
         if (!result) {
