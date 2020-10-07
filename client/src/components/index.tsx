@@ -174,8 +174,6 @@ const Aufgabe: React.FC = () => {
   const handleAddStopsOnCLick = useCallback(
     (e: any) => {
       const response = stations.filter((el) => el._id === e._id)[0];
-      setlastAutoSelectElem({ ...response });
-      setSelected(undefined);
       var vorschläge = calculateDistanceAndSort(response, stations);
       // Delete the repetition from the Suggestion Field
       vorschläge = vorschläge.filter(
@@ -183,34 +181,67 @@ const Aufgabe: React.FC = () => {
           !stateDND.trajekt.items.map((el: any) => el._id).includes(el.to._id)
       );
       setDistance([...vorschläge]);
-      setStateDND((prev: any) => {
-        return {
-          ...prev,
-          trajekt: {
-            title: "Stop sequence",
-            items: [
-              ...prev.trajekt.items,
-              {
-                ...response,
-              },
-            ],
-          },
-          vorschlag: {
-            title: "Suggestion",
-            items: vorschläge
-              .map((el: any) => {
-                return {
-                  ...el.to,
-                  angle: el.angle,
-                  distance: el.distance,
-                };
-              })
-              .slice(0, 16),
-          },
-        };
-      });
+
+      if (selected) {
+        const index = stateDND.trajekt.items
+          .map((el: any) => el._id)
+          .indexOf(selected._id);
+        setStateDND((prev: any) => {
+          return {
+            ...prev,
+            trajekt: {
+              title: "Stop sequence",
+              items: prev.trajekt.items
+                .slice(0, index + 1)
+                .concat({ ...response })
+                .concat(prev.trajekt.items.slice(index + 1)),
+            },
+            vorschlag: {
+              title: "Suggestion",
+              items: vorschläge
+                .map((el: any) => {
+                  return {
+                    ...el.to,
+                    angle: el.angle,
+                    distance: el.distance,
+                  };
+                })
+                .slice(0, 16),
+            },
+          };
+        });
+        setSelected({ ...response });
+      } else {
+        setlastAutoSelectElem({ ...response });
+        setStateDND((prev: any) => {
+          return {
+            ...prev,
+            trajekt: {
+              title: "Stop sequence",
+              items: [
+                ...prev.trajekt.items,
+                {
+                  ...response,
+                },
+              ],
+            },
+            vorschlag: {
+              title: "Suggestion",
+              items: vorschläge
+                .map((el: any) => {
+                  return {
+                    ...el.to,
+                    angle: el.angle,
+                    distance: el.distance,
+                  };
+                })
+                .slice(0, 16),
+            },
+          };
+        });
+      }
     },
-    [stations, stateDND.trajekt.items]
+    [stations, stateDND.trajekt.items, selected]
   );
 
   // Delete the button from Drop Part
@@ -578,7 +609,7 @@ const Aufgabe: React.FC = () => {
       // once the request is sent, update state again
       setIsSending(false);
     },
-    [stateDND.trajekt.items, isSending]
+    [stateDND.trajekt, isSending]
   );
 
   const handleDeleteMarkerFromMap = useCallback(

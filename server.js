@@ -97,7 +97,7 @@ app.post("/savedStopSequence", (req, res) => {
 
   res.json({
     msg: "saved",
-    stopSeqenceStringify,
+    stopSequence: req.body,
   });
 });
 
