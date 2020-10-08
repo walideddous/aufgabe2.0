@@ -27,11 +27,11 @@ const SaveStopsSequenceForm = ({
   const options = [
     { label: "Mo", value: "Monday" },
     { label: "Tu", value: "Tuesday" },
-    { label: "We", value: "Wednesday " },
-    { label: "Th", value: "Thursday " },
-    { label: "Fr", value: "Friday " },
-    { label: "Sa", value: "Saturday " },
-    { label: "Su", value: "Sunday " },
+    { label: "We", value: "Wednesday" },
+    { label: "Th", value: "Thursday" },
+    { label: "Fr", value: "Friday" },
+    { label: "Sa", value: "Saturday" },
+    { label: "Su", value: "Sunday" },
     { label: "Holiday", value: "Holiday" },
   ];
 
