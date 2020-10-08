@@ -8,8 +8,7 @@ import React, {
 import axios from "axios";
 import { uuid } from "uuidv4";
 import { Row, Menu, Dropdown, Spin, Col } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
-import { DownOutlined } from "@ant-design/icons";
+import { LoadingOutlined, DownOutlined } from "@ant-design/icons";
 
 // Import const values to connect with graphQL
 import { GRAPHQL_API, GET_STOPS_BY_MODES } from "../config/config";
@@ -20,6 +19,7 @@ import SearchInput from "./search/SearchInput";
 import DragDrop from "./dnd/DragDrop";
 import Map from "./map/Map";
 import SaveStopsSequenceForm from "./form/SaveStopsSequenceForm";
+import GetStopSequence from "./fetchStopSequence/GetStopSequence";
 
 // Import the types of the state
 import { Tstations, TstateDND, Tchoose, Tdistance } from "./type/Types";
@@ -769,16 +769,19 @@ const Aufgabe: React.FC = () => {
               onclick={clickOnDrop}
               onDelete={handleDeleteOnDND}
             />
-            <Map
-              stations={stations}
-              stateDND={stateDND}
-              selected={selected}
-              lastAutoSelectElem={lastAutoSelectElem}
-              onAddBeforSelected={handleAddBeforSelected}
-              onAddAfterSelected={handleAddAfterSelected}
-              onDeleteMarkerFromMap={handleDeleteMarkerFromMap}
-              selectMarkerOnMap={clickOnMapMarker}
-            />
+            <Col lg={12} xs={24}>
+              <Map
+                stations={stations}
+                stateDND={stateDND}
+                selected={selected}
+                lastAutoSelectElem={lastAutoSelectElem}
+                onAddBeforSelected={handleAddBeforSelected}
+                onAddAfterSelected={handleAddAfterSelected}
+                onDeleteMarkerFromMap={handleDeleteMarkerFromMap}
+                selectMarkerOnMap={clickOnMapMarker}
+              />
+              <GetStopSequence />
+            </Col>
             <Col lg={12} xs={24}>
               <Info
                 selected={selected}

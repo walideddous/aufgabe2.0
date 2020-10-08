@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Form, Input, Checkbox, TimePicker } from "antd";
+import { Card, Form, Input, Checkbox, TimePicker, Row, Col } from "antd";
 
 // Import types
 import { TstateDND } from "../type/Types";
@@ -23,17 +23,6 @@ const SaveStopsSequenceForm = ({
 }: TpropsForm) => {
   const { RangePicker } = TimePicker;
   const [result, setResult] = useState({});
-
-  const options = [
-    { label: "Mo", value: "Monday" },
-    { label: "Tu", value: "Tuesday" },
-    { label: "We", value: "Wednesday" },
-    { label: "Th", value: "Thursday" },
-    { label: "Fr", value: "Friday" },
-    { label: "Sa", value: "Saturday" },
-    { label: "Su", value: "Sunday" },
-    { label: "Holiday", value: "Holiday" },
-  ];
 
   const onFinish = (values: any) => {
     const formInput = {
@@ -75,21 +64,63 @@ const SaveStopsSequenceForm = ({
           <Input />
         </Form.Item>
 
-        <Form.Item
-          {...tailLayout}
-          label="Valid"
-          name="Valid"
-          rules={[{ required: true, message: "Ckeck" }]}
-        >
-          <Checkbox.Group options={options} onChange={onCheckBox} />
-        </Form.Item>
-        <Form.Item
-          {...tailLayout}
-          label="Time"
-          name="Time"
-          rules={[{ required: true, message: "Select the time" }]}
-        >
-          <RangePicker format="HH:mm" onChange={onRangePiker} />
+        <Form.Item {...tailLayout} label="Valid" name="Valid">
+          <Checkbox.Group style={{ width: "100%" }}>
+            <Row>
+              <Col span={6}>
+                <Checkbox value="Monday">Mo</Checkbox>
+              </Col>
+              <Col span={16}>
+                <RangePicker
+                  format="HH:mm"
+                  onChange={onRangePiker}
+                  disabled={true}
+                />
+              </Col>
+              <Col span={6}>
+                <Checkbox value="Tuesday">Tu</Checkbox>
+              </Col>
+              <Col span={16}>
+                <RangePicker format="HH:mm" onChange={onRangePiker} />
+              </Col>
+              <Col span={6}>
+                <Checkbox value="Wednesday">We</Checkbox>
+              </Col>
+              <Col span={16}>
+                <RangePicker format="HH:mm" onChange={onRangePiker} />
+              </Col>
+              <Col span={6}>
+                <Checkbox value="Thursday">Th</Checkbox>
+              </Col>
+              <Col span={16}>
+                <RangePicker format="HH:mm" onChange={onRangePiker} />
+              </Col>
+              <Col span={6}>
+                <Checkbox value="Friday">Fr</Checkbox>
+              </Col>
+              <Col span={16}>
+                <RangePicker format="HH:mm" onChange={onRangePiker} />
+              </Col>
+              <Col span={6}>
+                <Checkbox value="Saturday">Sa</Checkbox>
+              </Col>
+              <Col span={16}>
+                <RangePicker format="HH:mm" onChange={onRangePiker} />
+              </Col>
+              <Col span={6}>
+                <Checkbox value="Sunday">Su</Checkbox>
+              </Col>
+              <Col span={16}>
+                <RangePicker format="HH:mm" onChange={onRangePiker} />
+              </Col>
+              <Col span={6}>
+                <Checkbox value="Holiday">Holiday</Checkbox>
+              </Col>
+              <Col span={16}>
+                <RangePicker format="HH:mm" onChange={onRangePiker} />
+              </Col>
+            </Row>
+          </Checkbox.Group>
         </Form.Item>
 
         <Form.Item {...tailLayout}>
@@ -106,3 +137,10 @@ const SaveStopsSequenceForm = ({
 };
 
 export default SaveStopsSequenceForm;
+
+/*
+
+          <Checkbox>Mo</Checkbox>{" "}
+          <RangePicker format="HH:mm" onChange={onRangePiker} />
+
+*/

@@ -54,7 +54,7 @@ const DragDrop = ({
   const scrollToBottom = useCallback(() => {
     if (AddStops.current) {
       //@ts-ignore
-      //AddStops.current.scrollIntoView({ behavior: "smooth" });
+      AddStops.current.scrollIntoView({ behavior: "smooth" });
     }
   }, []);
   useEffect(() => {
