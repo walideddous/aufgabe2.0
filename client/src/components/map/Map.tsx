@@ -18,12 +18,13 @@ import "leaflet-contextmenu/dist/leaflet.contextmenu.css";
 import { getPathFromTrajekt } from "../../utils/getPathFromTrajekt";
 
 // Import type
-import { Tstations, TstateDND } from "../type/Types";
+import { Tstations, TstateDND, Tdistance } from "../type/Types";
 
 interface TpropsOnMap {
   stations: Tstations[];
   stateDND: TstateDND;
   selected: Tstations | undefined;
+  distance: Tdistance[]
   lastAutoSelectElem: Tstations | undefined;
   onAddBeforSelected: (e: string) => void;
   onAddAfterSelected: (e: string) => void;
@@ -35,6 +36,7 @@ const Map = ({
   stations,
   stateDND,
   selected,
+  distance,
   lastAutoSelectElem,
   onAddAfterSelected,
   onAddBeforSelected,
@@ -51,6 +53,22 @@ const Map = ({
       zoom: 5,
     };
   }, []);
+  // Zoom reactive
+  const responsiveZoom = useMemo(() => {
+    //@ts-ignore
+    if(distance.length && distance[0].distance > 0,6){
+      return {
+        zoom : 13
+      }
+    } else {
+      return {
+        zoom: 15
+      }
+    }
+
+  }, [distance]);
+
+
   const clickOnMarker = useCallback(
     (el: any, index: number) => {
       selectMarkerOnMap(el, index);
@@ -118,7 +136,7 @@ const Map = ({
         : selected && !lastAutoSelectElem
         ? [selected.coord.WGS84.lat, selected.coord.WGS84.lon]
         : [position.lat, position.lng],
-      !lastAutoSelectElem && !selected ? position.zoom : 13
+      !lastAutoSelectElem && !selected ? position.zoom : responsiveZoom.zoom
     );
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution:

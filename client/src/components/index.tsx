@@ -11,7 +11,7 @@ import { Row, Menu, Dropdown, Spin, Col } from "antd";
 import { LoadingOutlined, DownOutlined } from "@ant-design/icons";
 
 // Import const values to connect with graphQL
-import { GRAPHQL_API, GET_STOPS_BY_MODES } from "../config/config";
+import { GRAPHQL_API, GET_STOPS_BY_MODES, REST_API } from "../config/config";
 
 // Import composents
 import Info from "./info/Info";
@@ -32,6 +32,13 @@ import { calculateDistanceAndSort } from "../utils/getDistanceFromLatLonInKm";
 
 const authAxios = axios.create({
   baseURL: GRAPHQL_API,
+  headers: {
+    authorization: "Bearer " + process.env.REACT_APP_JSON_SECRET_KEY,
+  },
+});
+
+const stopSequenceGet = axios.create({
+  baseURL: REST_API,
   headers: {
     authorization: "Bearer " + process.env.REACT_APP_JSON_SECRET_KEY,
   },
@@ -645,6 +652,51 @@ const Aufgabe: React.FC = () => {
     [stations, stateDND.trajekt.items, handleDeleteOnDND]
   );
 
+  const [stopSequenceList, setStopSequenceList] = useState()
+
+  // Get the sgtopseQuence list from Backend
+  const handleGetStopSequenceBotton = useCallback( async ()=> {
+    console.log("clicked");
+    if (isSending) return;
+    // update state
+    setIsSending(true);
+    setSelected(undefined);
+    setlastAutoSelectElem(undefined);
+    setStateDND({
+      vorschlag: {
+        title: "Suggestion",
+        items: [],
+      },
+      trajekt: {
+        title: "Stop sequence",
+        items: [],
+      },
+    });
+    // send the actual request
+    try {
+      console.log("start fetching");
+      // Get the stop sequence
+      const queryResult = await stopSequenceGet.get("/");
+
+      console.log("end fetching");
+      if (queryResult) {
+        const {stopSequence} = queryResult.data
+        setStopSequenceList(stopSequence);
+
+        // Get the mode and set it
+      
+
+      } else {
+        console.log("not authorized provid a token");
+      }
+    } catch (error) {
+      console.error(error, "error from trycatch");
+    }
+    // once the request is sent, update state again
+    setIsSending(false);
+  },[])
+
+
   return (
     <div className="Prototyp" style={{ position: "relative" }}>
       <Row gutter={[8, 8]}>
@@ -774,13 +826,14 @@ const Aufgabe: React.FC = () => {
                 stations={stations}
                 stateDND={stateDND}
                 selected={selected}
+                distance={distance}
                 lastAutoSelectElem={lastAutoSelectElem}
                 onAddBeforSelected={handleAddBeforSelected}
                 onAddAfterSelected={handleAddAfterSelected}
                 onDeleteMarkerFromMap={handleDeleteMarkerFromMap}
                 selectMarkerOnMap={clickOnMapMarker}
               />
-              <GetStopSequence />
+              <GetStopSequence stopSequenceList={stopSequenceList} onGetStopSequenceBotton={handleGetStopSequenceBotton} />
             </Col>
             <Col lg={12} xs={24}>
               <Info

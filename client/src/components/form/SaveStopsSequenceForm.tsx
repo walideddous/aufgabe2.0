@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
-import { Card, Form, Input, Checkbox, Row, Col, TimePicker, TreeSelect  } from 'antd';
+import React, { useCallback, useState } from 'react';
+import { Card, Form, Input, Row, Col, TimePicker, TreeSelect, Button  } from 'antd';
+
+import { DeleteOutlined } from "@ant-design/icons";
 
 // Import types
 import { TstateDND } from '../type/Types';
@@ -9,7 +11,7 @@ const layout = {
   labelCol: { span: 2 },
 };
 const tailLayout = {
-  wrapperCol: { offset: 4, span: 16 },
+  wrapperCol: { offset: 2, span: 24 },
 };
 
 // Declare Props Types
@@ -18,28 +20,20 @@ interface TpropsForm {
   handleSaveStopSequence: (formInput: any) => void;
 }
 const { RangePicker } = TimePicker;
+const { TreeNode } = TreeSelect;
 
 const SaveStopsSequenceForm = ({
   stateDND,
   handleSaveStopSequence,
 }: TpropsForm) => {
- 
-  const [result, setResult] = useState({
-    Mo: {},
-    Tu: {},
-    We: {},
-    Th: {},
-    Fr: {},
-    Sa: {},
-    Su: {},
-    Holiday: {},
-  });
-  const [checkedBox, setCheckedBox] = useState([])
+  const [selecetdDay, setSelectedDay] = useState([])
+  const [timeSelected , setTimeselected] = useState({})
+  const [savedDate, setSavedDate] = useState([])
+
 
   const onFinish = (values: any) => {
     const formInput = {
-      name: values.Name,
-      ...result,
+      name: values.Name,  
     };
     handleSaveStopSequence(formInput);
   };
@@ -49,21 +43,27 @@ const SaveStopsSequenceForm = ({
   };
 
   const onRangePikerMo = (time: any, timeString: any) => {
-    setResult({
-      ...result,
-      Mo: {
-        ...result.Mo,
-        time: {
-          start: timeString[0],
-          end: timeString[1],
-        },
-      },
-    });
+    setTimeselected({
+      ...timeSelected, start: timeString[0], end:timeString[1]
+    })
   };
 
-  const onCheckBox = (checkedBox: any) => {
-    setCheckedBox(checkedBox)
+  const daySelect = ( value : any  ) => {
+    setSelectedDay(value)
   }
+
+  const saveSelectedDate = useCallback(() => {
+    console.log("saveSelectedDate");
+    //@ts-ignore
+    setSavedDate([
+      ...savedDate, {
+        day : selecetdDay,
+        time : timeSelected
+      }
+    ])
+    setSelectedDay([])
+    setTimeselected({})
+  },[selecetdDay,timeSelected ])
 
 
   return (
@@ -85,48 +85,64 @@ const SaveStopsSequenceForm = ({
         </Form.Item>
 
         <Form.Item {...tailLayout} label='Valid' name='Valid' rules={[{ required: true, message: 'Please give a Valid day' }]}>
-          <Checkbox.Group style={{ width: '100%' }} onChange={onCheckBox}  >
+
           <Row>
-            <Col >
-              <Checkbox value="monday">Mo</Checkbox>
+            <Col span={11}>
+            <TreeSelect
+              showSearch
+              dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+              placeholder="Please select a day"
+              allowClear
+              multiple
+              treeDefaultExpandAll
+              onChange={daySelect}
+              value={selecetdDay}
+              >
+            <TreeNode value="monday" title="Mo" />
+            <TreeNode value="tuesday" title="Tu" />
+            <TreeNode value="wednesday" title="We" />
+            <TreeNode value="thursday" title="Th" />
+            <TreeNode value="friday" title="Fr" />
+            <TreeNode value="saturday" title="Sa" />
+            <TreeNode value="sunday" title="Su" />
+            <TreeNode value="holiday" title="Holiday" />
+            </TreeSelect>
             </Col>
-            <Col >
-              <Checkbox value="tuesday">Tu</Checkbox>
-            </Col>
-            <Col >
-              <Checkbox value="wednesday ">We</Checkbox>
-            </Col>
-            <Col >
-              <Checkbox value="thursday">Th</Checkbox>
-            </Col>
-            <Col >
-              <Checkbox value="friday">Fr</Checkbox>
-            </Col>
-            <Col >
-              <Checkbox value="saturday">Sa</Checkbox>
-            </Col>
-            <Col >
-              <Checkbox value="sunday" >Su</Checkbox>
-            </Col>
-            <Col >
-              <Checkbox value="holiday">Holiday</Checkbox>
-            </Col>
+            <Col offset={1} >
+            <RangePicker
+                format='HH:mm'
+                onChange={onRangePikerMo}
+                disabled={selecetdDay.length ? false : true}
+              />
+              </Col>
+            <Col offset={1}   >
+            <Button onClick={saveSelectedDate} disabled={selecetdDay.length ? false : true}>Save</Button>
+              </Col>
+              <Col>{savedDate && savedDate.map((el:any, i:number)=> (
+                                              <div
+                                        
+                                            >
+                                              <span
+                                                style={{ width: "90%" }}
+                                              >
+                                                {el.time.start}
+                                              </span>
+                                              <button
+                                                style={{
+                                                  backgroundColor: "white",
+                                                  color: "#3949ab",
+                                                  borderRadius: "5px",
+                                                  outline: "0",
+                                                  cursor: "pointer",
+                                                  boxShadow: "0px 2px 2px lightgray",
+                                                }}
+                                              >
+                                                <DeleteOutlined />
+                                              </button>
+                                            </div>))}
+                  </Col>
+
           </Row>
-        </Checkbox.Group>
-        </Form.Item>
-        <Form.Item {...tailLayout} label='Time' name='Time'>
-        <TimePicker
-                format='HH:mm'
-                placeholder="Strat time"
-                onChange={onRangePikerMo}
-                disabled={checkedBox.length ? false : true}
-              />
-        <TimePicker
-                format='HH:mm'
-                placeholder="End time"
-                onChange={onRangePikerMo}
-                disabled={checkedBox.length ? false : true}
-              />
         </Form.Item>
         <Form.Item {...tailLayout}>
           <button

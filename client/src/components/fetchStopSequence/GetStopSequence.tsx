@@ -2,7 +2,12 @@ import React, { useMemo, useCallback, useState } from "react";
 import { Card, Dropdown, Menu, Col, Row } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 
-const GetStopSequence = () => {
+interface Tprops {
+  onGetStopSequenceBotton : () => void
+  stopSequenceList: any
+}
+
+const GetStopSequence = ({onGetStopSequenceBotton, stopSequenceList}: Tprops) => {
   const [stopSequenceName, setStopSequenceName] = useState("");
   // handle the drop menu to display the choosed Modes on Map
   const handleDropDownMenu = useCallback((event: any) => {
@@ -14,17 +19,18 @@ const GetStopSequence = () => {
     () => (
       //@ts-ignore
       <Menu onClick={handleDropDownMenu}>
-        <Menu.Item key="2">Basel to Zürich HB</Menu.Item>
+        { stopSequenceList&& stopSequenceList.map((el:any)=> <Menu.Item key="2">{el.name}</Menu.Item> )}
       </Menu>
     ),
-    []
+    [stopSequenceList]
   );
+
   return (
     <Card>
       <Row>
         <Col span={12}>
-          <Dropdown overlay={menu}>
-            <p className="ant-dropdown-link" style={{ cursor: "pointer" }}>
+          <Dropdown overlay={menu} disabled={stopSequenceList ? false : true}>
+            <p className="ant-dropdown-link" style={ stopSequenceList ? { cursor: "pointer" } : {}}>
               <strong>Stop sequence name : </strong>
               {stopSequenceName} <DownOutlined />
             </p>
@@ -41,6 +47,9 @@ const GetStopSequence = () => {
               borderRadius: "5px",
               outline: "0",
               boxShadow: "0px 2px 2px lightgray",
+            }}
+            onClick={()=> {
+              onGetStopSequenceBotton()
             }}
           >
             Get stop sequence
