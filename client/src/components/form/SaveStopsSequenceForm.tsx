@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { Card, Form, Input, Checkbox, TimePicker, Row, Col } from 'antd';
+import { Card, Form, Input, Checkbox, Row, Col, TimePicker, TreeSelect  } from 'antd';
 
 // Import types
 import { TstateDND } from '../type/Types';
+
 
 const layout = {
   labelCol: { span: 2 },
 };
 const tailLayout = {
-  wrapperCol: { offset: 3, span: 16 },
+  wrapperCol: { offset: 4, span: 16 },
 };
 
 // Declare Props Types
@@ -16,12 +17,13 @@ interface TpropsForm {
   stateDND: TstateDND;
   handleSaveStopSequence: (formInput: any) => void;
 }
+const { RangePicker } = TimePicker;
 
 const SaveStopsSequenceForm = ({
   stateDND,
   handleSaveStopSequence,
 }: TpropsForm) => {
-  const { RangePicker } = TimePicker;
+ 
   const [result, setResult] = useState({
     Mo: {},
     Tu: {},
@@ -32,6 +34,7 @@ const SaveStopsSequenceForm = ({
     Su: {},
     Holiday: {},
   });
+  const [checkedBox, setCheckedBox] = useState([])
 
   const onFinish = (values: any) => {
     const formInput = {
@@ -57,220 +60,11 @@ const SaveStopsSequenceForm = ({
       },
     });
   };
-  const onRangePikerTu = (time: any, timeString: any) => {
-    setResult({
-      ...result,
-      Tu: {
-        ...result.Tu,
-        time: {
-          start: timeString[0],
-          end: timeString[1],
-        },
-      },
-    });
-  };
-  const onRangePikerWe = (time: any, timeString: any) => {
-    setResult({
-      ...result,
-      We: {
-        ...result.We,
-        time: {
-          start: timeString[0],
-          end: timeString[1],
-        },
-      },
-    });
-  };
-  const onRangePikerTh = (time: any, timeString: any) => {
-    setResult({
-      ...result,
-      Th: {
-        ...result.Th,
-        time: {
-          start: timeString[0],
-          end: timeString[1],
-        },
-      },
-    });
-  };
-  const onRangePikerFr = (time: any, timeString: any) => {
-    setResult({
-      ...result,
-      Fr: {
-        ...result.Fr,
-        time: {
-          start: timeString[0],
-          end: timeString[1],
-        },
-      },
-    });
-  };
-  const onRangePikerSa = (time: any, timeString: any) => {
-    setResult({
-      ...result,
-      Sa: {
-        ...result.Sa,
-        time: {
-          start: timeString[0],
-          end: timeString[1],
-        },
-      },
-    });
-  };
-  const onRangePikerSu = (time: any, timeString: any) => {
-    setResult({
-      ...result,
-      Su: {
-        ...result.Su,
-        time: {
-          start: timeString[0],
-          end: timeString[1],
-        },
-      },
-    });
-  };
-  const onRangePikerHoliday = (time: any, timeString: any) => {
-    setResult({
-      ...result,
-      Holiday: {
-        ...result.Holiday,
-        time: {
-          start: timeString[0],
-          end: timeString[1],
-        },
-      },
-    });
-  };
 
-  const onCheckBoxMo = (entry: any) => {
-    const { checked } = entry.target;
-    if (checked) {
-      setResult({
-        ...result,
-        Mo: {
-          day: 'monday',
-        },
-      });
-    } else {
-      setResult({
-        ...result,
-        Mo: {},
-      });
-    }
-  };
-  const onCheckBoxTu = (entry: any) => {
-    const { checked } = entry.target;
-    if (checked) {
-      setResult({
-        ...result,
-        Tu: {
-          day: 'tuesday',
-        },
-      });
-    } else {
-      setResult({
-        ...result,
-        Tu: {},
-      });
-    }
-  };
-  const onCheckBoxWe = (entry: any) => {
-    const { checked } = entry.target;
+  const onCheckBox = (checkedBox: any) => {
+    setCheckedBox(checkedBox)
+  }
 
-    if (checked) {
-      setResult({
-        ...result,
-        We: {
-          day: 'wednesday',
-        },
-      });
-    } else {
-      setResult({
-        ...result,
-        We: {},
-      });
-    }
-  };
-  const onCheckBoxTh = (entry: any) => {
-    const { checked } = entry.target;
-    if (checked) {
-      setResult({
-        ...result,
-        Th: {
-          day: 'thursday',
-        },
-      });
-    } else {
-      setResult({
-        ...result,
-        Th: {},
-      });
-    }
-  };
-  const onCheckBoxFr = (entry: any) => {
-    const { checked } = entry.target;
-    if (checked) {
-      setResult({
-        ...result,
-        Fr: {
-          day: 'friday',
-        },
-      });
-    } else {
-      setResult({
-        ...result,
-        Fr: {},
-      });
-    }
-  };
-  const onCheckBoxSa = (entry: any) => {
-    const { checked } = entry.target;
-    if (checked) {
-      setResult({
-        ...result,
-        Sa: {
-          day: 'saturday',
-        },
-      });
-    } else {
-      setResult({
-        ...result,
-        Sa: {},
-      });
-    }
-  };
-  const onCheckBoxSu = (entry: any) => {
-    const { checked } = entry.target;
-    if (checked) {
-      setResult({
-        ...result,
-        Su: {
-          day: 'sunday',
-        },
-      });
-    } else {
-      setResult({
-        ...result,
-        Su: {},
-      });
-    }
-  };
-  const onCheckBoxHoliday = (entry: any) => {
-    const { checked } = entry.target;
-    if (checked) {
-      setResult({
-        ...result,
-        Holiday: {
-          day: 'holiday',
-        },
-      });
-    } else {
-      setResult({
-        ...result,
-        Holiday: {},
-      });
-    }
-  };
 
   return (
     <Card bordered={true}>
@@ -290,107 +84,50 @@ const SaveStopsSequenceForm = ({
           <Input />
         </Form.Item>
 
-        <Form.Item {...tailLayout} label='Valid' name='Valid'>
+        <Form.Item {...tailLayout} label='Valid' name='Valid' rules={[{ required: true, message: 'Please give a Valid day' }]}>
+          <Checkbox.Group style={{ width: '100%' }} onChange={onCheckBox}  >
           <Row>
-            <Col span={6}>
-              <Checkbox value='Monday' onChange={onCheckBoxMo}>
-                Mo
-              </Checkbox>
+            <Col >
+              <Checkbox value="monday">Mo</Checkbox>
             </Col>
-            <Col span={16}>
-              <RangePicker
-                format='HH:mm'
-                onChange={onRangePikerMo}
-                disabled={Object.keys(result.Mo).length ? false : true}
-              />
+            <Col >
+              <Checkbox value="tuesday">Tu</Checkbox>
             </Col>
-            <Col span={6}>
-              <Checkbox value='Tuesday' onChange={onCheckBoxTu}>
-                Tu
-              </Checkbox>
+            <Col >
+              <Checkbox value="wednesday ">We</Checkbox>
             </Col>
-            <Col span={16}>
-              <RangePicker
-                format='HH:mm'
-                onChange={onRangePikerTu}
-                disabled={Object.keys(result.Tu).length ? false : true}
-              />
+            <Col >
+              <Checkbox value="thursday">Th</Checkbox>
             </Col>
-            <Col span={6}>
-              <Checkbox value='Wednesday' onChange={onCheckBoxWe}>
-                We
-              </Checkbox>
+            <Col >
+              <Checkbox value="friday">Fr</Checkbox>
             </Col>
-            <Col span={16}>
-              <RangePicker
-                format='HH:mm'
-                onChange={onRangePikerWe}
-                disabled={Object.keys(result.We).length ? false : true}
-              />
+            <Col >
+              <Checkbox value="saturday">Sa</Checkbox>
             </Col>
-            <Col span={6}>
-              <Checkbox value='Thursday' onChange={onCheckBoxTh}>
-                Th
-              </Checkbox>
+            <Col >
+              <Checkbox value="sunday" >Su</Checkbox>
             </Col>
-            <Col span={16}>
-              <RangePicker
-                format='HH:mm'
-                onChange={onRangePikerTh}
-                disabled={Object.keys(result.Th).length ? false : true}
-              />
-            </Col>
-            <Col span={6}>
-              <Checkbox value='Friday' onChange={onCheckBoxFr}>
-                Fr
-              </Checkbox>
-            </Col>
-            <Col span={16}>
-              <RangePicker
-                format='HH:mm'
-                onChange={onRangePikerFr}
-                disabled={Object.keys(result.Fr).length ? false : true}
-              />
-            </Col>
-            <Col span={6}>
-              <Checkbox value='Saturday' onChange={onCheckBoxSa}>
-                Sa
-              </Checkbox>
-            </Col>
-            <Col span={16}>
-              <RangePicker
-                format='HH:mm'
-                onChange={onRangePikerSa}
-                disabled={Object.keys(result.Sa).length ? false : true}
-              />
-            </Col>
-            <Col span={6}>
-              <Checkbox value='Sunday' onChange={onCheckBoxSu}>
-                Su
-              </Checkbox>
-            </Col>
-            <Col span={16}>
-              <RangePicker
-                format='HH:mm'
-                onChange={onRangePikerSu}
-                disabled={Object.keys(result.Su).length ? false : true}
-              />
-            </Col>
-            <Col span={6}>
-              <Checkbox value='Holiday' onChange={onCheckBoxHoliday}>
-                Holiday
-              </Checkbox>
-            </Col>
-            <Col span={16}>
-              <RangePicker
-                format='HH:mm'
-                onChange={onRangePikerHoliday}
-                disabled={Object.keys(result.Holiday).length ? false : true}
-              />
+            <Col >
+              <Checkbox value="holiday">Holiday</Checkbox>
             </Col>
           </Row>
+        </Checkbox.Group>
         </Form.Item>
-
+        <Form.Item {...tailLayout} label='Time' name='Time'>
+        <TimePicker
+                format='HH:mm'
+                placeholder="Strat time"
+                onChange={onRangePikerMo}
+                disabled={checkedBox.length ? false : true}
+              />
+        <TimePicker
+                format='HH:mm'
+                placeholder="End time"
+                onChange={onRangePikerMo}
+                disabled={checkedBox.length ? false : true}
+              />
+        </Form.Item>
         <Form.Item {...tailLayout}>
           <button
             type='submit'
