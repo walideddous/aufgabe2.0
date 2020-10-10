@@ -35,13 +35,16 @@ const SaveStopsSequenceForm = ({
   stateDND,
   handleSaveStopSequence,
 }: TpropsForm) => {
-  const [selecetdDay, setSelectedDay] = useState([]);
-  const [timeSelected, setTimeselected] = useState({});
+  const [selectedDay, setSelectedDay] = useState([]);
+  const [selectedDate, setSelectedDate] = useState([]);
+  const [selectedTime, setSelectedTime] = useState({});
   const [savedDate, setSavedDate] = useState([]);
 
   const onFinish = (values: any) => {
     const formInput = {
       name: values.Name,
+      date: selectedDate,
+      schedule: savedDate,
     };
     handleSaveStopSequence(formInput);
   };
@@ -50,21 +53,23 @@ const SaveStopsSequenceForm = ({
     console.log('Failed:', errorInfo);
   };
 
-  const onRangePikerMo = (time: any, timeString: any) => {
-    setTimeselected({
-      ...timeSelected,
-      start: timeString[0],
-      end: timeString[1],
+  const onRangePikerMo = useCallback((time: any, timeString: any) => {
+    setSelectedTime((prev) => {
+      return {
+        ...prev,
+        start: timeString[0],
+        end: timeString[1],
+      };
     });
-  };
+  }, []);
 
-  const daySelect = (value: any) => {
+  const daySelect = useCallback((value: any) => {
     setSelectedDay(value);
-  };
+  }, []);
 
-  const onDatePicker = (time: any, dateString: any) => {
-    console.log('value datePicker', dateString);
-  };
+  const onDatePicker = useCallback((time: any, dateString: any) => {
+    setSelectedDate(dateString);
+  }, []);
 
   const saveSelectedDate = useCallback(() => {
     console.log('saveSelectedDate');
@@ -73,14 +78,23 @@ const SaveStopsSequenceForm = ({
       return [
         ...prev,
         {
-          day: selecetdDay,
-          time: timeSelected,
+          day: selectedDay,
+          time: selectedTime,
         },
       ];
     });
     setSelectedDay([]);
-    setTimeselected({});
-  }, [selecetdDay, timeSelected]);
+    setSelectedTime({});
+  }, [selectedDay, selectedTime]);
+
+  const deleteAddetTime = useCallback(
+    (i: number) => {
+      console.log('index deleted', i);
+      const result = savedDate.filter((el: any, index: number) => index !== i);
+      setSavedDate(result);
+    },
+    [savedDate]
+  );
 
   return (
     <Card bordered={true}>
@@ -112,7 +126,11 @@ const SaveStopsSequenceForm = ({
           {...tailLayout}
           label='Valid'
           name='Valid'
-          rules={[{ required: true, message: 'Please give a Valid day' }]}
+          rules={
+            !Object.keys(savedDate).length
+              ? [{ required: true, message: 'Please give a Valid day' }]
+              : undefined
+          }
         >
           <Row>
             <Col span={11}>
@@ -124,7 +142,7 @@ const SaveStopsSequenceForm = ({
                 multiple
                 treeDefaultExpandAll
                 onChange={daySelect}
-                value={selecetdDay}
+                value={selectedDay}
               >
                 <TreeNode value='monday' title='Mo' />
                 <TreeNode value='tuesday' title='Tu' />
@@ -140,23 +158,46 @@ const SaveStopsSequenceForm = ({
               <RangePicker
                 format='HH:mm'
                 onChange={onRangePikerMo}
-                disabled={selecetdDay.length ? false : true}
+                disabled={selectedDay.length ? false : true}
               />
             </Col>
             <Col offset={0.5}>
               <Button
                 onClick={saveSelectedDate}
-                disabled={selecetdDay.length ? false : true}
+                disabled={
+                  selectedDay.length && Object.keys(selectedTime).length
+                    ? false
+                    : true
+                }
               >
                 +
               </Button>
             </Col>
-            <Col>
+            <Col style={{ display: 'flex', marginTop: '1' }}>
               {savedDate &&
                 savedDate.map((el: any, i: number) => (
-                  <div>
-                    <span style={{ width: '90%' }}>{el.time.start}</span>
-                    <button
+                  <div
+                    key={i}
+                    className='item-highlighted'
+                    style={{ display: 'flex', flexDirection: 'column' }}
+                  >
+                    <div style={{ display: 'flex' }}>
+                      {'Days: '}
+                      <p>{el.day[0]}</p>
+                      {el.day.length > 1 ? (
+                        <p>
+                          {'-'}
+                          {el.day[el.day.length - 1]}
+                        </p>
+                      ) : null}
+                    </div>
+                    <div style={{ display: 'flex' }}>
+                      {'Time: '}
+                      <p>{el.time.start}</p>
+                      {'-'}
+                      <p>{el.time.end}</p>
+                    </div>
+                    <Button
                       style={{
                         backgroundColor: 'white',
                         color: '#3949ab',
@@ -165,9 +206,10 @@ const SaveStopsSequenceForm = ({
                         cursor: 'pointer',
                         boxShadow: '0px 2px 2px lightgray',
                       }}
+                      onClick={() => deleteAddetTime(i)}
                     >
                       <DeleteOutlined />
-                    </button>
+                    </Button>
                   </div>
                 ))}
             </Col>

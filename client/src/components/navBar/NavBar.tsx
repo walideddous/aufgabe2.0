@@ -7,9 +7,10 @@ import { TstateDND } from './../type/Types';
 
 interface TnavBarProps {
   stopSequenceList: any;
-  updateDate?: string;
+  updateDate: string;
   isSending: boolean;
   stateDND: TstateDND;
+  currentMode: string;
   onSendRequest: (modes: string, currentMode: string) => void;
   onClearAll: () => void;
 }
@@ -21,10 +22,9 @@ const NavBar = ({
   onClearAll,
   stopSequenceList,
   updateDate,
+  currentMode,
 }: TnavBarProps) => {
   const [modes, setModes] = useState<string>('Choose Mode');
-  const [currentMode, setCurrentMode] = useState<string>('');
-
   const [stopSequenceName, setStopSequenceName] = useState<string>('');
 
   // handle the drop menu to display the choosed Modes on Map
@@ -118,7 +118,6 @@ const NavBar = ({
           type={isSending || modes !== 'Choose Mode' ? 'primary' : 'dashed'}
           disabled={isSending || modes !== 'Choose Mode' ? false : true}
           onClick={() => {
-            setCurrentMode(modes);
             onSendRequest(modes, currentMode);
           }}
         >

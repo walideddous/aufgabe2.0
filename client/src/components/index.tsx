@@ -59,7 +59,8 @@ const Aufgabe: React.FC = () => {
   const [lastAutoSelectElem, setlastAutoSelectElem] = useState<Tstations>();
   const [isSending, setIsSending] = useState<boolean>(false);
   const [stopSequenceList, setStopSequenceList] = useState([]);
-  const [updateDate, setUpdateDate] = useState<string>();
+  const [updateDate, setUpdateDate] = useState<string>('');
+  const [currentMode, setCurrentMode] = useState<string>('');
 
   // Send the request when you click on get the Data button
   const sendRequest = useCallback(
@@ -96,6 +97,7 @@ const Aufgabe: React.FC = () => {
           const { stopSequence } = queryStopSequence.data;
           setStations([...result]);
           setStopSequenceList(stopSequence);
+          setCurrentMode(modes);
           setUpdateDate(Date().toString().substr(4, 24));
         } else {
           console.log('not aithorized provid a token');
@@ -641,6 +643,7 @@ const Aufgabe: React.FC = () => {
           onClearAll={clearAll}
           stopSequenceList={stopSequenceList}
           updateDate={updateDate}
+          currentMode={currentMode}
         />
         {isSending ? (
           <div
