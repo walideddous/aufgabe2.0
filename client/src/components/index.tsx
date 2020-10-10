@@ -1,19 +1,14 @@
-import React, {
-  useEffect,
-  useState,
-  useCallback,
-  useMemo,
-  Fragment,
-} from 'react';
+import React, { useEffect, useState, useCallback, Fragment } from 'react';
 import axios from 'axios';
 import { uuid } from 'uuidv4';
-import { Row, Menu, Dropdown, Spin, Col, Button } from 'antd';
-import { LoadingOutlined, DownOutlined } from '@ant-design/icons';
+import { Row, Spin, Col } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 
 // Import const values to connect with graphQL
 import { GRAPHQL_API, GET_STOPS_BY_MODES, REST_API } from '../config/config';
 
 // Import composents
+import NavBar from './navBar/NavBar';
 import Info from './info/Info';
 import SearchInput from './search/SearchInput';
 import DragDrop from './dnd/DragDrop';
@@ -63,57 +58,56 @@ const Aufgabe: React.FC = () => {
   });
   const [lastAutoSelectElem, setlastAutoSelectElem] = useState<Tstations>();
   const [isSending, setIsSending] = useState<boolean>(false);
-  const [updateDate, setUpdateDate] = useState<string>();
-  const [modes, setModes] = useState<string>('Choose Mode');
-  const [currentMode, setCurrentMode] = useState<string>('');
   const [stopSequenceList, setStopSequenceList] = useState([]);
-  const [stopSequenceName, setStopSequenceName] = useState<string>('');
+  const [updateDate, setUpdateDate] = useState<string>();
 
   // Send the request when you click on get the Data button
-  const sendRequest = useCallback(async () => {
-    if (isSending) return;
-    if (modes === currentMode) return;
-    // update state
-    setIsSending(true);
-    setSelected(undefined);
-    setlastAutoSelectElem(undefined);
-    setCurrentMode(modes);
-    setStateDND({
-      vorschlag: {
-        title: 'Suggestion',
-        items: [],
-      },
-      trajekt: {
-        title: 'Stop sequence',
-        items: [],
-      },
-    });
-    // send the actual request
-    try {
-      console.log('start fetching');
-      // GraphQl
-      const queryResult = await authAxios.post('/graphql', {
-        query: GET_STOPS_BY_MODES(modes),
+  const sendRequest = useCallback(
+    async (modes, currentMode) => {
+      if (isSending) return;
+      if (modes === currentMode) return;
+      // update state
+      setIsSending(true);
+      setSelected(undefined);
+      setlastAutoSelectElem(undefined);
+      setStateDND({
+        vorschlag: {
+          title: 'Suggestion',
+          items: [],
+        },
+        trajekt: {
+          title: 'Stop sequence',
+          items: [],
+        },
       });
-      // Rest Api
-      const queryStopSequence = await stopSequenceGet.get('/');
+      // send the actual request
+      try {
+        console.log('start fetching');
+        // GraphQl
+        const queryResult = await authAxios.post('/graphql', {
+          query: GET_STOPS_BY_MODES(modes),
+        });
+        // Rest Api
+        const queryStopSequence = await stopSequenceGet.get('/');
 
-      console.log('end fetching');
-      if (queryResult) {
-        const result = queryResult.data.data.haltestelleByMode;
-        const { stopSequence } = queryStopSequence.data;
-        setStations([...result]);
-        setStopSequenceList(stopSequence);
-        setUpdateDate(Date().toString().substr(4, 24));
-      } else {
-        console.log('not aithorized provid a token');
+        console.log('end fetching');
+        if (queryResult) {
+          const result = queryResult.data.data.haltestelleByMode;
+          const { stopSequence } = queryStopSequence.data;
+          setStations([...result]);
+          setStopSequenceList(stopSequence);
+          setUpdateDate(Date().toString().substr(4, 24));
+        } else {
+          console.log('not aithorized provid a token');
+        }
+      } catch (error) {
+        console.error(error, 'error from trycatch');
       }
-    } catch (error) {
-      console.error(error, 'error from trycatch');
-    }
-    // once the request is sent, update state again
-    setIsSending(false);
-  }, [isSending, modes, currentMode]);
+      // once the request is sent, update state again
+      setIsSending(false);
+    },
+    [isSending]
+  );
 
   // Update the state of stateDND when you drag and drop
   useEffect(() => {
@@ -555,26 +549,6 @@ const Aufgabe: React.FC = () => {
     [stations, stateDND.trajekt.items, handleAddStopsOnCLick]
   );
 
-  // handle the drop menu to display the choosed Modes on Map
-  const handleDropDownMenu = useCallback((event: any) => {
-    setModes(event.item.props.children[1]);
-  }, []);
-  // Menu of the drop menu
-  const menu = useMemo(
-    () => (
-      //@ts-ignore
-      <Menu onClick={handleDropDownMenu}>
-        <Menu.Item key='2'>13</Menu.Item>
-        <Menu.Item key='3'>5</Menu.Item>
-        <Menu.Item key='4'>8</Menu.Item>
-        <Menu.Item key='5'>9</Menu.Item>
-        <Menu.Item key='6'>2</Menu.Item>
-        <Menu.Item key='7'>4</Menu.Item>
-      </Menu>
-    ),
-    [handleDropDownMenu]
-  );
-
   // Reset and delete all
   const clearAll = useCallback(() => {
     setSelected(undefined);
@@ -654,96 +628,20 @@ const Aufgabe: React.FC = () => {
     [stations, stateDND.trajekt.items, handleDeleteOnDND]
   );
 
-  // handle the drop menu to display the choosed Modes on Map
-  const handleDropDownStopsequenceMenu = useCallback((event: any) => {
-    setStopSequenceName(event.item.props.children[1]);
-  }, []);
-
-  // stop sequence drop down menu
-  const stopSequenceMenu = useMemo(
-    () => (
-      //@ts-ignore
-      <Menu onClick={handleDropDownStopsequenceMenu}>
-        {stopSequenceList &&
-          stopSequenceList.map((el: any) => (
-            <Menu.Item key='2'>{el.name}</Menu.Item>
-          ))}
-      </Menu>
-    ),
-    [stopSequenceList, handleDropDownStopsequenceMenu]
-  );
-
   return (
     <div className='Prototyp' style={{ position: 'relative' }}>
       <Row gutter={[8, 8]}>
         <Col span={8}>
           <SearchInput stations={stations} handleEvent={onEvent} />
         </Col>
-
-        <Col lg={3} xs={12}>
-          <Dropdown
-            overlay={stopSequenceMenu}
-            disabled={stopSequenceList.length ? false : true}
-          >
-            <p
-              className='ant-dropdown-link'
-              style={
-                stopSequenceList.length
-                  ? { cursor: 'pointer', margin: 20 }
-                  : { margin: 20 }
-              }
-            >
-              <strong>Stop sequence name : </strong>
-              {stopSequenceName} <DownOutlined />
-            </p>
-          </Dropdown>
-        </Col>
-        <Col lg={3} xs={12}>
-          <p style={{ margin: 20 }}>
-            <strong>Current mode : </strong>
-            {currentMode}
-            <br />
-            <strong>Update at : </strong>
-            {updateDate}
-          </p>
-        </Col>
-        <Col lg={3} xs={12}>
-          <Dropdown overlay={menu}>
-            <p
-              className='ant-dropdown-link'
-              style={{ margin: 20, cursor: 'pointer' }}
-            >
-              <strong>Modes : </strong>
-              {modes} <DownOutlined />
-            </p>
-          </Dropdown>
-        </Col>
-        <Col
-          lg={6}
-          xs={12}
-          style={{
-            marginTop: '20px',
-            display: 'flex',
-            justifyContent: 'space-around',
-          }}
-        >
-          <Button
-            type={isSending || modes !== 'Choose Mode' ? 'primary' : 'dashed'}
-            disabled={isSending || modes !== 'Choose Mode' ? false : true}
-            onClick={sendRequest}
-          >
-            {modes === 'Choose Mode'
-              ? 'Select a Mode'
-              : `Get the Data and the stop Sequences with mode ${modes}`}
-          </Button>
-          <Button
-            type={isSending || modes !== 'Choose Mode' ? 'link' : 'dashed'}
-            disabled={stateDND.trajekt.items.length ? false : true}
-            onClick={clearAll}
-          >
-            Reset
-          </Button>
-        </Col>
+        <NavBar
+          isSending={isSending}
+          stateDND={stateDND}
+          onSendRequest={sendRequest}
+          onClearAll={clearAll}
+          stopSequenceList={stopSequenceList}
+          updateDate={updateDate}
+        />
         {isSending ? (
           <div
             style={{
