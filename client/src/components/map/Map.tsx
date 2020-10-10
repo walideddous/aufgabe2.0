@@ -56,7 +56,7 @@ const Map = ({
   // Zoom reactive
   const responsiveZoom = useMemo(() => {
     //@ts-ignore
-    if(distance.length && distance[0].distance > 0,6){
+    if(distance.length && distance[0].distance > 0.6){
       return {
         zoom : 13
       }
