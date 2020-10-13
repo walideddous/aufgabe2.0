@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, Fragment } from "react";
+import React, { useState, useCallback, Fragment } from "react";
 import axios from "axios";
 import { v4 } from "uuid";
 import { Row, Spin, Col, message } from "antd";
@@ -42,6 +42,13 @@ const getStopSequence = axios.create({
   },
 });
 
+const deleteStopSequencebyID = axios.create({
+  baseURL: GRAPHQL_API,
+  headers: {
+    authorization: "Bearer " + process.env.REACT_APP_JSON_SECRET_KEY,
+  },
+});
+
 // Custom Loader
 const antIcon = <LoadingOutlined style={{ fontSize: 100 }} spin />;
 
@@ -62,6 +69,7 @@ const Aufgabe: React.FC = () => {
   const [lastAutoSelectElem, setlastAutoSelectElem] = useState<Tstations>();
   const [isSending, setIsSending] = useState<boolean>(false);
   const [stopSequenceList, setStopSequenceList] = useState([]);
+  const [savedStopSequence, setSavedStopSequence] = useState([]);
   const [updateDate, setUpdateDate] = useState<string>("");
   const [currentMode, setCurrentMode] = useState<string>("");
   const [currentStopSequenceName, setCurrentStopSequenceName] = useState<
@@ -117,37 +125,6 @@ const Aufgabe: React.FC = () => {
     },
     [isSending]
   );
-
-  // Update the state of stateDND when you drag and drop
-  useEffect(() => {
-    if (lastAutoSelectElem) {
-      var vorschläge = calculateDistanceAndSort(lastAutoSelectElem, stations);
-      // Delete the repetition from the Suggestion Field
-      vorschläge = vorschläge.filter(
-        (el: any) =>
-          !stateDND.trajekt.items.map((el: any) => el._id).includes(el.to._id)
-      );
-
-      setDistance([...vorschläge]);
-      setStateDND((prev: any) => {
-        return {
-          ...prev,
-          vorschlag: {
-            title: "Suggestion",
-            items: vorschläge
-              .map((el: any) => {
-                return {
-                  ...el.to,
-                  angle: el.angle,
-                  distance: el.distance,
-                };
-              })
-              .slice(0, 16),
-          },
-        };
-      });
-    }
-  }, [lastAutoSelectElem, stations, stateDND.trajekt.items]);
 
   // Select the Station when you click on the button to show the suggestion
   const clickOnDrop = useCallback(
@@ -631,12 +608,13 @@ const Aufgabe: React.FC = () => {
         const result = await authAxios.put("/savedStopSequence", body);
         if (!result) {
           console.error("Result not found");
+          message.error("cannot save the stop sequence");
         }
         console.log(result.data.msg);
         if (result.data.msg) {
           message.success(result.data.msg);
           // Set the state of stopSequence List
-          setStopSequenceList((prev) => {
+          setSavedStopSequence((prev) => {
             return prev.concat({ ...body });
           });
         }
@@ -692,10 +670,52 @@ const Aufgabe: React.FC = () => {
     [clickOnDrop]
   );
 
+  // Update button after stop sequence have been saved
+  const handleUpdateAfterSave = useCallback(() => {
+    setStopSequenceList((prev) => {
+      return prev.concat(savedStopSequence);
+    });
+    setSavedStopSequence([]);
+  }, [savedStopSequence]);
+
+  // Delete the stop sequence by Id
+  const handleDeleteStopSequence = useCallback(
+    async (id: string) => {
+      if (isSending) return; // update state
+      setIsSending(true);
+      // send the actual request
+      try {
+        console.log("send the saved Stop sequence");
+        // REST_API
+        const result = await deleteStopSequencebyID.delete(
+          `/savedStopSequence/${id}`
+        );
+        if (!result) {
+          console.error("Result not found");
+          message.error("cannot delete the stop sequence");
+        }
+        console.log(result.data.msg);
+        if (result.data.msg) {
+          message.success(result.data.msg);
+          // Set the state of stopSequence List
+          setStopSequenceList([]);
+          clearAll();
+          setCurrentStopSequenceName("");
+        }
+      } catch (error) {
+        console.error(error, "error from trycatch");
+        message.error("cannot save the stop sequence");
+      }
+      // once the request is sent, update state again
+      setIsSending(false);
+    },
+    [clearAll, isSending]
+  );
+
   return (
     <div className="Prototyp" style={{ position: "relative" }}>
       <Row gutter={[8, 8]}>
-        <Col span={8}>
+        <Col xxl={8} xs={12}>
           <SearchInput
             stations={stations}
             handleSelectAutoSearch={onSelectAutoSearch}
@@ -708,8 +728,11 @@ const Aufgabe: React.FC = () => {
           updateDate={updateDate}
           currentMode={currentMode}
           currentStopSequenceName={currentStopSequenceName}
+          savedStopSequence={savedStopSequence}
+          handleDeleteStopSequence={handleDeleteStopSequence}
           onSendRequest={sendRequest}
           onClearAll={clearAll}
+          handleUpdateAfterSave={handleUpdateAfterSave}
           ondisplayStopSequence={handledisplayStopSequence}
         />
         {isSending ? (
@@ -752,7 +775,7 @@ const Aufgabe: React.FC = () => {
               onDeleteMarkerFromMap={handleDeleteMarkerFromMap}
               selectMarkerOnMap={clickOnMapMarker}
             />
-            <Col lg={12} xs={24}>
+            <Col xxl={12} xs={24}>
               <Info
                 selected={selected}
                 distance={distance}

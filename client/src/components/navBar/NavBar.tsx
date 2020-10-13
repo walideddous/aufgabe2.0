@@ -1,5 +1,5 @@
-import React, { Fragment, useMemo, useCallback, useState } from "react";
-import { Col, Button, Dropdown, Menu } from "antd";
+import React, { Fragment, useMemo, useCallback, useState, useRef } from "react";
+import { Col, Button, Dropdown, Menu, Badge } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 
 // Import Type
@@ -7,6 +7,7 @@ import { TstateDND } from "./../type/Types";
 
 interface TnavBarProps {
   stopSequenceList: any;
+  savedStopSequence: any;
   updateDate: string;
   isSending: boolean;
   stateDND: TstateDND;
@@ -14,6 +15,8 @@ interface TnavBarProps {
   currentStopSequenceName: string;
   onSendRequest: (modes: string, currentMode: string) => void;
   onClearAll: () => void;
+  handleUpdateAfterSave: () => void;
+  handleDeleteStopSequence: (id: string) => void;
   ondisplayStopSequence: (stopSequenceName: any) => void;
 }
 
@@ -21,15 +24,19 @@ const NavBar = ({
   isSending,
   stateDND,
   stopSequenceList,
+  savedStopSequence,
   updateDate,
   currentMode,
   currentStopSequenceName,
   onSendRequest,
   onClearAll,
+  handleUpdateAfterSave,
+  handleDeleteStopSequence,
   ondisplayStopSequence,
 }: TnavBarProps) => {
-  const [modes, setModes] = useState<string>("Choose Mode");
+  const [modes, setModes] = useState<string>("");
   const [stopSequenceName, setStopSequenceName] = useState<string>("");
+  const stopSequenceRef = useRef("");
 
   // handle the drop menu to display the choosed Modes on Map
   const handleDropDownMenu = useCallback((event: any) => {
@@ -72,59 +79,60 @@ const NavBar = ({
       <Menu onClick={handleDropDownStopsequenceMenu}>
         {stopSequenceList &&
           stopSequenceList.map((el: any) => (
-            <Menu.Item key={el._id}>{el.name}</Menu.Item>
+            <Menu.Item
+              key={el._id}
+              onClick={() => {
+                stopSequenceRef.current = el._id;
+              }}
+            >
+              {el.name}
+            </Menu.Item>
           ))}
       </Menu>
     ),
     [stopSequenceList, handleDropDownStopsequenceMenu]
   );
+
   return (
     <Fragment>
-      <Col lg={3} xs={12}>
-        <Dropdown
-          overlay={stopSequenceMenu}
-          disabled={stopSequenceList.length ? false : true}
-        >
-          <p
-            className="ant-dropdown-link"
-            style={
-              stopSequenceList.length
-                ? { cursor: "pointer", margin: 20 }
-                : { margin: 20 }
-            }
-          >
-            <strong>Stop sequence name : </strong>
-            {stopSequenceName} <DownOutlined />
-          </p>
-        </Dropdown>
-      </Col>
-      <Col lg={3} xs={12}>
-        <p style={{ margin: 20 }}>
+      <Col xxl={3} xs={6} style={{ paddingTop: "20px" }}>
+        <p>
           <strong>Current mode : </strong>
           {currentMode}
           <br />
           <strong>Current stop sequence : </strong>
+          <br />
           {currentStopSequenceName}
         </p>
       </Col>
-      <Col lg={3} xs={12}>
+      <Col xxl={2} xs={6} style={{ paddingTop: "20px" }}>
         <Dropdown overlay={menu}>
-          <p
-            className="ant-dropdown-link"
-            style={{ margin: 20, cursor: "pointer" }}
-          >
+          <p className="ant-dropdown-link" style={{ cursor: "pointer" }}>
             <strong>Modes : </strong>
             {modes} <DownOutlined />
           </p>
         </Dropdown>
       </Col>
+      <Col xxl={3} xs={6} style={{ paddingTop: "20px", paddingLeft: "20px" }}>
+        <Dropdown
+          overlay={stopSequenceMenu}
+          disabled={stopSequenceList.length ? false : true}
+        >
+          <p className="ant-dropdown-link" style={{ cursor: "pointer" }}>
+            <strong>Stop sequences : </strong> <DownOutlined />
+            <br />
+            {stopSequenceName}
+          </p>
+        </Dropdown>
+      </Col>
       <Col
-        lg={6}
-        xs={12}
+        xxl={8}
+        xs={18}
         style={{
-          marginTop: "20px",
           display: "flex",
-          justifyContent: "space-around",
+          justifyContent: "space-between",
+          paddingTop: "20px",
+          paddingRight: "20px",
         }}
       >
         <Button
@@ -136,16 +144,43 @@ const NavBar = ({
         >
           {modes === "Choose Mode"
             ? "Select a Mode"
-            : `Get the Data and the stop Sequences with mode ${modes}`}
+            : `Get data with mode ${modes}`}
         </Button>
         <Button
-          style={{ color: "red" }}
+          style={
+            stateDND.trajekt.items.length
+              ? { backgroundColor: "#f5222d", color: "white" }
+              : { backgroundColor: "white", color: "black" }
+          }
           disabled={stateDND.trajekt.items.length ? false : true}
           onClick={() => {
             onClearAll();
           }}
         >
           Reset
+        </Button>
+        <Badge count={savedStopSequence.length}>
+          <Button
+            type="primary"
+            onClick={() => {
+              handleUpdateAfterSave();
+            }}
+            disabled={!savedStopSequence.length ? true : false}
+          >
+            Update
+          </Button>
+        </Badge>
+        <Button
+          style={
+            currentStopSequenceName
+              ? { backgroundColor: "#f5222d", color: "white" }
+              : { backgroundColor: "white", color: "black" }
+          }
+          onClick={() => {
+            handleDeleteStopSequence(stopSequenceRef.current);
+          }}
+        >
+          Delete stop sequence
         </Button>
       </Col>
     </Fragment>

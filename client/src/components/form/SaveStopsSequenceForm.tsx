@@ -228,7 +228,7 @@ const SaveStopsSequenceForm = ({
                 <TreeNode value="holiday" title="Holiday" />
               </TreeSelect>
             </Col>
-            <Col offset={1}>
+            <Col>
               <RangePicker
                 format="HH:mm"
                 onChange={onFirstTimeRangePiker}
@@ -241,7 +241,7 @@ const SaveStopsSequenceForm = ({
                 disabled={selectedDay.length ? false : true}
               />
             </Col>
-            <Col offset={1}>
+            <Col>
               <Button
                 onClick={() => {
                   setAddTimeRange(!addTimeRange);
@@ -272,7 +272,7 @@ const SaveStopsSequenceForm = ({
                 />
               </Col>
             )}
-            <Col offset={1}>
+            <Col>
               <Button
                 onClick={saveSelectedDate}
                 disabled={

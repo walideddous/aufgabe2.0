@@ -9,26 +9,37 @@ interface TporpsSearchInput {
   handleSelectAutoSearch: (elementSelected: Tstations) => void;
 }
 
-const SearchInput = ({ stations, handleSelectAutoSearch }: TporpsSearchInput) => {
+const SearchInput = ({
+  stations,
+  handleSelectAutoSearch,
+}: TporpsSearchInput) => {
   // Search Component
   const [search, setSearch] = useState("");
 
   // Auto complete component
   const { Option } = AutoComplete;
 
-  const handleSelect = useCallback((data: string) => {
-    setSearch("");
-    const elementSelected = stations.filter((el) => el.name === data)[0];
-    handleSelectAutoSearch(elementSelected);
-  },[stations, handleSelectAutoSearch])
+  const handleSelect = useCallback(
+    (data: string) => {
+      setSearch("");
+      const elementSelected = stations.filter((el) => el.name === data)[0];
+      handleSelectAutoSearch(elementSelected);
+    },
+    [stations, handleSelectAutoSearch]
+  );
 
   return (
     <Fragment>
       <AutoComplete
-        style={{ width: "90%", margin: 20 }}
+        style={{
+          width: "100%",
+          paddingTop: "20px",
+          paddingLeft: "20px",
+          paddingRight: "20px",
+        }}
         onSelect={handleSelect}
-        onChange={(input: string)=> {
-          setSearch(input)
+        onChange={(input: string) => {
+          setSearch(input);
         }}
         value={search}
         placeholder="Enter stops name"
