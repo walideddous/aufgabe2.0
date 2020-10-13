@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useCallback, useState } from "react";
 import { AutoComplete } from "antd";
 
 // Import type
@@ -6,32 +6,30 @@ import { Tstations } from "../type/Types";
 
 interface TporpsSearchInput {
   stations: Tstations[];
-  handleEvent: (elementSelected: Tstations) => void;
+  handleSelectAutoSearch: (elementSelected: Tstations) => void;
 }
 
-const SearchInput = ({ stations, handleEvent }: TporpsSearchInput) => {
+const SearchInput = ({ stations, handleSelectAutoSearch }: TporpsSearchInput) => {
   // Search Component
   const [search, setSearch] = useState("");
 
   // Auto complete component
   const { Option } = AutoComplete;
 
-  const handleChange = (input: string) => {
-    setSearch(input);
-  };
-
-  const handleSelect = (data: string) => {
+  const handleSelect = useCallback((data: string) => {
     setSearch("");
     const elementSelected = stations.filter((el) => el.name === data)[0];
-    handleEvent(elementSelected);
-  };
+    handleSelectAutoSearch(elementSelected);
+  },[stations, handleSelectAutoSearch])
 
   return (
     <Fragment>
       <AutoComplete
         style={{ width: "90%", margin: 20 }}
         onSelect={handleSelect}
-        onChange={handleChange}
+        onChange={(input: string)=> {
+          setSearch(input)
+        }}
         value={search}
         placeholder="Enter stops name"
         open={search ? true : false}
@@ -39,7 +37,7 @@ const SearchInput = ({ stations, handleEvent }: TporpsSearchInput) => {
         {stations &&
           stations
             .filter((el: Tstations) =>
-              el.name.toLowerCase().includes(search.toLowerCase())
+              el.name.toLowerCase().startsWith(search.toLowerCase())
             )
             .map((el: Tstations) => (
               <Option value={el.name} key={el._id}>

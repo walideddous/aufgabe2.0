@@ -4,17 +4,16 @@ import React, {
   useEffect,
   useRef,
   Fragment,
-} from 'react';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { Card, Col } from 'antd';
-import { DeleteOutlined, ArrowUpOutlined } from '@ant-design/icons';
+} from "react";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { Card, Col } from "antd";
+import { DeleteOutlined, ArrowUpOutlined } from "@ant-design/icons";
 
 // Import types
-import { TstateDND, Tchoose, Tstations } from '../type/Types';
+import { TstateDND, Tstations } from "../type/Types";
 
 // Declare Types
 interface TporpsDND {
-  choose: Tchoose;
   stateDND: TstateDND;
   selected: Tstations | undefined;
   lastAutoSelectElem: Tstations | undefined;
@@ -25,7 +24,6 @@ interface TporpsDND {
 }
 
 const DragDrop = ({
-  choose,
   stateDND,
   selected,
   lastAutoSelectElem,
@@ -48,13 +46,13 @@ const DragDrop = ({
   };
 
   useEffect(() => {
-    window.addEventListener('resize', resize);
+    window.addEventListener("resize", resize);
     resize();
   });
   const scrollToBottom = useCallback(() => {
     if (AddStops.current) {
       //@ts-ignore
-      AddStops.current.scrollIntoView({ behavior: 'smooth' });
+      AddStops.current.scrollIntoView({ behavior: "smooth" });
     }
   }, []);
   useEffect(() => {
@@ -88,19 +86,19 @@ const DragDrop = ({
       <DragDropContext onDragEnd={handleDragEnd}>
         <Col lg={12} xs={24}>
           <Card bordered={true} title={stateDND.vorschlag.title}>
-            <Droppable droppableId={'vorschlag'}>
+            <Droppable droppableId={"vorschlag"}>
               {(provided: any) => {
                 return (
                   <div
                     style={{
-                      display: 'flex',
+                      display: "flex",
                     }}
                   >
                     <Col lg={12} xs={24}>
                       <div
                         ref={provided.innerRef}
                         {...provided.droppableProps}
-                        className={'droppable-col'}
+                        className={"droppable-col"}
                       >
                         {stateDND.vorschlag.items
                           .slice(0, 8)
@@ -114,13 +112,13 @@ const DragDrop = ({
                                 {(provided) => {
                                   return (
                                     <div
-                                      className='item-suggestion '
+                                      className="item-suggestion "
                                       ref={provided.innerRef}
                                       {...provided.draggableProps}
                                       {...provided.dragHandleProps}
                                     >
                                       <span
-                                        style={{ width: '90%' }}
+                                        style={{ width: "90%" }}
                                         onClick={() => {
                                           addStopsOnCLick(el);
                                         }}
@@ -129,10 +127,10 @@ const DragDrop = ({
                                       </span>
                                       <button
                                         style={{
-                                          backgroundColor: 'white',
-                                          color: '#3949ab',
-                                          borderRadius: '5px',
-                                          outline: '0',
+                                          backgroundColor: "white",
+                                          color: "#3949ab",
+                                          borderRadius: "5px",
+                                          outline: "0",
                                         }}
                                       >
                                         <ArrowUpOutlined
@@ -155,7 +153,7 @@ const DragDrop = ({
                         <div
                           ref={provided.innerRef}
                           {...provided.droppableProps}
-                          className={'droppable-col'}
+                          className={"droppable-col"}
                         >
                           {stateDND.vorschlag.items
                             .slice(8, 16)
@@ -169,28 +167,28 @@ const DragDrop = ({
                                   {(provided) => {
                                     return (
                                       <div
-                                        className='item-suggestion '
+                                        className="item-suggestion "
                                         ref={provided.innerRef}
                                         {...provided.draggableProps}
                                         {...provided.dragHandleProps}
                                       >
                                         <span
                                           style={{
-                                            width: '90%',
+                                            width: "90%",
                                           }}
                                           onClick={() => {
                                             addStopsOnCLick(el);
                                           }}
                                         >
-                                          {el.name} "{el.distance.toFixed(3)}{' '}
+                                          {el.name} "{el.distance.toFixed(3)}{" "}
                                           Km"
                                         </span>
                                         <button
                                           style={{
-                                            backgroundColor: 'white',
-                                            color: '#3949ab',
-                                            borderRadius: '5px',
-                                            outline: '0',
+                                            backgroundColor: "white",
+                                            color: "#3949ab",
+                                            borderRadius: "5px",
+                                            outline: "0",
                                           }}
                                         >
                                           <ArrowUpOutlined
@@ -222,14 +220,14 @@ const DragDrop = ({
         </Col>
         <Col lg={12} xs={24}>
           <Card bordered={true} title={stateDND.trajekt.title}>
-            <div style={{ height: '535px', overflowY: 'scroll' }}>
-              <Droppable droppableId={'trajekt'}>
+            <div style={{ height: "535px", overflowY: "scroll" }}>
+              <Droppable droppableId={"trajekt"}>
                 {(provided: any) => {
                   return (
                     <div
                       ref={provided.innerRef}
                       {...provided.droppableProps}
-                      className={'droppable-col'}
+                      className={"droppable-col"}
                     >
                       {stateDND.trajekt.items.map((el: any, index: number) => {
                         return (
@@ -252,8 +250,8 @@ const DragDrop = ({
                                     (selected &&
                                       !lastAutoSelectElem &&
                                       selected._id === el._id)
-                                      ? 'item-highlighted'
-                                      : 'item'
+                                      ? "item-highlighted"
+                                      : "item"
                                   }
                                   ref={provided.innerRef}
                                   {...provided.draggableProps}
@@ -263,18 +261,18 @@ const DragDrop = ({
                                     onClick={() => {
                                       handleClick(el, index);
                                     }}
-                                    style={{ width: '90%' }}
+                                    style={{ width: "90%" }}
                                   >
                                     {el.name}
                                   </span>
                                   <button
                                     style={{
-                                      backgroundColor: 'white',
-                                      color: '#3949ab',
-                                      borderRadius: '5px',
-                                      outline: '0',
-                                      cursor: 'pointer',
-                                      boxShadow: '0px 2px 2px lightgray',
+                                      backgroundColor: "white",
+                                      color: "#3949ab",
+                                      borderRadius: "5px",
+                                      outline: "0",
+                                      cursor: "pointer",
+                                      boxShadow: "0px 2px 2px lightgray",
                                     }}
                                     onClick={() => {
                                       handleDelete(el, index);

@@ -24,7 +24,7 @@ interface TpropsOnMap {
   stations: Tstations[];
   stateDND: TstateDND;
   selected: Tstations | undefined;
-  distance: Tdistance[]
+  distance: Tdistance[];
   lastAutoSelectElem: Tstations | undefined;
   onAddBeforSelected: (e: string) => void;
   onAddAfterSelected: (e: string) => void;
@@ -56,18 +56,16 @@ const Map = ({
   // Zoom reactive
   const responsiveZoom = useMemo(() => {
     //@ts-ignore
-    if(distance.length && distance[0].distance > 0.6){
+    if (distance.length && distance[0].distance > 0.6) {
       return {
-        zoom : 13
-      }
+        zoom: 13,
+      };
     } else {
       return {
-        zoom: 15
-      }
+        zoom: 15,
+      };
     }
-
   }, [distance]);
-
 
   const clickOnMarker = useCallback(
     (el: any, index: number) => {
@@ -150,6 +148,8 @@ const Map = ({
       const marker = L.circleMarker(el.coord.WGS84, {
         //@ts-ignore
         contextmenu: true,
+
+        disabled: true,
         contextmenuWidth: "200",
         contextmenuInheritItems: false,
         contextmenuItems: [
@@ -235,16 +235,22 @@ const Map = ({
 
     L.control
       .layers(undefined, {
-        "Show the Stop sequence": markers,
+        "Show all markers": markers,
       })
       .addTo(myMap);
   }, [stations, selected, lastAutoSelectElem, stateDND]);
 
   return (
     <Fragment>
-      <Col>
+      <Col lg={12} xs={24}>
         <Card bordered={true} title="Map">
-          <div id="mapId" style={{ height: "700px" }}></div>
+          <div
+            id="mapId"
+            style={{ height: "700px" }}
+            onClick={() => {
+              console.log("clicked");
+            }}
+          ></div>
         </Card>
       </Col>
     </Fragment>

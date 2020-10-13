@@ -1,40 +1,44 @@
-import React, { useEffect, useState, useCallback, Fragment } from 'react';
-import axios from 'axios';
-import { uuid } from 'uuidv4';
-import { Row, Spin, Col } from 'antd';
-import { LoadingOutlined } from '@ant-design/icons';
+import React, { useEffect, useState, useCallback, Fragment } from "react";
+import axios from "axios";
+import { v4 } from "uuid";
+import { Row, Spin, Col, message } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 
 // Import const values to connect with graphQL
-import { GRAPHQL_API, GET_STOPS_BY_MODES, REST_API } from '../config/config';
+import {
+  GRAPHQL_API,
+  GET_STOPS_BY_MODES,
+  GET_STOP_SEQUENCE_BY_MODES,
+} from "../config/config";
 
 // Import composents
-import NavBar from './navBar/NavBar';
-import Info from './info/Info';
-import SearchInput from './search/SearchInput';
-import DragDrop from './dnd/DragDrop';
-import Map from './map/Map';
-import SaveStopsSequenceForm from './form/SaveStopsSequenceForm';
+import NavBar from "./navBar/NavBar";
+import Info from "./info/Info";
+import SearchInput from "./search/SearchInput";
+import DragDrop from "./dnd/DragDrop";
+import Map from "./map/Map";
+import SaveStopsSequenceForm from "./form/SaveStopsSequenceForm";
 
 // Import the types of the state
-import { Tstations, TstateDND, Tchoose, Tdistance } from './type/Types';
+import { Tstations, TstateDND, Tdistance } from "./type/Types";
 
 // Get the property from Utils
-import { getProperty } from '../utils/getPropertyKey';
+import { getProperty } from "../utils/getPropertyKey";
 
 // get the function to compare the distance between a point fix and a banch of punkt
-import { calculateDistanceAndSort } from '../utils/getDistanceFromLatLonInKm';
+import { calculateDistanceAndSort } from "../utils/getDistanceFromLatLonInKm";
 
 const authAxios = axios.create({
   baseURL: GRAPHQL_API,
   headers: {
-    authorization: 'Bearer ' + process.env.REACT_APP_JSON_SECRET_KEY,
+    authorization: "Bearer " + process.env.REACT_APP_JSON_SECRET_KEY,
   },
 });
 
-const stopSequenceGet = axios.create({
-  baseURL: REST_API,
+const getStopSequence = axios.create({
+  baseURL: GRAPHQL_API,
   headers: {
-    authorization: 'Bearer ' + process.env.REACT_APP_JSON_SECRET_KEY,
+    authorization: "Bearer " + process.env.REACT_APP_JSON_SECRET_KEY,
   },
 });
 
@@ -44,23 +48,25 @@ const antIcon = <LoadingOutlined style={{ fontSize: 100 }} spin />;
 const Aufgabe: React.FC = () => {
   const [stations, setStations] = useState<Tstations[]>([]);
   const [selected, setSelected] = useState<Tstations>();
-  const [choose, setChoose] = useState<Tchoose>('');
   const [distance, setDistance] = useState<Tdistance[]>([]);
   const [stateDND, setStateDND] = useState<TstateDND>({
     vorschlag: {
-      title: 'Suggestion',
+      title: "Suggestion",
       items: [],
     },
     trajekt: {
-      title: 'Stop sequence',
+      title: "Stop sequence",
       items: [],
     },
   });
   const [lastAutoSelectElem, setlastAutoSelectElem] = useState<Tstations>();
   const [isSending, setIsSending] = useState<boolean>(false);
   const [stopSequenceList, setStopSequenceList] = useState([]);
-  const [updateDate, setUpdateDate] = useState<string>('');
-  const [currentMode, setCurrentMode] = useState<string>('');
+  const [updateDate, setUpdateDate] = useState<string>("");
+  const [currentMode, setCurrentMode] = useState<string>("");
+  const [currentStopSequenceName, setCurrentStopSequenceName] = useState<
+    string
+  >("");
 
   // Send the request when you click on get the Data button
   const sendRequest = useCallback(
@@ -73,37 +79,38 @@ const Aufgabe: React.FC = () => {
       setlastAutoSelectElem(undefined);
       setStateDND({
         vorschlag: {
-          title: 'Suggestion',
+          title: "Suggestion",
           items: [],
         },
         trajekt: {
-          title: 'Stop sequence',
+          title: "Stop sequence",
           items: [],
         },
       });
       // send the actual request
       try {
-        console.log('start fetching');
+        console.log("start fetching");
         // GraphQl
-        const queryResult = await authAxios.post('/graphql', {
+        const queryResult = await authAxios.post("/graphql", {
           query: GET_STOPS_BY_MODES(modes),
         });
-        // Rest Api
-        const queryStopSequence = await stopSequenceGet.get('/');
+        const queryStopSequence = await getStopSequence.post("/graphql", {
+          query: GET_STOP_SEQUENCE_BY_MODES(modes),
+        });
 
-        console.log('end fetching');
-        if (queryResult) {
-          const result = queryResult.data.data.haltestelleByMode;
-          const { stopSequence } = queryStopSequence.data;
-          setStations([...result]);
+        console.log("end fetching");
+        if (queryResult && queryStopSequence) {
+          const { haltestelleByMode } = queryResult.data.data;
+          const { stopSequence } = queryStopSequence.data.data;
+          setStations([...haltestelleByMode]);
           setStopSequenceList(stopSequence);
           setCurrentMode(modes);
           setUpdateDate(Date().toString().substr(4, 24));
         } else {
-          console.log('not aithorized provid a token');
+          console.log("not authorized provid a token");
         }
       } catch (error) {
-        console.error(error, 'error from trycatch');
+        console.error(error, "error from trycatch");
       }
       // once the request is sent, update state again
       setIsSending(false);
@@ -126,7 +133,7 @@ const Aufgabe: React.FC = () => {
         return {
           ...prev,
           vorschlag: {
-            title: 'Suggestion',
+            title: "Suggestion",
             items: vorschläge
               .map((el: any) => {
                 return {
@@ -154,13 +161,12 @@ const Aufgabe: React.FC = () => {
         (el: any) =>
           !stateDND.trajekt.items.map((el: any) => el._id).includes(el.to._id)
       );
-
       setDistance([...vorschläge]);
       setStateDND((prev: any) => {
         return {
           ...prev,
           vorschlag: {
-            title: 'Suggestion',
+            title: "Suggestion",
             items: vorschläge
               .map((el: any) => {
                 return {
@@ -197,14 +203,14 @@ const Aufgabe: React.FC = () => {
           return {
             ...prev,
             trajekt: {
-              title: 'Stop sequence',
+              title: "Stop sequence",
               items: prev.trajekt.items
                 .slice(0, index + 1)
                 .concat({ ...response })
                 .concat(prev.trajekt.items.slice(index + 1)),
             },
             vorschlag: {
-              title: 'Suggestion',
+              title: "Suggestion",
               items: vorschläge
                 .map((el: any) => {
                   return {
@@ -224,7 +230,7 @@ const Aufgabe: React.FC = () => {
           return {
             ...prev,
             trajekt: {
-              title: 'Stop sequence',
+              title: "Stop sequence",
               items: [
                 ...prev.trajekt.items,
                 {
@@ -233,7 +239,7 @@ const Aufgabe: React.FC = () => {
               ],
             },
             vorschlag: {
-              title: 'Suggestion',
+              title: "Suggestion",
               items: vorschläge
                 .map((el: any) => {
                   return {
@@ -261,9 +267,7 @@ const Aufgabe: React.FC = () => {
       ) {
         let newValue =
           stateDND.trajekt.items[stateDND.trajekt.items.length - 2];
-        setlastAutoSelectElem(
-          stations.filter((el) => el._id === newValue._id)[0]
-        );
+        setSelected(stations.filter((el) => el._id === newValue._id)[0]);
         setSelected(undefined);
       }
       if (stateDND.trajekt.items.length === 1) {
@@ -274,7 +278,7 @@ const Aufgabe: React.FC = () => {
         return {
           ...prev,
           trajekt: {
-            title: 'Stop sequence',
+            title: "Stop sequence",
             items: stateDND.trajekt.items.filter(
               (item: any) => item._id !== e._id
             ),
@@ -288,7 +292,7 @@ const Aufgabe: React.FC = () => {
           return {
             ...prev,
             vorschlag: {
-              title: 'Suggestion',
+              title: "Suggestion",
               items: [],
             },
           };
@@ -299,11 +303,8 @@ const Aufgabe: React.FC = () => {
   );
 
   // to choose the station from the input options
-  const onEvent = useCallback(
+  const onSelectAutoSearch = useCallback(
     (elementSelected: Tstations) => {
-      setlastAutoSelectElem({ ...elementSelected });
-      setSelected(undefined);
-      setChoose(elementSelected.name);
       var vorschläge = calculateDistanceAndSort(elementSelected, stations);
       // Delete the repetition from the Suggestion Field
       vorschläge = vorschläge.filter(
@@ -311,34 +312,67 @@ const Aufgabe: React.FC = () => {
           !stateDND.trajekt.items.map((el: any) => el._id).includes(el.to._id)
       );
       setDistance([...vorschläge]);
-      setStateDND((prev: any) => {
-        return {
-          ...prev,
-          trajekt: {
-            title: 'Stop sequence',
-            items: [
-              ...prev.trajekt.items,
-              {
-                ...elementSelected,
-              },
-            ],
-          },
-          vorschlag: {
-            title: 'Suggestion',
-            items: vorschläge
-              .map((el: any) => {
-                return {
-                  ...el.to,
-                  angle: el.angle,
-                  distance: el.distance,
-                };
-              })
-              .slice(0, 16),
-          },
-        };
-      });
+
+      if (selected) {
+        const index = stateDND.trajekt.items
+          .map((el: any) => el._id)
+          .indexOf(selected._id);
+        setStateDND((prev: any) => {
+          return {
+            ...prev,
+            trajekt: {
+              title: "Stop sequence",
+              items: prev.trajekt.items
+                .slice(0, index + 1)
+                .concat({ ...elementSelected })
+                .concat(prev.trajekt.items.slice(index + 1)),
+            },
+            vorschlag: {
+              title: "Suggestion",
+              items: vorschläge
+                .map((el: any) => {
+                  return {
+                    ...el.to,
+                    angle: el.angle,
+                    distance: el.distance,
+                  };
+                })
+                .slice(0, 16),
+            },
+          };
+        });
+        setSelected({ ...elementSelected, index });
+      } else {
+        setlastAutoSelectElem({ ...elementSelected });
+        setStateDND((prev: any) => {
+          return {
+            ...prev,
+            trajekt: {
+              title: "Stop sequence",
+              items: [
+                ...prev.trajekt.items,
+                {
+                  ...elementSelected,
+                },
+              ],
+            },
+            vorschlag: {
+              title: "Suggestion",
+              items: vorschläge
+                .map((el: any) => {
+                  return {
+                    ...el.to,
+                    angle: el.angle,
+                    distance: el.distance,
+                  };
+                })
+                .slice(0, 16),
+            },
+          };
+        });
+      }
     },
-    [stations, stateDND.trajekt.items]
+    [stations, stateDND.trajekt.items, selected]
   );
 
   // To Drag and Drop from source to the destination
@@ -371,10 +405,15 @@ const Aufgabe: React.FC = () => {
         );
         return prev;
       });
-      setSelected(itemCopy);
+
+      const index = stateDND.trajekt.items
+        .map((el: any) => el._id)
+        .indexOf(itemCopy._id);
+      clickOnDrop(itemCopy, index);
+
       setlastAutoSelectElem(undefined);
     },
-    [stateDND]
+    [stateDND, clickOnDrop]
   );
 
   // Context menu to add the stop After the selected stops in the drop Menu
@@ -399,7 +438,7 @@ const Aufgabe: React.FC = () => {
           return {
             ...prev,
             trajekt: {
-              title: 'Stop sequence',
+              title: "Stop sequence",
               items: [
                 ...prev.trajekt.items,
                 {
@@ -408,7 +447,7 @@ const Aufgabe: React.FC = () => {
               ],
             },
             vorschlag: {
-              title: 'Suggestion',
+              title: "Suggestion",
               items: vorschläge
                 .map((el: any) => {
                   return {
@@ -436,7 +475,7 @@ const Aufgabe: React.FC = () => {
           return {
             ...prev,
             trajekt: {
-              title: 'Stop sequence',
+              title: "Stop sequence",
               items: prev.trajekt.items
                 .slice(0, index + 1)
                 .concat({ ...response })
@@ -463,7 +502,7 @@ const Aufgabe: React.FC = () => {
           return {
             ...prev,
             trajekt: {
-              title: 'Stop sequence',
+              title: "Stop sequence",
               items: prev.trajekt.items
                 .filter(
                   (el: any, index: number, tab: any) => index !== tab.length - 1
@@ -491,7 +530,7 @@ const Aufgabe: React.FC = () => {
           return {
             ...prev,
             trajekt: {
-              title: 'Stop sequence',
+              title: "Stop sequence",
               items: prev.trajekt.items
                 .slice(0, index)
                 .concat({ ...response })
@@ -527,7 +566,7 @@ const Aufgabe: React.FC = () => {
         return {
           ...prev,
           vorschlag: {
-            title: 'Suggestion',
+            title: "Suggestion",
             items: vorschläge
               .map((el: any) => {
                 return {
@@ -555,13 +594,14 @@ const Aufgabe: React.FC = () => {
   const clearAll = useCallback(() => {
     setSelected(undefined);
     setlastAutoSelectElem(undefined);
+    setCurrentStopSequenceName("");
     setStateDND({
       vorschlag: {
-        title: 'Suggestion',
+        title: "Suggestion",
         items: [],
       },
       trajekt: {
-        title: 'Stop sequence',
+        title: "Stop sequence",
         items: [],
       },
     });
@@ -570,46 +610,47 @@ const Aufgabe: React.FC = () => {
   // Save the stop sequence
   const saveStopSequence = useCallback(
     async (formInput: any) => {
-      const { name, valid, time } = formInput;
       const { items } = stateDND.trajekt;
-      const config = {
-        headers: {
-          'Content-Type': 'appication/json',
-        },
-      };
-      const body = JSON.stringify({
-        _id: uuid(),
-        name,
-        valid,
-        time,
-        stopSequence: items,
-      });
+
       if (isSending) return;
+      if (!items.length) return;
+
+      const body = {
+        _id: v4(),
+        ...formInput,
+        modes: currentMode,
+        stopSequence: items,
+      };
+
       // update state
       setIsSending(true);
       // send the actual request
       try {
-        console.log('send the saved Stop sequence');
+        console.log("send the saved Stop sequence");
         // REST_API
-        const result = await authAxios.put(
-          '/savedStopSequence',
-
-          body,
-          config
-        );
+        const result = await authAxios.put("/savedStopSequence", body);
         if (!result) {
-          console.error('Result not found');
+          console.error("Result not found");
         }
         console.log(result.data.msg);
+        if (result.data.msg) {
+          message.success(result.data.msg);
+          // Set the state of stopSequence List
+          setStopSequenceList((prev) => {
+            return prev.concat({ ...body });
+          });
+        }
       } catch (error) {
-        console.error(error, 'error from trycatch');
+        console.error(error, "error from trycatch");
       }
       // once the request is sent, update state again
       setIsSending(false);
+      clearAll();
     },
-    [stateDND.trajekt, isSending]
+    [stateDND.trajekt, isSending, currentMode, clearAll]
   );
 
+  // Delete marker from map
   const handleDeleteMarkerFromMap = useCallback(
     (e: any) => {
       const response = stations.filter((el, i) => el.name === e)[0];
@@ -622,51 +663,76 @@ const Aufgabe: React.FC = () => {
           .indexOf(response._id);
         handleDeleteOnDND(response, index);
         if (index === stateDND.trajekt.items.length - 1) {
-          //@ts-ignore
-          setlastAutoSelectElem(stateDND.trajekt.items[index - 1]);
+          clickOnDrop(stateDND.trajekt.items[index - 1], index - 1);
         }
       }
     },
-    [stations, stateDND.trajekt.items, handleDeleteOnDND]
+    [stations, stateDND.trajekt.items, handleDeleteOnDND, clickOnDrop]
+  );
+
+  // Display the stop sequence on map
+  const handledisplayStopSequence = useCallback(
+    (input: any) => {
+      const { stopSequence, name } = input;
+      setCurrentStopSequenceName(name);
+      setStateDND((prev) => {
+        return {
+          ...prev,
+          trajekt: {
+            title: "Stop sequence",
+            items: stopSequence,
+          },
+        };
+      });
+      clickOnDrop(
+        stopSequence[stopSequence.length - 1],
+        stopSequence.length - 1
+      );
+    },
+    [clickOnDrop]
   );
 
   return (
-    <div className='Prototyp' style={{ position: 'relative' }}>
+    <div className="Prototyp" style={{ position: "relative" }}>
       <Row gutter={[8, 8]}>
         <Col span={8}>
-          <SearchInput stations={stations} handleEvent={onEvent} />
+          <SearchInput
+            stations={stations}
+            handleSelectAutoSearch={onSelectAutoSearch}
+          />
         </Col>
         <NavBar
           isSending={isSending}
           stateDND={stateDND}
-          onSendRequest={sendRequest}
-          onClearAll={clearAll}
           stopSequenceList={stopSequenceList}
           updateDate={updateDate}
           currentMode={currentMode}
+          currentStopSequenceName={currentStopSequenceName}
+          onSendRequest={sendRequest}
+          onClearAll={clearAll}
+          ondisplayStopSequence={handledisplayStopSequence}
         />
         {isSending ? (
           <div
             style={{
-              margin: '0',
-              position: 'absolute',
-              marginTop: '25%',
-              left: '50%',
-              marginRight: ' -50%',
-              transform: 'translate(-50%, -50%)',
+              margin: "0",
+              position: "absolute",
+              marginTop: "25%",
+              left: "50%",
+              marginRight: " -50%",
+              transform: "translate(-50%, -50%)",
             }}
           >
             <Spin
               indicator={antIcon}
               style={{
-                display: 'flex',
+                display: "flex",
               }}
             />
           </div>
         ) : (
           <Fragment>
             <DragDrop
-              choose={choose}
               stateDND={stateDND}
               selected={selected}
               lastAutoSelectElem={lastAutoSelectElem}
@@ -675,19 +741,17 @@ const Aufgabe: React.FC = () => {
               onclick={clickOnDrop}
               onDelete={handleDeleteOnDND}
             />
-            <Col lg={12} xs={24}>
-              <Map
-                stations={stations}
-                stateDND={stateDND}
-                selected={selected}
-                distance={distance}
-                lastAutoSelectElem={lastAutoSelectElem}
-                onAddBeforSelected={handleAddBeforSelected}
-                onAddAfterSelected={handleAddAfterSelected}
-                onDeleteMarkerFromMap={handleDeleteMarkerFromMap}
-                selectMarkerOnMap={clickOnMapMarker}
-              />
-            </Col>
+            <Map
+              stations={stations}
+              stateDND={stateDND}
+              selected={selected}
+              distance={distance}
+              lastAutoSelectElem={lastAutoSelectElem}
+              onAddBeforSelected={handleAddBeforSelected}
+              onAddAfterSelected={handleAddAfterSelected}
+              onDeleteMarkerFromMap={handleDeleteMarkerFromMap}
+              selectMarkerOnMap={clickOnMapMarker}
+            />
             <Col lg={12} xs={24}>
               <Info
                 selected={selected}
@@ -706,4 +770,4 @@ const Aufgabe: React.FC = () => {
   );
 };
 
-export default React.memo(Aufgabe);
+export default Aufgabe;

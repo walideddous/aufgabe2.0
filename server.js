@@ -23,7 +23,6 @@ app.use(express.json());
 app.use(cors());
 
 // Middelware for the jsonwebtoken
-
 app.use((req, _, next) => {
   let accessToken;
   if (

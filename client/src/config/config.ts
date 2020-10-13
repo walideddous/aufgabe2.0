@@ -11,7 +11,11 @@ export const GET_HALTESTELLE_QUERY = ` query {haltestelles {
     modes
   }}`;
 
-export const GET_STOPS_BY_MODES = (modes: String) => {
+export const GET_STOPS_BY_MODES = (modes: string ) => {
   return ` query {haltestelleByMode(modes:"${modes}"){_id,name,modes,coord{WGS84{lat,lon}}}}
   `;
 };
+
+export const GET_STOP_SEQUENCE_BY_MODES = (modes: string ) => {
+  return `query {stopSequence(modes:"${modes}"){_id,name,date,schedule{day,time{start,end}},stopSequence{_id,name,modes,coord{WGS84{lat,lon}}}}}`
+}

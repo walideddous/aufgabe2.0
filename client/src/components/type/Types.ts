@@ -12,7 +12,6 @@ export interface Tstations {
 }
 
 export type Tloading = boolean;
-export type Tchoose = string;
 
 export interface Tdistance {
   from: string;
