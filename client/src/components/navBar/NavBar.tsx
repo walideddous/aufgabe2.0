@@ -1,4 +1,11 @@
-import React, { Fragment, useMemo, useCallback, useState, useRef } from "react";
+import React, {
+  Fragment,
+  useMemo,
+  useCallback,
+  useState,
+  useRef,
+  useEffect,
+} from "react";
 import { Col, Button, Dropdown, Menu, Badge } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 
@@ -12,7 +19,7 @@ interface TnavBarProps {
   isSending: boolean;
   stateDND: TstateDND;
   currentMode: string;
-  currentStopSequenceName: string;
+  currentStopSequenceName: any;
   onSendRequest: (modes: string, currentMode: string) => void;
   onClearAll: () => void;
   handleUpdateAfterSave: () => void;
@@ -37,12 +44,19 @@ const NavBar = ({
   const [modes, setModes] = useState<string>("");
   const [stopSequenceName, setStopSequenceName] = useState<string>("");
   const stopSequenceRef = useRef("");
+  const [styleChanged, setStyleChanged] = useState(false);
 
   // handle the drop menu to display the choosed Modes on Map
-  const handleDropDownMenu = useCallback((event: any) => {
-    setModes(event.item.props.children[1]);
-    setStopSequenceName("");
-  }, []);
+  const handleDropDownMenu = useCallback(
+    (event: any) => {
+      setModes(event.item.props.children[1]);
+      if (event.item.props.children[1] !== currentMode) {
+        setStopSequenceName("");
+        onClearAll();
+      }
+    },
+    [currentMode, onClearAll]
+  );
   // Menu of the drop menu
   const menu = useMemo(
     () => (
@@ -62,7 +76,7 @@ const NavBar = ({
   // handle the drop menu to display the stop sequence on the map
   const handleDropDownStopsequenceMenu = useCallback(
     (event: any) => {
-      if (currentStopSequenceName === event.item.props.children[1]) return;
+      if (currentStopSequenceName.name === event.item.props.children[1]) return;
       const response = stopSequenceList.filter(
         (el: any) => el.name === event.item.props.children[1]
       )[0];
@@ -93,18 +107,21 @@ const NavBar = ({
     [stopSequenceList, handleDropDownStopsequenceMenu]
   );
 
+  const resize = () => {
+    if (window.innerWidth < 695) {
+      setStyleChanged(true);
+    } else {
+      setStyleChanged(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", resize);
+    resize();
+  });
+
   return (
     <Fragment>
-      <Col xxl={3} xs={6} style={{ paddingTop: "20px" }}>
-        <p>
-          <strong>Current mode : </strong>
-          {currentMode}
-          <br />
-          <strong>Current stop sequence : </strong>
-          <br />
-          {currentStopSequenceName}
-        </p>
-      </Col>
       <Col xxl={2} xs={6} style={{ paddingTop: "20px" }}>
         <Dropdown overlay={menu}>
           <p className="ant-dropdown-link" style={{ cursor: "pointer" }}>
@@ -113,7 +130,7 @@ const NavBar = ({
           </p>
         </Dropdown>
       </Col>
-      <Col xxl={3} xs={6} style={{ paddingTop: "20px", paddingLeft: "20px" }}>
+      <Col xxl={3} xs={6} style={{ paddingTop: "20px" }}>
         <Dropdown
           overlay={stopSequenceMenu}
           disabled={stopSequenceList.length ? false : true}
@@ -125,35 +142,53 @@ const NavBar = ({
           </p>
         </Dropdown>
       </Col>
+      <Col xxl={3} xs={8} style={{ paddingTop: "20px", paddingLeft: "20px" }}>
+        <p>
+          <strong>Current mode : </strong>
+          {currentMode}
+          <br />
+          <strong>Current stop sequence : </strong>
+          <br />
+          {stopSequenceName}
+        </p>
+      </Col>
       <Col
         xxl={8}
-        xs={18}
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          paddingTop: "20px",
-          paddingRight: "20px",
-        }}
+        xs={16}
+        style={
+          styleChanged
+            ? {
+                display: "flex",
+                flexFlow: "wrap",
+                paddingLeft: "70px",
+                paddingTop: "20px",
+                paddingRight: "20px",
+              }
+            : {
+                display: "flex",
+                justifyContent: "space-between",
+                paddingTop: "20px",
+                paddingRight: "20px",
+              }
+        }
       >
         <Button
-          type={isSending || modes !== "Choose Mode" ? "primary" : "dashed"}
-          disabled={isSending || modes !== "Choose Mode" ? false : true}
+          type="primary"
+          disabled={isSending || modes ? false : true}
+          style={styleChanged ? { width: "200px" } : undefined}
           onClick={() => {
             onSendRequest(modes, currentMode);
           }}
         >
-          {modes === "Choose Mode"
-            ? "Select a Mode"
-            : `Get data with mode ${modes}`}
+          {modes === "" ? "Select a Mode" : `Get data with mode ${modes}`}
         </Button>
         <Button
-          style={
-            stateDND.trajekt.items.length
-              ? { backgroundColor: "#f5222d", color: "white" }
-              : { backgroundColor: "white", color: "black" }
-          }
+          type="primary"
+          danger
+          style={styleChanged ? { width: "200px" } : undefined}
           disabled={stateDND.trajekt.items.length ? false : true}
           onClick={() => {
+            setStopSequenceName("");
             onClearAll();
           }}
         >
@@ -162,6 +197,7 @@ const NavBar = ({
         <Badge count={savedStopSequence.length}>
           <Button
             type="primary"
+            style={styleChanged ? { width: "200px" } : undefined}
             onClick={() => {
               handleUpdateAfterSave();
             }}
@@ -171,13 +207,14 @@ const NavBar = ({
           </Button>
         </Badge>
         <Button
-          style={
-            currentStopSequenceName
-              ? { backgroundColor: "#f5222d", color: "white" }
-              : { backgroundColor: "white", color: "black" }
-          }
+          type="primary"
+          danger
+          style={styleChanged ? { width: "200px" } : undefined}
+          disabled={Object.keys(currentStopSequenceName).length ? false : true}
           onClick={() => {
+            window.confirm("You really want to delete the stop sequence ?");
             handleDeleteStopSequence(stopSequenceRef.current);
+            setStopSequenceName("");
           }}
         >
           Delete stop sequence

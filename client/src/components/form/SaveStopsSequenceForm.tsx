@@ -25,7 +25,7 @@ const layout = {
   labelCol: { span: 2 },
 };
 const tailLayout = {
-  wrapperCol: { offset: 2, span: 24 },
+  wrapperCol: { offset: 2, span: 20 },
 };
 
 // Declare Props Types
@@ -51,29 +51,16 @@ const SaveStopsSequenceForm = ({
   const [firstTimeMoment, setFirstTimeMoment] = useState([]);
   const [secondTimeMoment, setSecondTimeMoment] = useState([]);
 
+  console.log("savedDaysTimes", savedDaysTimes);
+
   const onFinish = (values: any) => {
     let formInput;
     if (selectedDay.length && !savedDaysTimes.length) {
-      if (Object.keys(secondSelectedTimeRange).length) {
-        formInput = {
-          name: values.Name,
-          date: selectedDate,
-          schedule: {
-            day: selectedDay,
-            time: [firstSelectedTimeRange, secondSelectedTimeRange],
-          },
-        };
-      } else {
-        formInput = {
-          name: values.Name,
-          date: selectedDate,
-          schedule: {
-            day: selectedDay,
-            time: [firstSelectedTimeRange],
-          },
-        };
-      }
-
+      formInput = {
+        name: values.Name,
+        date: selectedDate,
+        schedule: savedDaysTimes,
+      };
       handleSaveStopSequence(formInput);
     }
     if (!selectedDay.length && savedDaysTimes.length) {
@@ -207,7 +194,7 @@ const SaveStopsSequenceForm = ({
           }
         >
           <Row>
-            <Col span={11}>
+            <Col span={10}>
               <TreeSelect
                 showSearch
                 dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
@@ -228,7 +215,7 @@ const SaveStopsSequenceForm = ({
                 <TreeNode value="holiday" title="Holiday" />
               </TreeSelect>
             </Col>
-            <Col>
+            <Col span={7}>
               <RangePicker
                 format="HH:mm"
                 onChange={onFirstTimeRangePiker}
@@ -241,7 +228,7 @@ const SaveStopsSequenceForm = ({
                 disabled={selectedDay.length ? false : true}
               />
             </Col>
-            <Col>
+            <Col span={2}>
               <Button
                 onClick={() => {
                   setAddTimeRange(!addTimeRange);
@@ -257,8 +244,21 @@ const SaveStopsSequenceForm = ({
                 {addTimeRange ? <MinusOutlined /> : <PlusOutlined />}
               </Button>
             </Col>
+            <Col span={2}>
+              <Button
+                onClick={saveSelectedDate}
+                disabled={
+                  selectedDay.length &&
+                  Object.keys(firstSelectedTimeRange).length
+                    ? false
+                    : true
+                }
+              >
+                <SaveOutlined />
+              </Button>
+            </Col>
             {addTimeRange && (
-              <Col offset={1}>
+              <Col span={7} offset={10}>
                 <RangePicker
                   format="HH:mm"
                   onChange={onSecondTimeRangePiker}
@@ -272,25 +272,23 @@ const SaveStopsSequenceForm = ({
                 />
               </Col>
             )}
-            <Col>
-              <Button
-                onClick={saveSelectedDate}
-                disabled={
-                  selectedDay.length &&
-                  Object.keys(firstSelectedTimeRange).length
-                    ? false
-                    : true
-                }
-              >
-                <SaveOutlined />
-              </Button>
-            </Col>
           </Row>
         </Form.Item>
         <Form.Item {...tailLayout}>
           {savedDaysTimes &&
             savedDaysTimes.map((el: any, i: number) => (
               <div key={i} className="item">
+                {el.day.map((el: any, index: number) => (
+                  <p key={index}>{el}</p>
+                ))}
+                {el.time.map((el: any, index: number) => (
+                  <p key={index}>
+                    {"From "}
+                    {el.start}
+                    {" To "}
+                    {el.end}
+                  </p>
+                ))}
                 <Button
                   style={{
                     backgroundColor: "white",

@@ -16,7 +16,6 @@ import { TstateDND, Tstations } from "../type/Types";
 interface TporpsDND {
   stateDND: TstateDND;
   selected: Tstations | undefined;
-  lastAutoSelectElem: Tstations | undefined;
   onclick: (e: any, index: number) => void;
   handleAddStopsOnCLick: (e: any) => void;
   onDelete: (e: any, index: number) => void;
@@ -26,7 +25,6 @@ interface TporpsDND {
 const DragDrop = ({
   stateDND,
   selected,
-  lastAutoSelectElem,
   handleAddStopsOnCLick,
   handleDragEnd,
   onclick,
@@ -127,6 +125,7 @@ const DragDrop = ({
                                       </span>
                                       <button
                                         style={{
+                                          width: "30px",
                                           backgroundColor: "white",
                                           color: "#3949ab",
                                           borderRadius: "5px",
@@ -185,6 +184,7 @@ const DragDrop = ({
                                         </span>
                                         <button
                                           style={{
+                                            width: "30px",
                                             backgroundColor: "white",
                                             color: "#3949ab",
                                             borderRadius: "5px",
@@ -240,16 +240,10 @@ const DragDrop = ({
                               return (
                                 <div
                                   className={
-                                    (lastAutoSelectElem &&
-                                      !selected &&
+                                    (!selected &&
                                       stateDND.trajekt.items.length - 1 ===
                                         index) ||
-                                    (lastAutoSelectElem &&
-                                      selected &&
-                                      selected._id === el._id) ||
-                                    (selected &&
-                                      !lastAutoSelectElem &&
-                                      selected._id === el._id)
+                                    (selected && selected._id === el._id)
                                       ? "item-highlighted"
                                       : "item"
                                   }
@@ -267,6 +261,7 @@ const DragDrop = ({
                                   </span>
                                   <button
                                     style={{
+                                      width: "30px",
                                       backgroundColor: "white",
                                       color: "#3949ab",
                                       borderRadius: "5px",

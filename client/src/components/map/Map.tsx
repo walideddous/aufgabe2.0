@@ -25,7 +25,6 @@ interface TpropsOnMap {
   stateDND: TstateDND;
   selected: Tstations | undefined;
   distance: Tdistance[];
-  lastAutoSelectElem: Tstations | undefined;
   onAddBeforSelected: (e: string) => void;
   onAddAfterSelected: (e: string) => void;
   onDeleteMarkerFromMap: (e: string) => void;
@@ -37,7 +36,6 @@ const Map = ({
   stateDND,
   selected,
   distance,
-  lastAutoSelectElem,
   onAddAfterSelected,
   onAddBeforSelected,
   onDeleteMarkerFromMap,
@@ -124,17 +122,10 @@ const Map = ({
     document.getElementById("mapId").innerHTML =
       "<div id='map' style='width: 100%; height: 100%;'></div>";
     const myMap = L.map("map").setView(
-      lastAutoSelectElem && !selected
-        ? [
-            lastAutoSelectElem.coord.WGS84.lat,
-            lastAutoSelectElem.coord.WGS84.lon,
-          ]
-        : selected && lastAutoSelectElem
-        ? [selected.coord.WGS84.lat, selected.coord.WGS84.lon]
-        : selected && !lastAutoSelectElem
+      selected
         ? [selected.coord.WGS84.lat, selected.coord.WGS84.lon]
         : [position.lat, position.lng],
-      !lastAutoSelectElem && !selected ? position.zoom : responsiveZoom.zoom
+      !selected ? position.zoom : responsiveZoom.zoom
     );
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution:
@@ -168,11 +159,7 @@ const Map = ({
           },
         ],
         color:
-          (lastAutoSelectElem &&
-            !selected &&
-            lastAutoSelectElem._id === el._id) ||
-          (lastAutoSelectElem && selected && selected._id === el._id) ||
-          (selected && !lastAutoSelectElem && selected._id === el._id)
+          selected && selected._id === el._id
             ? "red"
             : stateDND.vorschlag.items.length &&
               stateDND.vorschlag.items.map((el) => el._id).includes(el._id)
@@ -213,11 +200,7 @@ const Map = ({
           },
         ],
         color:
-          (lastAutoSelectElem &&
-            !selected &&
-            lastAutoSelectElem._id === el._id) ||
-          (lastAutoSelectElem && selected && selected._id === el._id) ||
-          (selected && !lastAutoSelectElem && selected._id === el._id)
+          selected && selected._id === el._id
             ? "red"
             : stateDND.vorschlag.items.length &&
               stateDND.vorschlag.items.map((el) => el._id).includes(el._id)
@@ -238,19 +221,13 @@ const Map = ({
         "Show all markers": markers,
       })
       .addTo(myMap);
-  }, [stations, selected, lastAutoSelectElem, stateDND]);
+  }, [stations, selected, stateDND]);
 
   return (
     <Fragment>
       <Col xxl={12} xs={24}>
         <Card bordered={true} title="Map">
-          <div
-            id="mapId"
-            style={{ height: "700px" }}
-            onClick={() => {
-              console.log("clicked");
-            }}
-          ></div>
+          <div id="mapId" style={{ height: "700px" }}></div>
         </Card>
       </Col>
     </Fragment>
