@@ -42,6 +42,7 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  border: 0;
 }
 
 .App .column {
@@ -69,6 +70,7 @@
   border-radius: 7px;
   width: 100%;
 }
+
 .item-highlighted {
   display: flex;
   justify-content: space-between;
@@ -96,4 +98,15 @@
 
 .item.dragging {
   background-color: coral;
+}
+
+.timePicked {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1890ff;
+  color: white;
+  border: 1px solid white;
+  padding: 5px;
+  border-radius: 7px;
 }

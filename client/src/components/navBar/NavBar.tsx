@@ -212,9 +212,12 @@ const NavBar = ({
           style={styleChanged ? { width: "200px" } : undefined}
           disabled={Object.keys(currentStopSequenceName).length ? false : true}
           onClick={() => {
-            window.confirm("You really want to delete the stop sequence ?");
-            handleDeleteStopSequence(stopSequenceRef.current);
-            setStopSequenceName("");
+            if (
+              window.confirm("You really want to delete the stop sequence ?")
+            ) {
+              handleDeleteStopSequence(stopSequenceRef.current);
+              setStopSequenceName("");
+            }
           }}
         >
           Delete stop sequence

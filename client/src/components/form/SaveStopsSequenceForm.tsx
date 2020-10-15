@@ -3,7 +3,6 @@ import {
   Card,
   Form,
   Input,
-  Row,
   Col,
   TimePicker,
   TreeSelect,
@@ -11,12 +10,7 @@ import {
   DatePicker,
 } from "antd";
 
-import {
-  DeleteOutlined,
-  PlusOutlined,
-  SaveOutlined,
-  MinusOutlined,
-} from "@ant-design/icons";
+import { DeleteOutlined, PlusOutlined, MinusOutlined } from "@ant-design/icons";
 
 // Import types
 import { TstateDND } from "../type/Types";
@@ -44,24 +38,21 @@ const SaveStopsSequenceForm = ({
   const [selectedDay, setSelectedDay] = useState([]);
   const [firstSelectedTimeRange, setFirstSelectedTimeRange] = useState({});
   const [secondSelectedTimeRange, setSecondSelectedTimeRange] = useState({});
-  const [savedDaysTimes, setSavedDaysTimes] = useState([]);
+  const [savedDaysTimes, setSavedDaysTimes] = useState<{}[]>([]);
   const [addTimeRange, setAddTimeRange] = useState(false);
 
   // Momnet stored in variable to reset the value of TimeRangPiker
   const [firstTimeMoment, setFirstTimeMoment] = useState([]);
   const [secondTimeMoment, setSecondTimeMoment] = useState([]);
 
-  console.log("savedDaysTimes", savedDaysTimes);
-
   const onFinish = (values: any) => {
     let formInput;
-    if (selectedDay.length && !savedDaysTimes.length) {
+    if (Object.keys(firstSelectedTimeRange).length && !savedDaysTimes.length) {
       formInput = {
         name: values.Name,
         date: selectedDate,
-        schedule: savedDaysTimes,
+        schedule: [{ day: selectedDate, time: firstSelectedTimeRange }],
       };
-      handleSaveStopSequence(formInput);
     }
     if (!selectedDay.length && savedDaysTimes.length) {
       formInput = {
@@ -69,8 +60,29 @@ const SaveStopsSequenceForm = ({
         date: selectedDate,
         schedule: savedDaysTimes,
       };
-      handleSaveStopSequence(formInput);
     }
+    if (Object.keys(firstSelectedTimeRange).length && savedDaysTimes.length) {
+      if (Object.keys(secondSelectedTimeRange).length) {
+        formInput = {
+          name: values.Name,
+          date: selectedDate,
+          schedule: savedDaysTimes.concat({
+            day: selectedDate,
+            time: [firstSelectedTimeRange, secondSelectedTimeRange],
+          }),
+        };
+      } else {
+        formInput = {
+          name: values.Name,
+          date: selectedDate,
+          schedule: savedDaysTimes.concat({
+            day: selectedDate,
+            time: [firstSelectedTimeRange],
+          }),
+        };
+      }
+    }
+    // handleSaveStopSequence(formInput);
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -193,102 +205,115 @@ const SaveStopsSequenceForm = ({
               : undefined
           }
         >
-          <Row>
-            <Col span={10}>
-              <TreeSelect
-                showSearch
-                dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
-                placeholder="Please select a day"
-                allowClear
-                multiple
-                treeDefaultExpandAll
-                onChange={daySelect}
-                value={selectedDay}
-              >
-                <TreeNode value="monday" title="Mo" />
-                <TreeNode value="tuesday" title="Tu" />
-                <TreeNode value="wednesday" title="We" />
-                <TreeNode value="thursday" title="Th" />
-                <TreeNode value="friday" title="Fr" />
-                <TreeNode value="saturday" title="Sa" />
-                <TreeNode value="sunday" title="Su" />
-                <TreeNode value="holiday" title="Holiday" />
-              </TreeSelect>
-            </Col>
-            <Col span={7}>
+          <Col style={{ display: "flex", padding: "10px" }}>
+            <strong>Days: </strong>
+            <TreeSelect
+              style={{ width: "70%", paddingLeft: "20px" }}
+              showSearch
+              dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
+              placeholder="Please select a day"
+              allowClear
+              multiple
+              treeDefaultExpandAll
+              onChange={daySelect}
+              value={selectedDay}
+            >
+              <TreeNode value="monday" title="Mo" />
+              <TreeNode value="tuesday" title="Tu" />
+              <TreeNode value="wednesday" title="We" />
+              <TreeNode value="thursday" title="Th" />
+              <TreeNode value="friday" title="Fr" />
+              <TreeNode value="saturday" title="Sa" />
+              <TreeNode value="sunday" title="Su" />
+              <TreeNode value="holiday" title="Holiday" />
+            </TreeSelect>
+          </Col>
+          <Col style={{ display: "flex", padding: "10px" }}>
+            <strong style={{ paddingRight: "20px" }}>Time: </strong>
+            <RangePicker
+              format="HH:mm"
+              onChange={onFirstTimeRangePiker}
+              //@ts-ignore
+              value={
+                Object.keys(firstSelectedTimeRange).length
+                  ? firstTimeMoment
+                  : null
+              }
+              disabled={selectedDay.length ? false : true}
+            />
+            <Button
+              onClick={() => {
+                setAddTimeRange(!addTimeRange);
+                if (addTimeRange) {
+                  setSecondTimeMoment([]);
+                  setSecondSelectedTimeRange({});
+                }
+              }}
+              disabled={
+                Object.keys(firstSelectedTimeRange).length ? false : true
+              }
+            >
+              {addTimeRange ? <MinusOutlined /> : <PlusOutlined />}
+            </Button>
+            {addTimeRange && (
               <RangePicker
                 format="HH:mm"
-                onChange={onFirstTimeRangePiker}
+                onChange={onSecondTimeRangePiker}
                 //@ts-ignore
                 value={
-                  Object.keys(firstSelectedTimeRange).length
-                    ? firstTimeMoment
+                  Object.keys(secondSelectedTimeRange).length
+                    ? secondTimeMoment
                     : null
                 }
                 disabled={selectedDay.length ? false : true}
               />
-            </Col>
-            <Col span={2}>
-              <Button
-                onClick={() => {
-                  setAddTimeRange(!addTimeRange);
-                  if (addTimeRange) {
-                    setSecondTimeMoment([]);
-                    setSecondSelectedTimeRange({});
-                  }
-                }}
-                disabled={
-                  Object.keys(firstSelectedTimeRange).length ? false : true
-                }
-              >
-                {addTimeRange ? <MinusOutlined /> : <PlusOutlined />}
-              </Button>
-            </Col>
-            <Col span={2}>
-              <Button
-                onClick={saveSelectedDate}
-                disabled={
-                  selectedDay.length &&
-                  Object.keys(firstSelectedTimeRange).length
-                    ? false
-                    : true
-                }
-              >
-                <SaveOutlined />
-              </Button>
-            </Col>
-            {addTimeRange && (
-              <Col span={7} offset={10}>
-                <RangePicker
-                  format="HH:mm"
-                  onChange={onSecondTimeRangePiker}
-                  //@ts-ignore
-                  value={
-                    Object.keys(secondSelectedTimeRange).length
-                      ? secondTimeMoment
-                      : null
-                  }
-                  disabled={selectedDay.length ? false : true}
-                />
-              </Col>
             )}
-          </Row>
+          </Col>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              paddingRight: "50px",
+            }}
+          >
+            <Button
+              type="primary"
+              onClick={saveSelectedDate}
+              disabled={
+                selectedDay.length && Object.keys(firstSelectedTimeRange).length
+                  ? false
+                  : true
+              }
+            >
+              Save Days and Time
+            </Button>
+          </div>
         </Form.Item>
         <Form.Item {...tailLayout}>
           {savedDaysTimes &&
             savedDaysTimes.map((el: any, i: number) => (
-              <div key={i} className="item">
-                {el.day.map((el: any, index: number) => (
-                  <p key={index}>{el}</p>
-                ))}
-                {el.time.map((el: any, index: number) => (
-                  <p key={index}>
-                    {"From "}
-                    {el.start}
-                    {" To "}
-                    {el.end}
-                  </p>
-                ))}
+              <div key={i} className="timePicked">
+                <div>
+                  {el.day.length === 1 ? (
+                    <p>{el.day[0]}</p>
+                  ) : (
+                    <p>
+                      {el.day[0]}
+                      {"-"}
+                      {el.day[el.day.length - 1]}
+                    </p>
+                  )}
+                </div>
+                <div>
+                  {el.time.map((el: any, index: number) => (
+                    <p key={index}>
+                      {"From "}
+                      {el.start}
+                      {" To "}
+                      {el.end}
+                    </p>
+                  ))}
+                </div>
                 <Button
                   style={{
                     backgroundColor: "white",

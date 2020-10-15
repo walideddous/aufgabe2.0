@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Card, Col } from "antd";
 
 // Import types
@@ -11,15 +11,33 @@ interface TpropsInfo {
 }
 
 const Info = ({ selected, distance, currentStopSequenceName }: TpropsInfo) => {
-  console.log("currentStopSequenceName", currentStopSequenceName);
+  const [styleChanged, setStyleChanged] = useState(false);
+
+  const resize = () => {
+    if (window.innerWidth < 853) {
+      setStyleChanged(true);
+    } else {
+      setStyleChanged(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", resize);
+    resize();
+  });
+
   return (
     <Fragment>
-      <Card bordered={true} title="Info" style={{ height: "600px" }}>
+      <Card bordered={true} title="Info">
         <div
-          style={{
-            display: "flex",
-            justifyContent: "space-around",
-          }}
+          style={
+            styleChanged
+              ? undefined
+              : {
+                  display: "flex",
+                  justifyContent: "space-around",
+                }
+          }
         >
           <Col xxl={15}>
             {selected ? (
@@ -98,7 +116,12 @@ const Info = ({ selected, distance, currentStopSequenceName }: TpropsInfo) => {
               <p>Choose a station</p>
             )}
           </Col>
-          <Col xxl={9}>
+          <Col
+            xxl={9}
+            style={{
+              borderBlockColor: "red",
+            }}
+          >
             {Object.keys(currentStopSequenceName).length ? (
               <div>
                 <h3>Stop sequence info</h3>
@@ -115,37 +138,40 @@ const Info = ({ selected, distance, currentStopSequenceName }: TpropsInfo) => {
                   {currentStopSequenceName.date[1]}
                 </p>
                 <div>
-                  {currentStopSequenceName.schedule.map((el: any) => (
-                    <Fragment>
-                      <div>
-                        <p>
-                          <strong>Days</strong>
-                          {" : "} <br />
-                        </p>
-                        <div style={{ display: "flex" }}>
-                          {el.day.map((el: string, index: number) => (
+                  <strong>Shedule</strong>
+                  {currentStopSequenceName.schedule.map(
+                    (el: any, index: number) => (
+                      <Fragment key={index}>
+                        <div>
+                          <p>
+                            <strong>Days</strong>
+                            {" : "} <br />
+                          </p>
+                          <div style={{ display: "flex" }}>
+                            {el.day.map((el: string, index: number) => (
+                              <p key={index}>
+                                {el}
+                                {" ,"}
+                              </p>
+                            ))}
+                          </div>
+                        </div>
+                        <div>
+                          <p>
+                            <strong>Time</strong>
+                            {" : "} <br />
+                          </p>
+                          {el.time.map((el: any, index: number) => (
                             <p key={index}>
-                              {el}
-                              {" ,"}
+                              {"From "}
+                              {el.start} {" To "}
+                              {el.end}
                             </p>
                           ))}
                         </div>
-                      </div>
-                      <div>
-                        <p>
-                          <strong>Time</strong>
-                          {" : "} <br />
-                        </p>
-                        {el.time.map((el: any, index: number) => (
-                          <p key={index}>
-                            {"From "}
-                            {el.start} {" To "}
-                            {el.end}
-                          </p>
-                        ))}
-                      </div>
-                    </Fragment>
-                  ))}
+                      </Fragment>
+                    )
+                  )}
                 </div>
               </div>
             ) : (

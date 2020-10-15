@@ -65,7 +65,7 @@ const StopSequenceType = new GraphQLObjectType({
     _id: { type: GraphQLID },
     name: { type: GraphQLString },
     date: { type: GraphQLList(GraphQLString) },
-    schedule: { type: scheduleType },
+    schedule: { type: GraphQLList(scheduleType)  },
     stopSequence: { type: GraphQLList(HaltestelleType) },
   }),
 });

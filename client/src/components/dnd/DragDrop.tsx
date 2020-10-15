@@ -240,10 +240,7 @@ const DragDrop = ({
                               return (
                                 <div
                                   className={
-                                    (!selected &&
-                                      stateDND.trajekt.items.length - 1 ===
-                                        index) ||
-                                    (selected && selected._id === el._id)
+                                    selected && selected._id === el._id
                                       ? "item-highlighted"
                                       : "item"
                                   }

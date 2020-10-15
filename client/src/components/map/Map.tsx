@@ -25,6 +25,7 @@ interface TpropsOnMap {
   stateDND: TstateDND;
   selected: Tstations | undefined;
   distance: Tdistance[];
+  currentStopSequenceName: any;
   onAddBeforSelected: (e: string) => void;
   onAddAfterSelected: (e: string) => void;
   onDeleteMarkerFromMap: (e: string) => void;
@@ -36,6 +37,7 @@ const Map = ({
   stateDND,
   selected,
   distance,
+  currentStopSequenceName,
   onAddAfterSelected,
   onAddBeforSelected,
   onDeleteMarkerFromMap,
@@ -221,6 +223,20 @@ const Map = ({
         "Show all markers": markers,
       })
       .addTo(myMap);
+
+    if (Object.keys(currentStopSequenceName).length && !selected) {
+      const { stopSequence } = currentStopSequenceName;
+      var corner1 = L.latLng(
+          stopSequence[0].coord.WGS84.lat,
+          stopSequence[0].coord.WGS84.lon
+        ),
+        corner2 = L.latLng(
+          stopSequence[stopSequence.length - 1].coord.WGS84.lat,
+          stopSequence[stopSequence.length - 1].coord.WGS84.lon
+        ),
+        bounds = L.latLngBounds(corner1, corner2);
+      myMap.fitBounds(bounds);
+    }
   }, [stations, selected, stateDND]);
 
   return (

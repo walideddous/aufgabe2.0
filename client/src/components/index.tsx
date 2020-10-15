@@ -231,10 +231,9 @@ const Aufgabe: React.FC = () => {
   // Delete the button from Drop Part
   const handleDeleteOnDND = useCallback(
     (e: any, index: number) => {
-      if (stateDND.trajekt.items.length > 1) {
-        let newValue =
-          stateDND.trajekt.items[stateDND.trajekt.items.length - 2];
-        const newIndex = stateDND.trajekt.items.length - 2;
+      if (stateDND.trajekt.items.length > 1 && e._id === selected?._id) {
+        let newValue = stateDND.trajekt.items[index - 1];
+        const newIndex = index - 1;
         const response = stations.filter((el) => el._id === newValue._id)[0];
         setSelected({ ...response, index: newIndex });
         var vorschläge = calculateDistanceAndSort(response, stations);
@@ -271,6 +270,19 @@ const Aufgabe: React.FC = () => {
           };
         });
       }
+      if (stateDND.trajekt.items.length > 1 && e._id !== selected?._id) {
+        setStateDND((prev: any) => {
+          return {
+            ...prev,
+            trajekt: {
+              title: "Stop sequence",
+              items: stateDND.trajekt.items.filter(
+                (item: any) => item._id !== e._id
+              ),
+            },
+          };
+        });
+      }
       if (stateDND.trajekt.items.length === 1) {
         setSelected(undefined);
         setStateDND((prev: any) => {
@@ -290,7 +302,7 @@ const Aufgabe: React.FC = () => {
         });
       }
     },
-    [stations, stateDND]
+    [stations, stateDND, selected]
   );
 
   // to choose the station from the input options
@@ -482,29 +494,6 @@ const Aufgabe: React.FC = () => {
     (e: string) => {
       const response = stations.filter((el, i) => el.name === e)[0];
       if (
-        stateDND.trajekt.items.filter((item: any) => item._id === response._id)
-          .length === 0 &&
-        !selected
-      ) {
-        setStateDND((prev: any) => {
-          return {
-            ...prev,
-            trajekt: {
-              title: "Stop sequence",
-              items: prev.trajekt.items
-                .filter(
-                  (el: any, index: number, tab: any) => index !== tab.length - 1
-                )
-                .concat({
-                  ...response,
-                })
-                .concat(prev.trajekt.items[prev.trajekt.items.length - 1]),
-            },
-          };
-        });
-      }
-
-      if (
         selected &&
         stateDND.trajekt.items.filter((item: any) => item._id === selected._id)
           .length &&
@@ -514,6 +503,14 @@ const Aufgabe: React.FC = () => {
         const index = stateDND.trajekt.items
           .map((el: any) => el._id)
           .indexOf(selected._id);
+        setSelected({ ...response, index });
+        var vorschläge = calculateDistanceAndSort(response, stations);
+        // Delete the repetition from the Suggestion Field
+        vorschläge = vorschläge.filter(
+          (el: any) =>
+            !stateDND.trajekt.items.map((el: any) => el._id).includes(el.to._id)
+        );
+        setDistance([...vorschläge]);
         setStateDND((prev: any) => {
           return {
             ...prev,
@@ -524,11 +521,23 @@ const Aufgabe: React.FC = () => {
                 .concat({ ...response })
                 .concat(prev.trajekt.items.slice(index)),
             },
+            vorschlag: {
+              title: "Suggestion",
+              items: vorschläge
+                .map((el: any) => {
+                  return {
+                    ...el.to,
+                    angle: el.angle,
+                    distance: el.distance,
+                  };
+                })
+                .slice(0, 16),
+            },
           };
         });
       }
     },
-    [stations, stateDND.trajekt.items, selected]
+    [stations, stateDND, selected]
   );
 
   // Click on Marker
@@ -656,25 +665,24 @@ const Aufgabe: React.FC = () => {
   );
 
   // Display the stop sequence on map
-  const handledisplayStopSequence = useCallback(
-    (input: any) => {
-      setCurrentStopSequenceName({ ...input });
-      setStateDND((prev) => {
-        return {
-          ...prev,
-          trajekt: {
-            title: "Stop sequence",
-            items: input.stopSequence,
-          },
-        };
-      });
+  const handledisplayStopSequence = useCallback((input: any) => {
+    setCurrentStopSequenceName({ ...input });
+    setStateDND((prev) => {
+      return {
+        ...prev,
+        trajekt: {
+          title: "Stop sequence",
+          items: input.stopSequence,
+        },
+      };
+    });
+  }, []);
+  /*
       clickOnDrop(
         input.stopSequence[input.stopSequence.length - 1],
         input.stopSequence.length - 1
       );
-    },
-    [clickOnDrop]
-  );
+  */
 
   // Update button after stop sequence have been saved
   const handleUpdateAfterSave = useCallback(() => {
@@ -704,7 +712,9 @@ const Aufgabe: React.FC = () => {
         if (result.data.msg) {
           message.success(result.data.msg);
           // Set the state of stopSequence List
-          setStopSequenceList([]);
+          setStopSequenceList((prev) => {
+            return prev.filter((el: any) => el._id !== id);
+          });
           clearAll();
           setCurrentStopSequenceName({});
         }
@@ -772,6 +782,7 @@ const Aufgabe: React.FC = () => {
               stateDND={stateDND}
               selected={selected}
               distance={distance}
+              currentStopSequenceName={currentStopSequenceName}
               onAddBeforSelected={handleAddBeforSelected}
               onAddAfterSelected={handleAddAfterSelected}
               onDeleteMarkerFromMap={handleDeleteMarkerFromMap}
