@@ -220,7 +220,7 @@ const DragDrop = ({
         </Col>
         <Col xxl={12} xs={24}>
           <Card bordered={true} title={stateDND.trajekt.title}>
-            <div style={{ height: "400px", overflowY: "scroll" }}>
+            <div style={{ height: "370px", overflowY: "scroll" }}>
               <Droppable droppableId={"trajekt"}>
                 {(provided: any) => {
                   return (

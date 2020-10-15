@@ -243,7 +243,7 @@ const Map = ({
     <Fragment>
       <Col xxl={12} xs={24}>
         <Card bordered={true} title="Map">
-          <div id="mapId" style={{ height: "700px" }}></div>
+          <div id="mapId" style={{ height: "880px" }}></div>
         </Card>
       </Col>
     </Fragment>

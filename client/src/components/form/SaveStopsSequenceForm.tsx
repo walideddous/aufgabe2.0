@@ -5,12 +5,13 @@ import {
   Input,
   Col,
   TimePicker,
-  TreeSelect,
   Button,
   DatePicker,
+  Checkbox,
+  Row,
 } from "antd";
 
-import { DeleteOutlined, PlusOutlined, MinusOutlined } from "@ant-design/icons";
+import { PlusOutlined, MinusOutlined, CloseOutlined } from "@ant-design/icons";
 
 // Import types
 import { TstateDND } from "../type/Types";
@@ -28,7 +29,6 @@ interface TpropsForm {
   handleSaveStopSequence: (formInput: any) => void;
 }
 const { RangePicker } = TimePicker;
-const { TreeNode } = TreeSelect;
 
 const SaveStopsSequenceForm = ({
   stateDND,
@@ -51,7 +51,7 @@ const SaveStopsSequenceForm = ({
       formInput = {
         name: values.Name,
         date: selectedDate,
-        schedule: [{ day: selectedDate, time: firstSelectedTimeRange }],
+        schedule: [{ day: selectedDay, time: [firstSelectedTimeRange] }],
       };
     }
     if (!selectedDay.length && savedDaysTimes.length) {
@@ -67,7 +67,7 @@ const SaveStopsSequenceForm = ({
           name: values.Name,
           date: selectedDate,
           schedule: savedDaysTimes.concat({
-            day: selectedDate,
+            day: selectedDay,
             time: [firstSelectedTimeRange, secondSelectedTimeRange],
           }),
         };
@@ -76,13 +76,13 @@ const SaveStopsSequenceForm = ({
           name: values.Name,
           date: selectedDate,
           schedule: savedDaysTimes.concat({
-            day: selectedDate,
+            day: selectedDay,
             time: [firstSelectedTimeRange],
           }),
         };
       }
     }
-    // handleSaveStopSequence(formInput);
+    handleSaveStopSequence(formInput);
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -207,26 +207,41 @@ const SaveStopsSequenceForm = ({
         >
           <Col style={{ display: "flex", padding: "10px" }}>
             <strong>Days: </strong>
-            <TreeSelect
-              style={{ width: "70%", paddingLeft: "20px" }}
-              showSearch
-              dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
-              placeholder="Please select a day"
-              allowClear
-              multiple
-              treeDefaultExpandAll
+            <Checkbox.Group
+              style={{ width: "80%", paddingLeft: "20px" }}
               onChange={daySelect}
               value={selectedDay}
             >
-              <TreeNode value="monday" title="Mo" />
-              <TreeNode value="tuesday" title="Tu" />
-              <TreeNode value="wednesday" title="We" />
-              <TreeNode value="thursday" title="Th" />
-              <TreeNode value="friday" title="Fr" />
-              <TreeNode value="saturday" title="Sa" />
-              <TreeNode value="sunday" title="Su" />
-              <TreeNode value="holiday" title="Holiday" />
-            </TreeSelect>
+              <Row>
+                <Col span={3}>
+                  <Checkbox value="monday">Mo</Checkbox>
+                </Col>
+                <Col span={3}>
+                  <Checkbox value="tuesday">Tu</Checkbox>
+                </Col>
+                <Col span={3}>
+                  <Checkbox value="wednesday">We</Checkbox>
+                </Col>
+                <Col span={3}>
+                  <Checkbox value="thursday">Th</Checkbox>
+                </Col>
+                <Col span={3}>
+                  <Checkbox value="friday">Fr</Checkbox>
+                </Col>
+                <Col span={3}>
+                  <Checkbox value="saturday">Sa</Checkbox>
+                </Col>
+                <Col span={3}>
+                  <Checkbox value="sunday">Su</Checkbox>
+                </Col>
+                <Col span={3}>
+                  <Checkbox value="holiday" style={{ width: "80px" }}>
+                    Holiday
+                  </Checkbox>
+                </Col>
+              </Row>
+            </Checkbox.Group>
+            ,
           </Col>
           <Col style={{ display: "flex", padding: "10px" }}>
             <strong style={{ paddingRight: "20px" }}>Time: </strong>
@@ -273,7 +288,7 @@ const SaveStopsSequenceForm = ({
             style={{
               display: "flex",
               justifyContent: "flex-end",
-              paddingRight: "50px",
+              paddingRight: "63px",
             }}
           >
             <Button
@@ -314,18 +329,8 @@ const SaveStopsSequenceForm = ({
                     </p>
                   ))}
                 </div>
-                <Button
-                  style={{
-                    backgroundColor: "white",
-                    color: "#3949ab",
-                    borderRadius: "5px",
-                    outline: "0",
-                    cursor: "pointer",
-                    boxShadow: "0px 2px 2px lightgray",
-                  }}
-                  onClick={() => deleteAddetTime(i)}
-                >
-                  <DeleteOutlined />
+                <Button onClick={() => deleteAddetTime(i)}>
+                  <CloseOutlined />
                 </Button>
               </div>
             ))}

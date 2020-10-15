@@ -134,7 +134,7 @@ const Info = ({ selected, distance, currentStopSequenceName }: TpropsInfo) => {
                   {" : "}
                   <br />
                   {"From "} {currentStopSequenceName.date[0]}
-                  {" To "}
+                  {" to "}
                   {currentStopSequenceName.date[1]}
                 </p>
                 <div>
@@ -151,7 +151,7 @@ const Info = ({ selected, distance, currentStopSequenceName }: TpropsInfo) => {
                             {el.day.map((el: string, index: number) => (
                               <p key={index}>
                                 {el}
-                                {" ,"}
+                                {", "}
                               </p>
                             ))}
                           </div>
@@ -164,7 +164,7 @@ const Info = ({ selected, distance, currentStopSequenceName }: TpropsInfo) => {
                           {el.time.map((el: any, index: number) => (
                             <p key={index}>
                               {"From "}
-                              {el.start} {" To "}
+                              {el.start} {" to "}
                               {el.end}
                             </p>
                           ))}
