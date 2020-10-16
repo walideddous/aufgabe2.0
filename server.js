@@ -146,7 +146,7 @@ app.delete("/savedStopSequence/:id", async (req, res) => {
               msg: `Document with id ${req.params.id} not found`,
             });
           }
-          // Insert the document
+          // Delete the document
           await collection.deleteOne({ _id: req.params.id }, function (
             err,
             result
@@ -162,7 +162,7 @@ app.delete("/savedStopSequence/:id", async (req, res) => {
 
         deleteDocument(db, function () {
           client.close();
-          console.log("Data deleted and database closed ");
+          console.log("Stop sequence deleted and database closed ");
         });
       });
     } else {

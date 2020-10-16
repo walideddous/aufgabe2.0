@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useCallback,
-  useEffect,
-  useRef,
-  Fragment,
-} from "react";
+import React, { useState, useCallback, useEffect, Fragment } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { Card, Col } from "antd";
 import { DeleteOutlined, ArrowUpOutlined } from "@ant-design/icons";
@@ -31,7 +25,6 @@ const DragDrop = ({
   onDelete,
 }: TporpsDND) => {
   const [clicked, setClicked] = useState(false);
-  const AddStops = useRef(null);
   const [hide, setHide] = useState(false);
 
   const resize = () => {
@@ -48,9 +41,13 @@ const DragDrop = ({
     resize();
   });
   const scrollToBottom = useCallback(() => {
-    if (AddStops.current) {
+    var element = document.getElementById("item-highlighted");
+    if (element) {
       //@ts-ignore
-      AddStops.current.scrollIntoView({ behavior: "smooth" });
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+      });
     }
   }, []);
   useEffect(() => {
@@ -220,7 +217,7 @@ const DragDrop = ({
         </Col>
         <Col xxl={12} xs={24}>
           <Card bordered={true} title={stateDND.trajekt.title}>
-            <div style={{ height: "370px", overflowY: "scroll" }}>
+            <div style={{ height: "370px", overflowY: "auto" }}>
               <Droppable droppableId={"trajekt"}>
                 {(provided: any) => {
                   return (
@@ -239,6 +236,11 @@ const DragDrop = ({
                             {(provided) => {
                               return (
                                 <div
+                                  id={
+                                    selected && selected._id === el._id
+                                      ? "item-highlighted"
+                                      : "item"
+                                  }
                                   className={
                                     selected && selected._id === el._id
                                       ? "item-highlighted"
@@ -278,7 +280,6 @@ const DragDrop = ({
                           </Draggable>
                         );
                       })}
-                      <div ref={AddStops} />
                       {provided.placeholder}
                     </div>
                   );
