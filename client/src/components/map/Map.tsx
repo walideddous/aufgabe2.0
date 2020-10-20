@@ -113,7 +113,6 @@ const Map = ({
           };
         });
     }
-
     const stopSequenceMarkers = stateDND.trajekt.items.map((el: any) => {
       return {
         ...el,
@@ -141,8 +140,6 @@ const Map = ({
       const marker = L.circleMarker(el.coord.WGS84, {
         //@ts-ignore
         contextmenu: true,
-
-        disabled: true,
         contextmenuWidth: "200",
         contextmenuInheritItems: false,
         contextmenuItems: [
@@ -237,7 +234,20 @@ const Map = ({
         bounds = L.latLngBounds(corner1, corner2);
       myMap.fitBounds(bounds);
     }
-  }, [stations, selected, stateDND]);
+  }, [
+    stations,
+    selected,
+    stateDND,
+    currentStopSequenceName,
+    position.lat,
+    position.lng,
+    position.zoom,
+    responsiveZoom,
+    addAfterSelected,
+    addBeforSelected,
+    clickOnMarker,
+    deleteMarkerFromMap,
+  ]);
 
   return (
     <Fragment>
@@ -251,3 +261,97 @@ const Map = ({
 };
 
 export default React.memo(Map);
+
+/*
+  // Display the markers
+  useEffect(() => {
+    //@ts-ignore
+    stationsRef.current = stations;
+    if (stationsRef.current) {
+      //@ts-ignore
+      stationsRef.current = stations.map((el: any) => {
+        return {
+          ...el,
+          coord: { WGS84: [el.coord.WGS84.lat, el.coord.WGS84.lon] },
+        };
+      });
+    }
+
+    // Display the markers on map
+    var markers = new L.MarkerClusterGroup();
+    //@ts-ignore
+    stationsRef.current.forEach((el: any, index: number) => {
+      const marker = L.circleMarker(el.coord.WGS84, {
+        //@ts-ignore
+        contextmenu: true,
+        disabled: true,
+        contextmenuWidth: "200",
+        contextmenuInheritItems: false,
+        contextmenuItems: [
+          { text: "Close" },
+          {
+            text: "Add before the highlighted stations",
+            callback: addBeforSelected,
+          },
+          {
+            text: "Add after the highlighted stations",
+            callback: addAfterSelected,
+          },
+          {
+            text: "Delete",
+            callback: deleteMarkerFromMap,
+          },
+        ],
+        color:
+          selected && selected._id === el._id
+            ? "red"
+            : stateDND.vorschlag.items.length &&
+              stateDND.vorschlag.items.map((el) => el._id).includes(el._id)
+            ? "green"
+            : "blue",
+      });
+
+      marker.bindTooltip(el.name);
+      marker.on("click", () => clickOnMarker(el, index));
+
+      markers.addLayer(marker);
+    });
+    L.layerGroup([markers]).addTo(myMap.current);
+
+    // to center the map when we load the stopSequence Path
+    if (Object.keys(currentStopSequenceName).length && !selected) {
+      const { stopSequence } = currentStopSequenceName;
+      var corner1 = L.latLng(
+          stopSequence[0].coord.WGS84.lat,
+          stopSequence[0].coord.WGS84.lon
+        ),
+        corner2 = L.latLng(
+          stopSequence[stopSequence.length - 1].coord.WGS84.lat,
+          stopSequence[stopSequence.length - 1].coord.WGS84.lon
+        ),
+        bounds = L.latLngBounds(corner1, corner2);
+      myMap.current.fitBounds(bounds);
+    }
+
+    // Center and zoom the map on markers
+    myMap.current.setView(
+      selected
+        ? [selected.coord.WGS84.lat, selected.coord.WGS84.lon]
+        : [position.lat, position.lng],
+      !selected ? position.zoom : responsiveZoom.zoom
+    );
+  }, [
+    stations,
+    selected,
+    stateDND,
+    currentStopSequenceName,
+    position.lat,
+    position.lng,
+    position.zoom,
+    responsiveZoom.zoom,
+    addAfterSelected,
+    addBeforSelected,
+    deleteMarkerFromMap,
+    clickOnMarker,
+  ]);
+  */

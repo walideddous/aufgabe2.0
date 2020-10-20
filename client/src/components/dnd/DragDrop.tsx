@@ -102,7 +102,7 @@ const DragDrop = ({
                               <Draggable
                                 key={el._id}
                                 index={index}
-                                draggableId={el._id}
+                                draggableId={el._id + index}
                               >
                                 {(provided) => {
                                   return (
@@ -158,7 +158,7 @@ const DragDrop = ({
                                 <Draggable
                                   key={el._id}
                                   index={index + 8}
-                                  draggableId={el._id}
+                                  draggableId={el._id + index}
                                 >
                                   {(provided) => {
                                     return (
@@ -229,20 +229,24 @@ const DragDrop = ({
                       {stateDND.trajekt.items.map((el: any, index: number) => {
                         return (
                           <Draggable
-                            key={el._id}
+                            key={el._id + index}
                             index={index}
-                            draggableId={el._id}
+                            draggableId={el._id + index}
                           >
                             {(provided) => {
                               return (
                                 <div
                                   id={
-                                    selected && selected._id === el._id
+                                    selected &&
+                                    selected._id + selected.index ===
+                                      el._id + index
                                       ? "item-highlighted"
                                       : "item"
                                   }
                                   className={
-                                    selected && selected._id === el._id
+                                    selected &&
+                                    selected._id + selected.index ===
+                                      el._id + index
                                       ? "item-highlighted"
                                       : "item"
                                   }
