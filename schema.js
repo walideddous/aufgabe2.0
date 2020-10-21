@@ -64,8 +64,9 @@ const StopSequenceType = new GraphQLObjectType({
   fields: () => ({
     _id: { type: GraphQLID },
     name: { type: GraphQLString },
+    modes: { type: GraphQLString },
     date: { type: GraphQLList(GraphQLString) },
-    schedule: { type: GraphQLList(scheduleType)  },
+    schedule: { type: GraphQLList(scheduleType) },
     stopSequence: { type: GraphQLList(HaltestelleType) },
   }),
 });
@@ -139,8 +140,40 @@ const RootQuery = new GraphQLObjectType({
         })();
       },
     },
-    // Query stop sequence by Modes
+    // Get all stop sequence
     stopSequence: {
+      type: new GraphQLList(StopSequenceType),
+      resolve(parentValue) {
+        return (async function () {
+          let client;
+          let result;
+          try {
+            if (process.env.MONGO_URI) {
+              client = await MongoClient.connect(process.env.MONGO_URI);
+              console.log("Connected successfully to server");
+
+              // Get the dataBase
+              const db = client.db(dbName);
+
+              // Get the documents collection
+              const collection = db.collection("walid.stopSequence");
+
+              result = await collection.find().toArray();
+            } else {
+              console.log("Mongo URI fehlt");
+            }
+          } catch (err) {
+            console.log(err.stack);
+          }
+          // Close connection
+          client.close();
+          console.log("data fetched and database closed ");
+          return result;
+        })();
+      },
+    },
+    // Query stop sequence by Modes
+    stopSequenceByMode: {
       type: new GraphQLList(StopSequenceType),
       args: { modes: { type: GraphQLString } },
       resolve(parentValue, args) {

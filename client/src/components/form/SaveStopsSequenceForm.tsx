@@ -51,6 +51,7 @@ const SaveStopsSequenceForm = ({
   const [secondTimeMoment, setSecondTimeMoment] = useState([]);
 
   const onFinish = (values: any) => {
+    console.log("values", values);
     let formInput;
     if (Object.keys(firstSelectedTimeRange).length && !savedDaysTimes.length) {
       formInput = {
@@ -87,7 +88,7 @@ const SaveStopsSequenceForm = ({
         };
       }
     }
-    handleSaveStopSequence(formInput);
+    //handleSaveStopSequence(formInput);
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -211,134 +212,113 @@ const SaveStopsSequenceForm = ({
 
         <Form.Item
           {...tailLayout}
-          label="Valid"
-          name="Valid"
-          rules={
-            !savedDaysTimes.length &&
-            !Object.keys(firstSelectedTimeRange).length
-              ? [
-                  {
-                    required: true,
-                    message: "Please give a Valid day and time",
-                  },
-                ]
-              : undefined
-          }
+          label="Day"
+          name="Day"
+          rules={[{ required: true, message: "Please check at least one day" }]}
         >
-          <Form
-            name="dynamic_form_nest_item"
-            onFinish={DayTimeFields}
-            autoComplete="off"
+          <Checkbox.Group
+            style={{ width: "80%", paddingLeft: "20px" }}
+            onChange={daySelect}
+            value={selectedDay}
           >
-            <Col style={{ display: "flex", padding: "10px" }}>
-              <strong>Days: </strong>
-              <Checkbox.Group
-                style={{ width: "80%", paddingLeft: "20px" }}
-                onChange={daySelect}
-                value={selectedDay}
-              >
-                <Row>
-                  <Col span={3}>
-                    <Checkbox value="monday">Mo</Checkbox>
-                  </Col>
-                  <Col span={3}>
-                    <Checkbox value="tuesday">Tu</Checkbox>
-                  </Col>
-                  <Col span={3}>
-                    <Checkbox value="wednesday">We</Checkbox>
-                  </Col>
-                  <Col span={3}>
-                    <Checkbox value="thursday">Th</Checkbox>
-                  </Col>
-                  <Col span={3}>
-                    <Checkbox value="friday">Fr</Checkbox>
-                  </Col>
-                  <Col span={3}>
-                    <Checkbox value="saturday">Sa</Checkbox>
-                  </Col>
-                  <Col span={3}>
-                    <Checkbox value="sunday">Su</Checkbox>
-                  </Col>
-                  <Col span={3}>
-                    <Checkbox value="holiday" style={{ width: "80px" }}>
-                      Holiday
-                    </Checkbox>
-                  </Col>
-                </Row>
-              </Checkbox.Group>
-            </Col>
-            <Col style={{ display: "flex", padding: "10px" }}>
-              <strong style={{ paddingRight: "20px" }}>Time: </strong>
-              <Form.List name="timeRange">
-                {(fields, { add, remove }) => {
-                  return (
-                    <div>
-                      <Form.Item>
-                        <RangePicker
-                          format="HH:mm"
-                          onChange={onFirstTimeRangePiker}
-                          //@ts-ignore
-                          value={
-                            Object.keys(firstSelectedTimeRange).length
-                              ? firstTimeMoment
-                              : null
-                          }
-                          disabled={selectedDay.length ? false : true}
-                        />
-                        <Button
-                          type="dashed"
-                          disabled={
-                            Object.keys(firstSelectedTimeRange).length
-                              ? false
-                              : true
-                          }
+            <Row>
+              <Col span={3}>
+                <Checkbox value="monday">Mo</Checkbox>
+              </Col>
+              <Col span={3}>
+                <Checkbox value="tuesday">Tu</Checkbox>
+              </Col>
+              <Col span={3}>
+                <Checkbox value="wednesday">We</Checkbox>
+              </Col>
+              <Col span={3}>
+                <Checkbox value="thursday">Th</Checkbox>
+              </Col>
+              <Col span={3}>
+                <Checkbox value="friday">Fr</Checkbox>
+              </Col>
+              <Col span={3}>
+                <Checkbox value="saturday">Sa</Checkbox>
+              </Col>
+              <Col span={3}>
+                <Checkbox value="sunday">Su</Checkbox>
+              </Col>
+              <Col span={3}>
+                <Checkbox value="holiday" style={{ width: "80px" }}>
+                  Holiday
+                </Checkbox>
+              </Col>
+            </Row>
+          </Checkbox.Group>
+        </Form.Item>
+
+        <Form.Item
+          {...tailLayout}
+          label="Time"
+          name="Time"
+          rules={[{ required: true, message: "Please give a valid time rang" }]}
+        >
+          <RangePicker format="HH:mm" />
+        </Form.Item>
+        <Col
+          style={{
+            display: "flex",
+            justifyContent: "flex-start",
+          }}
+        >
+          <Form.List name="timeRange">
+            {(fields, { add, remove }) => {
+              return (
+                <div style={{ display: "flex" }}>
+                  <Button
+                    type="dashed"
+                    style={{
+                      marginLeft: "288px",
+                    }}
+                    onClick={() => {
+                      add();
+                    }}
+                  >
+                    <PlusOutlined /> Add time
+                  </Button>
+                  <div>
+                    {fields.map((field) => (
+                      <Space
+                        key={field.key}
+                        style={{ display: "flex", marginBottom: 8 }}
+                        align="start"
+                      >
+                        <Form.Item
+                          {...field}
+                          name={[field.name, "time"]}
+                          fieldKey={[field.fieldKey, "time"]}
+                          rules={[{ required: true, message: "Mising time" }]}
+                        >
+                          <RangePicker format="HH:mm" />
+                        </Form.Item>
+                        <MinusCircleOutlined
                           onClick={() => {
-                            add();
+                            remove(field.name);
                           }}
-                        >
-                          <PlusOutlined /> Add time
-                        </Button>
-                      </Form.Item>
-                      {fields.map((field) => (
-                        <Space
-                          key={field.key}
-                          style={{ display: "flex", marginBottom: 8 }}
-                          align="start"
-                        >
-                          <Form.Item
-                            {...field}
-                            name={[field.name, "time"]}
-                            fieldKey={[field.fieldKey, "time"]}
-                            rules={[{ required: true, message: "Mising time" }]}
-                          >
-                            <RangePicker format="HH:mm" />
-                          </Form.Item>
-                          <MinusCircleOutlined
-                            onClick={() => {
-                              remove(field.name);
-                            }}
-                          />
-                        </Space>
-                      ))}
-                    </div>
-                  );
-                }}
-              </Form.List>
-            </Col>
-            <Form.Item>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "flex-end",
-                  paddingRight: "63px",
-                }}
-              >
-                <Button type="primary" htmlType="submit">
-                  Save Days and Time
-                </Button>
-              </div>
-            </Form.Item>
-          </Form>
+                        />
+                      </Space>
+                    ))}
+                  </div>
+                </div>
+              );
+            }}
+          </Form.List>
+        </Col>
+        <Form.Item>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              paddingRight: "63px",
+            }}
+          >
+            <Button type="primary">Save Days and Time</Button>
+          </div>
         </Form.Item>
         <Form.Item {...tailLayout}>
           {savedDaysTimes &&
@@ -376,7 +356,7 @@ const SaveStopsSequenceForm = ({
           <Button
             type="primary"
             htmlType="submit"
-            disabled={stateDND.trajekt.items.length ? false : true}
+            //disabled={stateDND.trajekt.items.length ? false : true}
           >
             {stateDND.trajekt.items.length
               ? " save the stop sequence"

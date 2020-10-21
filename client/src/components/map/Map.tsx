@@ -242,11 +242,11 @@ const Map = ({
     position.lat,
     position.lng,
     position.zoom,
-    responsiveZoom,
+    responsiveZoom.zoom,
     addAfterSelected,
     addBeforSelected,
-    clickOnMarker,
     deleteMarkerFromMap,
+    clickOnMarker,
   ]);
 
   return (

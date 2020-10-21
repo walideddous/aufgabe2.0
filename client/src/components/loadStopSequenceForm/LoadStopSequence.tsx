@@ -1,19 +1,26 @@
-import React, { useState, useEffect, useMemo, useCallback } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import { AutoComplete, Menu, Dropdown, Button } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 
-const LoadStopSequence = () => {
-  const [stopSeuqneceList, setStopSequenceList] = useState([]);
+interface TLoadStopSequence {
+  stopSequenceList: any;
+  onNewStopSequenceButton: () => void;
+  ondisplayStopSequence: (stopSequenceName: any) => void;
+}
+const LoadStopSequence = ({
+  stopSequenceList,
+  onNewStopSequenceButton,
+  ondisplayStopSequence,
+}: TLoadStopSequence) => {
   const [search, setSearch] = useState("");
+  const [modes, setModes] = useState("All");
 
   // Auto complete component
   const { Option } = AutoComplete;
 
-  useEffect(() => {}, []);
-
   // handle the drop menu to display the choosed Modes on Map
   const handleDropDownMenu = useCallback((event: any) => {
-    console.log("event.item.props.children[1]", event.item.props.children[1]);
+    setModes(event.item.props.children[1]);
   }, []);
 
   // Menu of the drop menu
@@ -21,6 +28,7 @@ const LoadStopSequence = () => {
     () => (
       //@ts-ignore
       <Menu onClick={handleDropDownMenu}>
+        <Menu.Item key="1">All</Menu.Item>
         <Menu.Item key="2">13</Menu.Item>
         <Menu.Item key="3">5</Menu.Item>
         <Menu.Item key="4">8</Menu.Item>
@@ -32,26 +40,51 @@ const LoadStopSequence = () => {
     [handleDropDownMenu]
   );
 
+  const handleSelect = useCallback(
+    (input: string, data: any) => {
+      const mode = stopSequenceList.filter((el: any) => el._id === data.key)[0]
+        .modes;
+      const response = stopSequenceList.filter(
+        (el: any) => el.name === input
+      )[0];
+      setModes(mode);
+      ondisplayStopSequence(response);
+    },
+    [stopSequenceList, ondisplayStopSequence]
+  );
+
   return (
     <div
       style={{
         display: "flex",
+        justifyContent: "space-between",
         paddingTop: "20px",
         paddingLeft: "20px",
         paddingRight: "20px",
       }}
     >
+      <p>
+        <strong>Stop sequence name : </strong>
+      </p>
       <AutoComplete
-        //onSelect={}
-        //onChange={}
-        //value={search}
+        style={{
+          width: "40%",
+        }}
+        onChange={(input: string) => {
+          setSearch(input);
+        }}
+        onSelect={handleSelect}
+        value={search}
         placeholder="Enter stop sequence name"
-        open={search ? true : false}
+        allowClear={true}
       >
-        {stopSeuqneceList &&
-          stopSeuqneceList
+        {stopSequenceList &&
+          stopSequenceList
+            .filter((el: any) => (modes === "All" ? el : el.modes === modes))
             .filter((el: any) =>
-              el.name.toLowerCase().startsWith(search.toLowerCase())
+              el.name
+                .toLowerCase()
+                .startsWith(search ? search.toLowerCase() : "")
             )
             .map((el: any) => (
               <Option value={el.name} key={el._id}>
@@ -66,12 +99,19 @@ const LoadStopSequence = () => {
       <Dropdown overlay={menu}>
         <p className="ant-dropdown-link" style={{ cursor: "pointer" }}>
           <strong>Modes : </strong>
-          <DownOutlined />
+          {modes} <DownOutlined />
         </p>
       </Dropdown>
-      <Button type="primary">New stop sequence</Button>
+      <Button
+        type="primary"
+        onClick={() => {
+          onNewStopSequenceButton();
+        }}
+      >
+        New stop sequence
+      </Button>
     </div>
   );
 };
 
-export default LoadStopSequence;
+export default React.memo(LoadStopSequence);

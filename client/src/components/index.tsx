@@ -1,4 +1,4 @@
-import React, { useState, useCallback, Fragment } from "react";
+import React, { useState, useCallback, Fragment, useEffect } from "react";
 import axios from "axios";
 import { v4 } from "uuid";
 import { Row, Spin, Col, message } from "antd";
@@ -9,6 +9,7 @@ import {
   GRAPHQL_API,
   GET_STOPS_BY_MODES,
   GET_STOP_SEQUENCE_BY_MODES,
+  GET_ALL_STOP_SEQUENCE,
 } from "../config/config";
 
 // Import composents
@@ -30,20 +31,6 @@ import { getProperty } from "../utils/getPropertyKey";
 import { calculateDistanceAndSort } from "../utils/getDistanceFromLatLonInKm";
 
 const authAxios = axios.create({
-  baseURL: GRAPHQL_API,
-  headers: {
-    authorization: "Bearer " + process.env.REACT_APP_JSON_SECRET_KEY,
-  },
-});
-
-const getStopSequence = axios.create({
-  baseURL: GRAPHQL_API,
-  headers: {
-    authorization: "Bearer " + process.env.REACT_APP_JSON_SECRET_KEY,
-  },
-});
-
-const deleteStopSequencebyID = axios.create({
   baseURL: GRAPHQL_API,
   headers: {
     authorization: "Bearer " + process.env.REACT_APP_JSON_SECRET_KEY,
@@ -73,6 +60,7 @@ const Aufgabe: React.FC = () => {
   const [updateDate, setUpdateDate] = useState<string>("");
   const [currentMode, setCurrentMode] = useState<string>("");
   const [currentStopSequenceName, setCurrentStopSequenceName] = useState({});
+  const [addStopSequence, setAddStopSequence] = useState(false);
 
   // Send the request when you click on get the Data button
   const sendRequest = useCallback(
@@ -99,7 +87,7 @@ const Aufgabe: React.FC = () => {
         const queryResult = await authAxios.post("/graphql", {
           query: GET_STOPS_BY_MODES(modes),
         });
-        const queryStopSequence = await getStopSequence.post("/graphql", {
+        const queryStopSequence = await authAxios.post("/graphql", {
           query: GET_STOP_SEQUENCE_BY_MODES(modes),
         });
 
@@ -122,6 +110,32 @@ const Aufgabe: React.FC = () => {
     },
     [isSending]
   );
+
+  useEffect(() => {
+    (async function getStopSequence() {
+      // update state
+      setIsSending(true);
+      // send the actual request
+      try {
+        console.log("start fetching");
+        const queryStopSequence = await authAxios.post("/graphql", {
+          query: GET_ALL_STOP_SEQUENCE,
+        });
+
+        console.log("end fetching");
+        if (queryStopSequence) {
+          const { stopSequence } = queryStopSequence.data.data;
+          setStopSequenceList(stopSequence);
+        } else {
+          console.log("not authorized provid a token");
+        }
+      } catch (error) {
+        console.error(error, "error from trycatch");
+      }
+      // once the request is sent, update state again
+      setIsSending(false);
+    })();
+  }, []);
 
   // Select the Station when you click on the button to show the suggestion
   const clickOnDrop = useCallback(
@@ -712,9 +726,7 @@ const Aufgabe: React.FC = () => {
       try {
         console.log("delete the stop sequence");
         // REST_API
-        const result = await deleteStopSequencebyID.delete(
-          `/savedStopSequence/${id}`
-        );
+        const result = await authAxios.delete(`/savedStopSequence/${id}`);
         if (!result) {
           console.error("Result not found");
           message.error("cannot delete the stop sequence");
@@ -739,32 +751,44 @@ const Aufgabe: React.FC = () => {
     [clearAll, isSending]
   );
 
+  const handeNewStopSequenceButton = useCallback(() => {
+    setAddStopSequence(!addStopSequence);
+  }, [addStopSequence]);
+
   return (
     <div className="Prototyp" style={{ position: "relative" }}>
       <Row gutter={[8, 8]}>
         <Col xs={24}>
-          <LoadStopSequence />
-        </Col>
-        <Col xxl={8} xs={12}>
-          <SearchInput
-            stations={stations}
-            handleSelectAutoSearch={onSelectAutoSearch}
+          <LoadStopSequence
+            stopSequenceList={stopSequenceList}
+            onNewStopSequenceButton={handeNewStopSequenceButton}
+            ondisplayStopSequence={handledisplayStopSequence}
           />
         </Col>
-        <NavBar
-          isSending={isSending}
-          stateDND={stateDND}
-          stopSequenceList={stopSequenceList}
-          updateDate={updateDate}
-          currentMode={currentMode}
-          currentStopSequenceName={currentStopSequenceName}
-          savedStopSequence={savedStopSequence}
-          handleDeleteStopSequence={handleDeleteStopSequence}
-          onSendRequest={sendRequest}
-          onClearAll={clearAll}
-          handleUpdateAfterSave={handleUpdateAfterSave}
-          ondisplayStopSequence={handledisplayStopSequence}
-        />
+        {addStopSequence && (
+          <Fragment>
+            <Col xxl={8} xs={12}>
+              <SearchInput
+                stations={stations}
+                handleSelectAutoSearch={onSelectAutoSearch}
+              />
+            </Col>
+            <NavBar
+              isSending={isSending}
+              stateDND={stateDND}
+              stopSequenceList={stopSequenceList}
+              updateDate={updateDate}
+              currentMode={currentMode}
+              currentStopSequenceName={currentStopSequenceName}
+              savedStopSequence={savedStopSequence}
+              handleDeleteStopSequence={handleDeleteStopSequence}
+              onSendRequest={sendRequest}
+              onClearAll={clearAll}
+              handleUpdateAfterSave={handleUpdateAfterSave}
+              ondisplayStopSequence={handledisplayStopSequence}
+            />
+          </Fragment>
+        )}
         {isSending ? (
           <div
             style={{
