@@ -18,6 +18,7 @@ import SearchInput from "./search/SearchInput";
 import DragDrop from "./dnd/DragDrop";
 import Map from "./map/Map";
 import SaveStopsSequenceForm from "./form/SaveStopsSequenceForm";
+import LoadStopSequence from "./loadStopSequenceForm/LoadStopSequence";
 
 // Import the types of the state
 import { Tstations, TstateDND, Tdistance } from "./type/Types";
@@ -805,6 +806,7 @@ const Aufgabe: React.FC = () => {
                 stateDND={stateDND}
               />
             </Col>
+            <LoadStopSequence />
           </Fragment>
         )}
       </Row>
