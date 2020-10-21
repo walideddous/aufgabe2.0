@@ -693,11 +693,15 @@ const Aufgabe: React.FC = () => {
 
   // Update button after stop sequence have been saved
   const handleUpdateAfterSave = useCallback(() => {
+    // filter the saved stop sequence by mode and added to th stopSequenceList
+    const flteredStopSeqenceByMode = savedStopSequence.filter(
+      (el: any) => el.modes === currentMode
+    );
     setStopSequenceList((prev) => {
-      return prev.concat(savedStopSequence);
+      return prev.concat(flteredStopSeqenceByMode);
     });
     setSavedStopSequence([]);
-  }, [savedStopSequence]);
+  }, [savedStopSequence, currentMode]);
 
   // Delete the stop sequence by Id
   const handleDeleteStopSequence = useCallback(
@@ -738,6 +742,9 @@ const Aufgabe: React.FC = () => {
   return (
     <div className="Prototyp" style={{ position: "relative" }}>
       <Row gutter={[8, 8]}>
+        <Col xs={24}>
+          <LoadStopSequence />
+        </Col>
         <Col xxl={8} xs={12}>
           <SearchInput
             stations={stations}
@@ -806,7 +813,6 @@ const Aufgabe: React.FC = () => {
                 stateDND={stateDND}
               />
             </Col>
-            <LoadStopSequence />
           </Fragment>
         )}
       </Row>
