@@ -13,9 +13,11 @@ import {
 } from "../config/config";
 
 // Import composents
+/*
 import NavBar from "./navBar/NavBar";
 import Info from "./info/Info";
 import SearchInput from "./search/SearchInput";
+*/
 import DragDrop from "./dnd/DragDrop";
 import Map from "./map/Map";
 import SaveStopsSequenceForm from "./form/SaveStopsSequenceForm";
@@ -59,14 +61,13 @@ const Aufgabe: React.FC = () => {
   const [savedStopSequence, setSavedStopSequence] = useState([]);
   const [updateDate, setUpdateDate] = useState<string>("");
   const [currentMode, setCurrentMode] = useState<string>("");
-  const [currentStopSequenceName, setCurrentStopSequenceName] = useState({});
+  const [currentStopSequence, setCurrentStopSequence] = useState({});
   const [addStopSequence, setAddStopSequence] = useState(false);
 
   // Send the request when you click on get the Data button
   const sendRequest = useCallback(
-    async (modes, currentMode) => {
+    async (modes) => {
       if (isSending) return;
-      if (modes === currentMode) return;
       // update state
       setIsSending(true);
       setSelected(undefined);
@@ -94,9 +95,9 @@ const Aufgabe: React.FC = () => {
         console.log("end fetching");
         if (queryResult && queryStopSequence) {
           const { haltestelleByMode } = queryResult.data.data;
-          const { stopSequence } = queryStopSequence.data.data;
+          const { stopSequenceByMode } = queryStopSequence.data.data;
           setStations([...haltestelleByMode]);
-          setStopSequenceList(stopSequence);
+          setStopSequenceList(stopSequenceByMode);
           setCurrentMode(modes);
           setUpdateDate(Date().toString().substr(4, 24));
         } else {
@@ -111,6 +112,7 @@ const Aufgabe: React.FC = () => {
     [isSending]
   );
 
+  /*
   useEffect(() => {
     (async function getStopSequence() {
       // update state
@@ -136,6 +138,7 @@ const Aufgabe: React.FC = () => {
       setIsSending(false);
     })();
   }, []);
+  */
 
   // Select the Station when you click on the button to show the suggestion
   const clickOnDrop = useCallback(
@@ -627,7 +630,7 @@ const Aufgabe: React.FC = () => {
   // Reset and delete all
   const clearAll = useCallback(() => {
     setSelected(undefined);
-    setCurrentStopSequenceName({});
+    setCurrentStopSequence({});
     setStateDND({
       vorschlag: {
         title: "Suggestion",
@@ -687,7 +690,7 @@ const Aufgabe: React.FC = () => {
 
   // Display the stop sequence on map
   const handledisplayStopSequence = useCallback((input: any) => {
-    setCurrentStopSequenceName({ ...input });
+    setCurrentStopSequence({ ...input });
     setStateDND((prev) => {
       return {
         ...prev,
@@ -739,7 +742,7 @@ const Aufgabe: React.FC = () => {
             return prev.filter((el: any) => el._id !== id);
           });
           clearAll();
-          setCurrentStopSequenceName({});
+          setCurrentStopSequence({});
         }
       } catch (error) {
         console.error(error, "error from trycatch");
@@ -751,44 +754,20 @@ const Aufgabe: React.FC = () => {
     [clearAll, isSending]
   );
 
-  const handeNewStopSequenceButton = useCallback(() => {
-    setAddStopSequence(!addStopSequence);
-  }, [addStopSequence]);
-
   return (
     <div className="Prototyp" style={{ position: "relative" }}>
       <Row gutter={[8, 8]}>
         <Col xs={24}>
           <LoadStopSequence
+            stateDND={stateDND}
             stopSequenceList={stopSequenceList}
-            onNewStopSequenceButton={handeNewStopSequenceButton}
+            currentStopSequence={currentStopSequence}
+            onSendRequest={sendRequest}
+            onClearAll={clearAll}
+            handleDeleteStopSequence={handleDeleteStopSequence}
             ondisplayStopSequence={handledisplayStopSequence}
           />
         </Col>
-        {addStopSequence && (
-          <Fragment>
-            <Col xxl={8} xs={12}>
-              <SearchInput
-                stations={stations}
-                handleSelectAutoSearch={onSelectAutoSearch}
-              />
-            </Col>
-            <NavBar
-              isSending={isSending}
-              stateDND={stateDND}
-              stopSequenceList={stopSequenceList}
-              updateDate={updateDate}
-              currentMode={currentMode}
-              currentStopSequenceName={currentStopSequenceName}
-              savedStopSequence={savedStopSequence}
-              handleDeleteStopSequence={handleDeleteStopSequence}
-              onSendRequest={sendRequest}
-              onClearAll={clearAll}
-              handleUpdateAfterSave={handleUpdateAfterSave}
-              ondisplayStopSequence={handledisplayStopSequence}
-            />
-          </Fragment>
-        )}
         {isSending ? (
           <div
             style={{
@@ -807,34 +786,33 @@ const Aufgabe: React.FC = () => {
           </div>
         ) : (
           <Fragment>
-            <DragDrop
-              stateDND={stateDND}
-              selected={selected}
-              handleAddStopsOnCLick={handleAddStopsOnCLick}
-              handleDragEnd={handleDragEnd}
-              onclick={clickOnDrop}
-              onDelete={handleDeleteOnDND}
-            />
+            <Col xs={24}>
+              <SaveStopsSequenceForm
+                stateDND={stateDND}
+                currentStopSequence={currentStopSequence}
+                handleSaveStopSequence={saveStopSequence}
+              />
+            </Col>
             <Map
               stations={stations}
               stateDND={stateDND}
               selected={selected}
               distance={distance}
-              currentStopSequenceName={currentStopSequenceName}
+              handleSelectAutoSearch={onSelectAutoSearch}
+              currentStopSequence={currentStopSequence}
               onAddBeforSelected={handleAddBeforSelected}
               onAddAfterSelected={handleAddAfterSelected}
               onDeleteMarkerFromMap={handleDeleteMarkerFromMap}
               selectMarkerOnMap={clickOnMapMarker}
             />
             <Col xxl={12} xs={24}>
-              <Info
-                selected={selected}
-                distance={distance}
-                currentStopSequenceName={currentStopSequenceName}
-              />
-              <SaveStopsSequenceForm
-                handleSaveStopSequence={saveStopSequence}
+              <DragDrop
                 stateDND={stateDND}
+                selected={selected}
+                handleAddStopsOnCLick={handleAddStopsOnCLick}
+                handleDragEnd={handleDragEnd}
+                onclick={clickOnDrop}
+                onDelete={handleDeleteOnDND}
               />
             </Col>
           </Fragment>
@@ -845,3 +823,30 @@ const Aufgabe: React.FC = () => {
 };
 
 export default Aufgabe;
+
+/*
+        {addStopSequence && (
+          <Fragment>
+            <Col xxl={8} xs={12}>
+              <SearchInput
+                stations={stations}
+                handleSelectAutoSearch={onSelectAutoSearch}
+              />
+            </Col>
+            <NavBar
+              isSending={isSending}
+              stateDND={stateDND}
+              stopSequenceList={stopSequenceList}
+              updateDate={updateDate}
+              currentMode={currentMode}
+              currentStopSequence={currentStopSequence}
+              savedStopSequence={savedStopSequence}
+              handleDeleteStopSequence={handleDeleteStopSequence}
+              onSendRequest={sendRequest}
+              onClearAll={clearAll}
+              handleUpdateAfterSave={handleUpdateAfterSave}
+              ondisplayStopSequence={handledisplayStopSequence}
+            />
+          </Fragment>
+        )}
+*/

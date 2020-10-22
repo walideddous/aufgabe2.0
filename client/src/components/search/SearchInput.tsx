@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { AutoComplete } from "antd";
 
 // Import type
@@ -29,13 +29,19 @@ const SearchInput = ({
   );
 
   return (
-    <Fragment>
+    <div
+      style={{
+        position: "absolute",
+        top: "4vh",
+        right: "7vh",
+        paddingTop: "30px",
+        zIndex: 400,
+        width: "75%",
+      }}
+    >
       <AutoComplete
         style={{
           width: "100%",
-          paddingTop: "20px",
-          paddingLeft: "20px",
-          paddingRight: "20px",
         }}
         onSelect={handleSelect}
         onChange={(input: string) => {
@@ -60,7 +66,7 @@ const SearchInput = ({
               </Option>
             ))}
       </AutoComplete>
-    </Fragment>
+    </div>
   );
 };
 

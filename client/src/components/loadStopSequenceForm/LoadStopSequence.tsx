@@ -1,116 +1,167 @@
-import React, { useState, useMemo, useCallback } from "react";
-import { AutoComplete, Menu, Dropdown, Button } from "antd";
-import { DownOutlined } from "@ant-design/icons";
+import React, { useState, useCallback } from "react";
+import { AutoComplete, Button, Radio, Card, Form, Select } from "antd";
 
 interface TLoadStopSequence {
   stopSequenceList: any;
-  onNewStopSequenceButton: () => void;
-  ondisplayStopSequence: (stopSequenceName: any) => void;
+  stateDND: any;
+  currentStopSequence: any;
+  onClearAll: () => void;
+  onSendRequest: (modes: string) => void;
+  handleDeleteStopSequence: (id: string) => void;
+  ondisplayStopSequence: (stopSequence: any) => void;
 }
 const LoadStopSequence = ({
   stopSequenceList,
-  onNewStopSequenceButton,
+  stateDND,
+  currentStopSequence,
+  onSendRequest,
   ondisplayStopSequence,
+  handleDeleteStopSequence,
+  onClearAll,
 }: TLoadStopSequence) => {
+  const [form] = Form.useForm();
   const [search, setSearch] = useState("");
-  const [modes, setModes] = useState("All");
+  const [show, setShow] = useState(true);
 
   // Auto complete component
   const { Option } = AutoComplete;
 
   // handle the drop menu to display the choosed Modes on Map
-  const handleDropDownMenu = useCallback((event: any) => {
-    setModes(event.item.props.children[1]);
-  }, []);
-
-  // Menu of the drop menu
-  const menu = useMemo(
-    () => (
-      //@ts-ignore
-      <Menu onClick={handleDropDownMenu}>
-        <Menu.Item key="1">All</Menu.Item>
-        <Menu.Item key="2">13</Menu.Item>
-        <Menu.Item key="3">5</Menu.Item>
-        <Menu.Item key="4">8</Menu.Item>
-        <Menu.Item key="5">9</Menu.Item>
-        <Menu.Item key="6">2</Menu.Item>
-        <Menu.Item key="7">4</Menu.Item>
-      </Menu>
-    ),
-    [handleDropDownMenu]
+  const handleModeChange = useCallback(
+    (value: any) => {
+      if (value !== "Choose mode ") {
+        onSendRequest(value);
+      }
+    },
+    [onSendRequest]
   );
 
   const handleSelect = useCallback(
-    (input: string, data: any) => {
-      const mode = stopSequenceList.filter((el: any) => el._id === data.key)[0]
-        .modes;
+    (input: string) => {
       const response = stopSequenceList.filter(
         (el: any) => el.name === input
       )[0];
-      setModes(mode);
       ondisplayStopSequence(response);
     },
     [stopSequenceList, ondisplayStopSequence]
   );
 
+  const handleRadioGroupChange = useCallback(
+    (e: any) => {
+      const { value } = e.target;
+      if (value === "load") {
+        setShow(true);
+      }
+      if (value === "new") {
+        setShow(false);
+        onClearAll();
+        setSearch("");
+      }
+    },
+    [onClearAll]
+  );
+
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        paddingTop: "20px",
-        paddingLeft: "20px",
-        paddingRight: "20px",
-      }}
-    >
-      <p>
-        <strong>Stop sequence name : </strong>
-      </p>
-      <AutoComplete
-        style={{
-          width: "40%",
-        }}
-        onChange={(input: string) => {
-          setSearch(input);
-        }}
-        onSelect={handleSelect}
-        value={search}
-        placeholder="Enter stop sequence name"
-        allowClear={true}
-      >
-        {stopSequenceList &&
-          stopSequenceList
-            .filter((el: any) => (modes === "All" ? el : el.modes === modes))
-            .filter((el: any) =>
-              el.name
-                .toLowerCase()
-                .startsWith(search ? search.toLowerCase() : "")
-            )
-            .map((el: any) => (
-              <Option value={el.name} key={el._id}>
-                <i
-                  className="fas fa-subway"
-                  style={{ color: "#1890ff", margin: "0 10px" }}
-                ></i>
-                {el.name}
-              </Option>
-            ))}
-      </AutoComplete>
-      <Dropdown overlay={menu}>
-        <p className="ant-dropdown-link" style={{ cursor: "pointer" }}>
-          <strong>Modes : </strong>
-          {modes} <DownOutlined />
-        </p>
-      </Dropdown>
-      <Button
-        type="primary"
-        onClick={() => {
-          onNewStopSequenceButton();
-        }}
-      >
-        New stop sequence
-      </Button>
-    </div>
+    <Card>
+      <Form form={form}>
+        <Form.Item>
+          <Radio.Group defaultValue="load" onChange={handleRadioGroupChange}>
+            <Radio.Button value="load">Load</Radio.Button>
+            <Radio.Button value="new">New stop sequence</Radio.Button>
+          </Radio.Group>
+        </Form.Item>
+        <Form.Item label="Modes">
+          <Select
+            defaultValue="Choose mode"
+            style={{ width: 120 }}
+            onChange={handleModeChange}
+          >
+            <Option value="Choose mode">Choose mode</Option>
+            <Option value="13">13</Option>
+            <Option value="5">5</Option>
+            <Option value="8">8</Option>
+            <Option value="9">9</Option>
+            <Option value="2">2</Option>
+            <Option value="4">4</Option>
+          </Select>
+        </Form.Item>
+        {show && (
+          <Form.Item label="Stop sequence name">
+            <AutoComplete
+              style={{
+                width: "50%",
+              }}
+              onChange={(input: string) => {
+                setSearch(input);
+              }}
+              onSelect={handleSelect}
+              value={search}
+              placeholder="Enter stop sequence name"
+              allowClear={true}
+            >
+              {stopSequenceList &&
+                stopSequenceList
+                  .filter((el: any) =>
+                    el.name
+                      .toLowerCase()
+                      .startsWith(search ? search.toLowerCase() : "")
+                  )
+                  .map((el: any) => (
+                    <Option value={el.name} key={el._id}>
+                      <i
+                        className="fas fa-subway"
+                        style={{ color: "#1890ff", margin: "0 10px" }}
+                      ></i>
+                      {el.name}
+                    </Option>
+                  ))}
+            </AutoComplete>
+          </Form.Item>
+        )}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+          }}
+        >
+          <Button
+            type="primary"
+            danger
+            disabled={stateDND.trajekt.items.length ? false : true}
+            onClick={() => {
+              onClearAll();
+            }}
+          >
+            Reset
+          </Button>
+          {show && (
+            <Button
+              type="primary"
+              style={{
+                marginLeft: "10px",
+              }}
+              danger
+              disabled={Object.keys(currentStopSequence).length ? false : true}
+              onClick={() => {
+                if (
+                  window.confirm(
+                    "You really want to delete the stop sequence ?"
+                  )
+                ) {
+                  const stopSequenceToDelete = stopSequenceList.filter(
+                    (el: any) => el.name === search
+                  )[0]._id;
+                  handleDeleteStopSequence(stopSequenceToDelete);
+                  setSearch("");
+                }
+              }}
+            >
+              Delete stop sequence
+            </Button>
+          )}
+        </div>
+      </Form>
+    </Card>
   );
 };
 

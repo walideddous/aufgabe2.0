@@ -79,7 +79,7 @@ const DragDrop = ({
   return (
     <Fragment>
       <DragDropContext onDragEnd={handleDragEnd}>
-        <Col xxl={12} xs={24}>
+        <Col xs={24}>
           <Card bordered={true} title={stateDND.vorschlag.title}>
             <Droppable droppableId={"vorschlag"}>
               {(provided: any) => {
@@ -215,7 +215,7 @@ const DragDrop = ({
             </Droppable>
           </Card>
         </Col>
-        <Col xxl={12} xs={24}>
+        <Col xs={24}>
           <Card bordered={true} title={stateDND.trajekt.title}>
             <div style={{ height: "370px", overflowY: "auto" }}>
               <Droppable droppableId={"trajekt"}>

@@ -133,7 +133,7 @@ const NavBar = ({
       <Col xxl={3} xs={6} style={{ paddingTop: "20px" }}>
         <Dropdown
           overlay={stopSequenceMenu}
-          disabled={stopSequenceList.length ? false : true}
+          disabled={stopSequenceList && stopSequenceList.length ? false : true}
         >
           <p className="ant-dropdown-link" style={{ cursor: "pointer" }}>
             <strong>Stop sequences : </strong> <DownOutlined />

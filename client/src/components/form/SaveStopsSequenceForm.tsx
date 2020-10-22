@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import {
   Card,
   Form,
@@ -10,6 +10,7 @@ import {
   Checkbox,
   Row,
   Space,
+  Collapse,
 } from "antd";
 
 import {
@@ -27,16 +28,22 @@ const layout = {
 const tailLayout = {
   wrapperCol: { offset: 2, span: 20 },
 };
+const timetailLayout = {
+  wrapperCol: { offset: 5, span: 15 },
+};
 
 // Declare Props Types
 interface TpropsForm {
   stateDND: TstateDND;
+  currentStopSequence: any;
   handleSaveStopSequence: (formInput: any) => void;
 }
 const { RangePicker } = TimePicker;
+const { Panel } = Collapse;
 
 const SaveStopsSequenceForm = ({
   stateDND,
+  currentStopSequence,
   handleSaveStopSequence,
 }: TpropsForm) => {
   const [selectedDate, setSelectedDate] = useState([]);
@@ -50,8 +57,18 @@ const SaveStopsSequenceForm = ({
   const [firstTimeMoment, setFirstTimeMoment] = useState([]);
   const [secondTimeMoment, setSecondTimeMoment] = useState([]);
 
+  console.log("current stop sequence", currentStopSequence);
+  const [dataLoaded, setDataLoaded] = useState({
+    name: "",
+  });
+
+  useEffect(() => {
+    setDataLoaded((prev) => {
+      return { ...prev, name: "bien afficher" };
+    });
+  }, [currentStopSequence]);
+
   const onFinish = (values: any) => {
-    console.log("values", values);
     let formInput;
     if (Object.keys(firstSelectedTimeRange).length && !savedDaysTimes.length) {
       formInput = {
@@ -186,184 +203,195 @@ const SaveStopsSequenceForm = ({
 
   return (
     <Card bordered={true}>
-      <Form
-        {...layout}
-        name="basic"
-        initialValues={{ remember: true }}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-      >
-        <Form.Item
-          {...tailLayout}
-          label="Name"
-          name="Name"
-          rules={[{ required: true, message: "Please give a Name" }]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          {...tailLayout}
-          label="Date interval"
-          name="Date interval"
-          rules={[{ required: true, message: "Please give a Date interval" }]}
-        >
-          <DatePicker.RangePicker onChange={onDateRangePicker} />
-        </Form.Item>
-
-        <Form.Item
-          {...tailLayout}
-          label="Day"
-          name="Day"
-          rules={[{ required: true, message: "Please check at least one day" }]}
-        >
-          <Checkbox.Group
-            style={{ width: "80%", paddingLeft: "20px" }}
-            onChange={daySelect}
-            value={selectedDay}
+      <Collapse>
+        <Panel header="Stop sequence save form" key="1">
+          <Form
+            {...layout}
+            name="basic"
+            initialValues={{ remember: true }}
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
           >
-            <Row>
-              <Col span={3}>
-                <Checkbox value="monday">Mo</Checkbox>
-              </Col>
-              <Col span={3}>
-                <Checkbox value="tuesday">Tu</Checkbox>
-              </Col>
-              <Col span={3}>
-                <Checkbox value="wednesday">We</Checkbox>
-              </Col>
-              <Col span={3}>
-                <Checkbox value="thursday">Th</Checkbox>
-              </Col>
-              <Col span={3}>
-                <Checkbox value="friday">Fr</Checkbox>
-              </Col>
-              <Col span={3}>
-                <Checkbox value="saturday">Sa</Checkbox>
-              </Col>
-              <Col span={3}>
-                <Checkbox value="sunday">Su</Checkbox>
-              </Col>
-              <Col span={3}>
-                <Checkbox value="holiday" style={{ width: "80px" }}>
-                  Holiday
-                </Checkbox>
-              </Col>
-            </Row>
-          </Checkbox.Group>
-        </Form.Item>
+            <Input value={currentStopSequence.name} />
+            <Form.Item
+              {...tailLayout}
+              label="Name"
+              name="Name"
+              rules={[{ required: true, message: "Please give a Name" }]}
+            >
+              <Input value={currentStopSequence.name} />
+            </Form.Item>
+            <Form.Item
+              {...tailLayout}
+              label="Date"
+              name="Date"
+              rules={[
+                { required: true, message: "Please give a Date interval" },
+              ]}
+            >
+              <DatePicker.RangePicker onChange={onDateRangePicker} />
+            </Form.Item>
 
-        <Form.Item
-          {...tailLayout}
-          label="Time"
-          name="Time"
-          rules={[{ required: true, message: "Please give a valid time rang" }]}
-        >
-          <RangePicker format="HH:mm" />
-        </Form.Item>
-        <Col
-          style={{
-            display: "flex",
-            justifyContent: "flex-start",
-          }}
-        >
-          <Form.List name="timeRange">
-            {(fields, { add, remove }) => {
-              return (
-                <div style={{ display: "flex" }}>
-                  <Button
-                    type="dashed"
-                    style={{
-                      marginLeft: "288px",
-                    }}
-                    onClick={() => {
-                      add();
-                    }}
-                  >
-                    <PlusOutlined /> Add time
-                  </Button>
-                  <div>
-                    {fields.map((field) => (
-                      <Space
-                        key={field.key}
-                        style={{ display: "flex", marginBottom: 8 }}
-                        align="start"
+            <Form.Item
+              {...tailLayout}
+              label="Day"
+              name="Day"
+              rules={[
+                { required: true, message: "Please check at least one day" },
+              ]}
+            >
+              <Checkbox.Group
+                style={{ width: "80%", paddingLeft: "20px" }}
+                onChange={daySelect}
+                value={selectedDay}
+              >
+                <Row>
+                  <Col span={3}>
+                    <Checkbox value="monday">Mo</Checkbox>
+                  </Col>
+                  <Col span={3}>
+                    <Checkbox value="tuesday">Tu</Checkbox>
+                  </Col>
+                  <Col span={3}>
+                    <Checkbox value="wednesday">We</Checkbox>
+                  </Col>
+                  <Col span={3}>
+                    <Checkbox value="thursday">Th</Checkbox>
+                  </Col>
+                  <Col span={3}>
+                    <Checkbox value="friday">Fr</Checkbox>
+                  </Col>
+                  <Col span={3}>
+                    <Checkbox value="saturday">Sa</Checkbox>
+                  </Col>
+                  <Col span={3}>
+                    <Checkbox value="sunday">Su</Checkbox>
+                  </Col>
+                  <Col span={3}>
+                    <Checkbox value="holiday" style={{ width: "80px" }}>
+                      Holiday
+                    </Checkbox>
+                  </Col>
+                </Row>
+              </Checkbox.Group>
+            </Form.Item>
+            <Col
+              style={{
+                display: "flex",
+              }}
+            >
+              <Form.Item
+                style={{
+                  width: "60%",
+                }}
+                {...timetailLayout}
+                label="Time"
+                name="Time"
+                rules={[
+                  { required: true, message: "Please give a valid time rang" },
+                ]}
+              >
+                <RangePicker format="HH:mm" />
+              </Form.Item>
+              <Form.List name="TimeRange">
+                {(fields, { add, remove }) => {
+                  return (
+                    <div style={{ display: "flex" }}>
+                      <Button
+                        type="dashed"
+                        onClick={() => {
+                          add();
+                        }}
                       >
-                        <Form.Item
-                          {...field}
-                          name={[field.name, "time"]}
-                          fieldKey={[field.fieldKey, "time"]}
-                          rules={[{ required: true, message: "Mising time" }]}
-                        >
-                          <RangePicker format="HH:mm" />
-                        </Form.Item>
-                        <MinusCircleOutlined
-                          onClick={() => {
-                            remove(field.name);
-                          }}
-                        />
-                      </Space>
-                    ))}
-                  </div>
-                </div>
-              );
-            }}
-          </Form.List>
-        </Col>
-        <Form.Item>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "flex-end",
-              paddingRight: "63px",
-            }}
-          >
-            <Button type="primary">Save Days and Time</Button>
-          </div>
-        </Form.Item>
-        <Form.Item {...tailLayout}>
-          {savedDaysTimes &&
-            savedDaysTimes.map((el: any, i: number) => (
-              <div key={i} className="timePicked">
-                <div>
-                  {el.day.length === 1 ? (
-                    <p>{el.day[0]}</p>
-                  ) : (
-                    <p>
-                      {el.day[0]}
-                      {"-"}
-                      {el.day[el.day.length - 1]}
-                    </p>
-                  )}
-                </div>
-                <div>
-                  {el.time.map((el: any, index: number) => (
-                    <p key={index}>
-                      {"From "}
-                      {el.start}
-                      {" To "}
-                      {el.end}
-                    </p>
-                  ))}
-                </div>
-                <Button onClick={() => deleteAddetTime(i)}>
-                  <CloseOutlined />
-                </Button>
+                        <PlusOutlined /> Add time
+                      </Button>
+                      <div>
+                        {fields.map((field) => (
+                          <Space
+                            key={field.key}
+                            style={{ display: "flex", marginBottom: 8 }}
+                            align="start"
+                          >
+                            <Form.Item
+                              {...field}
+                              name={[field.name, "time"]}
+                              fieldKey={[field.fieldKey, "time"]}
+                              rules={[
+                                { required: true, message: "Mising time" },
+                              ]}
+                            >
+                              <RangePicker format="HH:mm" />
+                            </Form.Item>
+                            <MinusCircleOutlined
+                              onClick={() => {
+                                remove(field.name);
+                              }}
+                            />
+                          </Space>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                }}
+              </Form.List>
+            </Col>
+            <Form.Item>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  paddingRight: "63px",
+                }}
+              >
+                <Button type="primary">Save Days and Time</Button>
               </div>
-            ))}
-        </Form.Item>
+            </Form.Item>
+            <Form.Item {...tailLayout}>
+              {savedDaysTimes &&
+                savedDaysTimes.map((el: any, i: number) => (
+                  <div key={i} className="timePicked">
+                    <div>
+                      {el.day.length === 1 ? (
+                        <p>{el.day[0]}</p>
+                      ) : (
+                        <p>
+                          {el.day[0]}
+                          {"-"}
+                          {el.day[el.day.length - 1]}
+                        </p>
+                      )}
+                    </div>
+                    <div>
+                      {el.time.map((el: any, index: number) => (
+                        <p key={index}>
+                          {"From "}
+                          {el.start}
+                          {" To "}
+                          {el.end}
+                        </p>
+                      ))}
+                    </div>
+                    <Button onClick={() => deleteAddetTime(i)}>
+                      <CloseOutlined />
+                    </Button>
+                  </div>
+                ))}
+            </Form.Item>
 
-        <Form.Item {...tailLayout}>
-          <Button
-            type="primary"
-            htmlType="submit"
-            //disabled={stateDND.trajekt.items.length ? false : true}
-          >
-            {stateDND.trajekt.items.length
-              ? " save the stop sequence"
-              : "stop sequence required"}
-          </Button>
-        </Form.Item>
-      </Form>
+            <Form.Item {...tailLayout}>
+              <Button
+                type="primary"
+                htmlType="submit"
+                //disabled={stateDND.trajekt.items.length ? false : true}
+              >
+                {stateDND.trajekt.items.length
+                  ? " save the stop sequence"
+                  : "stop sequence required"}
+              </Button>
+            </Form.Item>
+          </Form>
+        </Panel>
+      </Collapse>
     </Card>
   );
 };

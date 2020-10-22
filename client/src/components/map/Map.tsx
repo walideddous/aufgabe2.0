@@ -14,6 +14,9 @@ import "leaflet.markercluster";
 import "leaflet-contextmenu";
 import "leaflet-contextmenu/dist/leaflet.contextmenu.css";
 
+//Import search Component
+import SearchInput from "../search/SearchInput";
+
 // import the function to filter the table of the trajeckt and draw the linie on map
 import { getPathFromTrajekt } from "../../utils/getPathFromTrajekt";
 
@@ -25,7 +28,8 @@ interface TpropsOnMap {
   stateDND: TstateDND;
   selected: Tstations | undefined;
   distance: Tdistance[];
-  currentStopSequenceName: any;
+  currentStopSequence: any;
+  handleSelectAutoSearch: (elementSelected: Tstations) => void;
   onAddBeforSelected: (e: string) => void;
   onAddAfterSelected: (e: string) => void;
   onDeleteMarkerFromMap: (e: string) => void;
@@ -37,7 +41,8 @@ const Map = ({
   stateDND,
   selected,
   distance,
-  currentStopSequenceName,
+  currentStopSequence,
+  handleSelectAutoSearch,
   onAddAfterSelected,
   onAddBeforSelected,
   onDeleteMarkerFromMap,
@@ -58,7 +63,7 @@ const Map = ({
     //@ts-ignore
     if (distance.length && distance[0].distance > 0.6) {
       return {
-        zoom: 13,
+        zoom: 14,
       };
     } else {
       return {
@@ -221,8 +226,8 @@ const Map = ({
       })
       .addTo(myMap);
 
-    if (Object.keys(currentStopSequenceName).length && !selected) {
-      const { stopSequence } = currentStopSequenceName;
+    if (Object.keys(currentStopSequence).length && !selected) {
+      const { stopSequence } = currentStopSequence;
       var corner1 = L.latLng(
           stopSequence[0].coord.WGS84.lat,
           stopSequence[0].coord.WGS84.lon
@@ -238,7 +243,7 @@ const Map = ({
     stations,
     selected,
     stateDND,
-    currentStopSequenceName,
+    currentStopSequence,
     position.lat,
     position.lng,
     position.zoom,
@@ -253,7 +258,11 @@ const Map = ({
     <Fragment>
       <Col xxl={12} xs={24}>
         <Card bordered={true} title="Map">
-          <div id="mapId" style={{ height: "880px" }}></div>
+          <div id="mapId" style={{ height: "880px", zIndex: 0 }}></div>
+          <SearchInput
+            stations={stations}
+            handleSelectAutoSearch={handleSelectAutoSearch}
+          />
         </Card>
       </Col>
     </Fragment>
