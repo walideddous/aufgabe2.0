@@ -10,6 +10,16 @@ interface TLoadStopSequence {
   handleDeleteStopSequence: (id: string) => void;
   ondisplayStopSequence: (stopSequence: any) => void;
 }
+
+const layout = {
+  labelCol: { span: 8 },
+  wrapperCol: { span: 16 },
+};
+
+const tailLayout = {
+  wrapperCol: { offset: 8, span: 16 },
+};
+
 const LoadStopSequence = ({
   stopSequenceList,
   stateDND,
@@ -63,17 +73,17 @@ const LoadStopSequence = ({
 
   return (
     <Card>
-      <Form form={form}>
+      <Form form={form} {...layout}>
         <Form.Item>
           <Radio.Group defaultValue="load" onChange={handleRadioGroupChange}>
             <Radio.Button value="load">Load</Radio.Button>
-            <Radio.Button value="new">New stop sequence</Radio.Button>
+            <Radio.Button value="new">New</Radio.Button>
           </Radio.Group>
         </Form.Item>
         <Form.Item label="Modes">
           <Select
             defaultValue="Choose mode"
-            style={{ width: 120 }}
+            style={{ width: "50%" }}
             onChange={handleModeChange}
           >
             <Option value="Choose mode">Choose mode</Option>
