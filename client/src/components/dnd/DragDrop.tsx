@@ -44,10 +44,12 @@ const DragDrop = ({
     var element = document.getElementById("item-highlighted");
     if (element) {
       //@ts-ignore
+      /*
       element.scrollIntoView({
         behavior: "smooth",
         block: "nearest",
       });
+      */
     }
   }, []);
   useEffect(() => {

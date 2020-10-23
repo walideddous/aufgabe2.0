@@ -31,13 +31,6 @@ const SaveStopsSequenceForm = ({
   currentStopSequence,
   handleSaveStopSequence,
 }: TpropsForm) => {
-  const [dataLoaded, setDataLoaded] = useState({
-
-  })
-  useEffect(() => {
-
-  }, [currentStopSequence]);
-
   console.log("currentStopSequence", currentStopSequence);
   return (
     <Card bordered={true}>
@@ -138,6 +131,7 @@ const SaveStopsSequenceForm = ({
 
 export default React.memo(SaveStopsSequenceForm);
 */
+
 import React, { useCallback, useState } from "react";
 import {
   Card,
@@ -185,7 +179,7 @@ const SaveStopsSequenceForm = ({
   const [savedDaysTimes, setSavedDaysTimes] = useState<{}[]>([]);
   const [addTimeRange, setAddTimeRange] = useState(false);
 
-  // Momnet stored in variable to reset the value of TimeRangPiker
+  // Moment stored in variable to reset the value of TimeRangPiker
   const [firstTimeMoment, setFirstTimeMoment] = useState([]);
   const [secondTimeMoment, setSecondTimeMoment] = useState([]);
 
@@ -340,9 +334,7 @@ const SaveStopsSequenceForm = ({
               {...tailLayout}
               label="Day"
               name="Day"
-              rules={[
-                { required: true, message: "Please give a Date interval" },
-              ]}
+              rules={[{ required: true, message: "Please give a day" }]}
             >
               <Checkbox.Group
                 style={{ width: "80%" }}
@@ -390,7 +382,7 @@ const SaveStopsSequenceForm = ({
                   ? [
                       {
                         required: true,
-                        message: "Please give a Valid day and time",
+                        message: "Please give a Valid time",
                       },
                     ]
                   : undefined

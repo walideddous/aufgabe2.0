@@ -16,10 +16,6 @@ const layout = {
   wrapperCol: { span: 16 },
 };
 
-const tailLayout = {
-  wrapperCol: { offset: 8, span: 16 },
-};
-
 const LoadStopSequence = ({
   stopSequenceList,
   stateDND,
