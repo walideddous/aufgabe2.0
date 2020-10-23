@@ -7,6 +7,7 @@ interface TLoadStopSequence {
   currentStopSequence: any;
   onClearAll: () => void;
   onSendRequest: (modes: string) => void;
+  handleUpdateAfterSave: () => void;
   handleDeleteStopSequence: (id: string) => void;
   ondisplayStopSequence: (stopSequence: any) => void;
 }
@@ -20,6 +21,7 @@ const LoadStopSequence = ({
   stopSequenceList,
   stateDND,
   currentStopSequence,
+  handleUpdateAfterSave,
   onSendRequest,
   ondisplayStopSequence,
   handleDeleteStopSequence,
@@ -57,6 +59,7 @@ const LoadStopSequence = ({
       const { value } = e.target;
       if (value === "load") {
         setShow(true);
+        handleUpdateAfterSave();
       }
       if (value === "new") {
         setShow(false);
@@ -64,7 +67,7 @@ const LoadStopSequence = ({
         setSearch("");
       }
     },
-    [onClearAll]
+    [onClearAll, handleUpdateAfterSave]
   );
 
   return (
@@ -140,31 +143,6 @@ const LoadStopSequence = ({
           >
             Reset
           </Button>
-          {show && (
-            <Button
-              type="primary"
-              style={{
-                marginLeft: "10px",
-              }}
-              danger
-              disabled={Object.keys(currentStopSequence).length ? false : true}
-              onClick={() => {
-                if (
-                  window.confirm(
-                    "You really want to delete the stop sequence ?"
-                  )
-                ) {
-                  const stopSequenceToDelete = stopSequenceList.filter(
-                    (el: any) => el.name === search
-                  )[0]._id;
-                  handleDeleteStopSequence(stopSequenceToDelete);
-                  setSearch("");
-                }
-              }}
-            >
-              Delete stop sequence
-            </Button>
-          )}
         </div>
       </Form>
     </Card>

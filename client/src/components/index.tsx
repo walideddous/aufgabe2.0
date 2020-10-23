@@ -1,4 +1,4 @@
-import React, { useState, useCallback, Fragment, useEffect } from "react";
+import React, { useState, useCallback, Fragment } from "react";
 import axios from "axios";
 import { v4 } from "uuid";
 import { Row, Spin, Col, message } from "antd";
@@ -9,7 +9,6 @@ import {
   GRAPHQL_API,
   GET_STOPS_BY_MODES,
   GET_STOP_SEQUENCE_BY_MODES,
-  GET_ALL_STOP_SEQUENCE,
 } from "../config/config";
 
 // Import composents
@@ -62,7 +61,6 @@ const Aufgabe: React.FC = () => {
   const [updateDate, setUpdateDate] = useState<string>("");
   const [currentMode, setCurrentMode] = useState<string>("");
   const [currentStopSequence, setCurrentStopSequence] = useState({});
-  const [addStopSequence, setAddStopSequence] = useState(false);
 
   // Send the request when you click on get the Data button
   const sendRequest = useCallback(
@@ -111,34 +109,6 @@ const Aufgabe: React.FC = () => {
     },
     [isSending]
   );
-
-  /*
-  useEffect(() => {
-    (async function getStopSequence() {
-      // update state
-      setIsSending(true);
-      // send the actual request
-      try {
-        console.log("start fetching");
-        const queryStopSequence = await authAxios.post("/graphql", {
-          query: GET_ALL_STOP_SEQUENCE,
-        });
-
-        console.log("end fetching");
-        if (queryStopSequence) {
-          const { stopSequence } = queryStopSequence.data.data;
-          setStopSequenceList(stopSequence);
-        } else {
-          console.log("not authorized provid a token");
-        }
-      } catch (error) {
-        console.error(error, "error from trycatch");
-      }
-      // once the request is sent, update state again
-      setIsSending(false);
-    })();
-  }, []);
-  */
 
   // Select the Station when you click on the button to show the suggestion
   const clickOnDrop = useCallback(
@@ -711,13 +681,15 @@ const Aufgabe: React.FC = () => {
   // Update button after stop sequence have been saved
   const handleUpdateAfterSave = useCallback(() => {
     // filter the saved stop sequence by mode and added to th stopSequenceList
-    const flteredStopSeqenceByMode = savedStopSequence.filter(
-      (el: any) => el.modes === currentMode
-    );
-    setStopSequenceList((prev) => {
-      return prev.concat(flteredStopSeqenceByMode);
-    });
-    setSavedStopSequence([]);
+    if (savedStopSequence.length) {
+      const flteredStopSeqenceByMode = savedStopSequence.filter(
+        (el: any) => el.modes === currentMode
+      );
+      setStopSequenceList((prev) => {
+        return prev.concat(flteredStopSeqenceByMode);
+      });
+      setSavedStopSequence([]);
+    }
   }, [savedStopSequence, currentMode]);
 
   // Delete the stop sequence by Id
@@ -763,6 +735,7 @@ const Aufgabe: React.FC = () => {
             stopSequenceList={stopSequenceList}
             currentStopSequence={currentStopSequence}
             onSendRequest={sendRequest}
+            handleUpdateAfterSave={handleUpdateAfterSave}
             onClearAll={clearAll}
             handleDeleteStopSequence={handleDeleteStopSequence}
             ondisplayStopSequence={handledisplayStopSequence}
@@ -791,6 +764,7 @@ const Aufgabe: React.FC = () => {
                 stateDND={stateDND}
                 currentStopSequence={currentStopSequence}
                 handleSaveStopSequence={saveStopSequence}
+                handleDeleteStopSequence={handleDeleteStopSequence}
               />
             </Col>
             <Map

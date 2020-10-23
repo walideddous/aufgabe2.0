@@ -128,11 +128,10 @@ const SaveStopsSequenceForm = ({
     </Card>
   );
 };
-
 export default React.memo(SaveStopsSequenceForm);
 */
 
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect, Fragment } from "react";
 import {
   Card,
   Form,
@@ -144,9 +143,15 @@ import {
   Checkbox,
   Row,
   Collapse,
+  Space,
+  Descriptions,
 } from "antd";
 
-import { PlusOutlined, MinusOutlined, CloseOutlined } from "@ant-design/icons";
+import {
+  PlusOutlined,
+  CloseOutlined,
+  MinusCircleOutlined,
+} from "@ant-design/icons";
 
 // Import types
 import { TstateDND } from "../type/Types";
@@ -162,6 +167,7 @@ const tailLayout = {
 interface TpropsForm {
   stateDND: TstateDND;
   currentStopSequence: any;
+  handleDeleteStopSequence: (id: string) => void;
   handleSaveStopSequence: (formInput: any) => void;
 }
 const { RangePicker } = TimePicker;
@@ -170,125 +176,56 @@ const { Panel } = Collapse;
 const SaveStopsSequenceForm = ({
   stateDND,
   currentStopSequence,
+  handleDeleteStopSequence,
   handleSaveStopSequence,
 }: TpropsForm) => {
-  const [selectedDate, setSelectedDate] = useState([]);
   const [selectedDay, setSelectedDay] = useState([]);
-  const [firstSelectedTimeRange, setFirstSelectedTimeRange] = useState({});
-  const [secondSelectedTimeRange, setSecondSelectedTimeRange] = useState({});
   const [savedDaysTimes, setSavedDaysTimes] = useState<{}[]>([]);
-  const [addTimeRange, setAddTimeRange] = useState(false);
+  const [savedForm, setSavedForm] = useState({
+    name: "",
+    date: [],
+    schedule: [],
+  });
+  const [days, setDays] = useState([]);
+  const [timePicker, setTimePicker] = useState([{}]);
 
-  // Moment stored in variable to reset the value of TimeRangPiker
-  const [firstTimeMoment, setFirstTimeMoment] = useState([]);
-  const [secondTimeMoment, setSecondTimeMoment] = useState([]);
+  useEffect(() => {
+    setSavedDaysTimes(currentStopSequence.schedule);
+    setSavedForm(currentStopSequence);
+  }, [currentStopSequence]);
 
   const onFinish = (values: any) => {
-    let formInput;
-    if (Object.keys(firstSelectedTimeRange).length && !savedDaysTimes.length) {
-      formInput = {
+    console.log("values", values);
+    setSavedForm((prev: any) => {
+      return {
+        ...prev,
         name: values.Name,
-        date: selectedDate,
-        schedule: [{ day: selectedDay, time: [firstSelectedTimeRange] }],
-      };
-    }
-    if (!selectedDay.length && savedDaysTimes.length) {
-      formInput = {
-        name: values.Name,
-        date: selectedDate,
-        schedule: savedDaysTimes,
-      };
-    }
-    if (Object.keys(firstSelectedTimeRange).length && savedDaysTimes.length) {
-      if (Object.keys(secondSelectedTimeRange).length) {
-        formInput = {
-          name: values.Name,
-          date: selectedDate,
-          schedule: savedDaysTimes.concat({
-            day: selectedDay,
-            time: [firstSelectedTimeRange, secondSelectedTimeRange],
+        date: [
+          values.Date[0].toString().split(" ").slice(1, 4).join(" "),
+          values.Date[1].toString().split(" ").slice(1, 4).join(" "),
+        ],
+        schedule: prev.schedule.push({
+          day: values.Day,
+          time: values.time.map((el: any) => {
+            return {
+              start: el.timePicker[0].toString().split(" ")[4],
+              end: el.timePicker[1].toString().split(" ")[4],
+            };
           }),
-        };
-      } else {
-        formInput = {
-          name: values.Name,
-          date: selectedDate,
-          schedule: savedDaysTimes.concat({
-            day: selectedDay,
-            time: [firstSelectedTimeRange],
-          }),
-        };
-      }
-    }
-    handleSaveStopSequence(formInput);
+        }),
+      };
+    });
   };
+
+  console.log("savedForm", savedForm);
+
+  const onSave = useCallback(() => {
+    handleSaveStopSequence(savedForm);
+  }, [savedForm]);
 
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
-
-  // save the first selected Time range
-  const onFirstTimeRangePiker = useCallback((time: any, timeString: any) => {
-    const newValue = {
-      start: timeString[0],
-      end: timeString[1],
-    };
-    setFirstTimeMoment(time);
-    setFirstSelectedTimeRange({ ...newValue });
-  }, []);
-
-  // save the second selected Time range
-  const onSecondTimeRangePiker = useCallback((time: any, timeString: any) => {
-    const newValue = {
-      start: timeString[0],
-      end: timeString[1],
-    };
-    setSecondTimeMoment(time);
-    setSecondSelectedTimeRange({ ...newValue });
-  }, []);
-
-  // save the selectedDays
-  const daySelect = useCallback((value: any) => {
-    setSelectedDay(value);
-  }, []);
-
-  // save the selected Date range
-  const onDateRangePicker = useCallback((time: any, dateString: any) => {
-    setSelectedDate(dateString);
-  }, []);
-
-  // Click on save date button
-  const saveSelectedDate = useCallback(() => {
-    if (Object.keys(secondSelectedTimeRange).length) {
-      //@ts-ignore
-      setSavedDaysTimes((prev) => {
-        return [
-          ...prev,
-          {
-            day: selectedDay,
-            time: [firstSelectedTimeRange, secondSelectedTimeRange],
-          },
-        ];
-      });
-    } else {
-      //@ts-ignore
-      setSavedDaysTimes((prev: any) => {
-        return [
-          ...prev,
-          {
-            day: selectedDay,
-            time: [firstSelectedTimeRange],
-          },
-        ];
-      });
-    }
-    setSelectedDay([]);
-    setFirstTimeMoment([]);
-    setSecondTimeMoment([]);
-    setFirstSelectedTimeRange({});
-    setSecondSelectedTimeRange({});
-    setAddTimeRange(false);
-  }, [selectedDay, firstSelectedTimeRange, secondSelectedTimeRange]);
 
   // Delete the Timeplan
   const deleteAddetTime = useCallback(
@@ -301,9 +238,23 @@ const SaveStopsSequenceForm = ({
     [savedDaysTimes]
   );
 
+  const datePicker = (date: any, dateString: any) => {
+    console.log(date, dateString);
+    setTimePicker((prev: any) => {
+      return prev.concat({
+        start: dateString[0],
+        end: dateString[1],
+      });
+    });
+  };
+
+  const handleCheckBox = (data: any) => {
+    setDays(data);
+  };
+
   return (
     <Card bordered={true}>
-      <Collapse>
+      <Collapse defaultActiveKey="1">
         <Panel header="Stop sequence save form" key="1">
           <Form
             {...layout}
@@ -318,7 +269,7 @@ const SaveStopsSequenceForm = ({
               name="Name"
               rules={[{ required: true, message: "Please give a Name" }]}
             >
-              <Input />
+              <Input placeholder={currentStopSequence.name} />
             </Form.Item>
             <Form.Item
               {...tailLayout}
@@ -328,7 +279,7 @@ const SaveStopsSequenceForm = ({
                 { required: true, message: "Please give a Date interval" },
               ]}
             >
-              <DatePicker.RangePicker onChange={onDateRangePicker} />
+              <DatePicker.RangePicker />
             </Form.Item>
             <Form.Item
               {...tailLayout}
@@ -338,8 +289,7 @@ const SaveStopsSequenceForm = ({
             >
               <Checkbox.Group
                 style={{ width: "80%" }}
-                onChange={daySelect}
-                value={selectedDay}
+                onChange={handleCheckBox}
               >
                 <Row>
                   <Col span={3}>
@@ -371,61 +321,54 @@ const SaveStopsSequenceForm = ({
                 </Row>
               </Checkbox.Group>
             </Form.Item>
-
-            <Form.Item
-              {...tailLayout}
-              label="Time"
-              name="Time"
-              rules={
-                !savedDaysTimes.length &&
-                !Object.keys(firstSelectedTimeRange).length
-                  ? [
-                      {
-                        required: true,
-                        message: "Please give a Valid time",
-                      },
-                    ]
-                  : undefined
-              }
-            >
-              <RangePicker
-                format="HH:mm"
-                onChange={onFirstTimeRangePiker}
-                //@ts-ignore
-                value={
-                  Object.keys(firstSelectedTimeRange).length
-                    ? firstTimeMoment
-                    : null
-                }
-                disabled={selectedDay.length ? false : true}
-              />
-              <Button
-                onClick={() => {
-                  setAddTimeRange(!addTimeRange);
-                  if (addTimeRange) {
-                    setSecondTimeMoment([]);
-                    setSecondSelectedTimeRange({});
-                  }
-                }}
-                disabled={
-                  Object.keys(firstSelectedTimeRange).length ? false : true
-                }
-              >
-                {addTimeRange ? <MinusOutlined /> : <PlusOutlined />}
-              </Button>
-              {addTimeRange && (
-                <RangePicker
-                  format="HH:mm"
-                  onChange={onSecondTimeRangePiker}
-                  //@ts-ignore
-                  value={
-                    Object.keys(secondSelectedTimeRange).length
-                      ? secondTimeMoment
-                      : null
-                  }
-                  disabled={selectedDay.length ? false : true}
-                />
+            <Form.List name="time">
+              {(fields, { add, remove }) => (
+                <>
+                  <Form.Item {...tailLayout} label="Time" name="Time">
+                    <div style={{ display: "flex" }}>
+                      <div>
+                        {fields.map((field) => (
+                          <Space
+                            key={field.key}
+                            style={{
+                              display: "flex",
+                              marginBottom: "5px",
+                              marginRight: "10px",
+                            }}
+                            align="baseline"
+                          >
+                            <Form.Item
+                              {...field}
+                              name={[field.name, "timePicker"]}
+                              fieldKey={[field.fieldKey, "timePicker"]}
+                              rules={[
+                                { required: true, message: "Missing time" },
+                              ]}
+                            >
+                              <RangePicker
+                                format="HH:mm"
+                                onChange={datePicker}
+                              />
+                            </Form.Item>
+                            <MinusCircleOutlined
+                              onClick={() => remove(field.name)}
+                            />
+                          </Space>
+                        ))}
+                      </div>
+                      <Button
+                        type="dashed"
+                        onClick={() => add()}
+                        icon={<PlusOutlined />}
+                      >
+                        Add time
+                      </Button>
+                    </div>
+                  </Form.Item>
+                </>
               )}
+            </Form.List>
+            <Form.Item {...tailLayout}>
               <div
                 style={{
                   display: "flex",
@@ -434,64 +377,82 @@ const SaveStopsSequenceForm = ({
                   paddingTop: "10px",
                 }}
               >
-                <Button
-                  type="primary"
-                  onClick={saveSelectedDate}
-                  disabled={
-                    selectedDay.length &&
-                    Object.keys(firstSelectedTimeRange).length
-                      ? false
-                      : true
-                  }
-                >
+                <Button type="primary" htmlType="submit">
                   Save Days and Time
                 </Button>
               </div>
-            </Form.Item>
-            <Form.Item {...tailLayout}>
-              {savedDaysTimes &&
-                savedDaysTimes.map((el: any, i: number) => (
-                  <div key={i} className="timePicked">
-                    <div>
-                      {el.day.length === 1 ? (
-                        <p>{el.day[0]}</p>
-                      ) : (
-                        <p>
-                          {el.day[0]}
-                          {"-"}
-                          {el.day[el.day.length - 1]}
-                        </p>
-                      )}
-                    </div>
-                    <div>
-                      {el.time.map((el: any, index: number) => (
-                        <p key={index}>
-                          {"From "}
-                          {el.start}
-                          {" To "}
-                          {el.end}
-                        </p>
-                      ))}
-                    </div>
-                    <Button onClick={() => deleteAddetTime(i)}>
-                      <CloseOutlined />
-                    </Button>
-                  </div>
-                ))}
-            </Form.Item>
-
-            <Form.Item {...tailLayout}>
-              <Button
-                type="primary"
-                htmlType="submit"
-                disabled={stateDND.trajekt.items.length ? false : true}
-              >
-                {stateDND.trajekt.items.length
-                  ? " save the stop sequence"
-                  : "stop sequence required"}
-              </Button>
+              <Descriptions title="Stop sequence info" bordered>
+                {savedDaysTimes &&
+                  savedDaysTimes.map((el: any, i: number) => (
+                    <Fragment>
+                      <Descriptions.Item label="Day" key={i}>
+                        {el.day.length === 1 ? (
+                          <p>{el.day[0]}</p>
+                        ) : (
+                          <p>
+                            {el.day[0]}
+                            {"-"}
+                            {el.day[el.day.length - 1]}
+                          </p>
+                        )}
+                      </Descriptions.Item>
+                      <Descriptions.Item label="Time">
+                        {el.time.map((el: any, index: number) => (
+                          <p key={index}>
+                            {"From "}
+                            {el.start}
+                            {" To "}
+                            {el.end}
+                          </p>
+                        ))}
+                      </Descriptions.Item>
+                      <Descriptions.Item>
+                        <Button onClick={() => deleteAddetTime(i)}>
+                          <CloseOutlined />
+                        </Button>
+                      </Descriptions.Item>
+                    </Fragment>
+                  ))}
+              </Descriptions>
             </Form.Item>
           </Form>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              paddingRight: "63px",
+              paddingTop: "10px",
+            }}
+          >
+            <Button
+              type="primary"
+              onClick={onSave}
+              disabled={stateDND.trajekt.items.length ? false : true}
+            >
+              {stateDND.trajekt.items.length
+                ? " Save"
+                : "Stop sequence required"}
+            </Button>
+            <Button
+              type="primary"
+              style={{
+                marginLeft: "10px",
+              }}
+              danger
+              disabled={Object.keys(currentStopSequence).length ? false : true}
+              onClick={() => {
+                if (
+                  window.confirm(
+                    "You really want to delete the stop sequence ?"
+                  )
+                ) {
+                  handleDeleteStopSequence(currentStopSequence._id);
+                }
+              }}
+            >
+              Delete
+            </Button>
+          </div>
         </Panel>
       </Collapse>
     </Card>
