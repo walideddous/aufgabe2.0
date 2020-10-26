@@ -13,7 +13,6 @@ interface TLoadStopSequence {
 }
 
 const layout = {
-  labelCol: { span: 8 },
   wrapperCol: { span: 16 },
 };
 
@@ -72,7 +71,7 @@ const LoadStopSequence = ({
 
   return (
     <Card>
-      <Form form={form} {...layout}>
+      <Form form={form} layout="vertical">
         <Form.Item>
           <Radio.Group defaultValue="load" onChange={handleRadioGroupChange}>
             <Radio.Button value="load">Load</Radio.Button>
@@ -80,11 +79,7 @@ const LoadStopSequence = ({
           </Radio.Group>
         </Form.Item>
         <Form.Item label="Modes">
-          <Select
-            defaultValue="Choose mode"
-            style={{ width: "50%" }}
-            onChange={handleModeChange}
-          >
+          <Select defaultValue="Choose mode" onChange={handleModeChange}>
             <Option value="Choose mode">Choose mode</Option>
             <Option value="13">13</Option>
             <Option value="5">5</Option>
@@ -97,9 +92,6 @@ const LoadStopSequence = ({
         {show && (
           <Form.Item label="Stop sequence name">
             <AutoComplete
-              style={{
-                width: "50%",
-              }}
               onChange={(input: string) => {
                 setSearch(input);
               }}
@@ -127,26 +119,24 @@ const LoadStopSequence = ({
             </AutoComplete>
           </Form.Item>
         )}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "flex-end",
-          }}
-        >
-          <Button
-            type="primary"
-            danger
-            disabled={stateDND.trajekt.items.length ? false : true}
-            onClick={() => {
-              onClearAll();
-            }}
-          >
-            Reset
-          </Button>
-        </div>
       </Form>
     </Card>
   );
 };
 
 export default React.memo(LoadStopSequence);
+
+/*
+
+        <Button
+          type="primary"
+          danger
+          disabled={stateDND.trajekt.items.length ? false : true}
+          onClick={() => {
+            onClearAll();
+          }}
+        >
+          Reset
+        </Button>
+
+*/

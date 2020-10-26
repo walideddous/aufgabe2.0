@@ -326,6 +326,13 @@ const SaveStopsSequenceForm = ({
                 <>
                   <Form.Item {...tailLayout} label="Time" name="Time">
                     <div style={{ display: "flex" }}>
+                      <Button
+                        type="dashed"
+                        onClick={() => add()}
+                        icon={<PlusOutlined />}
+                      >
+                        Add time
+                      </Button>
                       <div>
                         {fields.map((field) => (
                           <Space
@@ -356,13 +363,6 @@ const SaveStopsSequenceForm = ({
                           </Space>
                         ))}
                       </div>
-                      <Button
-                        type="dashed"
-                        onClick={() => add()}
-                        icon={<PlusOutlined />}
-                      >
-                        Add time
-                      </Button>
                     </div>
                   </Form.Item>
                 </>
@@ -381,40 +381,41 @@ const SaveStopsSequenceForm = ({
                   Save Days and Time
                 </Button>
               </div>
-              <Descriptions title="Stop sequence info" bordered>
-                {savedDaysTimes &&
-                  savedDaysTimes.map((el: any, i: number) => (
-                    <Fragment>
-                      <Descriptions.Item label="Day" key={i}>
-                        {el.day.length === 1 ? (
-                          <p>{el.day[0]}</p>
-                        ) : (
-                          <p>
-                            {el.day[0]}
-                            {"-"}
-                            {el.day[el.day.length - 1]}
-                          </p>
-                        )}
-                      </Descriptions.Item>
-                      <Descriptions.Item label="Time">
-                        {el.time.map((el: any, index: number) => (
-                          <p key={index}>
-                            {"From "}
-                            {el.start}
-                            {" To "}
-                            {el.end}
-                          </p>
-                        ))}
-                      </Descriptions.Item>
-                      <Descriptions.Item>
-                        <Button onClick={() => deleteAddetTime(i)}>
-                          <CloseOutlined />
-                        </Button>
-                      </Descriptions.Item>
-                    </Fragment>
-                  ))}
-              </Descriptions>
             </Form.Item>
+            {savedDaysTimes && (
+              <Descriptions title="Stop sequence info" bordered>
+                {savedDaysTimes.map((el: any, i: number) => (
+                  <Fragment>
+                    <Descriptions.Item label="Day" key={i}>
+                      {el.day.length === 1 ? (
+                        <p>{el.day[0]}</p>
+                      ) : (
+                        <p>
+                          {el.day[0]}
+                          {"-"}
+                          {el.day[el.day.length - 1]}
+                        </p>
+                      )}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Time">
+                      {el.time.map((el: any, index: number) => (
+                        <p key={index * 2}>
+                          {"From "}
+                          {el.start}
+                          {" To "}
+                          {el.end}
+                        </p>
+                      ))}
+                    </Descriptions.Item>
+                    <Descriptions.Item>
+                      <Button onClick={() => deleteAddetTime(i)}>
+                        <CloseOutlined />
+                      </Button>
+                    </Descriptions.Item>
+                  </Fragment>
+                ))}
+              </Descriptions>
+            )}
           </Form>
           <div
             style={{
