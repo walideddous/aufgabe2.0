@@ -32,9 +32,8 @@ const SearchInput = ({
     <div
       style={{
         position: "absolute",
-        top: "4vh",
-        right: "7vh",
-        paddingTop: "30px",
+        top: "8vh",
+        right: "9vh",
         zIndex: 400,
         width: "75%",
       }}
