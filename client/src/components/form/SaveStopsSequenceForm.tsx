@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, Fragment } from "react";
 import {
   Card,
   Form,
@@ -25,13 +25,18 @@ const SaveStopsSequenceForm = () => {
 
   const [addSchedule, setAddSchedule] = useState(false);
   const [savedPeriod, setSavedPeriod] = useState<{}[] | undefined>([]);
-  const [tags, setTags] = useState<{}[] | undefined>([]);
+  const [tags, setTags] = useState<{ date: string; displayedtags: [] }[]>([
+    {
+      date: "",
+      displayedtags: [],
+    },
+  ]);
 
   const onFinish = (values: any) => {
     const format = {
-      date: `${moment(values.date[0]).format("DD/MM/YYYY")}-${moment(
+      date: `${moment(values.date[0]).format("YYYY.MM.DD")} - ${moment(
         values.date[1]
-      ).format("DD/MM/YYYY")}`,
+      ).format("YYYY.MM.DD")}`,
       dayTime: [
         {
           day: values.day,
@@ -54,17 +59,29 @@ const SaveStopsSequenceForm = () => {
     });
 
     const formatTags = {
-      date: `${moment(values.date[0]).format("DD/MM/YYYY")}-${moment(
+      date: `${moment(values.date[0]).format("YYYY.MM.DD")} - ${moment(
         values.date[1]
-      ).format("DD/MM/YYYY")}`,
+      ).format("YYYY.MM.DD")}`,
       displayedtags: values.time.map((el: any) => {
-        return `${values.day[0]}-${values.day[values.day.length - 1]} ${moment(
-          el.timePicker[0]
-        ).format("hh:mm")}-${moment(el.timePicker[1]).format("hh:mm")}`;
+        if (values.day.length === 8) {
+          return `All days ${moment(el.timePicker[0]).format(
+            "hh:mm"
+          )} - ${moment(el.timePicker[1]).format("hh:mm")}`;
+        } else if (values.day.length === 1) {
+          return `${values.day[0]} ${moment(el.timePicker[0]).format(
+            "hh:mm"
+          )} - ${moment(el.timePicker[1]).format("hh:mm")}`;
+        } else {
+          return `${values.day[0]} - ${
+            values.day[values.day.length - 1]
+          } ${moment(el.timePicker[0]).format("hh:mm")} - ${moment(
+            el.timePicker[1]
+          ).format("hh:mm")}`;
+        }
       }),
     };
 
-    setTags((prev) => {
+    setTags((prev: any) => {
       if (prev) {
         return prev.concat({ ...formatTags });
       } else {
@@ -87,22 +104,6 @@ const SaveStopsSequenceForm = () => {
   const handleCancelSchedule = () => {
     setAddSchedule(false);
   };
-
-  const tags2 = [
-    "All days 07:00 - 12:00",
-    "Mon-Fri 13:00 - 14:00",
-    "Mon-Fri 17:00 - 18:00",
-    "Mon-Fri 07:00 - 12:00 14:00 - 18:00",
-    "Holiday 07:00 -12:00",
-    "Sat 07:00 - 12:00",
-    "Mon-Fri 07:00 - 12:00",
-    "Mon-Sun 07:00 -12:00",
-    "Mon-Fri 07:00 - 12:00 14:00 - 18:00",
-    "Wen-Sun,Holiday 07:00 -12:00",
-    "Sat 07:00 - 12:00",
-  ];
-
-  console.log("tags bien ou non", tags);
 
   return (
     <Card bordered={true}>
@@ -235,6 +236,7 @@ const SaveStopsSequenceForm = () => {
                           style={{
                             display: "flex",
                             flexWrap: "wrap",
+                            marginBottom: "0.5em",
                           }}
                         >
                           {el.displayedtags &&
@@ -301,4 +303,12 @@ export default React.memo(SaveStopsSequenceForm);
                   </Col>
                 </Row>
               </Checkbox.Group>
+*/
+
+/*
+        if (prev.map((el: any) => el.date).indexOf(formatTags.date) >= 0) {
+          const index = prev.map((el: any) => el.date).indexOf(formatTags.date);
+          return prev[index].displayedtags.concat(formatTags.displayedtags);
+        } else {
+        }
 */

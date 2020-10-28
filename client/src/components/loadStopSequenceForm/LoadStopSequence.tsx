@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { AutoComplete, Button, Radio, Card, Form, Select } from "antd";
+import { AutoComplete, Radio, Card, Form, Select } from "antd";
 
 interface TLoadStopSequence {
   stopSequenceList: any;
@@ -11,10 +11,6 @@ interface TLoadStopSequence {
   handleDeleteStopSequence: (id: string) => void;
   ondisplayStopSequence: (stopSequence: any) => void;
 }
-
-const layout = {
-  wrapperCol: { span: 16 },
-};
 
 const LoadStopSequence = ({
   stopSequenceList,
