@@ -226,7 +226,7 @@ const SaveStopsSequenceForm = () => {
               </Fragment>
             )}
             {tags && (
-              <Collapse defaultActiveKey="2">
+              <Collapse defaultActiveKey="3">
                 <Panel header="Stop sequence schedule" key="2">
                   <div style={{ height: "200px", overflowY: "auto" }}>
                     {tags.map((el: any, index: number) => (
