@@ -760,12 +760,7 @@ const Aufgabe: React.FC = () => {
         ) : (
           <Fragment>
             <Col xs={24}>
-              <SaveStopsSequenceForm
-                stateDND={stateDND}
-                currentStopSequence={currentStopSequence}
-                handleSaveStopSequence={saveStopSequence}
-                handleDeleteStopSequence={handleDeleteStopSequence}
-              />
+              <SaveStopsSequenceForm />
             </Col>
             <Map
               stations={stations}
