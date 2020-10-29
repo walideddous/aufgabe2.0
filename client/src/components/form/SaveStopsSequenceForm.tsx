@@ -33,6 +33,7 @@ const SaveStopsSequenceForm = () => {
   ]);
 
   const onFinish = (values: any) => {
+    console.log("values", values);
     const format = {
       date: `${moment(values.date[0]).format("YYYY.MM.DD")} - ${moment(
         values.date[1]
@@ -123,11 +124,15 @@ const SaveStopsSequenceForm = () => {
               name="name"
               rules={[{ required: true, message: "Please give a Name" }]}
             >
-              <Input allowClear />
+              <Input id="name-input" allowClear />
             </Form.Item>
             {!addSchedule && (
               <div style={{ paddingBottom: "20px" }}>
-                <Button type="primary" onClick={hanldeAddSchedule}>
+                <Button
+                  type="primary"
+                  onClick={hanldeAddSchedule}
+                  id="AddSchedule-button"
+                >
                   Add schedule
                 </Button>
               </div>
@@ -135,20 +140,16 @@ const SaveStopsSequenceForm = () => {
             {addSchedule && (
               <Fragment>
                 <Form.Item
-                  label="Date"
-                  name="date"
-                  rules={[
-                    { required: true, message: "Please give a Date interval" },
-                  ]}
-                >
-                  <DatePicker.RangePicker />
-                </Form.Item>
-                <Form.Item
                   label="Day"
                   name="day"
                   rules={[{ required: true, message: "Please give a day" }]}
                 >
-                  <Select allowClear mode="tags" style={{ width: "100%" }}>
+                  <Select
+                    allowClear
+                    id="dayPicker-input"
+                    mode="tags"
+                    style={{ width: "100%" }}
+                  >
                     <Option key="1" value="Mon">
                       Monday
                     </Option>
@@ -175,10 +176,19 @@ const SaveStopsSequenceForm = () => {
                     </Option>
                   </Select>
                 </Form.Item>
+                <Form.Item
+                  label="Date"
+                  name="date"
+                  rules={[
+                    { required: true, message: "Please give a Date interval" },
+                  ]}
+                >
+                  <DatePicker.RangePicker id="date-input" />
+                </Form.Item>
                 <Form.List name="time">
                   {(fields, { add, remove }) => (
                     <>
-                      <div style={{ display: "flex" }}>
+                      <div style={{ display: "flex", paddingBottom: "20px" }}>
                         <Button
                           type="dashed"
                           onClick={() => add()}
@@ -203,7 +213,10 @@ const SaveStopsSequenceForm = () => {
                                   { required: true, message: "Missing time" },
                                 ]}
                               >
-                                <RangePicker format="HH:mm" />
+                                <RangePicker
+                                  format="HH:mm"
+                                  id="timePicker-input"
+                                />
                               </Form.Item>
                               <MinusCircleOutlined
                                 onClick={() => remove(field.name)}
@@ -219,7 +232,11 @@ const SaveStopsSequenceForm = () => {
                   <Button type="primary" htmlType="submit">
                     Save schedule
                   </Button>
-                  <Button type="dashed" onClick={handleCancelSchedule}>
+                  <Button
+                    type="dashed"
+                    id="Cancel-button"
+                    onClick={handleCancelSchedule}
+                  >
                     Cancel
                   </Button>
                 </Form.Item>
