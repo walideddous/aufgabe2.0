@@ -134,5 +134,4 @@ export default React.memo(LoadStopSequence);
         >
           Reset
         </Button>
-
 */

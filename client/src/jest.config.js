@@ -1,6 +1,6 @@
 module.exports = {
     "roots": [
-      "<rootDir>/src"
+      "<rootDir>/src/components"
     ],
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
@@ -15,4 +15,6 @@ module.exports = {
       "node"
     ],
     "snapshotSerializers": ["enzyme-to-json/serializer"],
+    "setupFilesAfterEnv": ["<rootDir>src/setupTests.ts"],
+    "collectCoverageFrom": ['src/**/*.tsx',]
   }

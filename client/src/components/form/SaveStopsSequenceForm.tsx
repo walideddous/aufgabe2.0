@@ -33,7 +33,6 @@ const SaveStopsSequenceForm = () => {
   ]);
 
   const onFinish = (values: any) => {
-    console.log("values", values);
     const format = {
       date: `${moment(values.date[0]).format("YYYY.MM.DD")} - ${moment(
         values.date[1]
@@ -94,18 +93,6 @@ const SaveStopsSequenceForm = () => {
     form.resetFields();
   };
 
-  const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
-  };
-
-  const hanldeAddSchedule = () => {
-    setAddSchedule(true);
-  };
-
-  const handleCancelSchedule = () => {
-    setAddSchedule(false);
-  };
-
   return (
     <Card bordered={true}>
       <Collapse defaultActiveKey="1">
@@ -117,7 +104,6 @@ const SaveStopsSequenceForm = () => {
             initialValues={{ remember: true }}
             form={form}
             onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
           >
             <Form.Item
               label="Name"
@@ -130,7 +116,9 @@ const SaveStopsSequenceForm = () => {
               <div style={{ paddingBottom: "20px" }}>
                 <Button
                   type="primary"
-                  onClick={hanldeAddSchedule}
+                  onClick={() => {
+                    setAddSchedule(true);
+                  }}
                   id="AddSchedule-button"
                 >
                   Add schedule
@@ -235,7 +223,9 @@ const SaveStopsSequenceForm = () => {
                   <Button
                     type="dashed"
                     id="Cancel-button"
-                    onClick={handleCancelSchedule}
+                    onClick={() => {
+                      setAddSchedule(false);
+                    }}
                   >
                     Cancel
                   </Button>
@@ -285,47 +275,3 @@ const SaveStopsSequenceForm = () => {
 };
 
 export default React.memo(SaveStopsSequenceForm);
-
-/*
-              <Checkbox.Group
-                style={{ width: "80%" }}
-                onChange={handleCheckBox}
-              >
-                <Row>
-                  <Col span={3}>
-                    <Checkbox value="monday">Mo</Checkbox>
-                  </Col>
-                  <Col span={3}>
-                    <Checkbox value="tuesday">Tu</Checkbox>
-                  </Col>
-                  <Col span={3}>
-                    <Checkbox value="wednesday">We</Checkbox>
-                  </Col>
-                  <Col span={3}>
-                    <Checkbox value="thursday">Th</Checkbox>
-                  </Col>
-                  <Col span={3}>
-                    <Checkbox value="friday">Fr</Checkbox>
-                  </Col>
-                  <Col span={3}>
-                    <Checkbox value="saturday">Sa</Checkbox>
-                  </Col>
-                  <Col span={3}>
-                    <Checkbox value="sunday">Su</Checkbox>
-                  </Col>
-                  <Col span={3}>
-                    <Checkbox value="holiday" style={{ width: "80px" }}>
-                      Holiday
-                    </Checkbox>
-                  </Col>
-                </Row>
-              </Checkbox.Group>
-*/
-
-/*
-        if (prev.map((el: any) => el.date).indexOf(formatTags.date) >= 0) {
-          const index = prev.map((el: any) => el.date).indexOf(formatTags.date);
-          return prev[index].displayedtags.concat(formatTags.displayedtags);
-        } else {
-        }
-*/

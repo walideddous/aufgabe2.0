@@ -1,0 +1,97 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Aufgabe component => main component Match snapShot 1`] = `
+<div
+  className="Prototyp"
+  style={
+    Object {
+      "position": "relative",
+    }
+  }
+>
+  <Row
+    gutter={
+      Array [
+        8,
+        8,
+      ]
+    }
+  >
+    <Col
+      xs={24}
+    >
+      <Memo(LoadStopSequence)
+        currentStopSequence={Object {}}
+        handleDeleteStopSequence={[Function]}
+        handleUpdateAfterSave={[Function]}
+        onClearAll={[Function]}
+        onSendRequest={[Function]}
+        ondisplayStopSequence={[Function]}
+        stateDND={
+          Object {
+            "trajekt": Object {
+              "items": Array [],
+              "title": "Stop sequence",
+            },
+            "vorschlag": Object {
+              "items": Array [],
+              "title": "Suggestion",
+            },
+          }
+        }
+        stopSequenceList={Array []}
+      />
+    </Col>
+    <Col
+      xs={24}
+    >
+      <Memo(SaveStopsSequenceForm) />
+    </Col>
+    <Memo(Map)
+      currentStopSequence={Object {}}
+      distance={Array []}
+      handleSelectAutoSearch={[Function]}
+      onAddAfterSelected={[Function]}
+      onAddBeforSelected={[Function]}
+      onDeleteMarkerFromMap={[Function]}
+      selectMarkerOnMap={[Function]}
+      stateDND={
+        Object {
+          "trajekt": Object {
+            "items": Array [],
+            "title": "Stop sequence",
+          },
+          "vorschlag": Object {
+            "items": Array [],
+            "title": "Suggestion",
+          },
+        }
+      }
+      stations={Array []}
+    />
+    <Col
+      xs={24}
+      xxl={12}
+    >
+      <Memo(DragDrop)
+        handleAddStopsOnCLick={[Function]}
+        handleDragEnd={[Function]}
+        onDelete={[Function]}
+        onclick={[Function]}
+        stateDND={
+          Object {
+            "trajekt": Object {
+              "items": Array [],
+              "title": "Stop sequence",
+            },
+            "vorschlag": Object {
+              "items": Array [],
+              "title": "Suggestion",
+            },
+          }
+        }
+      />
+    </Col>
+  </Row>
+</div>
+`;

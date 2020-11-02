@@ -20,8 +20,42 @@ import SearchInput from "../search/SearchInput";
 // import the function to filter the table of the trajeckt and draw the linie on map
 import { getPathFromTrajekt } from "../../utils/getPathFromTrajekt";
 
-// Import type
-import { Tstations, TstateDND, Tdistance } from "../type/Types";
+// Typescript
+export interface Tstations {
+  index?: number;
+  _id: string;
+  name: string;
+  coord: {
+    WGS84: {
+      lat: number;
+      lon: number;
+    };
+  };
+  modes: [String];
+}
+
+export interface Tdistance {
+  from: string;
+  to: Tstations;
+  distance: number;
+}
+
+export interface TstateDND {
+  vorschlag: {
+    title: string;
+    items: {
+      _id: string;
+      name: string;
+    }[];
+  };
+  trajekt: {
+    title: string;
+    items: {
+      _id: string;
+      name: string;
+    }[];
+  };
+}
 
 interface TpropsOnMap {
   stations: Tstations[];
@@ -36,6 +70,7 @@ interface TpropsOnMap {
   selectMarkerOnMap: (el: Tstations, index: number) => void;
 }
 
+// Map component
 const Map = ({
   stations,
   stateDND,

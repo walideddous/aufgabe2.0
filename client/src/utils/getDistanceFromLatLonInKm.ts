@@ -1,5 +1,17 @@
-// Import type
-import { Tstations } from "../components/type/Types";
+// Typescript
+export interface Tstations {
+  index?: number;
+  _id: string;
+  name: string;
+  coord: {
+    WGS84: {
+      lat: number;
+      lon: number;
+    };
+  };
+  modes: [String];
+}
+
 
 function getpreciseDistanceFromLatLonInKm(
   lat1: number,

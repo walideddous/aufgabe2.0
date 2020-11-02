@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Map component match snapshot 1`] = `
+<Fragment>
+  <Col
+    xs={24}
+    xxl={12}
+  >
+    <Card
+      bordered={true}
+      title="Map"
+    >
+      <div
+        id="mapId"
+        style={
+          Object {
+            "height": "880px",
+            "zIndex": 0,
+          }
+        }
+      />
+      <Memo(SearchInput)
+        handleSelectAutoSearch={[MockFunction]}
+        stations={Array []}
+      />
+    </Card>
+  </Col>
+</Fragment>
+`;

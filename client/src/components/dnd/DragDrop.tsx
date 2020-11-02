@@ -3,8 +3,36 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { Card, Col } from "antd";
 import { DeleteOutlined, ArrowUpOutlined } from "@ant-design/icons";
 
-// Import types
-import { TstateDND, Tstations } from "../type/Types";
+// Typescript
+export interface Tstations {
+  index?: number;
+  _id: string;
+  name: string;
+  coord: {
+    WGS84: {
+      lat: number;
+      lon: number;
+    };
+  };
+  modes: [String];
+}
+
+export interface TstateDND {
+  vorschlag: {
+    title: string;
+    items: {
+      _id: string;
+      name: string;
+    }[];
+  };
+  trajekt: {
+    title: string;
+    items: {
+      _id: string;
+      name: string;
+    }[];
+  };
+}
 
 // Declare Types
 interface TporpsDND {
@@ -97,69 +125,14 @@ const DragDrop = ({
                         {...provided.droppableProps}
                         className={"droppable-col"}
                       >
-                        {stateDND.vorschlag.items
-                          .slice(0, 8)
-                          .map((el: any, index: number) => {
-                            return (
-                              <Draggable
-                                key={el._id}
-                                index={index}
-                                draggableId={el._id + index}
-                              >
-                                {(provided) => {
-                                  return (
-                                    <div
-                                      className="item-suggestion "
-                                      ref={provided.innerRef}
-                                      {...provided.draggableProps}
-                                      {...provided.dragHandleProps}
-                                    >
-                                      <span
-                                        style={{ width: "90%" }}
-                                        onClick={() => {
-                                          addStopsOnCLick(el);
-                                        }}
-                                      >
-                                        {el.name} "{el.distance.toFixed(3)} Km"
-                                      </span>
-                                      <button
-                                        style={{
-                                          width: "30px",
-                                          backgroundColor: "white",
-                                          color: "#3949ab",
-                                          borderRadius: "5px",
-                                          outline: "0",
-                                        }}
-                                      >
-                                        <ArrowUpOutlined
-                                          style={{
-                                            transform: `rotate(${el.angle}deg)`,
-                                          }}
-                                        />
-                                      </button>
-                                    </div>
-                                  );
-                                }}
-                              </Draggable>
-                            );
-                          })}
-                        {provided.placeholder}
-                      </div>
-                    </Col>
-                    {!hide ? (
-                      <Col lg={12}>
-                        <div
-                          ref={provided.innerRef}
-                          {...provided.droppableProps}
-                          className={"droppable-col"}
-                        >
-                          {stateDND.vorschlag.items
-                            .slice(8, 16)
+                        {stateDND.vorschlag.items &&
+                          stateDND.vorschlag.items
+                            .slice(0, 8)
                             .map((el: any, index: number) => {
                               return (
                                 <Draggable
                                   key={el._id}
-                                  index={index + 8}
+                                  index={index}
                                   draggableId={el._id + index}
                                 >
                                   {(provided) => {
@@ -171,9 +144,7 @@ const DragDrop = ({
                                         {...provided.dragHandleProps}
                                       >
                                         <span
-                                          style={{
-                                            width: "90%",
-                                          }}
+                                          style={{ width: "90%" }}
                                           onClick={() => {
                                             addStopsOnCLick(el);
                                           }}
@@ -202,6 +173,66 @@ const DragDrop = ({
                                 </Draggable>
                               );
                             })}
+                        {provided.placeholder}
+                      </div>
+                    </Col>
+                    {!hide ? (
+                      <Col lg={12}>
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.droppableProps}
+                          className={"droppable-col"}
+                        >
+                          {stateDND.vorschlag.items &&
+                            stateDND.vorschlag.items
+                              .slice(8, 16)
+                              .map((el: any, index: number) => {
+                                return (
+                                  <Draggable
+                                    key={el._id}
+                                    index={index + 8}
+                                    draggableId={el._id + index}
+                                  >
+                                    {(provided) => {
+                                      return (
+                                        <div
+                                          className="item-suggestion "
+                                          ref={provided.innerRef}
+                                          {...provided.draggableProps}
+                                          {...provided.dragHandleProps}
+                                        >
+                                          <span
+                                            style={{
+                                              width: "90%",
+                                            }}
+                                            onClick={() => {
+                                              addStopsOnCLick(el);
+                                            }}
+                                          >
+                                            {el.name} "{el.distance.toFixed(3)}{" "}
+                                            Km"
+                                          </span>
+                                          <button
+                                            style={{
+                                              width: "30px",
+                                              backgroundColor: "white",
+                                              color: "#3949ab",
+                                              borderRadius: "5px",
+                                              outline: "0",
+                                            }}
+                                          >
+                                            <ArrowUpOutlined
+                                              style={{
+                                                transform: `rotate(${el.angle}deg)`,
+                                              }}
+                                            />
+                                          </button>
+                                        </div>
+                                      );
+                                    }}
+                                  </Draggable>
+                                );
+                              })}
                           {provided.placeholder}
                         </div>
                       </Col>
@@ -228,64 +259,65 @@ const DragDrop = ({
                       {...provided.droppableProps}
                       className={"droppable-col"}
                     >
-                      {stateDND.trajekt.items.map((el: any, index: number) => {
-                        return (
-                          <Draggable
-                            key={el._id + index}
-                            index={index}
-                            draggableId={el._id + index}
-                          >
-                            {(provided) => {
-                              return (
-                                <div
-                                  id={
-                                    selected &&
-                                    selected._id + selected.index ===
-                                      el._id + index
-                                      ? "item-highlighted"
-                                      : "item"
-                                  }
-                                  className={
-                                    selected &&
-                                    selected._id + selected.index ===
-                                      el._id + index
-                                      ? "item-highlighted"
-                                      : "item"
-                                  }
-                                  ref={provided.innerRef}
-                                  {...provided.draggableProps}
-                                  {...provided.dragHandleProps}
-                                >
-                                  <span
-                                    onClick={() => {
-                                      handleClick(el, index);
-                                    }}
-                                    style={{ width: "90%" }}
+                      {stateDND.trajekt.items &&
+                        stateDND.trajekt.items.map((el: any, index: number) => {
+                          return (
+                            <Draggable
+                              key={el._id + index}
+                              index={index}
+                              draggableId={el._id + index}
+                            >
+                              {(provided) => {
+                                return (
+                                  <div
+                                    id={
+                                      selected &&
+                                      selected._id + selected.index ===
+                                        el._id + index
+                                        ? "item-highlighted"
+                                        : "item"
+                                    }
+                                    className={
+                                      selected &&
+                                      selected._id + selected.index ===
+                                        el._id + index
+                                        ? "item-highlighted"
+                                        : "item"
+                                    }
+                                    ref={provided.innerRef}
+                                    {...provided.draggableProps}
+                                    {...provided.dragHandleProps}
                                   >
-                                    {el.name}
-                                  </span>
-                                  <button
-                                    style={{
-                                      width: "30px",
-                                      backgroundColor: "white",
-                                      color: "#3949ab",
-                                      borderRadius: "5px",
-                                      outline: "0",
-                                      cursor: "pointer",
-                                      boxShadow: "0px 2px 2px lightgray",
-                                    }}
-                                    onClick={() => {
-                                      handleDelete(el, index);
-                                    }}
-                                  >
-                                    <DeleteOutlined />
-                                  </button>
-                                </div>
-                              );
-                            }}
-                          </Draggable>
-                        );
-                      })}
+                                    <span
+                                      onClick={() => {
+                                        handleClick(el, index);
+                                      }}
+                                      style={{ width: "90%" }}
+                                    >
+                                      {el.name}
+                                    </span>
+                                    <button
+                                      style={{
+                                        width: "30px",
+                                        backgroundColor: "white",
+                                        color: "#3949ab",
+                                        borderRadius: "5px",
+                                        outline: "0",
+                                        cursor: "pointer",
+                                        boxShadow: "0px 2px 2px lightgray",
+                                      }}
+                                      onClick={() => {
+                                        handleDelete(el, index);
+                                      }}
+                                    >
+                                      <DeleteOutlined />
+                                    </button>
+                                  </div>
+                                );
+                              }}
+                            </Draggable>
+                          );
+                        })}
                       {provided.placeholder}
                     </div>
                   );

@@ -12,24 +12,53 @@ import {
 } from "../config/config";
 
 // Import composents
-/*
-import NavBar from "./navBar/NavBar";
-import Info from "./info/Info";
-import SearchInput from "./search/SearchInput";
-*/
 import DragDrop from "./dnd/DragDrop";
 import Map from "./map/Map";
 import SaveStopsSequenceForm from "./form/SaveStopsSequenceForm";
 import LoadStopSequence from "./loadStopSequenceForm/LoadStopSequence";
-
-// Import the types of the state
-import { Tstations, TstateDND, Tdistance } from "./type/Types";
 
 // Get the property from Utils
 import { getProperty } from "../utils/getPropertyKey";
 
 // get the function to compare the distance between a point fix and a banch of punkt
 import { calculateDistanceAndSort } from "../utils/getDistanceFromLatLonInKm";
+
+// Typescript
+export interface Tstations {
+  index?: number;
+  _id: string;
+  name: string;
+  coord: {
+    WGS84: {
+      lat: number;
+      lon: number;
+    };
+  };
+  modes: [String];
+}
+
+export interface Tdistance {
+  from: string;
+  to: Tstations;
+  distance: number;
+}
+
+export interface TstateDND {
+  vorschlag: {
+    title: string;
+    items: {
+      _id: string;
+      name: string;
+    }[];
+  };
+  trajekt: {
+    title: string;
+    items: {
+      _id: string;
+      name: string;
+    }[];
+  };
+}
 
 const authAxios = axios.create({
   baseURL: GRAPHQL_API,

@@ -1,8 +1,19 @@
 import React, { useCallback, useState } from "react";
 import { AutoComplete } from "antd";
 
-// Import type
-import { Tstations } from "../type/Types";
+// Typescript
+export interface Tstations {
+  index?: number;
+  _id: string;
+  name: string;
+  coord: {
+    WGS84: {
+      lat: number;
+      lon: number;
+    };
+  };
+  modes: [String];
+}
 
 interface TporpsSearchInput {
   stations: Tstations[];
@@ -13,7 +24,6 @@ const SearchInput = ({
   stations,
   handleSelectAutoSearch,
 }: TporpsSearchInput) => {
-  // Search Component
   const [search, setSearch] = useState("");
 
   // Auto complete component
