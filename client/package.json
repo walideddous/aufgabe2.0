@@ -43,7 +43,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --watchAll --verbose --coverage",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -70,5 +70,14 @@
     "react-test-renderer": "^17.0.1",
     "sinon": "^9.2.1",
     "ts-jest": "^26.4.3"
+  },
+  "jest":{
+    "collectCoverageFrom" :[
+      "src/**/*.tsx",
+      "!src/index.tsx",
+      "!src/App.tsx",
+      "!src/components/react.tsx"
+    ]
   }
 }
+

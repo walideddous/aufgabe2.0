@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`LoadStopSequence component match snapShot 1`] = `
+exports[`LoadStopSequence component match snapShot with the LoadStopSequence component 1`] = `
 <Card>
   <ForwardRef(InternalForm)
     form={

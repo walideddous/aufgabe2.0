@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DragDrop component match snapshot 1`] = `
+exports[`DragDrop component match snapshot with the DrapDrop component 1`] = `
 <Memo(DragDrop)
   handleAddStopsOnCLick={[MockFunction]}
   handleDragEnd={[MockFunction]}

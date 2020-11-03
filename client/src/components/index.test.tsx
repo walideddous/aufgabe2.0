@@ -15,7 +15,7 @@ describe("Aufgabe component => main component", () => {
     mountWrapper = setUp();
   });
 
-  it("Match snapShot", () => {
+  it("Match snapShot with the Aufgabe(index) component", () => {
     expect(toJSON(mountWrapper)).toMatchSnapshot();
   });
 });

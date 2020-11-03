@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Aufgabe component => main component Match snapShot 1`] = `
+exports[`Aufgabe component => main component Match snapShot with the Aufgabe(index) component 1`] = `
 <div
   className="Prototyp"
   style={

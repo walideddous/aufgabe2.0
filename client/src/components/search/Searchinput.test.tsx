@@ -18,7 +18,7 @@ describe("Searchinput component", () => {
   beforeEach(() => {
     mountWrapper = setUp(props);
   });
-  it("match snapShot", () => {
+  it("match snapShot with the Seachinput component", () => {
     expect(toJSON(mountWrapper)).toMatchSnapshot();
   });
 });

@@ -32,7 +32,7 @@ describe("DragDrop component", () => {
     mountWrapper = setUp(props);
   });
 
-  it("match snapshot", () => {
+  it("match snapshot with the DrapDrop component", () => {
     expect(toJSON(mountWrapper)).toMatchSnapshot();
   });
 });

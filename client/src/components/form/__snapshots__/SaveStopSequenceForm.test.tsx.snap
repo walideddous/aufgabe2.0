@@ -1,902 +1,123 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SaveStopSequenceForm component matches snapshot 1`] = `
-<Memo(SaveStopsSequenceForm)>
-  <Card
+exports[`SaveStopSequenceForm component matches snapshot of the SaveStopSequenceForm component 1`] = `
+<Card
+  bordered={true}
+>
+  <Collapse
     bordered={true}
+    defaultActiveKey="1"
   >
-    <div
-      className="ant-card ant-card-bordered"
+    <CollapsePanel
+      header="Stop sequence save form"
+      key="1"
     >
-      <div
-        className="ant-card-body"
-        style={Object {}}
+      <ForwardRef(InternalForm)
+        form={
+          Object {
+            "__INTERNAL__": Object {
+              "itemRef": [Function],
+            },
+            "getFieldError": [Function],
+            "getFieldInstance": [Function],
+            "getFieldValue": [Function],
+            "getFieldsError": [Function],
+            "getFieldsValue": [Function],
+            "getInternalHooks": [Function],
+            "isFieldTouched": [Function],
+            "isFieldValidating": [Function],
+            "isFieldsTouched": [Function],
+            "isFieldsValidating": [Function],
+            "resetFields": [Function],
+            "scrollToField": [Function],
+            "setFields": [Function],
+            "setFieldsValue": [Function],
+            "submit": [Function],
+            "validateFields": [Function],
+          }
+        }
+        initialValues={
+          Object {
+            "remember": true,
+          }
+        }
+        layout="vertical"
+        name="basic"
+        onFinish={[Function]}
+        requiredMark={false}
       >
+        <FormItem
+          label="Name"
+          name="name"
+          rules={
+            Array [
+              Object {
+                "message": "Please give a Name",
+                "required": true,
+              },
+            ]
+          }
+        >
+          <Input
+            allowClear={true}
+            id="name-input"
+            type="text"
+          />
+        </FormItem>
+        <div
+          style={
+            Object {
+              "paddingBottom": "20px",
+            }
+          }
+        >
+          <Button
+            block={false}
+            ghost={false}
+            htmlType="button"
+            id="AddSchedule-button"
+            loading={false}
+            onClick={[Function]}
+            type="primary"
+          >
+            Add schedule
+          </Button>
+        </div>
         <Collapse
           bordered={true}
-          defaultActiveKey="1"
+          defaultActiveKey="3"
         >
-          <Collapse
-            accordion={false}
-            bordered={true}
-            className="ant-collapse-icon-position-left"
-            defaultActiveKey="1"
-            destroyInactivePanel={false}
-            expandIcon={[Function]}
-            onChange={[Function]}
-            openAnimation={
-              Object {
-                "appear": [Function],
-                "enter": [Function],
-                "leave": [Function],
-              }
-            }
-            prefixCls="ant-collapse"
+          <CollapsePanel
+            header="Stop sequence schedule"
+            key="2"
           >
             <div
-              className="ant-collapse ant-collapse-icon-position-left"
-              role={null}
-            >
-              <CollapsePanel
-                accordion={false}
-                destroyInactivePanel={false}
-                expandIcon={[Function]}
-                header="Stop sequence save form"
-                isActive={true}
-                key="1"
-                onItemClick={[Function]}
-                openAnimation={
-                  Object {
-                    "appear": [Function],
-                    "enter": [Function],
-                    "leave": [Function],
-                  }
+              style={
+                Object {
+                  "height": "200px",
+                  "overflowY": "auto",
                 }
-                panelKey="1"
-                prefixCls="ant-collapse"
+              }
+            >
+              <div
+                key="0"
               >
-                <CollapsePanel
-                  accordion={false}
-                  className=""
-                  destroyInactivePanel={false}
-                  expandIcon={[Function]}
-                  forceRender={false}
-                  header="Stop sequence save form"
-                  headerClass=""
-                  isActive={true}
-                  onItemClick={[Function]}
-                  openAnimation={
+                <h3 />
+                <div
+                  style={
                     Object {
-                      "appear": [Function],
-                      "enter": [Function],
-                      "leave": [Function],
+                      "display": "flex",
+                      "flexWrap": "wrap",
+                      "marginBottom": "0.5em",
                     }
                   }
-                  panelKey="1"
-                  prefixCls="ant-collapse"
-                  showArrow={true}
-                >
-                  <div
-                    className="ant-collapse-item ant-collapse-item-active"
-                  >
-                    <div
-                      aria-expanded="true"
-                      className="ant-collapse-header"
-                      onClick={[Function]}
-                      onKeyPress={[Function]}
-                      role="button"
-                      tabIndex={0}
-                    >
-                      <ForwardRef(RightOutlined)
-                        className="ant-collapse-arrow"
-                        rotate={90}
-                      >
-                        <AntdIcon
-                          className="ant-collapse-arrow"
-                          icon={
-                            Object {
-                              "icon": Object {
-                                "attrs": Object {
-                                  "focusable": "false",
-                                  "viewBox": "64 64 896 896",
-                                },
-                                "children": Array [
-                                  Object {
-                                    "attrs": Object {
-                                      "d": "M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z",
-                                    },
-                                    "tag": "path",
-                                  },
-                                ],
-                                "tag": "svg",
-                              },
-                              "name": "right",
-                              "theme": "outlined",
-                            }
-                          }
-                          rotate={90}
-                        >
-                          <span
-                            aria-label="right"
-                            className="anticon anticon-right ant-collapse-arrow"
-                            role="img"
-                          >
-                            <IconReact
-                              className=""
-                              icon={
-                                Object {
-                                  "icon": Object {
-                                    "attrs": Object {
-                                      "focusable": "false",
-                                      "viewBox": "64 64 896 896",
-                                    },
-                                    "children": Array [
-                                      Object {
-                                        "attrs": Object {
-                                          "d": "M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z",
-                                        },
-                                        "tag": "path",
-                                      },
-                                    ],
-                                    "tag": "svg",
-                                  },
-                                  "name": "right",
-                                  "theme": "outlined",
-                                }
-                              }
-                              style={
-                                Object {
-                                  "msTransform": "rotate(90deg)",
-                                  "transform": "rotate(90deg)",
-                                }
-                              }
-                            >
-                              <svg
-                                aria-hidden="true"
-                                className=""
-                                data-icon="right"
-                                fill="currentColor"
-                                focusable="false"
-                                height="1em"
-                                key="svg-right"
-                                style={
-                                  Object {
-                                    "msTransform": "rotate(90deg)",
-                                    "transform": "rotate(90deg)",
-                                  }
-                                }
-                                viewBox="64 64 896 896"
-                                width="1em"
-                              >
-                                <path
-                                  d="M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z"
-                                  key="svg-right-svg-0"
-                                />
-                              </svg>
-                            </IconReact>
-                          </span>
-                        </AntdIcon>
-                      </ForwardRef(RightOutlined)>
-                      Stop sequence save form
-                    </div>
-                    <Animate
-                      animation={
-                        Object {
-                          "appear": [Function],
-                          "enter": [Function],
-                          "leave": [Function],
-                        }
-                      }
-                      component=""
-                      componentProps={Object {}}
-                      exclusive={true}
-                      onAppear={[Function]}
-                      onEnd={[Function]}
-                      onEnter={[Function]}
-                      onLeave={[Function]}
-                      showProp="isActive"
-                      transitionAppear={false}
-                      transitionEnter={true}
-                      transitionLeave={true}
-                    >
-                      <AnimateChild
-                        animation={
-                          Object {
-                            "appear": [Function],
-                            "enter": [Function],
-                            "leave": [Function],
-                          }
-                        }
-                        key="rc_animate_1604336045688"
-                        transitionAppear={false}
-                        transitionEnter={true}
-                        transitionLeave={true}
-                      >
-                        <PanelContent
-                          destroyInactivePanel={false}
-                          forceRender={false}
-                          isActive={true}
-                          key="rc_animate_1604336045688"
-                          prefixCls="ant-collapse"
-                          role={null}
-                        >
-                          <div
-                            className="ant-collapse-content ant-collapse-content-active"
-                            role={null}
-                          >
-                            <div
-                              className="ant-collapse-content-box"
-                            >
-                              <ForwardRef(InternalForm)
-                                form={
-                                  Object {
-                                    "__INTERNAL__": Object {
-                                      "itemRef": [Function],
-                                      "name": "basic",
-                                    },
-                                    "getFieldError": [Function],
-                                    "getFieldInstance": [Function],
-                                    "getFieldValue": [Function],
-                                    "getFieldsError": [Function],
-                                    "getFieldsValue": [Function],
-                                    "getInternalHooks": [Function],
-                                    "isFieldTouched": [Function],
-                                    "isFieldValidating": [Function],
-                                    "isFieldsTouched": [Function],
-                                    "isFieldsValidating": [Function],
-                                    "resetFields": [Function],
-                                    "scrollToField": [Function],
-                                    "setFields": [Function],
-                                    "setFieldsValue": [Function],
-                                    "submit": [Function],
-                                    "validateFields": [Function],
-                                  }
-                                }
-                                initialValues={
-                                  Object {
-                                    "remember": true,
-                                  }
-                                }
-                                layout="vertical"
-                                name="basic"
-                                onFinish={[Function]}
-                                requiredMark={false}
-                              >
-                                <SizeContextProvider>
-                                  <ForwardRef(Form)
-                                    className="ant-form ant-form-vertical ant-form-hide-required-mark"
-                                    form={
-                                      Object {
-                                        "__INTERNAL__": Object {
-                                          "itemRef": [Function],
-                                          "name": "basic",
-                                        },
-                                        "getFieldError": [Function],
-                                        "getFieldInstance": [Function],
-                                        "getFieldValue": [Function],
-                                        "getFieldsError": [Function],
-                                        "getFieldsValue": [Function],
-                                        "getInternalHooks": [Function],
-                                        "isFieldTouched": [Function],
-                                        "isFieldValidating": [Function],
-                                        "isFieldsTouched": [Function],
-                                        "isFieldsValidating": [Function],
-                                        "resetFields": [Function],
-                                        "scrollToField": [Function],
-                                        "setFields": [Function],
-                                        "setFieldsValue": [Function],
-                                        "submit": [Function],
-                                        "validateFields": [Function],
-                                      }
-                                    }
-                                    id="basic"
-                                    initialValues={
-                                      Object {
-                                        "remember": true,
-                                      }
-                                    }
-                                    name="basic"
-                                    onFinish={[Function]}
-                                    onFinishFailed={[Function]}
-                                  >
-                                    <form
-                                      className="ant-form ant-form-vertical ant-form-hide-required-mark"
-                                      id="basic"
-                                      onSubmit={[Function]}
-                                    >
-                                      <FormItem
-                                        label="Name"
-                                        name="name"
-                                        rules={
-                                          Array [
-                                            Object {
-                                              "message": "Please give a Name",
-                                              "required": true,
-                                            },
-                                          ]
-                                        }
-                                      >
-                                        <WrapperField
-                                          label="Name"
-                                          messageVariables={
-                                            Object {
-                                              "label": "Name",
-                                            }
-                                          }
-                                          name="name"
-                                          onReset={[Function]}
-                                          rules={
-                                            Array [
-                                              Object {
-                                                "message": "Please give a Name",
-                                                "required": true,
-                                              },
-                                            ]
-                                          }
-                                          trigger="onChange"
-                                          validateTrigger="onChange"
-                                        >
-                                          <Field
-                                            fieldContext={
-                                              Object {
-                                                "__INTERNAL__": Object {
-                                                  "itemRef": [Function],
-                                                  "name": "basic",
-                                                },
-                                                "getFieldError": [Function],
-                                                "getFieldInstance": [Function],
-                                                "getFieldValue": [Function],
-                                                "getFieldsError": [Function],
-                                                "getFieldsValue": [Function],
-                                                "getInternalHooks": [Function],
-                                                "isFieldTouched": [Function],
-                                                "isFieldValidating": [Function],
-                                                "isFieldsTouched": [Function],
-                                                "isFieldsValidating": [Function],
-                                                "resetFields": [Function],
-                                                "scrollToField": [Function],
-                                                "setFields": [Function],
-                                                "setFieldsValue": [Function],
-                                                "submit": [Function],
-                                                "validateFields": [Function],
-                                                "validateTrigger": "onChange",
-                                              }
-                                            }
-                                            key="_name"
-                                            label="Name"
-                                            messageVariables={
-                                              Object {
-                                                "label": "Name",
-                                              }
-                                            }
-                                            name={
-                                              Array [
-                                                "name",
-                                              ]
-                                            }
-                                            onReset={[Function]}
-                                            rules={
-                                              Array [
-                                                Object {
-                                                  "message": "Please give a Name",
-                                                  "required": true,
-                                                },
-                                              ]
-                                            }
-                                            trigger="onChange"
-                                            validateTrigger="onChange"
-                                            valuePropName="value"
-                                          >
-                                            <Row
-                                              className="ant-form-item"
-                                              key="row"
-                                            >
-                                              <div
-                                                className="ant-row ant-form-item"
-                                                style={Object {}}
-                                              >
-                                                <FormItemLabel
-                                                  htmlFor="basic_name"
-                                                  label="Name"
-                                                  name="name"
-                                                  prefixCls="ant-form"
-                                                  required={true}
-                                                  requiredMark={false}
-                                                  rules={
-                                                    Array [
-                                                      Object {
-                                                        "message": "Please give a Name",
-                                                        "required": true,
-                                                      },
-                                                    ]
-                                                  }
-                                                >
-                                                  <Col
-                                                    className="ant-form-item-label"
-                                                  >
-                                                    <div
-                                                      className="ant-col ant-form-item-label"
-                                                      style={Object {}}
-                                                    >
-                                                      <label
-                                                        className="ant-form-item-required"
-                                                        htmlFor="basic_name"
-                                                        title="Name"
-                                                      >
-                                                        Name
-                                                      </label>
-                                                    </div>
-                                                  </Col>
-                                                </FormItemLabel>
-                                                <FormItemInput
-                                                  errors={Array []}
-                                                  label="Name"
-                                                  name={
-                                                    Array [
-                                                      "name",
-                                                    ]
-                                                  }
-                                                  onDomErrorVisibleChange={[Function]}
-                                                  prefixCls="ant-form"
-                                                  rules={
-                                                    Array [
-                                                      Object {
-                                                        "message": "Please give a Name",
-                                                        "required": true,
-                                                      },
-                                                    ]
-                                                  }
-                                                  status=""
-                                                  touched={false}
-                                                  validateStatus=""
-                                                  validating={false}
-                                                >
-                                                  <Col
-                                                    className="ant-form-item-control"
-                                                  >
-                                                    <div
-                                                      className="ant-col ant-form-item-control"
-                                                      style={Object {}}
-                                                    >
-                                                      <div
-                                                        className="ant-form-item-control-input"
-                                                      >
-                                                        <div
-                                                          className="ant-form-item-control-input-content"
-                                                        >
-                                                          <Component
-                                                            update={1}
-                                                          >
-                                                            <Input
-                                                              allowClear={true}
-                                                              id="name-input"
-                                                              onChange={[Function]}
-                                                              type="text"
-                                                            >
-                                                              <ClearableLabeledInput
-                                                                allowClear={true}
-                                                                bordered={true}
-                                                                element={
-                                                                  <input
-                                                                    className="ant-input"
-                                                                    id="name-input"
-                                                                    onBlur={[Function]}
-                                                                    onChange={[Function]}
-                                                                    onFocus={[Function]}
-                                                                    onKeyDown={[Function]}
-                                                                    type="text"
-                                                                  />
-                                                                }
-                                                                focused={false}
-                                                                handleReset={[Function]}
-                                                                id="name-input"
-                                                                inputType="input"
-                                                                onChange={[Function]}
-                                                                prefixCls="ant-input"
-                                                                triggerFocus={[Function]}
-                                                                type="text"
-                                                                value=""
-                                                              >
-                                                                <span
-                                                                  className="ant-input-affix-wrapper"
-                                                                  onMouseUp={[Function]}
-                                                                >
-                                                                  <input
-                                                                    className="ant-input"
-                                                                    id="name-input"
-                                                                    onBlur={[Function]}
-                                                                    onChange={[Function]}
-                                                                    onFocus={[Function]}
-                                                                    onKeyDown={[Function]}
-                                                                    style={null}
-                                                                    type="text"
-                                                                    value=""
-                                                                  />
-                                                                  <span
-                                                                    className="ant-input-suffix"
-                                                                  >
-                                                                    <ForwardRef(CloseCircleFilled)
-                                                                      className="ant-input-clear-icon-hidden ant-input-clear-icon"
-                                                                      onClick={[Function]}
-                                                                      role="button"
-                                                                    >
-                                                                      <AntdIcon
-                                                                        className="ant-input-clear-icon-hidden ant-input-clear-icon"
-                                                                        icon={
-                                                                          Object {
-                                                                            "icon": Object {
-                                                                              "attrs": Object {
-                                                                                "focusable": "false",
-                                                                                "viewBox": "64 64 896 896",
-                                                                              },
-                                                                              "children": Array [
-                                                                                Object {
-                                                                                  "attrs": Object {
-                                                                                    "d": "M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm165.4 618.2l-66-.3L512 563.4l-99.3 118.4-66.1.3c-4.4 0-8-3.5-8-8 0-1.9.7-3.7 1.9-5.2l130.1-155L340.5 359a8.32 8.32 0 01-1.9-5.2c0-4.4 3.6-8 8-8l66.1.3L512 464.6l99.3-118.4 66-.3c4.4 0 8 3.5 8 8 0 1.9-.7 3.7-1.9 5.2L553.5 514l130 155c1.2 1.5 1.9 3.3 1.9 5.2 0 4.4-3.6 8-8 8z",
-                                                                                  },
-                                                                                  "tag": "path",
-                                                                                },
-                                                                              ],
-                                                                              "tag": "svg",
-                                                                            },
-                                                                            "name": "close-circle",
-                                                                            "theme": "filled",
-                                                                          }
-                                                                        }
-                                                                        onClick={[Function]}
-                                                                        role="button"
-                                                                      >
-                                                                        <span
-                                                                          aria-label="close-circle"
-                                                                          className="anticon anticon-close-circle ant-input-clear-icon-hidden ant-input-clear-icon"
-                                                                          onClick={[Function]}
-                                                                          role="button"
-                                                                          tabIndex={-1}
-                                                                        >
-                                                                          <IconReact
-                                                                            className=""
-                                                                            icon={
-                                                                              Object {
-                                                                                "icon": Object {
-                                                                                  "attrs": Object {
-                                                                                    "focusable": "false",
-                                                                                    "viewBox": "64 64 896 896",
-                                                                                  },
-                                                                                  "children": Array [
-                                                                                    Object {
-                                                                                      "attrs": Object {
-                                                                                        "d": "M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm165.4 618.2l-66-.3L512 563.4l-99.3 118.4-66.1.3c-4.4 0-8-3.5-8-8 0-1.9.7-3.7 1.9-5.2l130.1-155L340.5 359a8.32 8.32 0 01-1.9-5.2c0-4.4 3.6-8 8-8l66.1.3L512 464.6l99.3-118.4 66-.3c4.4 0 8 3.5 8 8 0 1.9-.7 3.7-1.9 5.2L553.5 514l130 155c1.2 1.5 1.9 3.3 1.9 5.2 0 4.4-3.6 8-8 8z",
-                                                                                      },
-                                                                                      "tag": "path",
-                                                                                    },
-                                                                                  ],
-                                                                                  "tag": "svg",
-                                                                                },
-                                                                                "name": "close-circle",
-                                                                                "theme": "filled",
-                                                                              }
-                                                                            }
-                                                                          >
-                                                                            <svg
-                                                                              aria-hidden="true"
-                                                                              className=""
-                                                                              data-icon="close-circle"
-                                                                              fill="currentColor"
-                                                                              focusable="false"
-                                                                              height="1em"
-                                                                              key="svg-close-circle"
-                                                                              viewBox="64 64 896 896"
-                                                                              width="1em"
-                                                                            >
-                                                                              <path
-                                                                                d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm165.4 618.2l-66-.3L512 563.4l-99.3 118.4-66.1.3c-4.4 0-8-3.5-8-8 0-1.9.7-3.7 1.9-5.2l130.1-155L340.5 359a8.32 8.32 0 01-1.9-5.2c0-4.4 3.6-8 8-8l66.1.3L512 464.6l99.3-118.4 66-.3c4.4 0 8 3.5 8 8 0 1.9-.7 3.7-1.9 5.2L553.5 514l130 155c1.2 1.5 1.9 3.3 1.9 5.2 0 4.4-3.6 8-8 8z"
-                                                                                key="svg-close-circle-svg-0"
-                                                                              />
-                                                                            </svg>
-                                                                          </IconReact>
-                                                                        </span>
-                                                                      </AntdIcon>
-                                                                    </ForwardRef(CloseCircleFilled)>
-                                                                  </span>
-                                                                </span>
-                                                              </ClearableLabeledInput>
-                                                            </Input>
-                                                          </Component>
-                                                        </div>
-                                                      </div>
-                                                      <ErrorList
-                                                        errors={Array []}
-                                                        onDomErrorVisibleChange={[Function]}
-                                                      >
-                                                        <CSSMotion
-                                                          motionAppear={true}
-                                                          motionDeadline={500}
-                                                          motionName="show-help"
-                                                          onLeaveEnd={[Function]}
-                                                          removeOnLeave={true}
-                                                          visible={false}
-                                                        >
-                                                          <DomWrapper />
-                                                        </CSSMotion>
-                                                      </ErrorList>
-                                                    </div>
-                                                  </Col>
-                                                </FormItemInput>
-                                              </div>
-                                            </Row>
-                                          </Field>
-                                        </WrapperField>
-                                      </FormItem>
-                                      <div
-                                        style={
-                                          Object {
-                                            "paddingBottom": "20px",
-                                          }
-                                        }
-                                      >
-                                        <Button
-                                          block={false}
-                                          ghost={false}
-                                          htmlType="button"
-                                          id="AddSchedule-button"
-                                          loading={false}
-                                          onClick={[Function]}
-                                          type="primary"
-                                        >
-                                          <Wave>
-                                            <button
-                                              className="ant-btn ant-btn-primary"
-                                              id="AddSchedule-button"
-                                              onClick={[Function]}
-                                              type="button"
-                                            >
-                                              <LoadingIcon
-                                                existIcon={false}
-                                                loading={false}
-                                                prefixCls="ant-btn"
-                                              >
-                                                <CSSMotion
-                                                  motionName="ant-btn-loading-icon-motion"
-                                                  onAppearActive={[Function]}
-                                                  onAppearStart={[Function]}
-                                                  onEnterActive={[Function]}
-                                                  onEnterStart={[Function]}
-                                                  onLeaveActive={[Function]}
-                                                  onLeaveStart={[Function]}
-                                                  removeOnLeave={true}
-                                                  visible={false}
-                                                >
-                                                  <DomWrapper />
-                                                </CSSMotion>
-                                              </LoadingIcon>
-                                              <span
-                                                key=".0"
-                                              >
-                                                Add schedule
-                                              </span>
-                                            </button>
-                                          </Wave>
-                                        </Button>
-                                      </div>
-                                      <Collapse
-                                        bordered={true}
-                                        defaultActiveKey="3"
-                                      >
-                                        <Collapse
-                                          accordion={false}
-                                          bordered={true}
-                                          className="ant-collapse-icon-position-left"
-                                          defaultActiveKey="3"
-                                          destroyInactivePanel={false}
-                                          expandIcon={[Function]}
-                                          onChange={[Function]}
-                                          openAnimation={
-                                            Object {
-                                              "appear": [Function],
-                                              "enter": [Function],
-                                              "leave": [Function],
-                                            }
-                                          }
-                                          prefixCls="ant-collapse"
-                                        >
-                                          <div
-                                            className="ant-collapse ant-collapse-icon-position-left"
-                                            role={null}
-                                          >
-                                            <CollapsePanel
-                                              accordion={false}
-                                              destroyInactivePanel={false}
-                                              expandIcon={[Function]}
-                                              header="Stop sequence schedule"
-                                              isActive={false}
-                                              key="2"
-                                              onItemClick={[Function]}
-                                              openAnimation={
-                                                Object {
-                                                  "appear": [Function],
-                                                  "enter": [Function],
-                                                  "leave": [Function],
-                                                }
-                                              }
-                                              panelKey="2"
-                                              prefixCls="ant-collapse"
-                                            >
-                                              <CollapsePanel
-                                                accordion={false}
-                                                className=""
-                                                destroyInactivePanel={false}
-                                                expandIcon={[Function]}
-                                                forceRender={false}
-                                                header="Stop sequence schedule"
-                                                headerClass=""
-                                                isActive={false}
-                                                onItemClick={[Function]}
-                                                openAnimation={
-                                                  Object {
-                                                    "appear": [Function],
-                                                    "enter": [Function],
-                                                    "leave": [Function],
-                                                  }
-                                                }
-                                                panelKey="2"
-                                                prefixCls="ant-collapse"
-                                                showArrow={true}
-                                              >
-                                                <div
-                                                  className="ant-collapse-item"
-                                                >
-                                                  <div
-                                                    aria-expanded="false"
-                                                    className="ant-collapse-header"
-                                                    onClick={[Function]}
-                                                    onKeyPress={[Function]}
-                                                    role="button"
-                                                    tabIndex={0}
-                                                  >
-                                                    <ForwardRef(RightOutlined)
-                                                      className="ant-collapse-arrow"
-                                                    >
-                                                      <AntdIcon
-                                                        className="ant-collapse-arrow"
-                                                        icon={
-                                                          Object {
-                                                            "icon": Object {
-                                                              "attrs": Object {
-                                                                "focusable": "false",
-                                                                "viewBox": "64 64 896 896",
-                                                              },
-                                                              "children": Array [
-                                                                Object {
-                                                                  "attrs": Object {
-                                                                    "d": "M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z",
-                                                                  },
-                                                                  "tag": "path",
-                                                                },
-                                                              ],
-                                                              "tag": "svg",
-                                                            },
-                                                            "name": "right",
-                                                            "theme": "outlined",
-                                                          }
-                                                        }
-                                                      >
-                                                        <span
-                                                          aria-label="right"
-                                                          className="anticon anticon-right ant-collapse-arrow"
-                                                          role="img"
-                                                        >
-                                                          <IconReact
-                                                            className=""
-                                                            icon={
-                                                              Object {
-                                                                "icon": Object {
-                                                                  "attrs": Object {
-                                                                    "focusable": "false",
-                                                                    "viewBox": "64 64 896 896",
-                                                                  },
-                                                                  "children": Array [
-                                                                    Object {
-                                                                      "attrs": Object {
-                                                                        "d": "M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z",
-                                                                      },
-                                                                      "tag": "path",
-                                                                    },
-                                                                  ],
-                                                                  "tag": "svg",
-                                                                },
-                                                                "name": "right",
-                                                                "theme": "outlined",
-                                                              }
-                                                            }
-                                                          >
-                                                            <svg
-                                                              aria-hidden="true"
-                                                              className=""
-                                                              data-icon="right"
-                                                              fill="currentColor"
-                                                              focusable="false"
-                                                              height="1em"
-                                                              key="svg-right"
-                                                              viewBox="64 64 896 896"
-                                                              width="1em"
-                                                            >
-                                                              <path
-                                                                d="M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z"
-                                                                key="svg-right-svg-0"
-                                                              />
-                                                            </svg>
-                                                          </IconReact>
-                                                        </span>
-                                                      </AntdIcon>
-                                                    </ForwardRef(RightOutlined)>
-                                                    Stop sequence schedule
-                                                  </div>
-                                                  <Animate
-                                                    animation={
-                                                      Object {
-                                                        "appear": [Function],
-                                                        "enter": [Function],
-                                                        "leave": [Function],
-                                                      }
-                                                    }
-                                                    component=""
-                                                    componentProps={Object {}}
-                                                    exclusive={true}
-                                                    onAppear={[Function]}
-                                                    onEnd={[Function]}
-                                                    onEnter={[Function]}
-                                                    onLeave={[Function]}
-                                                    showProp="isActive"
-                                                    transitionAppear={false}
-                                                    transitionEnter={true}
-                                                    transitionLeave={true}
-                                                  >
-                                                    <AnimateChild
-                                                      animation={
-                                                        Object {
-                                                          "appear": [Function],
-                                                          "enter": [Function],
-                                                          "leave": [Function],
-                                                        }
-                                                      }
-                                                      key="rc_animate_1604336045688"
-                                                      transitionAppear={false}
-                                                      transitionEnter={true}
-                                                      transitionLeave={true}
-                                                    >
-                                                      <PanelContent
-                                                        destroyInactivePanel={false}
-                                                        forceRender={false}
-                                                        isActive={false}
-                                                        key="rc_animate_1604336045688"
-                                                        prefixCls="ant-collapse"
-                                                        role={null}
-                                                      />
-                                                    </AnimateChild>
-                                                  </Animate>
-                                                </div>
-                                              </CollapsePanel>
-                                            </CollapsePanel>
-                                          </div>
-                                        </Collapse>
-                                      </Collapse>
-                                    </form>
-                                  </ForwardRef(Form)>
-                                </SizeContextProvider>
-                              </ForwardRef(InternalForm)>
-                            </div>
-                          </div>
-                        </PanelContent>
-                      </AnimateChild>
-                    </Animate>
-                  </div>
-                </CollapsePanel>
-              </CollapsePanel>
+                />
+              </div>
             </div>
-          </Collapse>
+          </CollapsePanel>
         </Collapse>
-      </div>
-    </div>
-  </Card>
-</Memo(SaveStopsSequenceForm)>
+      </ForwardRef(InternalForm)>
+    </CollapsePanel>
+  </Collapse>
+</Card>
 `;

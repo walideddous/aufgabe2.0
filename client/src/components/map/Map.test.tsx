@@ -36,7 +36,7 @@ describe("Map component", () => {
     shallowWrapper = setUp(props);
   });
 
-  it("match snapshot", () => {
+  it("match snapshot with the Map component", () => {
     expect(toJSON(shallowWrapper)).toMatchSnapshot();
   });
 });

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Searchinput component match snapShot 1`] = `
+exports[`Searchinput component match snapShot with the Seachinput component 1`] = `
 <Memo(SearchInput)
   handleSelectAutoSearch={[MockFunction]}
   stations={Array []}

@@ -34,7 +34,7 @@ describe("LoadStopSequence component", () => {
     shallowWrapper = setUp(props);
   });
 
-  it("match snapShot", () => {
+  it("match snapShot with the LoadStopSequence component", () => {
     expect(toJSON(shallowWrapper)).toMatchSnapshot();
   });
 });
