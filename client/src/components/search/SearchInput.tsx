@@ -17,7 +17,7 @@ export interface Tstations {
 
 interface TporpsSearchInput {
   stations: Tstations[];
-  handleSelectAutoSearch: (elementSelected: Tstations) => void;
+  handleSelectAutoSearch: (selectedStop: string) => void;
 }
 
 const SearchInput = ({
@@ -30,10 +30,9 @@ const SearchInput = ({
   const { Option } = AutoComplete;
 
   const handleSelect = useCallback(
-    (data: string) => {
+    (selectedStop: string) => {
       setSearch("");
-      const elementSelected = stations.filter((el) => el.name === data)[0];
-      handleSelectAutoSearch(elementSelected);
+      handleSelectAutoSearch(selectedStop);
     },
     [stations, handleSelectAutoSearch]
   );
@@ -49,16 +48,17 @@ const SearchInput = ({
       }}
     >
       <AutoComplete
-        style={{
-          width: "100%",
-        }}
+        id="search"
+        value={search}
+        placeholder="Enter stops name"
+        open={search ? true : false}
         onSelect={handleSelect}
         onChange={(input: string) => {
           setSearch(input);
         }}
-        value={search}
-        placeholder="Enter stops name"
-        open={search ? true : false}
+        style={{
+          width: "100%",
+        }}
       >
         {stations &&
           stations

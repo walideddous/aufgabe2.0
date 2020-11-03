@@ -20,6 +20,7 @@
     "@types/react-redux": "^7.1.9",
     "@types/react-router-dom": "^5.1.5",
     "@types/react-test-renderer": "^16.9.3",
+    "@types/sinon": "^9.0.8",
     "antd": "^4.6.2",
     "axios": "^0.20.0",
     "graphql": "^15.3.0",
@@ -43,7 +44,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --watchAll --verbose --coverage",
+    "test": "react-scripts test --verbose --coverage",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -71,8 +72,8 @@
     "sinon": "^9.2.1",
     "ts-jest": "^26.4.3"
   },
-  "jest":{
-    "collectCoverageFrom" :[
+  "jest": {
+    "collectCoverageFrom": [
       "src/**/*.tsx",
       "!src/index.tsx",
       "!src/App.tsx",
@@ -80,4 +81,3 @@
     ]
   }
 }
-

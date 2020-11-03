@@ -21,7 +21,32 @@ exports[`Map component match snapshot with the Map component 1`] = `
       />
       <Memo(SearchInput)
         handleSelectAutoSearch={[MockFunction]}
-        stations={Array []}
+        stations={
+          Array [
+            Object {
+              "_id": "5f6203bb0d5658001cd8f85a",
+              "coord": Object {
+                "WGS84": Object {
+                  "lat": 47.54741,
+                  "lon": 7.58956,
+                },
+              },
+              "modes": Array [],
+              "name": "Basel",
+            },
+            Object {
+              "_id": "5f6203bb0d5658001cd8f85b",
+              "coord": Object {
+                "WGS84": Object {
+                  "lat": 45.74506,
+                  "lon": 4.84184,
+                },
+              },
+              "modes": Array [],
+              "name": "Lyon",
+            },
+          ]
+        }
       />
     </Card>
   </Col>

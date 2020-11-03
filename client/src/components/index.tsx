@@ -346,7 +346,10 @@ const Aufgabe: React.FC = () => {
 
   // to choose the station from the input options
   const onSelectAutoSearch = useCallback(
-    (elementSelected: Tstations) => {
+    (selectedStop: string) => {
+      const elementSelected = stations.filter(
+        (el) => el.name === selectedStop
+      )[0];
       var vorschläge = calculateDistanceAndSort(elementSelected, stations);
       // Delete the repetition from the Suggestion Field
       vorschläge = vorschläge.filter(

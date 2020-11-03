@@ -3,7 +3,32 @@
 exports[`Searchinput component match snapShot with the Seachinput component 1`] = `
 <Memo(SearchInput)
   handleSelectAutoSearch={[MockFunction]}
-  stations={Array []}
+  stations={
+    Array [
+      Object {
+        "_id": "5f6203bb0d5658001cd8f85a",
+        "coord": Object {
+          "WGS84": Object {
+            "lat": 47.54741,
+            "lon": 7.58956,
+          },
+        },
+        "modes": Array [],
+        "name": "Basel",
+      },
+      Object {
+        "_id": "5f6203bb0d5658001cd8f85b",
+        "coord": Object {
+          "WGS84": Object {
+            "lat": 45.74506,
+            "lon": 4.84184,
+          },
+        },
+        "modes": Array [],
+        "name": "Lyon",
+      },
+    ]
+  }
 >
   <div
     style={
@@ -17,6 +42,7 @@ exports[`Searchinput component match snapShot with the Seachinput component 1`] 
     }
   >
     <ForwardRef(AutoComplete)
+      id="search"
       onChange={[Function]}
       onSelect={[Function]}
       open={false}
@@ -30,6 +56,7 @@ exports[`Searchinput component match snapShot with the Seachinput component 1`] 
     >
       <ForwardRef(InternalSelect)
         className="ant-select-auto-complete"
+        id="search"
         mode="SECRET_COMBOBOX_MODE_DO_NOT_USE"
         onChange={[Function]}
         onSelect={[Function]}
@@ -47,6 +74,7 @@ exports[`Searchinput component match snapShot with the Seachinput component 1`] 
           className="ant-select-auto-complete"
           clearIcon={<ForwardRef(CloseCircleFilled) />}
           dropdownClassName=""
+          id="search"
           inputIcon={[Function]}
           listHeight={256}
           listItemHeight={24}
@@ -71,6 +99,7 @@ exports[`Searchinput component match snapShot with the Seachinput component 1`] 
             className="ant-select-auto-complete"
             clearIcon={<ForwardRef(CloseCircleFilled) />}
             dropdownClassName=""
+            id="search"
             inputIcon={[Function]}
             listHeight={256}
             listItemHeight={24}
@@ -107,15 +136,58 @@ exports[`Searchinput component match snapShot with the Seachinput component 1`] 
               <SelectTrigger
                 containerWidth={null}
                 dropdownClassName=""
-                empty={true}
+                empty={false}
                 getTriggerDOMNode={[Function]}
                 popupElement={
                   <ForwardRef(OptionList)
                     childrenAsData={true}
                     defaultActiveFirstOption={false}
-                    flattenOptions={Array []}
+                    flattenOptions={
+                      Array [
+                        Object {
+                          "data": Object {
+                            "children": Array [
+                              <i
+                                className="fas fa-subway"
+                                style={
+                                  Object {
+                                    "color": "#1890ff",
+                                    "margin": "0 10px",
+                                  }
+                                }
+                              />,
+                              "Basel",
+                            ],
+                            "key": "5f6203bb0d5658001cd8f85a",
+                            "value": "Basel",
+                          },
+                          "groupOption": false,
+                          "key": "5f6203bb0d5658001cd8f85a",
+                        },
+                        Object {
+                          "data": Object {
+                            "children": Array [
+                              <i
+                                className="fas fa-subway"
+                                style={
+                                  Object {
+                                    "color": "#1890ff",
+                                    "margin": "0 10px",
+                                  }
+                                }
+                              />,
+                              "Lyon",
+                            ],
+                            "key": "5f6203bb0d5658001cd8f85b",
+                            "value": "Lyon",
+                          },
+                          "groupOption": false,
+                          "key": "5f6203bb0d5658001cd8f85b",
+                        },
+                      ]
+                    }
                     height={256}
-                    id="rc_select_TEST_OR_SSR"
+                    id="search"
                     itemHeight={24}
                     menuItemSelectedIcon={null}
                     multiple={false}
@@ -125,7 +197,42 @@ exports[`Searchinput component match snapShot with the Seachinput component 1`] 
                     onSelect={[Function]}
                     onToggleOpen={[Function]}
                     open={false}
-                    options={Array []}
+                    options={
+                      Array [
+                        Object {
+                          "children": Array [
+                            <i
+                              className="fas fa-subway"
+                              style={
+                                Object {
+                                  "color": "#1890ff",
+                                  "margin": "0 10px",
+                                }
+                              }
+                            />,
+                            "Basel",
+                          ],
+                          "key": "5f6203bb0d5658001cd8f85a",
+                          "value": "Basel",
+                        },
+                        Object {
+                          "children": Array [
+                            <i
+                              className="fas fa-subway"
+                              style={
+                                Object {
+                                  "color": "#1890ff",
+                                  "margin": "0 10px",
+                                }
+                              }
+                            />,
+                            "Lyon",
+                          ],
+                          "key": "5f6203bb0d5658001cd8f85b",
+                          "value": "Lyon",
+                        },
+                      ]
+                    }
                     prefixCls="ant-select"
                     searchValue=""
                     values={Set {}}
@@ -219,9 +326,52 @@ exports[`Searchinput component match snapShot with the Seachinput component 1`] 
                       <ForwardRef(OptionList)
                         childrenAsData={true}
                         defaultActiveFirstOption={false}
-                        flattenOptions={Array []}
+                        flattenOptions={
+                          Array [
+                            Object {
+                              "data": Object {
+                                "children": Array [
+                                  <i
+                                    className="fas fa-subway"
+                                    style={
+                                      Object {
+                                        "color": "#1890ff",
+                                        "margin": "0 10px",
+                                      }
+                                    }
+                                  />,
+                                  "Basel",
+                                ],
+                                "key": "5f6203bb0d5658001cd8f85a",
+                                "value": "Basel",
+                              },
+                              "groupOption": false,
+                              "key": "5f6203bb0d5658001cd8f85a",
+                            },
+                            Object {
+                              "data": Object {
+                                "children": Array [
+                                  <i
+                                    className="fas fa-subway"
+                                    style={
+                                      Object {
+                                        "color": "#1890ff",
+                                        "margin": "0 10px",
+                                      }
+                                    }
+                                  />,
+                                  "Lyon",
+                                ],
+                                "key": "5f6203bb0d5658001cd8f85b",
+                                "value": "Lyon",
+                              },
+                              "groupOption": false,
+                              "key": "5f6203bb0d5658001cd8f85b",
+                            },
+                          ]
+                        }
                         height={256}
-                        id="rc_select_TEST_OR_SSR"
+                        id="search"
                         itemHeight={24}
                         menuItemSelectedIcon={null}
                         multiple={false}
@@ -231,7 +381,42 @@ exports[`Searchinput component match snapShot with the Seachinput component 1`] 
                         onSelect={[Function]}
                         onToggleOpen={[Function]}
                         open={false}
-                        options={Array []}
+                        options={
+                          Array [
+                            Object {
+                              "children": Array [
+                                <i
+                                  className="fas fa-subway"
+                                  style={
+                                    Object {
+                                      "color": "#1890ff",
+                                      "margin": "0 10px",
+                                    }
+                                  }
+                                />,
+                                "Basel",
+                              ],
+                              "key": "5f6203bb0d5658001cd8f85a",
+                              "value": "Basel",
+                            },
+                            Object {
+                              "children": Array [
+                                <i
+                                  className="fas fa-subway"
+                                  style={
+                                    Object {
+                                      "color": "#1890ff",
+                                      "margin": "0 10px",
+                                    }
+                                  }
+                                />,
+                                "Lyon",
+                              ],
+                              "key": "5f6203bb0d5658001cd8f85b",
+                              "value": "Lyon",
+                            },
+                          ]
+                        }
                         prefixCls="ant-select"
                         searchValue=""
                         values={Set {}}
@@ -240,7 +425,7 @@ exports[`Searchinput component match snapShot with the Seachinput component 1`] 
                     </div>
                   }
                   popupAlign={Object {}}
-                  popupClassName="ant-select-dropdown-empty"
+                  popupClassName=""
                   popupPlacement="bottomLeft"
                   popupStyle={
                     Object {
@@ -267,15 +452,15 @@ exports[`Searchinput component match snapShot with the Seachinput component 1`] 
                             class="ant-select-selection-search"
                           >
                             <input
-                              aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
+                              aria-activedescendant="search_list_0"
                               aria-autocomplete="list"
-                              aria-controls="rc_select_TEST_OR_SSR_list"
+                              aria-controls="search_list"
                               aria-expanded="false"
                               aria-haspopup="listbox"
-                              aria-owns="rc_select_TEST_OR_SSR_list"
+                              aria-owns="search_list"
                               autocomplete="off"
                               class="ant-select-selection-search-input"
-                              id="rc_select_TEST_OR_SSR"
+                              id="search"
                               role="combobox"
                               type="search"
                               value=""
@@ -290,7 +475,7 @@ exports[`Searchinput component match snapShot with the Seachinput component 1`] 
                       }
                     }
                     dropdownClassName=""
-                    id="rc_select_TEST_OR_SSR"
+                    id="search"
                     inputElement={null}
                     inputIcon={[Function]}
                     key="trigger"
@@ -340,15 +525,15 @@ exports[`Searchinput component match snapShot with the Seachinput component 1`] 
                                 class="ant-select-selection-search"
                               >
                                 <input
-                                  aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
+                                  aria-activedescendant="search_list_0"
                                   aria-autocomplete="list"
-                                  aria-controls="rc_select_TEST_OR_SSR_list"
+                                  aria-controls="search_list"
                                   aria-expanded="false"
                                   aria-haspopup="listbox"
-                                  aria-owns="rc_select_TEST_OR_SSR_list"
+                                  aria-owns="search_list"
                                   autocomplete="off"
                                   class="ant-select-selection-search-input"
-                                  id="rc_select_TEST_OR_SSR"
+                                  id="search"
                                   role="combobox"
                                   type="search"
                                   value=""
@@ -363,21 +548,21 @@ exports[`Searchinput component match snapShot with the Seachinput component 1`] 
                           }
                         }
                         dropdownClassName=""
-                        id="rc_select_TEST_OR_SSR"
+                        id="search"
                         inputElement={null}
                         inputIcon={[Function]}
                         inputRef={
                           Object {
                             "current": <input
-                              aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
+                              aria-activedescendant="search_list_0"
                               aria-autocomplete="list"
-                              aria-controls="rc_select_TEST_OR_SSR_list"
+                              aria-controls="search_list"
                               aria-expanded="false"
                               aria-haspopup="listbox"
-                              aria-owns="rc_select_TEST_OR_SSR_list"
+                              aria-owns="search_list"
                               autocomplete="off"
                               class="ant-select-selection-search-input"
-                              id="rc_select_TEST_OR_SSR"
+                              id="search"
                               role="combobox"
                               type="search"
                               value=""
@@ -424,7 +609,7 @@ exports[`Searchinput component match snapShot with the Seachinput component 1`] 
                             accessibilityIndex={0}
                             attrs={Object {}}
                             editable={true}
-                            id="rc_select_TEST_OR_SSR"
+                            id="search"
                             inputElement={null}
                             onChange={[Function]}
                             onCompositionEnd={[Function]}
@@ -437,15 +622,15 @@ exports[`Searchinput component match snapShot with the Seachinput component 1`] 
                             value=""
                           >
                             <input
-                              aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
+                              aria-activedescendant="search_list_0"
                               aria-autocomplete="list"
-                              aria-controls="rc_select_TEST_OR_SSR_list"
+                              aria-controls="search_list"
                               aria-expanded={false}
                               aria-haspopup="listbox"
-                              aria-owns="rc_select_TEST_OR_SSR_list"
+                              aria-owns="search_list"
                               autoComplete="off"
                               className="ant-select-selection-search-input"
-                              id="rc_select_TEST_OR_SSR"
+                              id="search"
                               onChange={[Function]}
                               onCompositionEnd={[Function]}
                               onCompositionStart={[Function]}

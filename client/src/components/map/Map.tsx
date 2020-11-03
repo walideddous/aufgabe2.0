@@ -63,7 +63,7 @@ interface TpropsOnMap {
   selected: Tstations | undefined;
   distance: Tdistance[];
   currentStopSequence: any;
-  handleSelectAutoSearch: (elementSelected: Tstations) => void;
+  handleSelectAutoSearch: (selectedStop: string) => void;
   onAddBeforSelected: (e: string) => void;
   onAddAfterSelected: (e: string) => void;
   onDeleteMarkerFromMap: (e: string) => void;
