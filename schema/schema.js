@@ -7,7 +7,6 @@ const {
   GraphQLSchema,
   GraphQLList,
 } = require("graphql");
-const assert = require("assert");
 
 // Database Name
 const dbName = "ptdata";
