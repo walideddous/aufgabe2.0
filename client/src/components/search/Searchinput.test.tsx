@@ -4,13 +4,8 @@ import { act } from "react-dom/test-utils";
 import toJSON from "enzyme-to-json";
 import Searchinput from "./SearchInput";
 
-const setUp = (props: any) => {
-  const component = mount(<Searchinput {...props} />);
-  return component;
-};
-
 describe.only("Searchinput component", () => {
-  let mountWrapper: any;
+  let shallowWrapper: any;
   let props = {
     stations: [
       {
@@ -36,26 +31,39 @@ describe.only("Searchinput component", () => {
         modes: [],
       },
     ],
-    handleSelectAutoSearch: jest.fn(),
   };
-  const setSearch = jest.fn((search: string) => search);
+  const spyOnhandleSelectAutoSearch = jest.fn();
+  const setSearch = jest.fn();
   const useStateSpy = jest.spyOn(React, "useState");
   //@ts-ignore
   useStateSpy.mockImplementation((search: string) => [search, setSearch]);
 
   beforeEach(() => {
-    mountWrapper = setUp(props);
+    shallowWrapper = shallow(
+      //@ts-ignore
+      <Searchinput
+        {...props}
+        handleSelectAutoSearch={spyOnhandleSelectAutoSearch}
+      />
+    );
   });
 
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  it("match snapShot with the Seachinput component", () => {
-    expect(toJSON(mountWrapper)).toMatchSnapshot();
+  it("Should match snapShot with the Seachinput component", () => {
+    expect(toJSON(shallowWrapper)).toMatchSnapshot();
   });
 
-  it("should set the input value on change event  ", async () => {
+  it("Should set the input value on change event", async () => {
+    const mountWrapper = mount(
+      //@ts-ignore
+      <Searchinput
+        {...props}
+        handleSelectAutoSearch={spyOnhandleSelectAutoSearch}
+      />
+    );
     let searchField = mountWrapper.find('input[type="search"]');
     await act(async () => {
       searchField.simulate("change", {
@@ -65,5 +73,11 @@ describe.only("Searchinput component", () => {
       });
     });
     expect(setSearch).toHaveBeenCalled();
+  });
+
+  it("Should dispatch the props function handleSelectAutoSearch onSelect", async () => {
+    let searchField = shallowWrapper.find("#search");
+    searchField.simulate("select");
+    expect(spyOnhandleSelectAutoSearch).toHaveBeenCalled();
   });
 });

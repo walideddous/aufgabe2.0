@@ -12,7 +12,7 @@ export interface Tstations {
       lon: number;
     };
   };
-  modes: [String];
+  modes: [string];
 }
 
 interface TporpsSearchInput {

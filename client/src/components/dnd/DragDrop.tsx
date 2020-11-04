@@ -14,7 +14,7 @@ export interface Tstations {
       lon: number;
     };
   };
-  modes: [String];
+  modes: [string];
 }
 
 export interface TstateDND {
@@ -144,6 +144,7 @@ const DragDrop = ({
                                         {...provided.dragHandleProps}
                                       >
                                         <span
+                                          id="addStopsButton"
                                           style={{ width: "90%" }}
                                           onClick={() => {
                                             addStopsOnCLick(el);
@@ -202,6 +203,7 @@ const DragDrop = ({
                                           {...provided.dragHandleProps}
                                         >
                                           <span
+                                            id="addStopsButton"
                                             style={{
                                               width: "90%",
                                             }}
@@ -289,6 +291,7 @@ const DragDrop = ({
                                     {...provided.dragHandleProps}
                                   >
                                     <span
+                                      id="clickStops"
                                       onClick={() => {
                                         handleClick(el, index);
                                       }}
@@ -297,6 +300,7 @@ const DragDrop = ({
                                       {el.name}
                                     </span>
                                     <button
+                                      id="deleteStopButton"
                                       style={{
                                         width: "30px",
                                         backgroundColor: "white",

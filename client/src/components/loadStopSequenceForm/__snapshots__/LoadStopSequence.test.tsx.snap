@@ -94,11 +94,28 @@ exports[`LoadStopSequence component match snapShot with the LoadStopSequence com
     >
       <ForwardRef(AutoComplete)
         allowClear={true}
+        id="stopSequence_autoComplete"
         onChange={[Function]}
         onSelect={[Function]}
         placeholder="Enter stop sequence name"
         value=""
-      />
+      >
+        <Option
+          key="c03295ea-5a3f-43e8-83ea-7736ce82cfd9"
+          value="St. Gallen to Zürich HB"
+        >
+          <i
+            className="fas fa-subway"
+            style={
+              Object {
+                "color": "#1890ff",
+                "margin": "0 10px",
+              }
+            }
+          />
+          St. Gallen to Zürich HB
+        </Option>
+      </ForwardRef(AutoComplete)>
     </FormItem>
   </ForwardRef(InternalForm)>
 </Card>

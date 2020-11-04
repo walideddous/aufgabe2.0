@@ -88,6 +88,7 @@ const LoadStopSequence = ({
         {show && (
           <Form.Item label="Stop sequence name">
             <AutoComplete
+              id="stopSequence_autoComplete"
               onChange={(input: string) => {
                 setSearch(input);
               }}

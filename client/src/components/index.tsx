@@ -34,7 +34,7 @@ export interface Tstations {
       lon: number;
     };
   };
-  modes: [String];
+  modes: [string];
 }
 
 export interface Tdistance {
