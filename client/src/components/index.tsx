@@ -1,15 +1,15 @@
 import React, { useState, useCallback, Fragment } from "react";
-import axios from "axios";
 import { v4 } from "uuid";
 import { Row, Spin, Col, message } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 
-// Import const values to connect with graphQL
+// Import services
+import stopsService from "../services/stopsService";
 import {
-  GRAPHQL_API,
-  GET_STOPS_BY_MODES,
-  GET_STOP_SEQUENCE_BY_MODES,
-} from "../config/config";
+  createStopSequence,
+  deleteStopSequence,
+  queryStopSequence,
+} from "../services/stopSequenceService";
 
 // Import composents
 import DragDrop from "./dnd/DragDrop";
@@ -60,13 +60,6 @@ export interface TstateDND {
   };
 }
 
-const authAxios = axios.create({
-  baseURL: GRAPHQL_API,
-  headers: {
-    authorization: "Bearer " + process.env.REACT_APP_JSON_SECRET_KEY,
-  },
-});
-
 // Custom Loader
 const antIcon = <LoadingOutlined style={{ fontSize: 100 }} spin />;
 
@@ -112,18 +105,14 @@ const Aufgabe: React.FC = () => {
       try {
         console.log("start fetching");
         // GraphQl
-        const queryResult = await authAxios.post("/graphql", {
-          query: GET_STOPS_BY_MODES(modes),
-        });
-        const queryStopSequence = await authAxios.post("/graphql", {
-          query: GET_STOP_SEQUENCE_BY_MODES(modes),
-        });
+        const stops = await stopsService(modes);
+        const stopSequence = await queryStopSequence(modes);
 
         console.log("end fetching");
-        if (queryResult && queryStopSequence) {
-          const { haltestelleByMode } = queryResult.data.data;
-          const { stopSequenceByMode } = queryStopSequence.data.data;
-          setStations([...haltestelleByMode]);
+        if (stops && stopSequence) {
+          const { haltestelleByMode } = stops.data.data;
+          const { stopSequenceByMode } = stopSequence.data.data;
+          setStations(haltestelleByMode);
           setStopSequenceList(stopSequenceByMode);
           setCurrentMode(modes);
           setUpdateDate(Date().toString().substr(4, 24));
@@ -666,7 +655,7 @@ const Aufgabe: React.FC = () => {
       try {
         console.log("send the saved Stop sequence");
         // REST_API
-        const result = await authAxios.put("/savedStopSequence", body);
+        const result = await createStopSequence(body);
         if (!result) {
           console.error("Result not found");
           message.error("cannot save the stop sequence");
@@ -733,7 +722,7 @@ const Aufgabe: React.FC = () => {
       try {
         console.log("delete the stop sequence");
         // REST_API
-        const result = await authAxios.delete(`/savedStopSequence/${id}`);
+        const result = await deleteStopSequence(id);
         if (!result) {
           console.error("Result not found");
           message.error("cannot delete the stop sequence");

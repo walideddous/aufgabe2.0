@@ -24,7 +24,6 @@ const SaveStopsSequenceForm = () => {
   const [form] = Form.useForm();
 
   const [addSchedule, setAddSchedule] = useState(false);
-  const [savedPeriod, setSavedPeriod] = useState<{}[] | undefined>([]);
   const [tags, setTags] = useState<{ date: string; displayedtags: [] }[]>([
     {
       date: "",
@@ -33,6 +32,7 @@ const SaveStopsSequenceForm = () => {
   ]);
 
   const onFinish = (values: any) => {
+    /*
     const format = {
       date: `${moment(values.date[0]).format("YYYY.MM.DD")} - ${moment(
         values.date[1]
@@ -49,14 +49,7 @@ const SaveStopsSequenceForm = () => {
         },
       ],
     };
-
-    setSavedPeriod((prev) => {
-      if (prev) {
-        return prev.concat({ ...format });
-      } else {
-        return [{ ...format }];
-      }
-    });
+    */
 
     const formatTags = {
       date: `${moment(values.date[0]).format("YYYY.MM.DD")} - ${moment(

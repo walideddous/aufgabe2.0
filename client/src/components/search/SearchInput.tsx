@@ -34,7 +34,7 @@ const SearchInput = ({
       setSearch("");
       handleSelectAutoSearch(selectedStop);
     },
-    [stations, handleSelectAutoSearch]
+    [handleSelectAutoSearch]
   );
 
   return (
