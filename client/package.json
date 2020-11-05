@@ -75,6 +75,9 @@
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.tsx",
+      "src/utils/*.ts",
+      "src/services/*.ts",
+      "!src/components/navBar/NavBar.tsx",
       "!src/index.tsx",
       "!src/App.tsx",
       "!src/components/react.tsx"

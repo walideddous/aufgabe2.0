@@ -2,13 +2,23 @@ import React from "react";
 import { mount, shallow } from "enzyme";
 import toJSON from "enzyme-to-json";
 import LoadStopSequence from "./LoadStopSequence";
-
-const setUp = (props: any) => {
-  const component = shallow(<LoadStopSequence {...props} />);
-  return component;
-};
+import { act } from "@testing-library/react";
 
 describe("LoadStopSequence component", () => {
+  Object.defineProperty(window, "matchMedia", {
+    writable: true,
+    value: jest.fn().mockImplementation((query) => ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addListener: jest.fn(), // Deprecated
+      removeListener: jest.fn(), // Deprecated
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+      dispatchEvent: jest.fn(),
+    })),
+  });
+
   let shallowWrapper: any;
   let props = {
     stopSequenceList: [
@@ -99,7 +109,57 @@ describe("LoadStopSequence component", () => {
     );
   });
 
-  it("match snapShot with the LoadStopSequence component", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("Should match the LoadStopSequence component snapshot", () => {
     expect(toJSON(shallowWrapper)).toMatchSnapshot();
+  });
+
+  it("Should disptach the onSendRequest props function when we choose the mode", () => {
+    const modeSelector = shallowWrapper.find("#mode_selector");
+
+    expect(modeSelector.props().value).toEqual("Choose mode");
+
+    modeSelector.simulate("change", "4");
+
+    expect(spyOnOnSendRequest).toHaveBeenCalledWith("4");
+  });
+
+  it("Should dispatch the onClearAll props function when we choose the new button", () => {
+    const radioButton = shallowWrapper.find("#radioButton");
+
+    radioButton.simulate("change", {
+      target: {
+        value: "new",
+      },
+    });
+
+    expect(spyOnClearAll).toHaveBeenCalled();
+  });
+
+  it("Should dispatch the handleUpdateAfterSave props function when we choose load button", () => {
+    const radioButton = shallowWrapper.find("#radioButton");
+
+    radioButton.simulate("change", {
+      target: {
+        value: "load",
+      },
+    });
+
+    expect(spyOnHandleUpdateAfterSave).toHaveBeenCalled();
+  });
+
+  it("Should dispatch ondisplayStopSequence props function on select value in Auto-complete field ", () => {
+    const AutoCompleteInput = shallowWrapper.find("#stopSequence_autoComplete");
+
+    AutoCompleteInput.simulate("select", {
+      target: {
+        value: "St. Gallen to Zürich HB",
+      },
+    });
+
+    expect(spyOnOndisplayStopSequence).toHaveBeenCalled();
   });
 });

@@ -188,6 +188,7 @@ const NavBar = ({
         }
       >
         <Button
+          id="navbar_getData_button"
           type="primary"
           disabled={isSending || modes ? false : true}
           style={styleChanged ? { width: "200px" } : undefined}
@@ -198,6 +199,7 @@ const NavBar = ({
           {modes === "" ? "Select a Mode" : `Get data with mode ${modes}`}
         </Button>
         <Button
+          id="navbar_reset_button"
           type="primary"
           danger
           style={styleChanged ? { width: "200px" } : undefined}
@@ -211,6 +213,7 @@ const NavBar = ({
         </Button>
         <Badge count={savedStopSequence.length}>
           <Button
+            id="navbar_update_button"
             type="primary"
             style={styleChanged ? { width: "200px" } : undefined}
             onClick={() => {
@@ -222,6 +225,7 @@ const NavBar = ({
           </Button>
         </Badge>
         <Button
+          id="navbar_delete_button"
           type="primary"
           danger
           style={styleChanged ? { width: "200px" } : undefined}

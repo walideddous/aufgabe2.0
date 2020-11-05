@@ -210,7 +210,7 @@ const SaveStopsSequenceForm = () => {
                   )}
                 </Form.List>
                 <Form.Item>
-                  <Button type="primary" htmlType="submit">
+                  <Button id="save_button" type="primary" htmlType="submit">
                     Save schedule
                   </Button>
                   <Button

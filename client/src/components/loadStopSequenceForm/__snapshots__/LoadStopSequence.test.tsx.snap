@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`LoadStopSequence component match snapShot with the LoadStopSequence component 1`] = `
+exports[`LoadStopSequence component Should match the LoadStopSequence component snapshot 1`] = `
 <Card>
   <ForwardRef(InternalForm)
     form={
@@ -30,15 +30,18 @@ exports[`LoadStopSequence component match snapShot with the LoadStopSequence com
   >
     <FormItem>
       <Memo([object Object])
-        defaultValue="load"
+        id="radioButton"
         onChange={[Function]}
+        value="load"
       >
         <ForwardRef(RadioButton)
+          id="load_button"
           value="load"
         >
           Load
         </ForwardRef(RadioButton)>
         <ForwardRef(RadioButton)
+          id="new_button"
           value="new"
         >
           New
@@ -49,8 +52,9 @@ exports[`LoadStopSequence component match snapShot with the LoadStopSequence com
       label="Modes"
     >
       <ForwardRef(InternalSelect)
-        defaultValue="Choose mode"
+        id="mode_selector"
         onChange={[Function]}
+        value="Choose mode"
       >
         <Option
           value="Choose mode"

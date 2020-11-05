@@ -85,12 +85,6 @@ const Map = ({
 }: TpropsOnMap) => {
   const stationsRef = useRef();
 
-  console.log("stations", stations);
-  console.log("stateDND", stateDND);
-  console.log("selected", selected);
-  console.log("distance", distance);
-  console.log("currentStopSequence", currentStopSequence);
-
   // Center the Map
   const position = useMemo(() => {
     return {

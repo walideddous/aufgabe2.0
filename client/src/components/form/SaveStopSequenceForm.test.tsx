@@ -18,7 +18,7 @@ Object.defineProperty(window, "matchMedia", {
 });
 
 const setUp = () => {
-  const mountWrapper = shallow(<SaveStopsSequenceForm />);
+  const mountWrapper = mount(<SaveStopsSequenceForm />);
   return mountWrapper;
 };
 
@@ -29,19 +29,7 @@ describe("SaveStopSequenceForm component", () => {
     mountWrapper = setUp();
   });
 
-  it("matches snapshot of the SaveStopSequenceForm component", () => {
+  it("Should matches snapshot with the SaveStopSequenceForm component", () => {
     expect(toJSON(mountWrapper)).toMatchSnapshot();
-  });
-
-  it("render SavedStopSequenceForm component without crashing", () => {
-    const wrapper = mountWrapper.find("Card");
-    expect(wrapper.length).toBe(1);
-  });
-
-  it("render Add schedule button without crashing", () => {
-    const result = mount(<SaveStopsSequenceForm />).find(
-      "#AddSchedule-button span"
-    );
-    expect(result.length).toBe(1);
   });
 });

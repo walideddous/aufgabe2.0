@@ -37,7 +37,7 @@ describe("NavBar component", () => {
     wrapper = setUp(props);
   });
 
-  it("Match snapshot with the Navbar component", () => {
+  it("Should Match snapshot with the Navbar component", () => {
     expect(toJSON(wrapper)).toMatchSnapshot();
   });
 });

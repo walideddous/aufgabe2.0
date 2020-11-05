@@ -65,13 +65,13 @@ describe.only("Searchinput component", () => {
       />
     );
     let searchField = mountWrapper.find('input[type="search"]');
-    await act(async () => {
-      searchField.simulate("change", {
-        target: {
-          value: "Basel",
-        },
-      });
+
+    searchField.simulate("change", {
+      target: {
+        value: "Basel",
+      },
     });
+
     expect(setSearch).toHaveBeenCalled();
   });
 

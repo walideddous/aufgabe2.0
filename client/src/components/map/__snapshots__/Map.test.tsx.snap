@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Map component match snapshot with the Map component 1`] = `
+exports[`Map component Should match snapshot with the Map component 1`] = `
 <Fragment>
   <Col
     xs={24}

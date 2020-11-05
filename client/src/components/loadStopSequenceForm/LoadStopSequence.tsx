@@ -24,6 +24,8 @@ const LoadStopSequence = ({
 }: TLoadStopSequence) => {
   const [form] = Form.useForm();
   const [search, setSearch] = useState("");
+  const [selectValue, setSelectValue] = useState("Choose mode");
+  const [radioButton, setRadioButton] = useState("load");
   const [show, setShow] = useState(true);
 
   // Auto complete component
@@ -34,6 +36,7 @@ const LoadStopSequence = ({
     (value: any) => {
       if (value !== "Choose mode ") {
         onSendRequest(value);
+        setSelectValue(value);
       }
     },
     [onSendRequest]
@@ -61,6 +64,7 @@ const LoadStopSequence = ({
         onClearAll();
         setSearch("");
       }
+      setRadioButton(value);
     },
     [onClearAll, handleUpdateAfterSave]
   );
@@ -69,13 +73,25 @@ const LoadStopSequence = ({
     <Card>
       <Form form={form} layout="vertical">
         <Form.Item>
-          <Radio.Group defaultValue="load" onChange={handleRadioGroupChange}>
-            <Radio.Button value="load">Load</Radio.Button>
-            <Radio.Button value="new">New</Radio.Button>
+          <Radio.Group
+            id="radioButton"
+            value={radioButton}
+            onChange={handleRadioGroupChange}
+          >
+            <Radio.Button id="load_button" value="load">
+              Load
+            </Radio.Button>
+            <Radio.Button id="new_button" value="new">
+              New
+            </Radio.Button>
           </Radio.Group>
         </Form.Item>
         <Form.Item label="Modes">
-          <Select defaultValue="Choose mode" onChange={handleModeChange}>
+          <Select
+            id="mode_selector"
+            value={selectValue}
+            onChange={handleModeChange}
+          >
             <Option value="Choose mode">Choose mode</Option>
             <Option value="13">13</Option>
             <Option value="5">5</Option>

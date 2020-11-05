@@ -157,7 +157,7 @@ describe("Map component", () => {
     );
   });
 
-  it("match snapshot with the Map component", () => {
+  it("Should match snapshot with the Map component", () => {
     expect(toJSON(shallowWrapper)).toMatchSnapshot();
   });
 });

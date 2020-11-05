@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`NavBar component Match snapshot with the Navbar component 1`] = `
+exports[`NavBar component Should Match snapshot with the Navbar component 1`] = `
 <NavBar
   currentMode={Array []}
   currentStopSequenceName={Array []}
@@ -650,6 +650,7 @@ exports[`NavBar component Match snapshot with the Navbar component 1`] = `
         disabled={true}
         ghost={false}
         htmlType="button"
+        id="navbar_getData_button"
         loading={false}
         onClick={[Function]}
         type="primary"
@@ -658,6 +659,7 @@ exports[`NavBar component Match snapshot with the Navbar component 1`] = `
           <button
             className="ant-btn ant-btn-primary"
             disabled={true}
+            id="navbar_getData_button"
             onClick={[Function]}
             type="button"
           >
@@ -694,6 +696,7 @@ exports[`NavBar component Match snapshot with the Navbar component 1`] = `
         disabled={true}
         ghost={false}
         htmlType="button"
+        id="navbar_reset_button"
         loading={false}
         onClick={[Function]}
         type="primary"
@@ -702,6 +705,7 @@ exports[`NavBar component Match snapshot with the Navbar component 1`] = `
           <button
             className="ant-btn ant-btn-primary ant-btn-dangerous"
             disabled={true}
+            id="navbar_reset_button"
             onClick={[Function]}
             type="button"
           >
@@ -741,6 +745,7 @@ exports[`NavBar component Match snapshot with the Navbar component 1`] = `
             disabled={true}
             ghost={false}
             htmlType="button"
+            id="navbar_update_button"
             loading={false}
             onClick={[Function]}
             type="primary"
@@ -749,6 +754,7 @@ exports[`NavBar component Match snapshot with the Navbar component 1`] = `
               <button
                 className="ant-btn ant-btn-primary"
                 disabled={true}
+                id="navbar_update_button"
                 onClick={[Function]}
                 type="button"
               >
@@ -801,6 +807,7 @@ exports[`NavBar component Match snapshot with the Navbar component 1`] = `
         disabled={true}
         ghost={false}
         htmlType="button"
+        id="navbar_delete_button"
         loading={false}
         onClick={[Function]}
         type="primary"
@@ -809,6 +816,7 @@ exports[`NavBar component Match snapshot with the Navbar component 1`] = `
           <button
             className="ant-btn ant-btn-primary ant-btn-dangerous"
             disabled={true}
+            id="navbar_delete_button"
             onClick={[Function]}
             type="button"
           >
