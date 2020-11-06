@@ -153,6 +153,7 @@ const Map = ({
           };
         });
     }
+
     const stopSequenceMarkers = stateDND.trajekt.items.map((el: any) => {
       return {
         ...el,
@@ -211,6 +212,10 @@ const Map = ({
 
       markers.addLayer(marker);
     });
+
+    console.log("stopSequenceMarkers", stopSequenceMarkers);
+
+    console.log("after function", getPathFromTrajekt(stopSequenceMarkers));
 
     const Polyline = L.polyline(getPathFromTrajekt(stopSequenceMarkers), {
       color: "red",
