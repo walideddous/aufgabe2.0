@@ -51,7 +51,7 @@ describe("calculateDistanceAndSort function", ()=>{
 
 
 
-    it("Should run the funcion without crashing", ()=>{
+    it("Should run the funcion calculateDistanceAndSort without crashing", ()=>{
         //@ts-ignore
         const testResult = calculateDistanceAndSort(response , stations)
         expect(testResult).toEqual(result)

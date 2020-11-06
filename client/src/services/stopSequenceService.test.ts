@@ -44,7 +44,7 @@ describe("Test the stopSequenceService", () => {
   afterAll(() => serverCreate.close());
   afterEach(() => serverCreate.resetHandlers());
 
-  it("Should create a new stopSequence", async () => {
+  it("Should create new stopSequence", async () => {
     const result = await createStopSequence(4);
     expect(result.data.msg).toEqual("StopSequence successly created");
   });
@@ -52,7 +52,7 @@ describe("Test the stopSequenceService", () => {
     const result = await deleteStopSequence("id");
     expect(result.data.msg).toEqual("StopSequence successly deleted");
   });
-  it("Should Query stop sequence", async () => {
+  it("Should Query stop sequence by mode", async () => {
     const result = await queryStopSequence(4);
     expect(result.data.msg).toEqual("StopSequence succesfully queried");
   });

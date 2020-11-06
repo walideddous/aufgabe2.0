@@ -10,7 +10,7 @@ describe("Testing the getPathfromTrajekt function", () => {
 
   const result = [[46.17831, 6.08824]];
 
-  it("Should test the function without crashing", () => {
+  it("Should test the function getPathfromTrajekt without crashing", () => {
     const testResult = getPathFromTrajekt(input);
 
     expect(testResult).toEqual(result);
