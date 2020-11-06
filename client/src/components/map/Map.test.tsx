@@ -1,5 +1,5 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { shallow, mount } from "enzyme";
 import toJSON from "enzyme-to-json";
 import Map from "./Map";
 

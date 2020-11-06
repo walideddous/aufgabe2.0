@@ -22,7 +22,6 @@ const { Option } = Select;
 const SaveStopsSequenceForm = () => {
   // get this form to clear the input form after submit
   const [form] = Form.useForm();
-
   const [addSchedule, setAddSchedule] = useState(false);
   const [tags, setTags] = useState<{ date: string; displayedtags: [] }[]>([
     {
@@ -231,7 +230,7 @@ const SaveStopsSequenceForm = () => {
                   <div style={{ height: "200px", overflowY: "auto" }}>
                     {tags.map((el: any, index: number) => (
                       <div key={index}>
-                        <h3>{el.date}</h3>
+                        <h3 id="date_output">{el.date}</h3>
                         <div
                           style={{
                             display: "flex",
@@ -244,6 +243,7 @@ const SaveStopsSequenceForm = () => {
                               (el: string, index: number) => (
                                 <Tag
                                   closable
+                                  id="time_output"
                                   key={index}
                                   style={{
                                     minWidth: "253px",

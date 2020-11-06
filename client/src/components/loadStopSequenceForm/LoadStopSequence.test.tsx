@@ -2,7 +2,6 @@ import React from "react";
 import { mount, shallow } from "enzyme";
 import toJSON from "enzyme-to-json";
 import LoadStopSequence from "./LoadStopSequence";
-import { act } from "@testing-library/react";
 
 describe("LoadStopSequence component", () => {
   Object.defineProperty(window, "matchMedia", {
