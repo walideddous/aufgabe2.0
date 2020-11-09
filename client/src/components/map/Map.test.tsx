@@ -144,6 +144,9 @@ describe("Map component", () => {
   const spyOnselectMarkerOnMap = jest.fn();
 
   beforeEach(() => {
+    const div = global.document.createElement("div");
+    global.document.body.appendChild(div);
+
     wrapper = mount(
       //@ts-ignore
       <Map
@@ -153,7 +156,8 @@ describe("Map component", () => {
         onAddBeforSelected={spyOnonAddBeforSelected}
         onDeleteMarkerFromMap={spyOnonDeleteMarkerFromMap}
         selectMarkerOnMap={spyOnselectMarkerOnMap}
-      />
+      />,
+      { attachTo: div }
     );
   });
 

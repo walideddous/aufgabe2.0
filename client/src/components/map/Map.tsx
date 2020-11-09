@@ -138,6 +138,9 @@ const Map = ({
   // Showing the map
   useEffect(() => {
     //@ts-ignore
+    document.getElementById("mapId").innerHTML =
+      "<div id='map' style='width: 100%; height: 100%;'></div>";
+    //@ts-ignore
     stationsRef.current = stations;
     if (stationsRef.current) {
       //@ts-ignore
@@ -172,9 +175,11 @@ const Map = ({
       maxZoom: 18,
     }).addTo(myMap);
 
+    var markers = new L.MarkerClusterGroup();
+
     //@ts-ignore
     stationsRef.current.forEach((el: any, index: number) => {
-      const marker = L.marker(el.coord.WGS84, {
+      const marker = L.circleMarker(el.coord.WGS84, {
         //@ts-ignore
         contextmenu: true,
         contextmenuWidth: "200",
@@ -206,12 +211,14 @@ const Map = ({
       marker.bindTooltip(el.name);
       marker.on("click", () => clickOnMarker(el, index));
 
-      marker.addTo(myMap);
+      markers.addLayer(marker);
     });
 
     const Polyline = L.polyline(getPathFromTrajekt(stopSequenceMarkers), {
       color: "red",
     }).addTo(myMap);
+
+    var markers2 = new L.MarkerClusterGroup();
 
     stopSequenceMarkers.forEach((el: any, index: number) => {
       const marker = L.circleMarker(el.coord.WGS84, {
@@ -246,10 +253,10 @@ const Map = ({
       marker.bindTooltip(el.name);
       marker.on("click", () => clickOnMarker(el, index));
 
-      marker.addTo(myMap);
+      markers2.addLayer(marker);
     });
 
-    L.layerGroup().addLayer(Polyline).addTo(myMap);
+    L.layerGroup([markers, markers2]).addLayer(Polyline).addTo(myMap);
 
     if (Object.keys(currentStopSequence).length && !selected) {
       const { stopSequence } = currentStopSequence;
@@ -283,9 +290,7 @@ const Map = ({
     <Fragment>
       <Col xxl={12} xs={24}>
         <Card bordered={true} title="Map">
-          <div id="mapId" style={{ height: "880px", zIndex: 0 }}>
-            <div id="map" style={{ width: "100%", height: "100%" }}></div>
-          </div>
+          <div id="mapId" style={{ height: "880px", zIndex: 0 }}></div>
           <SearchInput
             stations={stations}
             handleSelectAutoSearch={handleSelectAutoSearch}
