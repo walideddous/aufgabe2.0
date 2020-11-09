@@ -170,6 +170,7 @@ const SaveStopsSequenceForm = () => {
                     <>
                       <div style={{ display: "flex", paddingBottom: "20px" }}>
                         <Button
+                          id="addTime_Button"
                           type="dashed"
                           onClick={() => add()}
                           icon={<PlusOutlined />}
@@ -224,42 +225,38 @@ const SaveStopsSequenceForm = () => {
                 </Form.Item>
               </Fragment>
             )}
-            {tags && (
-              <Collapse defaultActiveKey="3">
-                <Panel header="Stop sequence schedule" key="2">
-                  <div style={{ height: "200px", overflowY: "auto" }}>
-                    {tags.map((el: any, index: number) => (
-                      <div key={index}>
-                        <h3 id="date_output">{el.date}</h3>
-                        <div
-                          style={{
-                            display: "flex",
-                            flexWrap: "wrap",
-                            marginBottom: "0.5em",
-                          }}
-                        >
-                          {el.displayedtags &&
-                            el.displayedtags.map(
-                              (el: string, index: number) => (
-                                <Tag
-                                  closable
-                                  id="time_output"
-                                  key={index}
-                                  style={{
-                                    minWidth: "253px",
-                                  }}
-                                >
-                                  {el}
-                                </Tag>
-                              )
-                            )}
-                        </div>
+            <Collapse defaultActiveKey="3">
+              <Panel header="Stop sequence schedule" key="2">
+                <div style={{ height: "200px", overflowY: "auto" }}>
+                  {tags.map((el: any, index: number) => (
+                    <div key={index}>
+                      <h3 id="date_output">{el.date}</h3>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexWrap: "wrap",
+                          marginBottom: "0.5em",
+                        }}
+                      >
+                        {el.displayedtags &&
+                          el.displayedtags.map((el: string, index: number) => (
+                            <Tag
+                              closable
+                              id="time_output"
+                              key={index}
+                              style={{
+                                minWidth: "253px",
+                              }}
+                            >
+                              {el}
+                            </Tag>
+                          ))}
                       </div>
-                    ))}
-                  </div>
-                </Panel>
-              </Collapse>
-            )}
+                    </div>
+                  ))}
+                </div>
+              </Panel>
+            </Collapse>
           </Form>
         </Panel>
       </Collapse>

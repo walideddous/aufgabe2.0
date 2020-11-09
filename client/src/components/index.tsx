@@ -17,6 +17,9 @@ import Map from "./map/Map";
 import SaveStopsSequenceForm from "./form/SaveStopsSequenceForm";
 import LoadStopSequence from "./loadStopSequenceForm/LoadStopSequence";
 
+// Import React-leaflet
+import ReactLeaflet from "./map/ReactLeaflet";
+
 // Get the property from Utils
 import { getProperty } from "../utils/getPropertyKey";
 
@@ -839,4 +842,20 @@ export default Aufgabe;
             />
           </Fragment>
         )}
+
+
+                      <Map
+              stations={stations}
+              stateDND={stateDND}
+              selected={selected}
+              distance={distance}
+              handleSelectAutoSearch={onSelectAutoSearch}
+              currentStopSequence={currentStopSequence}
+              onAddBeforSelected={handleAddBeforSelected}
+              onAddAfterSelected={handleAddAfterSelected}
+              onDeleteMarkerFromMap={handleDeleteMarkerFromMap}
+              selectMarkerOnMap={clickOnMapMarker}
+            />
+
+
 */

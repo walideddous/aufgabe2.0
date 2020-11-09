@@ -17,7 +17,7 @@ const table = () => {
 };
 
 describe("Map component", () => {
-  let shallowWrapper: any;
+  let wrapper: any;
   let props = {
     stations: [
       {
@@ -144,7 +144,7 @@ describe("Map component", () => {
   const spyOnselectMarkerOnMap = jest.fn();
 
   beforeEach(() => {
-    shallowWrapper = shallow(
+    wrapper = mount(
       //@ts-ignore
       <Map
         {...props}
@@ -158,6 +158,6 @@ describe("Map component", () => {
   });
 
   it("Should match snapshot with the Map component", () => {
-    expect(toJSON(shallowWrapper)).toMatchSnapshot();
+    expect(toJSON(wrapper)).toMatchSnapshot();
   });
 });
