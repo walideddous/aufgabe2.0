@@ -232,7 +232,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                             "leave": [Function],
                           }
                         }
-                        key="rc_animate_1605083316540"
+                        key="rc_animate_1605108359854"
                         transitionAppear={false}
                         transitionEnter={true}
                         transitionLeave={true}
@@ -241,7 +241,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                           destroyInactivePanel={false}
                           forceRender={false}
                           isActive={true}
-                          key="rc_animate_1605083316540"
+                          key="rc_animate_1605108359854"
                           prefixCls="ant-collapse"
                           role={null}
                         >
@@ -899,7 +899,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                           "leave": [Function],
                                                         }
                                                       }
-                                                      key="rc_animate_1605083316540"
+                                                      key="rc_animate_1605108359854"
                                                       transitionAppear={false}
                                                       transitionEnter={true}
                                                       transitionLeave={true}
@@ -908,7 +908,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                         destroyInactivePanel={false}
                                                         forceRender={false}
                                                         isActive={true}
-                                                        key="rc_animate_1605083316540"
+                                                        key="rc_animate_1605108359854"
                                                         prefixCls="ant-collapse"
                                                         role={null}
                                                       >

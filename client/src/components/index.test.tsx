@@ -27,17 +27,9 @@ const setUp = () => {
 
 describe("Aufgabe component => main component", () => {
   let mountWrapper: any;
-  const setState = jest.fn();
-  const useStateSpy = jest.spyOn(React, "useState");
 
   beforeEach(() => {
-    //@ts-ignore
-    useStateSpy.mockImplementation((init) => [init, setState]);
     mountWrapper = setUp();
-  });
-
-  afterEach(() => {
-    jest.clearAllMocks();
   });
 
   it("Should match snapShot with the Aufgabe(index) component", () => {

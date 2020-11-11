@@ -1881,7 +1881,7 @@ exports[`Aufgabe component => main component Should match snapShot with the Aufg
                                         "leave": [Function],
                                       }
                                     }
-                                    key="rc_animate_1605083316555"
+                                    key="rc_animate_1605108359818"
                                     transitionAppear={false}
                                     transitionEnter={true}
                                     transitionLeave={true}
@@ -1890,7 +1890,7 @@ exports[`Aufgabe component => main component Should match snapShot with the Aufg
                                       destroyInactivePanel={false}
                                       forceRender={false}
                                       isActive={true}
-                                      key="rc_animate_1605083316555"
+                                      key="rc_animate_1605108359818"
                                       prefixCls="ant-collapse"
                                       role={null}
                                     >
@@ -2548,7 +2548,7 @@ exports[`Aufgabe component => main component Should match snapShot with the Aufg
                                                                       "leave": [Function],
                                                                     }
                                                                   }
-                                                                  key="rc_animate_1605083316555"
+                                                                  key="rc_animate_1605108359818"
                                                                   transitionAppear={false}
                                                                   transitionEnter={true}
                                                                   transitionLeave={true}
@@ -2557,7 +2557,7 @@ exports[`Aufgabe component => main component Should match snapShot with the Aufg
                                                                     destroyInactivePanel={false}
                                                                     forceRender={false}
                                                                     isActive={true}
-                                                                    key="rc_animate_1605083316555"
+                                                                    key="rc_animate_1605108359818"
                                                                     prefixCls="ant-collapse"
                                                                     role={null}
                                                                   >
@@ -2626,7 +2626,7 @@ exports[`Aufgabe component => main component Should match snapShot with the Aufg
             </Memo(SaveStopsSequenceForm)>
           </div>
         </Col>
-        <Memo(ReactLeaflet)
+        <Memo(Map)
           currentStopSequence={Object {}}
           distance={Array []}
           handleSelectAutoSearch={[Function]}
@@ -2688,36 +2688,15 @@ exports[`Aufgabe component => main component Should match snapShot with the Aufg
                     className="ant-card-body"
                     style={Object {}}
                   >
-                    <MapContainer
-                      center={
-                        Array [
-                          46.8155135,
-                          8.224471999999992,
-                        ]
-                      }
-                      scrollWheelZoom={true}
+                    <div
+                      id="mapId"
                       style={
                         Object {
                           "height": "880px",
                           "zIndex": 0,
                         }
                       }
-                      zoom={5}
-                    >
-                      <div
-                        style={
-                          Object {
-                            "height": "880px",
-                            "zIndex": 0,
-                          }
-                        }
-                      >
-                        <ForwardRef(LeafComponent)
-                          attribution="© <a href=\\"http://osm.org/copyright\\">OpenStreetMap</a> contributors"
-                          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                        />
-                      </div>
-                    </MapContainer>
+                    />
                     <Memo(SearchInput)
                       handleSelectAutoSearch={[Function]}
                       stations={Array []}
@@ -3208,7 +3187,7 @@ exports[`Aufgabe component => main component Should match snapShot with the Aufg
               </Card>
             </div>
           </Col>
-        </Memo(ReactLeaflet)>
+        </Memo(Map)>
         <Col
           xs={24}
           xxl={12}

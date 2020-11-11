@@ -1,3 +1,4 @@
+/*
 import React, {
   Fragment,
   useMemo,
@@ -303,8 +304,8 @@ const Map = ({
 };
 
 export default React.memo(Map);
+*/
 
-/*
 import React, {
   Fragment,
   useMemo,
@@ -459,8 +460,11 @@ const Map = ({
     [onDeleteMarkerFromMap]
   );
 
-  // Displaying the Map
+  // Displaying and handling Map and Markers
   useEffect(() => {
+    if (map.current) {
+      map.current.remove();
+    }
     map.current = L.map("mapId", {
       layers: [
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -470,21 +474,14 @@ const Map = ({
         }),
       ],
     });
-  }, []);
 
-  //Center and zoom the map on markers
-  useEffect(() => {
     map.current.setView(
       selected
         ? [selected.coord.WGS84.lat, selected.coord.WGS84.lon]
         : [position.lat, position.lng],
       !selected ? position.zoom : responsiveZoom.zoom
     );
-  }, [selected, responsiveZoom, position]);
 
-  // Handling the markers
-  useEffect(() => {
-    var markers = new L.MarkerClusterGroup();
     //@ts-ignore
     stationsRef.current.forEach((el: any, index: number) => {
       const marker = L.circleMarker(el.coord.WGS84, {
@@ -514,20 +511,31 @@ const Map = ({
               stateDND.vorschlag.items.map((el) => el._id).includes(el._id)
             ? "green"
             : "blue",
-      });
+      }).addTo(map.current);
 
       marker.bindTooltip(el.name);
       marker.on("click", () => clickOnMarker(el, index));
-
-      markers.addLayer(marker);
     });
 
     const polyline = L.polyline(getPathFromTrajekt(stopSequenceMarkers), {
       color: "red",
     });
 
-    L.layerGroup([markers]).addLayer(polyline).addTo(map.current);
-  }, [selected, stopSequenceMarkers, stateDND.vorschlag.items]);
+    map.current.addLayer(polyline);
+  }, [
+    stopSequenceMarkers,
+    selected,
+    stateDND,
+    currentStopSequence,
+    position.lat,
+    position.lng,
+    position.zoom,
+    responsiveZoom.zoom,
+    addAfterSelected,
+    addBeforSelected,
+    deleteMarkerFromMap,
+    clickOnMarker,
+  ]);
 
   // Center the map wen we load the stopSequence
   useEffect(() => {
@@ -562,4 +570,3 @@ const Map = ({
 };
 
 export default React.memo(Map);
-*/
