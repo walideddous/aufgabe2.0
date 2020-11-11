@@ -750,6 +750,8 @@ const Aufgabe: React.FC = () => {
     [clearAll, isSending]
   );
 
+  const result = () => {};
+
   return (
     <div className="Prototyp" style={{ position: "relative" }}>
       <Row gutter={[8, 8]}>
@@ -784,7 +786,7 @@ const Aufgabe: React.FC = () => {
         ) : (
           <Fragment>
             <Col xs={24}>
-              <SaveStopsSequenceForm />
+              <SaveStopsSequenceForm result={result} />
             </Col>
             <Map
               stations={stations}
@@ -842,20 +844,4 @@ export default Aufgabe;
             />
           </Fragment>
         )}
-
-
-                      <Map
-              stations={stations}
-              stateDND={stateDND}
-              selected={selected}
-              distance={distance}
-              handleSelectAutoSearch={onSelectAutoSearch}
-              currentStopSequence={currentStopSequence}
-              onAddBeforSelected={handleAddBeforSelected}
-              onAddAfterSelected={handleAddAfterSelected}
-              onDeleteMarkerFromMap={handleDeleteMarkerFromMap}
-              selectMarkerOnMap={clickOnMapMarker}
-            />
-
-
 */

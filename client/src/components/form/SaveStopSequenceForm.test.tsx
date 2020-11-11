@@ -17,16 +17,17 @@ Object.defineProperty(window, "matchMedia", {
   })),
 });
 
-const setUp = () => {
-  const mountWrapper = mount(<SaveStopsSequenceForm />);
+const setUp = (props: any) => {
+  const mountWrapper = mount(<SaveStopsSequenceForm {...props} />);
   return mountWrapper;
 };
 
 describe.only("SaveStopSequenceForm component", () => {
   let mountWrapper: any;
+  let result = jest.fn();
 
   beforeEach(() => {
-    mountWrapper = setUp();
+    mountWrapper = setUp(result);
   });
 
   it("Should matches snapshot with the SaveStopSequenceForm component", () => {
@@ -59,35 +60,44 @@ describe.only("SaveStopSequenceForm component", () => {
   });
 
   it("Should display tags as wanted after submit", () => {
+    // CLick on the Button
+    mountWrapper
+      .find("#AddSchedule-button")
+      .at(0)
+      .simulate("click", {
+        preventDefault: () => {},
+      });
+    mountWrapper
+      .find("#addTime_Button")
+      .at(0)
+      .simulate("click", {
+        preventDefault: () => {},
+      });
     // Input fild
     const inputName = mountWrapper.find("#name-input").at(0);
+    const dayInput = mountWrapper.find("#dayPicker-input").at(0);
+    const selectDate1 = mountWrapper.find("#date-input").at(0);
+    const selectDate2 = mountWrapper.find("#date-input").at(1);
+    const selectTime1 = mountWrapper.find("#timePicker-input").at(0);
+    const selectTime2 = mountWrapper.find("#timePicker-input").at(1);
+    // Button
+    const submitButton = mountWrapper.find("form").at(0);
 
-    const addButton = mountWrapper.find("#AddSchedule-button").at(0);
-    addButton.simulate("click");
-
-    const selectDays = mountWrapper.find("#dayPicker-input").at(0);
-    const selectDate = mountWrapper.find("#date-input").at(0);
-
-    inputName.simulate("change", { target: { value: "Walid" } });
-    selectDays.simulate("change", { target: { value: "monday" } });
-    selectDate.simulate("change", {
-      target: { value: "2020-11-06 2020-12-16" },
+    inputName.props().value = "walid";
+    dayInput.simulate("change", {
+      target: {
+        value: "Mon",
+      },
     });
+    selectDate1.props().value = "2020-11-10";
+    selectDate2.props().value = "2020-12-10";
+    selectTime1.props().value = "03:00";
+    selectTime2.props().value = "06:00";
 
-    const addTimeButton = mountWrapper.find("#addTime_Button").at(0);
-    addTimeButton.simulate("click");
+    //Submit form
+    submitButton.props().onSubmit();
 
-    const selectTime = mountWrapper.find("#timePicker-input").at(0);
-    selectTime.simulate("change", { target: { value: "01:00 06:00" } });
-
-    // Submit button
-    const submitButton = mountWrapper.find("#save_button").at(0);
-    submitButton.simulate("click");
-
-    const tag = mountWrapper.find("#time_output").text();
-    const date = mountWrapper.find("#date_output").text();
-
-    expect(tag).toBe("Mon 01:00 - 06:00");
-    expect(date).toBe("2020.11.06 - 2020.12.16");
+    expect(mountWrapper.find("#save_button").at(0).length).toBe(0);
+    expect(mountWrapper.find("form").at(0).props()).toBe("bien");
   });
 });

@@ -19,7 +19,11 @@ const { RangePicker } = TimePicker;
 const { Panel } = Collapse;
 const { Option } = Select;
 
-const SaveStopsSequenceForm = () => {
+interface Tprops {
+  result: (input: any) => void;
+}
+
+const SaveStopsSequenceForm = ({ result }: Tprops) => {
   // get this form to clear the input form after submit
   const [form] = Form.useForm();
   const [addSchedule, setAddSchedule] = useState(false);
@@ -80,7 +84,7 @@ const SaveStopsSequenceForm = () => {
         return [{ ...formatTags }];
       }
     });
-
+    result(formatTags);
     setAddSchedule(false);
     form.resetFields();
   };
@@ -90,6 +94,7 @@ const SaveStopsSequenceForm = () => {
       <Collapse defaultActiveKey="1">
         <Panel header="Stop sequence save form" key="1">
           <Form
+            id="formWrapper"
             layout="vertical"
             name="basic"
             requiredMark={false}
@@ -225,9 +230,12 @@ const SaveStopsSequenceForm = () => {
                 </Form.Item>
               </Fragment>
             )}
-            <Collapse defaultActiveKey="3">
+            <Collapse defaultActiveKey="2">
               <Panel header="Stop sequence schedule" key="2">
-                <div style={{ height: "200px", overflowY: "auto" }}>
+                <div
+                  id="time_result"
+                  style={{ height: "200px", overflowY: "auto" }}
+                >
                   {tags.map((el: any, index: number) => (
                     <div key={index}>
                       <h3 id="date_output">{el.date}</h3>

@@ -1,13 +1,14 @@
-import React, {
-  Fragment,
-  useMemo,
-  useEffect,
-  useCallback,
-  useRef,
-} from "react";
+import React, { Fragment, useMemo, useCallback, useRef } from "react";
 import { Card, Col } from "antd";
 import * as L from "leaflet";
-import { MapContainer, TileLayer, Marker, Tooltip } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Tooltip,
+  CircleMarker,
+} from "react-leaflet";
+import MarkerClusterGroup from "react-leaflet-markercluster";
 
 // Import leaflet context menu
 import "leaflet-contextmenu";
@@ -82,6 +83,15 @@ const ReactLeaflet = ({
   onDeleteMarkerFromMap,
   selectMarkerOnMap,
 }: TpropsOnMap) => {
+  L.Icon.Default.imagePath = "https://unpkg.com/leaflet@1.5.0/dist/images/";
+  const stationsRef = useRef(
+    stations.map((el: any) => {
+      return {
+        ...el,
+        coord: { WGS84: [el.coord.WGS84.lat, el.coord.WGS84.lon] },
+      };
+    })
+  );
   // Center the Map
   const position = useMemo(() => {
     return {
@@ -131,6 +141,8 @@ const ReactLeaflet = ({
     },
     [onDeleteMarkerFromMap]
   );
+
+  console.log("stations", stations);
 
   return (
     <Fragment>
@@ -183,6 +195,7 @@ const ReactLeaflet = ({
                       ? "green"
                       : "blue"
                   }
+                  key={index}
                   position={[el.coord.WGS84.lat, el.coord.WGS84.lon]}
                   onClick={() => clickOnMarker(el, index)}
                 >
@@ -201,13 +214,3 @@ const ReactLeaflet = ({
 };
 
 export default React.memo(ReactLeaflet);
-
-/*
-            <Marker position={[51.505, -0.09]}>
-              <Popup>
-                A pretty CSS3 popup. <br /> Easily customizable.
-              </Popup>
-            </Marker>
-
-
-*/

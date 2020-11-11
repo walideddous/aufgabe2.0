@@ -83,6 +83,7 @@ const Map = ({
   onDeleteMarkerFromMap,
   selectMarkerOnMap,
 }: TpropsOnMap) => {
+  const map: any = useRef(null);
   const stationsRef = useRef();
 
   // Center the Map
@@ -389,6 +390,7 @@ const Map = ({
   onDeleteMarkerFromMap,
   selectMarkerOnMap,
 }: TpropsOnMap) => {
+  const map: any = useRef(null);
   const stationsRef = useRef(
     stations.map((el: any) => {
       return {
@@ -397,7 +399,15 @@ const Map = ({
       };
     })
   );
-  const map: any = useRef(null);
+
+  const stopSequenceMarkers = useMemo(() => {
+    return stateDND.trajekt.items.map((el: any) => {
+      return {
+        ...el,
+        coord: { WGS84: [el.coord.WGS84.lat, el.coord.WGS84.lon] },
+      };
+    });
+  }, [stateDND.trajekt.items]);
 
   // Center the Map
   const position = useMemo(() => {
@@ -472,12 +482,9 @@ const Map = ({
     );
   }, [selected, responsiveZoom, position]);
 
-  var markers = new L.MarkerClusterGroup();
   // Handling the markers
   useEffect(() => {
-    if (markers) {
-      markers.clearLayers();
-    }
+    var markers = new L.MarkerClusterGroup();
     //@ts-ignore
     stationsRef.current.forEach((el: any, index: number) => {
       const marker = L.circleMarker(el.coord.WGS84, {
@@ -515,29 +522,12 @@ const Map = ({
       markers.addLayer(marker);
     });
 
-    L.layerGroup([markers]).addTo(map.current);
-  }, [
-    selected,
-    stateDND.vorschlag.items,
-    addAfterSelected,
-    addBeforSelected,
-    deleteMarkerFromMap,
-    clickOnMarker,
-  ]);
-
-  useEffect(() => {
-    // Handling the Polyline => the path //
-    const stopSequenceMarkers = stateDND.trajekt.items.map((el: any) => {
-      return {
-        ...el,
-        coord: { WGS84: [el.coord.WGS84.lat, el.coord.WGS84.lon] },
-      };
+    const polyline = L.polyline(getPathFromTrajekt(stopSequenceMarkers), {
+      color: "red",
     });
 
-    L.polyline(getPathFromTrajekt(stopSequenceMarkers), {
-      color: "red",
-    }).addTo(map.current);
-  }, [stateDND]);
+    L.layerGroup([markers]).addLayer(polyline).addTo(map.current);
+  }, [selected, stopSequenceMarkers, stateDND.vorschlag.items]);
 
   // Center the map wen we load the stopSequence
   useEffect(() => {
