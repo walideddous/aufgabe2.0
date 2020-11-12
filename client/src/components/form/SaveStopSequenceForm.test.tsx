@@ -1,20 +1,11 @@
 import React from "react";
 import SaveStopsSequenceForm from "./SaveStopsSequenceForm";
-import { shallow, mount } from "enzyme";
+import { mount } from "enzyme";
 import toJSON from "enzyme-to-json";
 
-Object.defineProperty(window, "matchMedia", {
-  writable: true,
-  value: jest.fn().mockImplementation((query) => ({
-    matches: false,
-    media: query,
-    onchange: null,
-    addListener: jest.fn(), // deprecated
-    removeListener: jest.fn(), // deprecated
-    addEventListener: jest.fn(),
-    removeEventListener: jest.fn(),
-    dispatchEvent: jest.fn(),
-  })),
+const makeProps = (props: any) => ({
+  result() {},
+  ...props,
 });
 
 const setUp = (props: any) => {
@@ -24,10 +15,10 @@ const setUp = (props: any) => {
 
 describe("SaveStopSequenceForm component", () => {
   let mountWrapper: any;
-  let result = jest.fn();
+  const result = jest.fn();
 
   beforeEach(() => {
-    mountWrapper = setUp(result);
+    mountWrapper = setUp(makeProps({ result }));
   });
 
   it("Should matches snapshot with the SaveStopSequenceForm component", () => {

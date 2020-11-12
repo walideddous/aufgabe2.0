@@ -45,7 +45,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --verbose --coverage",
+    "test": "react-scripts test --verbose --coverage --updateSnapshot",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

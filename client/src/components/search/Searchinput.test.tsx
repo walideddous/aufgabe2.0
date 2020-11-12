@@ -3,47 +3,37 @@ import { shallow, mount } from "enzyme";
 import toJSON from "enzyme-to-json";
 import Searchinput from "./SearchInput";
 
-describe.only("Searchinput component", () => {
-  let shallowWrapper: any;
-  let props = {
-    stations: [
-      {
-        _id: "5f6203bb0d5658001cd8f85a",
-        name: "Basel",
-        coord: {
-          WGS84: {
-            lat: 47.54741,
-            lon: 7.58956,
-          },
-        },
-        modes: [],
-      },
-      {
-        _id: "5f6203bb0d5658001cd8f85b",
-        name: "Lyon",
-        coord: {
-          WGS84: {
-            lat: 45.74506,
-            lon: 4.84184,
-          },
-        },
-        modes: [],
-      },
-    ],
-  };
-  const spyOnhandleSelectAutoSearch = jest.fn();
+// Import the data to test With
+import { stations } from "../../testUtils/testData";
+
+const makeProps = (props: any) => ({
+  stations: [],
+  handleSelectAutoSearch() {},
+  ...props,
+});
+
+const setUp = (props: any) => {
+  const component = mount(<Searchinput {...props} />);
+  return component;
+};
+
+describe("Searchinput component", () => {
+  let wrappedComponent: any;
+
+  const handleSelectAutoSearch = jest.fn();
+
+  // Test the state Changes of the setSearch
   const setSearch = jest.fn();
   const useStateSpy = jest.spyOn(React, "useState");
   //@ts-ignore
   useStateSpy.mockImplementation((search: string) => [search, setSearch]);
 
   beforeEach(() => {
-    shallowWrapper = shallow(
-      //@ts-ignore
-      <Searchinput
-        {...props}
-        handleSelectAutoSearch={spyOnhandleSelectAutoSearch}
-      />
+    wrappedComponent = setUp(
+      makeProps({
+        stations,
+        handleSelectAutoSearch,
+      })
     );
   });
 
@@ -52,18 +42,11 @@ describe.only("Searchinput component", () => {
   });
 
   it("Should match snapShot with the Seachinput component", () => {
-    expect(toJSON(shallowWrapper)).toMatchSnapshot();
+    expect(toJSON(wrappedComponent)).toMatchSnapshot();
   });
 
   it("Should set the input value on change event", async () => {
-    const mountWrapper = mount(
-      //@ts-ignore
-      <Searchinput
-        {...props}
-        handleSelectAutoSearch={spyOnhandleSelectAutoSearch}
-      />
-    );
-    let searchField = mountWrapper.find('input[type="search"]');
+    let searchField = wrappedComponent.find('input[type="search"]');
 
     searchField.simulate("change", {
       target: {
@@ -71,12 +54,25 @@ describe.only("Searchinput component", () => {
       },
     });
 
-    expect(setSearch).toHaveBeenCalled();
+    expect(wrappedComponent.find('input[type="search"]').props().value).toBe(
+      "Basel"
+    );
   });
 
   it("Should dispatch the props function handleSelectAutoSearch onSelect", async () => {
-    let searchField = shallowWrapper.find("#search");
-    searchField.simulate("select");
-    expect(spyOnhandleSelectAutoSearch).toHaveBeenCalled();
+    const shallowWrapper = shallow(
+      <Searchinput
+        {...makeProps({
+          stations,
+          handleSelectAutoSearch,
+        })}
+      />
+    );
+
+    const selectField = shallowWrapper.find("#search");
+
+    selectField.simulate("select");
+
+    expect(handleSelectAutoSearch).toHaveBeenCalled();
   });
 });

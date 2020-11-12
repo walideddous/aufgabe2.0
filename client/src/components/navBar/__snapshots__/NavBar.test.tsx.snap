@@ -14,16 +14,363 @@ exports[`NavBar component Should Match snapshot with the Navbar component 1`] = 
   stateDND={
     Object {
       "trajekt": Object {
-        "items": Array [],
+        "items": Array [
+          Object {
+            "_id": "5f6205c60d5658001cd9480b",
+            "coord": Object {
+              "WGS84": Object {
+                "lat": 46.17831,
+                "lon": 6.08824,
+              },
+            },
+            "index": 0,
+            "modes": Array [
+              "4",
+              "5",
+            ],
+            "name": "Confignon, croisée",
+          },
+        ],
         "title": "Stop sequence",
       },
       "vorschlag": Object {
-        "items": Array [],
+        "items": Array [
+          Object {
+            "_id": "5f6206390d5658001cd959b4",
+            "angle": -83.19868517601843,
+            "coord": Object {
+              "WGS84": Object {
+                "lat": 46.17857,
+                "lon": 6.08606,
+              },
+            },
+            "distance": 0.17031643195093935,
+            "modes": Array [
+              "4",
+              "5",
+            ],
+            "name": "Bernex 1",
+          },
+          Object {
+            "_id": "5f6206390d5658001cd959b4",
+            "angle": -83.19868517601843,
+            "coord": Object {
+              "WGS84": Object {
+                "lat": 46.17857,
+                "lon": 6.08606,
+              },
+            },
+            "distance": 0.17031643195093935,
+            "modes": Array [
+              "4",
+              "5",
+            ],
+            "name": "Bernex 1",
+          },
+          Object {
+            "_id": "5f6206390d5658001cd959b4",
+            "angle": -83.19868517601843,
+            "coord": Object {
+              "WGS84": Object {
+                "lat": 46.17857,
+                "lon": 6.08606,
+              },
+            },
+            "distance": 0.17031643195093935,
+            "modes": Array [
+              "4",
+              "5",
+            ],
+            "name": "Bernex 1",
+          },
+          Object {
+            "_id": "5f6206390d5658001cd959b4",
+            "angle": -83.19868517601843,
+            "coord": Object {
+              "WGS84": Object {
+                "lat": 46.17857,
+                "lon": 6.08606,
+              },
+            },
+            "distance": 0.17031643195093935,
+            "modes": Array [
+              "4",
+              "5",
+            ],
+            "name": "Bernex 1",
+          },
+          Object {
+            "_id": "5f6206390d5658001cd959b4",
+            "angle": -83.19868517601843,
+            "coord": Object {
+              "WGS84": Object {
+                "lat": 46.17857,
+                "lon": 6.08606,
+              },
+            },
+            "distance": 0.17031643195093935,
+            "modes": Array [
+              "4",
+              "5",
+            ],
+            "name": "Bernex 1",
+          },
+          Object {
+            "_id": "5f6206390d5658001cd959b4",
+            "angle": -83.19868517601843,
+            "coord": Object {
+              "WGS84": Object {
+                "lat": 46.17857,
+                "lon": 6.08606,
+              },
+            },
+            "distance": 0.17031643195093935,
+            "modes": Array [
+              "4",
+              "5",
+            ],
+            "name": "Bernex 1",
+          },
+          Object {
+            "_id": "5f6206390d5658001cd959b4",
+            "angle": -83.19868517601843,
+            "coord": Object {
+              "WGS84": Object {
+                "lat": 46.17857,
+                "lon": 6.08606,
+              },
+            },
+            "distance": 0.17031643195093935,
+            "modes": Array [
+              "4",
+              "5",
+            ],
+            "name": "Bernex 1",
+          },
+          Object {
+            "_id": "5f6206390d5658001cd959b4",
+            "angle": -83.19868517601843,
+            "coord": Object {
+              "WGS84": Object {
+                "lat": 46.17857,
+                "lon": 6.08606,
+              },
+            },
+            "distance": 0.17031643195093935,
+            "modes": Array [
+              "4",
+              "5",
+            ],
+            "name": "Bernex 1",
+          },
+          Object {
+            "_id": "5f6206390d5658001cd959b4",
+            "angle": -83.19868517601843,
+            "coord": Object {
+              "WGS84": Object {
+                "lat": 46.17857,
+                "lon": 6.08606,
+              },
+            },
+            "distance": 0.17031643195093935,
+            "modes": Array [
+              "4",
+              "5",
+            ],
+            "name": "Bernex 1",
+          },
+          Object {
+            "_id": "5f6206390d5658001cd959b4",
+            "angle": -83.19868517601843,
+            "coord": Object {
+              "WGS84": Object {
+                "lat": 46.17857,
+                "lon": 6.08606,
+              },
+            },
+            "distance": 0.17031643195093935,
+            "modes": Array [
+              "4",
+              "5",
+            ],
+            "name": "Bernex 1",
+          },
+          Object {
+            "_id": "5f6206390d5658001cd959b4",
+            "angle": -83.19868517601843,
+            "coord": Object {
+              "WGS84": Object {
+                "lat": 46.17857,
+                "lon": 6.08606,
+              },
+            },
+            "distance": 0.17031643195093935,
+            "modes": Array [
+              "4",
+              "5",
+            ],
+            "name": "Bernex 1",
+          },
+          Object {
+            "_id": "5f6206390d5658001cd959b4",
+            "angle": -83.19868517601843,
+            "coord": Object {
+              "WGS84": Object {
+                "lat": 46.17857,
+                "lon": 6.08606,
+              },
+            },
+            "distance": 0.17031643195093935,
+            "modes": Array [
+              "4",
+              "5",
+            ],
+            "name": "Bernex 1",
+          },
+          Object {
+            "_id": "5f6206390d5658001cd959b4",
+            "angle": -83.19868517601843,
+            "coord": Object {
+              "WGS84": Object {
+                "lat": 46.17857,
+                "lon": 6.08606,
+              },
+            },
+            "distance": 0.17031643195093935,
+            "modes": Array [
+              "4",
+              "5",
+            ],
+            "name": "Bernex 1",
+          },
+          Object {
+            "_id": "5f6206390d5658001cd959b4",
+            "angle": -83.19868517601843,
+            "coord": Object {
+              "WGS84": Object {
+                "lat": 46.17857,
+                "lon": 6.08606,
+              },
+            },
+            "distance": 0.17031643195093935,
+            "modes": Array [
+              "4",
+              "5",
+            ],
+            "name": "Bernex 1",
+          },
+          Object {
+            "_id": "5f6206390d5658001cd959b4",
+            "angle": -83.19868517601843,
+            "coord": Object {
+              "WGS84": Object {
+                "lat": 46.17857,
+                "lon": 6.08606,
+              },
+            },
+            "distance": 0.17031643195093935,
+            "modes": Array [
+              "4",
+              "5",
+            ],
+            "name": "Bernex 1",
+          },
+          Object {
+            "_id": "5f6206390d5658001cd959b4",
+            "angle": -83.19868517601843,
+            "coord": Object {
+              "WGS84": Object {
+                "lat": 46.17857,
+                "lon": 6.08606,
+              },
+            },
+            "distance": 0.17031643195093935,
+            "modes": Array [
+              "4",
+              "5",
+            ],
+            "name": "Bernex 1",
+          },
+        ],
         "title": "Suggestion",
       },
     }
   }
-  stopSequenceList={Array []}
+  stopSequenceList={
+    Array [
+      Object {
+        "_id": "c03295ea-5a3f-43e8-83ea-7736ce82cfd9",
+        "date": Array [
+          "2020-10-16",
+          "2020-11-27",
+        ],
+        "modes": "13",
+        "name": "St. Gallen to Zürich HB",
+        "schedule": Array [
+          Object {
+            "day": Array [
+              "monday",
+              "tuesday",
+              "wednesday",
+              "thursday",
+              "friday",
+            ],
+            "time": Array [
+              Object {
+                "end": "12:00",
+                "start": "07:00",
+              },
+              Object {
+                "end": "18:00",
+                "start": "13:00",
+              },
+            ],
+          },
+          Object {
+            "day": Array [
+              "saturday",
+              "sunday",
+            ],
+            "time": Array [
+              Object {
+                "end": "12:00",
+                "start": "07:00",
+              },
+            ],
+          },
+        ],
+        "stopSequence": Array [
+          Object {
+            "_id": "5f62045b0d5658001cd910c4",
+            "coord": Object {
+              "WGS84": Object {
+                "lat": 47.42318,
+                "lon": 9.3699,
+              },
+            },
+            "modes": Array [
+              "13",
+              "5",
+            ],
+            "name": "St. Gallen",
+          },
+          Object {
+            "_id": "5f62045b0d5658001cd910c1",
+            "coord": Object {
+              "WGS84": Object {
+                "lat": 47.4072,
+                "lon": 9.32965,
+              },
+            },
+            "modes": Array [
+              "13",
+            ],
+            "name": "St. Gallen Bruggen",
+          },
+        ],
+      },
+    ]
+  }
   updateDate=""
 >
   <Col
@@ -336,17 +683,23 @@ exports[`NavBar component Should Match snapshot with the Navbar component 1`] = 
       }
     >
       <Dropdown
-        disabled={true}
+        disabled={false}
         mouseEnterDelay={0.15}
         mouseLeaveDelay={0.1}
         overlay={
           <Menu
             onClick={[Function]}
-          />
+          >
+            <MenuItem
+              onClick={[Function]}
+            >
+              St. Gallen to Zürich HB
+            </MenuItem>
+          </Menu>
         }
       >
         <ForwardRef(Dropdown)
-          disabled={true}
+          disabled={false}
           mouseEnterDelay={0.15}
           mouseLeaveDelay={0.1}
           overlay={[Function]}
@@ -354,10 +707,13 @@ exports[`NavBar component Should Match snapshot with the Navbar component 1`] = 
           placement="bottomLeft"
           prefixCls="ant-dropdown"
           transitionName="slide-up"
-          trigger={Array []}
         >
           <Trigger
-            action={Array []}
+            action={
+              Array [
+                "hover",
+              ]
+            }
             afterPopupVisibleChange={[Function]}
             autoDestroy={false}
             blurDelay={0.15}
@@ -475,7 +831,7 @@ exports[`NavBar component Should Match snapshot with the Navbar component 1`] = 
             }
             defaultPopupVisible={false}
             destroyPopupOnHide={false}
-            disabled={true}
+            disabled={false}
             focusDelay={0}
             getDocument={[Function]}
             getPopupClassNameFromAlign={[Function]}
@@ -499,8 +855,10 @@ exports[`NavBar component Should Match snapshot with the Navbar component 1`] = 
           >
             <p
               className="ant-dropdown-trigger ant-dropdown-link"
-              disabled={true}
+              disabled={false}
               key="trigger"
+              onMouseEnter={[Function]}
+              onMouseLeave={[Function]}
               style={
                 Object {
                   "cursor": "pointer",
@@ -693,7 +1051,7 @@ exports[`NavBar component Should Match snapshot with the Navbar component 1`] = 
       <Button
         block={false}
         danger={true}
-        disabled={true}
+        disabled={false}
         ghost={false}
         htmlType="button"
         id="navbar_reset_button"
@@ -704,7 +1062,7 @@ exports[`NavBar component Should Match snapshot with the Navbar component 1`] = 
         <Wave>
           <button
             className="ant-btn ant-btn-primary ant-btn-dangerous"
-            disabled={true}
+            disabled={false}
             id="navbar_reset_button"
             onClick={[Function]}
             type="button"
