@@ -107,9 +107,9 @@ const NavBar = ({
       //@ts-ignore
       <Menu onClick={handleDropDownStopsequenceMenu}>
         {stopSequenceList &&
-          stopSequenceList.map((el: any) => (
+          stopSequenceList.map((el: any, index: number) => (
             <Menu.Item
-              key={el._id}
+              key={index}
               onClick={() => {
                 stopSequenceRef.current = el._id;
               }}

@@ -7,7 +7,7 @@ const setUp = () => {
   const div = global.document.createElement("div");
   global.document.body.appendChild(div);
 
-  const component = shallow(<Aufgabe />, { attachTo: div });
+  const component = mount(<Aufgabe />, { attachTo: div });
   return component;
 };
 

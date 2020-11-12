@@ -36,7 +36,7 @@ exports[`NavBar component Should Match snapshot with the Navbar component 1`] = 
       "vorschlag": Object {
         "items": Array [
           Object {
-            "_id": "5f6206390d5658001cd959b4",
+            "_id": "5f6206390d5658001cd959b40",
             "angle": -83.19868517601843,
             "coord": Object {
               "WGS84": Object {
@@ -52,7 +52,7 @@ exports[`NavBar component Should Match snapshot with the Navbar component 1`] = 
             "name": "Bernex 1",
           },
           Object {
-            "_id": "5f6206390d5658001cd959b4",
+            "_id": "5f6206390d5658001cd959b41",
             "angle": -83.19868517601843,
             "coord": Object {
               "WGS84": Object {
@@ -68,7 +68,7 @@ exports[`NavBar component Should Match snapshot with the Navbar component 1`] = 
             "name": "Bernex 1",
           },
           Object {
-            "_id": "5f6206390d5658001cd959b4",
+            "_id": "5f6206390d5658001cd959b42",
             "angle": -83.19868517601843,
             "coord": Object {
               "WGS84": Object {
@@ -84,7 +84,7 @@ exports[`NavBar component Should Match snapshot with the Navbar component 1`] = 
             "name": "Bernex 1",
           },
           Object {
-            "_id": "5f6206390d5658001cd959b4",
+            "_id": "5f6206390d5658001cd959b43",
             "angle": -83.19868517601843,
             "coord": Object {
               "WGS84": Object {
@@ -100,7 +100,7 @@ exports[`NavBar component Should Match snapshot with the Navbar component 1`] = 
             "name": "Bernex 1",
           },
           Object {
-            "_id": "5f6206390d5658001cd959b4",
+            "_id": "5f6206390d5658001cd959b44",
             "angle": -83.19868517601843,
             "coord": Object {
               "WGS84": Object {
@@ -116,7 +116,7 @@ exports[`NavBar component Should Match snapshot with the Navbar component 1`] = 
             "name": "Bernex 1",
           },
           Object {
-            "_id": "5f6206390d5658001cd959b4",
+            "_id": "5f6206390d5658001cd959b45",
             "angle": -83.19868517601843,
             "coord": Object {
               "WGS84": Object {
@@ -132,7 +132,7 @@ exports[`NavBar component Should Match snapshot with the Navbar component 1`] = 
             "name": "Bernex 1",
           },
           Object {
-            "_id": "5f6206390d5658001cd959b4",
+            "_id": "5f6206390d5658001cd959b46",
             "angle": -83.19868517601843,
             "coord": Object {
               "WGS84": Object {
@@ -148,7 +148,7 @@ exports[`NavBar component Should Match snapshot with the Navbar component 1`] = 
             "name": "Bernex 1",
           },
           Object {
-            "_id": "5f6206390d5658001cd959b4",
+            "_id": "5f6206390d5658001cd959b47",
             "angle": -83.19868517601843,
             "coord": Object {
               "WGS84": Object {
@@ -164,7 +164,7 @@ exports[`NavBar component Should Match snapshot with the Navbar component 1`] = 
             "name": "Bernex 1",
           },
           Object {
-            "_id": "5f6206390d5658001cd959b4",
+            "_id": "5f6206390d5658001cd959b48",
             "angle": -83.19868517601843,
             "coord": Object {
               "WGS84": Object {
@@ -180,7 +180,7 @@ exports[`NavBar component Should Match snapshot with the Navbar component 1`] = 
             "name": "Bernex 1",
           },
           Object {
-            "_id": "5f6206390d5658001cd959b4",
+            "_id": "5f6206390d5658001cd959b49",
             "angle": -83.19868517601843,
             "coord": Object {
               "WGS84": Object {
@@ -196,7 +196,7 @@ exports[`NavBar component Should Match snapshot with the Navbar component 1`] = 
             "name": "Bernex 1",
           },
           Object {
-            "_id": "5f6206390d5658001cd959b4",
+            "_id": "5f6206390d5658001cd959b410",
             "angle": -83.19868517601843,
             "coord": Object {
               "WGS84": Object {
@@ -212,7 +212,7 @@ exports[`NavBar component Should Match snapshot with the Navbar component 1`] = 
             "name": "Bernex 1",
           },
           Object {
-            "_id": "5f6206390d5658001cd959b4",
+            "_id": "5f6206390d5658001cd959b411",
             "angle": -83.19868517601843,
             "coord": Object {
               "WGS84": Object {
@@ -228,7 +228,7 @@ exports[`NavBar component Should Match snapshot with the Navbar component 1`] = 
             "name": "Bernex 1",
           },
           Object {
-            "_id": "5f6206390d5658001cd959b4",
+            "_id": "5f6206390d5658001cd959b412",
             "angle": -83.19868517601843,
             "coord": Object {
               "WGS84": Object {
@@ -244,7 +244,7 @@ exports[`NavBar component Should Match snapshot with the Navbar component 1`] = 
             "name": "Bernex 1",
           },
           Object {
-            "_id": "5f6206390d5658001cd959b4",
+            "_id": "5f6206390d5658001cd959b413",
             "angle": -83.19868517601843,
             "coord": Object {
               "WGS84": Object {
@@ -260,7 +260,7 @@ exports[`NavBar component Should Match snapshot with the Navbar component 1`] = 
             "name": "Bernex 1",
           },
           Object {
-            "_id": "5f6206390d5658001cd959b4",
+            "_id": "5f6206390d5658001cd959b414",
             "angle": -83.19868517601843,
             "coord": Object {
               "WGS84": Object {
@@ -276,7 +276,23 @@ exports[`NavBar component Should Match snapshot with the Navbar component 1`] = 
             "name": "Bernex 1",
           },
           Object {
-            "_id": "5f6206390d5658001cd959b4",
+            "_id": "5f6206390d5658001cd959b415",
+            "angle": -83.19868517601843,
+            "coord": Object {
+              "WGS84": Object {
+                "lat": 46.17857,
+                "lon": 6.08606,
+              },
+            },
+            "distance": 0.17031643195093935,
+            "modes": Array [
+              "4",
+              "5",
+            ],
+            "name": "Bernex 1",
+          },
+          Object {
+            "_id": "5f6206390d5658001cd959b416",
             "angle": -83.19868517601843,
             "coord": Object {
               "WGS84": Object {

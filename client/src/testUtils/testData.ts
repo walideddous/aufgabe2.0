@@ -1,13 +1,15 @@
 const table = () => {
-  const tab = new Array(16).fill({
-    angle: -83.19868517601843,
-    coord: { WGS84: { lat: 46.17857, lon: 6.08606 } },
-    distance: 0.17031643195093935,
-    modes: ["4", "5"],
-    name: "Bernex 1",
-    _id: "5f6206390d5658001cd959b4",
-  });
-
+  let tab =[];
+  for(let i=0; i<=16; i++){
+    tab.push({
+      angle: -83.19868517601843,
+      coord: { WGS84: { lat: 46.17857, lon: 6.08606 } },
+      distance: 0.17031643195093935,
+      modes: ["4", "5"],
+      name: "Bernex 1",
+      _id: "5f6206390d5658001cd959b4" + i,
+    });  
+  }
   return tab;
 };
 

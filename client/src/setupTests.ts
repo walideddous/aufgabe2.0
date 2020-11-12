@@ -33,6 +33,26 @@ Object.defineProperty(window, "matchMedia", {
   })),
 });
 
+// Mock the  
+jest.mock('react-beautiful-dnd', () => ({
+  //@ts-ignore
+  Droppable: ({ children }) => children({
+    draggableProps: {
+      style: {},
+    },
+    innerRef: jest.fn(),
+  }, {}),
+   //@ts-ignore
+  Draggable: ({ children }) => children({
+    draggableProps: {
+      style: {},
+    },
+    innerRef: jest.fn(),
+  }, {}),
+   //@ts-ignore
+  DragDropContext: ({ children }) => children,
+}));
+
 configure( {adapter : new Adapter()})
 
 

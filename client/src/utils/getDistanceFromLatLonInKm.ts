@@ -47,7 +47,7 @@ const calculateAngle = (
   var latB = B.lat;
   var lonB = B.lon;
 
-  //when longitude or latitude is equal
+  //when longitude or latitude are equal
   if (lonA === lonB && latA > latB) {
     angle = Math.PI;
   } else if (lonA === lonB && latA < latB) {
@@ -70,7 +70,7 @@ const calculateAngle = (
   return (2 * (angle * 90)) / Math.PI;
 };
 
-// Calculate the distance from a fixed punkt to every punkt of the table
+// Calculate the distance from a fixed poins to every points of the table
 export function calculateDistanceAndSort(
   objClicked: any,
   tabData: Tstations[]
