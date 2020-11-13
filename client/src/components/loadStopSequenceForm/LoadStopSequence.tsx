@@ -35,8 +35,9 @@ const LoadStopSequence = ({
   const handleModeChange = useCallback(
     (value: any) => {
       if (value !== "Choose mode ") {
-        onSendRequest(value);
-        setSelectValue(value);
+        console.log("test", value);
+        onSendRequest(value + "");
+        setSelectValue(value + "");
       }
     },
     [onSendRequest]
@@ -92,13 +93,27 @@ const LoadStopSequence = ({
             value={selectValue}
             onChange={handleModeChange}
           >
-            <Option value="Choose mode">Choose mode</Option>
-            <Option value="13">13</Option>
-            <Option value="5">5</Option>
-            <Option value="8">8</Option>
-            <Option value="9">9</Option>
-            <Option value="2">2</Option>
-            <Option value="4">4</Option>
+            <Option value="Choose mode" id="Choose mode">
+              Choose mode
+            </Option>
+            <Option value="13" id="13">
+              13
+            </Option>
+            <Option value="5" id="5">
+              5
+            </Option>
+            <Option value="8" id="8">
+              8
+            </Option>
+            <Option value="9" id="9">
+              9
+            </Option>
+            <Option value="2" id="2">
+              2
+            </Option>
+            <Option value="4" id="4">
+              4
+            </Option>
           </Select>
         </Form.Item>
         {show && (

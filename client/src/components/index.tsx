@@ -16,6 +16,7 @@ import DragDrop from "./dnd/DragDrop";
 import Map from "./map/Map";
 import SaveStopsSequenceForm from "./form/SaveStopsSequenceForm";
 import LoadStopSequence from "./loadStopSequenceForm/LoadStopSequence";
+import SearchInput from "./search/SearchInput";
 
 // Import React-leaflet
 import ReactLeaflet from "./map/ReactLeaflet";
@@ -788,12 +789,17 @@ const Aufgabe: React.FC = () => {
             <Col xs={24}>
               <SaveStopsSequenceForm result={result} />
             </Col>
+            <Col xs={24}>
+              <SearchInput
+                stations={stations}
+                handleSelectAutoSearch={onSelectAutoSearch}
+              />
+            </Col>
             <Map
               stations={stations}
               stateDND={stateDND}
               selected={selected}
               distance={distance}
-              handleSelectAutoSearch={onSelectAutoSearch}
               currentStopSequence={currentStopSequence}
               onAddBeforSelected={handleAddBeforSelected}
               onAddAfterSelected={handleAddAfterSelected}
@@ -844,6 +850,7 @@ export default Aufgabe;
             />
           </Fragment>
         )}
+
 
 
 */

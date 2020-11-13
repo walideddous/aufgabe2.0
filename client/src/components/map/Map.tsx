@@ -322,9 +322,6 @@ import "leaflet.markercluster";
 import "leaflet-contextmenu";
 import "leaflet-contextmenu/dist/leaflet.contextmenu.css";
 
-//Import search Component
-import SearchInput from "../search/SearchInput";
-
 // import the function to filter the table of the trajeckt and draw the linie on map
 import { getPathFromTrajekt } from "../../utils/getPathFromTrajekt";
 
@@ -371,7 +368,6 @@ interface TpropsOnMap {
   selected: Tstations | undefined;
   distance: Tdistance[];
   currentStopSequence: any;
-  handleSelectAutoSearch: (selectedStop: string) => void;
   onAddBeforSelected: (e: string) => void;
   onAddAfterSelected: (e: string) => void;
   onDeleteMarkerFromMap: (e: string) => void;
@@ -385,7 +381,6 @@ const Map = ({
   selected,
   distance,
   currentStopSequence,
-  handleSelectAutoSearch,
   onAddAfterSelected,
   onAddBeforSelected,
   onDeleteMarkerFromMap,
@@ -408,7 +403,7 @@ const Map = ({
         coord: { WGS84: [el.coord.WGS84.lat, el.coord.WGS84.lon] },
       };
     });
-  }, [stateDND.trajekt.items]);
+  }, [stateDND]);
 
   // Center the Map
   const position = useMemo(() => {
@@ -537,7 +532,7 @@ const Map = ({
     clickOnMarker,
   ]);
 
-  // Center the map wen we load the stopSequence
+  // Center the map when we load the stopSequence
   useEffect(() => {
     if (Object.keys(currentStopSequence).length && !selected) {
       const { stopSequence } = currentStopSequence;
@@ -559,10 +554,6 @@ const Map = ({
       <Col xxl={12} xs={24}>
         <Card bordered={true} title="Map">
           <div id="mapId" style={{ height: "880px", zIndex: 0 }}></div>
-          <SearchInput
-            stations={stations}
-            handleSelectAutoSearch={handleSelectAutoSearch}
-          />
         </Card>
       </Col>
     </Fragment>

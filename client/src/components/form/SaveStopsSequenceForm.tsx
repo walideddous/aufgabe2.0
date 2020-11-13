@@ -230,7 +230,7 @@ const SaveStopsSequenceForm = ({ result }: Tprops) => {
                 </Form.Item>
               </Fragment>
             )}
-            <Collapse defaultActiveKey="2">
+            <Collapse defaultActiveKey="3">
               <Panel header="Stop sequence schedule" key="2">
                 <div
                   id="time_result"

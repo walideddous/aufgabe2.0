@@ -209,7 +209,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                             "leave": [Function],
                           }
                         }
-                        key="rc_animate_1605186053147"
+                        key="rc_animate_1605264377172"
                         transitionAppear={false}
                         transitionEnter={true}
                         transitionLeave={true}
@@ -218,7 +218,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                           destroyInactivePanel={false}
                           forceRender={false}
                           isActive={true}
-                          key="rc_animate_1605186053147"
+                          key="rc_animate_1605264377172"
                           prefixCls="ant-collapse"
                           role={null}
                         >
@@ -683,13 +683,13 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                       </div>
                                       <Collapse
                                         bordered={true}
-                                        defaultActiveKey="2"
+                                        defaultActiveKey="3"
                                       >
                                         <Collapse
                                           accordion={false}
                                           bordered={true}
                                           className="ant-collapse-icon-position-left"
-                                          defaultActiveKey="2"
+                                          defaultActiveKey="3"
                                           destroyInactivePanel={false}
                                           expandIcon={[Function]}
                                           onChange={[Function]}
@@ -711,7 +711,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                               destroyInactivePanel={false}
                                               expandIcon={[Function]}
                                               header="Stop sequence schedule"
-                                              isActive={true}
+                                              isActive={false}
                                               key="2"
                                               onItemClick={[Function]}
                                               openAnimation={
@@ -732,7 +732,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                 forceRender={false}
                                                 header="Stop sequence schedule"
                                                 headerClass=""
-                                                isActive={true}
+                                                isActive={false}
                                                 onItemClick={[Function]}
                                                 openAnimation={
                                                   Object {
@@ -746,10 +746,10 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                 showArrow={true}
                                               >
                                                 <div
-                                                  className="ant-collapse-item ant-collapse-item-active"
+                                                  className="ant-collapse-item"
                                                 >
                                                   <div
-                                                    aria-expanded="true"
+                                                    aria-expanded="false"
                                                     className="ant-collapse-header"
                                                     onClick={[Function]}
                                                     onKeyPress={[Function]}
@@ -758,7 +758,6 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                   >
                                                     <ForwardRef(RightOutlined)
                                                       className="ant-collapse-arrow"
-                                                      rotate={90}
                                                     >
                                                       <AntdIcon
                                                         className="ant-collapse-arrow"
@@ -783,7 +782,6 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                             "theme": "outlined",
                                                           }
                                                         }
-                                                        rotate={90}
                                                       >
                                                         <span
                                                           aria-label="right"
@@ -813,12 +811,6 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                                 "theme": "outlined",
                                                               }
                                                             }
-                                                            style={
-                                                              Object {
-                                                                "msTransform": "rotate(90deg)",
-                                                                "transform": "rotate(90deg)",
-                                                              }
-                                                            }
                                                           >
                                                             <svg
                                                               aria-hidden="true"
@@ -828,12 +820,6 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                               focusable="false"
                                                               height="1em"
                                                               key="svg-right"
-                                                              style={
-                                                                Object {
-                                                                  "msTransform": "rotate(90deg)",
-                                                                  "transform": "rotate(90deg)",
-                                                                }
-                                                              }
                                                               viewBox="64 64 896 896"
                                                               width="1em"
                                                             >
@@ -876,7 +862,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                           "leave": [Function],
                                                         }
                                                       }
-                                                      key="rc_animate_1605186053147"
+                                                      key="rc_animate_1605264377172"
                                                       transitionAppear={false}
                                                       transitionEnter={true}
                                                       transitionLeave={true}
@@ -884,47 +870,11 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                       <PanelContent
                                                         destroyInactivePanel={false}
                                                         forceRender={false}
-                                                        isActive={true}
-                                                        key="rc_animate_1605186053147"
+                                                        isActive={false}
+                                                        key="rc_animate_1605264377172"
                                                         prefixCls="ant-collapse"
                                                         role={null}
-                                                      >
-                                                        <div
-                                                          className="ant-collapse-content ant-collapse-content-active"
-                                                          role={null}
-                                                        >
-                                                          <div
-                                                            className="ant-collapse-content-box"
-                                                          >
-                                                            <div
-                                                              id="time_result"
-                                                              style={
-                                                                Object {
-                                                                  "height": "200px",
-                                                                  "overflowY": "auto",
-                                                                }
-                                                              }
-                                                            >
-                                                              <div
-                                                                key="0"
-                                                              >
-                                                                <h3
-                                                                  id="date_output"
-                                                                />
-                                                                <div
-                                                                  style={
-                                                                    Object {
-                                                                      "display": "flex",
-                                                                      "flexWrap": "wrap",
-                                                                      "marginBottom": "0.5em",
-                                                                    }
-                                                                  }
-                                                                />
-                                                              </div>
-                                                            </div>
-                                                          </div>
-                                                        </div>
-                                                      </PanelContent>
+                                                      />
                                                     </AnimateChild>
                                                   </Animate>
                                                 </div>

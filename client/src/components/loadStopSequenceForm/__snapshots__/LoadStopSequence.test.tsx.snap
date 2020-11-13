@@ -57,36 +57,43 @@ exports[`LoadStopSequence component Should match the LoadStopSequence component 
         value="Choose mode"
       >
         <Option
+          id="Choose mode"
           value="Choose mode"
         >
           Choose mode
         </Option>
         <Option
+          id="13"
           value="13"
         >
           13
         </Option>
         <Option
+          id="5"
           value="5"
         >
           5
         </Option>
         <Option
+          id="8"
           value="8"
         >
           8
         </Option>
         <Option
+          id="9"
           value="9"
         >
           9
         </Option>
         <Option
+          id="2"
           value="2"
         >
           2
         </Option>
         <Option
+          id="4"
           value="4"
         >
           4
