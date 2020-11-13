@@ -2,18 +2,7 @@ import React, { useCallback, useState } from "react";
 import { AutoComplete } from "antd";
 
 // Typescript
-export interface Tstations {
-  index?: number;
-  _id: string;
-  name: string;
-  coord: {
-    WGS84: {
-      lat: number;
-      lon: number;
-    };
-  };
-  modes: [string];
-}
+import { Tstations } from "../../types/types";
 
 interface TporpsSearchInput {
   stations: Tstations[];

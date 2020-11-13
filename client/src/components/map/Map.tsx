@@ -22,40 +22,7 @@ import SearchInput from "../search/SearchInput";
 import { getPathFromTrajekt } from "../../utils/getPathFromTrajekt";
 
 // Typescript
-export interface Tstations {
-  index?: number;
-  _id: string;
-  name: string;
-  coord: {
-    WGS84: {
-      lat: number;
-      lon: number;
-    };
-  };
-  modes: [string];
-}
-
-export interface Tdistance {
-  from: string;
-  to: Tstations;
-  distance: number;
-}
-
-export interface TstateDND {
-  vorschlag: {
-    title: string;
-    items: {
-      _id: string;
-      name: string;
-    }[];
-  };
-  trajekt: {
-    title: string;
-    items: {
-      _id: string;
-      name: string;
-    }[];
-  };
+import { Tstations, Tdistance, TstateDND } from "../../types/types";
 }
 
 interface TpropsOnMap {
@@ -326,41 +293,7 @@ import "leaflet-contextmenu/dist/leaflet.contextmenu.css";
 import { getPathFromTrajekt } from "../../utils/getPathFromTrajekt";
 
 // Typescript
-export interface Tstations {
-  index?: number;
-  _id: string;
-  name: string;
-  coord: {
-    WGS84: {
-      lat: number;
-      lon: number;
-    };
-  };
-  modes: [string];
-}
-
-export interface Tdistance {
-  from: string;
-  to: Tstations;
-  distance: number;
-}
-
-export interface TstateDND {
-  vorschlag: {
-    title: string;
-    items: {
-      _id: string;
-      name: string;
-    }[];
-  };
-  trajekt: {
-    title: string;
-    items: {
-      _id: string;
-      name: string;
-    }[];
-  };
-}
+import { Tstations, Tdistance, TstateDND } from "../../types/types";
 
 interface TpropsOnMap {
   stations: Tstations[];

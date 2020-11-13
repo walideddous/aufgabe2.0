@@ -18,9 +18,6 @@ import SaveStopsSequenceForm from "./form/SaveStopsSequenceForm";
 import LoadStopSequence from "./loadStopSequenceForm/LoadStopSequence";
 import SearchInput from "./search/SearchInput";
 
-// Import React-leaflet
-import ReactLeaflet from "./map/ReactLeaflet";
-
 // Get the property from Utils
 import { getProperty } from "../utils/getPropertyKey";
 
@@ -28,41 +25,7 @@ import { getProperty } from "../utils/getPropertyKey";
 import { calculateDistanceAndSort } from "../utils/getDistanceFromLatLonInKm";
 
 // Typescript
-export interface Tstations {
-  index?: number;
-  _id: string;
-  name: string;
-  coord: {
-    WGS84: {
-      lat: number;
-      lon: number;
-    };
-  };
-  modes: [string];
-}
-
-export interface Tdistance {
-  from: string;
-  to: Tstations;
-  distance: number;
-}
-
-export interface TstateDND {
-  vorschlag: {
-    title: string;
-    items: {
-      _id: string;
-      name: string;
-    }[];
-  };
-  trajekt: {
-    title: string;
-    items: {
-      _id: string;
-      name: string;
-    }[];
-  };
-}
+import { Tdistance, TstateDND, Tstations } from "../types/types";
 
 // Custom Loader
 const antIcon = <LoadingOutlined style={{ fontSize: 100 }} spin />;

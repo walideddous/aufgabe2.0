@@ -10,22 +10,7 @@ import { Col, Button, Dropdown, Menu, Badge } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 
 // Typescript
-export interface TstateDND {
-  vorschlag: {
-    title: string;
-    items: {
-      _id: string;
-      name: string;
-    }[];
-  };
-  trajekt: {
-    title: string;
-    items: {
-      _id: string;
-      name: string;
-    }[];
-  };
-}
+import { TstateDND } from "../../types/types";
 
 interface TnavBarProps {
   stopSequenceList: any;

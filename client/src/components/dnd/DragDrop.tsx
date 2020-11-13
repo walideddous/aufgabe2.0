@@ -4,35 +4,7 @@ import { Card, Col } from "antd";
 import { DeleteOutlined, ArrowUpOutlined } from "@ant-design/icons";
 
 // Typescript
-export interface Tstations {
-  index?: number;
-  _id: string;
-  name: string;
-  coord: {
-    WGS84: {
-      lat: number;
-      lon: number;
-    };
-  };
-  modes: [string];
-}
-
-export interface TstateDND {
-  vorschlag: {
-    title: string;
-    items: {
-      _id: string;
-      name: string;
-    }[];
-  };
-  trajekt: {
-    title: string;
-    items: {
-      _id: string;
-      name: string;
-    }[];
-  };
-}
+import { Tstations, TstateDND } from "../../types/types";
 
 // Declare Types
 interface TporpsDND {
