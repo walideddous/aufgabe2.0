@@ -137,8 +137,6 @@ describe("SaveStopSequenceForm component", () => {
       e.preventDefault();
     });
 
-    console.log(submitButton.props());
-
     expect(true).toBe(true);
   });
 });

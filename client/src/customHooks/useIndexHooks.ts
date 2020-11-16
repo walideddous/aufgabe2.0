@@ -62,15 +62,15 @@ export default function useIndexHooks() {
         console.log("start fetching");
         // GraphQl
         const stops = await stopsService(modes);
-        //const stopSequence = await queryStopSequence(modes);
+        const stopSequence = await queryStopSequence(modes);
         //stopSequence
 
         console.log("end fetching");
         if (stops ) {
           const { haltestelleByMode } = stops.data.data;
-         // const { stopSequenceByMode } = stopSequence.data.data;
+          const { stopSequenceByMode } = stopSequence.data.data;
           setStations(haltestelleByMode);
-        //  setStopSequenceList(stopSequenceByMode);
+          setStopSequenceList(stopSequenceByMode);
           setCurrentMode(modes);
           setUpdateDate(Date().toString().substr(4, 24));
         } else {

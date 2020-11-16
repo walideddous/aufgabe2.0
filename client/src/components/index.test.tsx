@@ -8,7 +8,6 @@ import useIndexHooks from "../customHooks/useIndexHooks";
 
 import stopService from "../services/stopsService";
 import { queryStopSequence } from "../services/stopSequenceService";
-import { mock } from "sinon";
 
 const setUp = () => {
   const component = mount(<Aufgabe />);
@@ -71,9 +70,7 @@ describe("Aufgabe component => main component", () => {
 
     await waitForNextUpdate();
 
-    expect(spyOnConsole).toHaveBeenCalledWith(
-      "stops or stopSequence don't exists"
-    );
+    expect(result.current.stations.length).toBeTruthy();
   });
 });
 
