@@ -62,6 +62,11 @@ describe("Map component", () => {
     );
   });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+    jest.resetAllMocks();
+  });
+
   it("Should match snapshot with the Map component", () => {
     expect(toJSON(wrapper)).toMatchSnapshot();
   });

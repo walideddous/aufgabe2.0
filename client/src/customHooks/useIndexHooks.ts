@@ -62,18 +62,19 @@ export default function useIndexHooks() {
         console.log("start fetching");
         // GraphQl
         const stops = await stopsService(modes);
-        const stopSequence = await queryStopSequence(modes);
+        //const stopSequence = await queryStopSequence(modes);
+        //stopSequence
 
         console.log("end fetching");
-        if (stops && stopSequence) {
+        if (stops ) {
           const { haltestelleByMode } = stops.data.data;
-          const { stopSequenceByMode } = stopSequence.data.data;
+         // const { stopSequenceByMode } = stopSequence.data.data;
           setStations(haltestelleByMode);
-          setStopSequenceList(stopSequenceByMode);
+        //  setStopSequenceList(stopSequenceByMode);
           setCurrentMode(modes);
           setUpdateDate(Date().toString().substr(4, 24));
         } else {
-          console.log("not authorized provid a token");
+          console.log("stops or stopSequence don't exists");
         }
       } catch (error) {
         console.error(error, "error from trycatch");

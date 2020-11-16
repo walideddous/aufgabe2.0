@@ -125,6 +125,7 @@ const SaveStopsSequenceForm = ({ result }: Tprops) => {
             {addSchedule && (
               <Fragment>
                 <Form.Item
+                  id="dayPicker-form"
                   label="Day"
                   name="day"
                   rules={[{ required: true, message: "Please give a day" }]}
@@ -205,6 +206,7 @@ const SaveStopsSequenceForm = ({ result }: Tprops) => {
                                 />
                               </Form.Item>
                               <MinusCircleOutlined
+                                id="remove_timePicker"
                                 onClick={() => remove(field.name)}
                               />
                             </Space>

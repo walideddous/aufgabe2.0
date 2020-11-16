@@ -3,6 +3,33 @@ import SaveStopsSequenceForm from "./SaveStopsSequenceForm";
 import { mount } from "enzyme";
 import toJSON from "enzyme-to-json";
 
+jest.mock("antd", () => {
+  const antd = jest.requireActual("antd");
+
+  const Select = ({ children, onChange }: any) => {
+    return (
+      <select
+        onChange={(e: any) => {
+          onChange(e.target.value);
+        }}
+      >
+        {children}
+      </select>
+    );
+  };
+
+  Select.Option = ({ children, otherProps }: any) => {
+    return <option {...otherProps}> {children} </option>;
+  };
+
+  return {
+    ...antd,
+    Select,
+  };
+});
+
+const spyOnConsoleWarn = jest.spyOn(console, "warn").mockImplementation();
+
 const makeProps = (props: any) => ({
   result() {},
   ...props,
@@ -19,6 +46,11 @@ describe("SaveStopSequenceForm component", () => {
 
   beforeEach(() => {
     mountWrapper = setUp(makeProps({ result }));
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+    jest.resetAllMocks();
   });
 
   it("Should matches snapshot with the SaveStopSequenceForm component", () => {
@@ -50,20 +82,39 @@ describe("SaveStopSequenceForm component", () => {
     expect(mountWrapper.find("#Cancel-button").length).toBe(0);
   });
 
+  it("Should remove timePicker on Click on remove time Picker button", () => {
+    mountWrapper.find("#AddSchedule-button").at(0).simulate("click");
+
+    const timePickerButton = mountWrapper.find("#addTime_Button").at(0);
+
+    timePickerButton.simulate("click");
+    expect(mountWrapper.find("#timePicker-input").at(0).length).toBe(1);
+
+    const removeTimePickerButton = mountWrapper
+      .find("#remove_timePicker")
+      .at(0);
+
+    removeTimePickerButton.simulate("click");
+
+    expect(mountWrapper.find("#timePicker-input").at(0).length).toBe(0);
+  });
+
+  it("Should display console warn when we submit and the Fields are Empty", () => {
+    mountWrapper.find("#AddSchedule-button").at(0).simulate("click");
+
+    const submitButton = mountWrapper.find("form").at(0);
+    //Submit form
+    submitButton.simulate("submit", (e: any) => {
+      e.preventDefault();
+    });
+
+    expect(spyOnConsoleWarn).toHaveBeenCalled();
+  });
+
   it("Should display tags as wanted after submit", () => {
-    // CLick on the Button
-    mountWrapper
-      .find("#AddSchedule-button")
-      .at(0)
-      .simulate("click", {
-        preventDefault: () => {},
-      });
-    mountWrapper
-      .find("#addTime_Button")
-      .at(0)
-      .simulate("click", {
-        preventDefault: () => {},
-      });
+    // Click on the Button
+    mountWrapper.find("#AddSchedule-button").at(0).simulate("click");
+    mountWrapper.find("#addTime_Button").at(0).simulate("click");
     // Input fild
     const inputName = mountWrapper.find("#name-input").at(0);
     const dayInput = mountWrapper.find("#dayPicker-input").at(0);
@@ -74,21 +125,19 @@ describe("SaveStopSequenceForm component", () => {
     // Button
     const submitButton = mountWrapper.find("form").at(0);
 
-    inputName.props().value = "walid";
-    dayInput.simulate("change", {
-      target: {
-        value: "Mon",
-      },
-    });
+    // inputName.props().value = "walid";
+    dayInput.props().value = "Mo";
     selectDate1.props().value = "2020-11-10";
     selectDate2.props().value = "2020-12-10";
     selectTime1.props().value = "03:00";
     selectTime2.props().value = "06:00";
 
     //Submit form
-    submitButton.simulate("click", {
-      preventDefault: () => {},
+    submitButton.simulate("submit", (e: any) => {
+      e.preventDefault();
     });
+
+    console.log(submitButton.props());
 
     expect(true).toBe(true);
   });

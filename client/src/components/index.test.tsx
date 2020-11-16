@@ -8,6 +8,7 @@ import useIndexHooks from "../customHooks/useIndexHooks";
 
 import stopService from "../services/stopsService";
 import { queryStopSequence } from "../services/stopSequenceService";
+import { mock } from "sinon";
 
 const setUp = () => {
   const component = mount(<Aufgabe />);
@@ -43,6 +44,40 @@ jest.mock("antd", () => {
   };
 });
 
+describe("Aufgabe component => main component", () => {
+  let wrappedComponent: any;
+  let spyOnConsole: any;
+
+  beforeEach(() => {
+    wrappedComponent = setUp();
+    spyOnConsole = spyOn(console, "log");
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+    jest.resetAllMocks();
+  });
+
+  it("Should match snapShot with the Aufgabe(index) component", () => {
+    expect(toJSON(wrappedComponent)).toMatchSnapshot();
+  });
+
+  it("Should dispatch the console log if we don't have stop in Backend", async () => {
+    const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
+
+    act(() => {
+      result.current.sendRequest("4");
+    });
+
+    await waitForNextUpdate();
+
+    expect(spyOnConsole).toHaveBeenCalledWith(
+      "stops or stopSequence don't exists"
+    );
+  });
+});
+
+/*
 jest.mock("../services/stopsService.ts", () => {
   return {
     __esModule: true,
@@ -134,57 +169,4 @@ jest.mock("../services/stopSequenceService.ts", () => {
   };
 });
 
-describe("Aufgabe component => main component", () => {
-  let wrappedComponent: any;
-
-  beforeEach(() => {
-    wrappedComponent = setUp();
-  });
-
-  it("Should match snapShot with the Aufgabe(index) component", () => {
-    expect(toJSON(wrappedComponent)).toMatchSnapshot();
-  });
-
-  afterEach(() => {
-    jest.clearAllMocks();
-    jest.resetAllMocks();
-  });
-
-  it("Should call API and return results when we select the mode", async () => {
-    const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
-    const selectMode = wrappedComponent.find("#mode_selector");
-
-    act(() => {
-      result.current.sendRequest("4");
-
-      //selectMode.simulate("change", { target: { value: "4" } });
-    });
-
-    await waitForNextUpdate();
-
-    expect(result.current.stations).toBe([
-      {
-        _id: "5f6203bb0d5658001cd8f85a",
-        name: "Basel",
-        coord: {
-          WGS84: {
-            lat: 47.54741,
-            lon: 7.58956,
-          },
-        },
-        modes: [],
-      },
-      {
-        _id: "5f6203bb0d5658001cd8f85b",
-        name: "Lyon",
-        coord: {
-          WGS84: {
-            lat: 45.74506,
-            lon: 4.84184,
-          },
-        },
-        modes: [],
-      },
-    ]);
-  });
-});
+*/

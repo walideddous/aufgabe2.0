@@ -35,7 +35,6 @@ const LoadStopSequence = ({
   const handleModeChange = useCallback(
     (value: any) => {
       if (value !== "Choose mode ") {
-        console.log("test", value);
         onSendRequest(value + "");
         setSelectValue(value + "");
       }
