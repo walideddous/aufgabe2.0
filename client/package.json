@@ -57,10 +57,12 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/react-hooks": "^3.4.2",
     "@types/enzyme": "^3.10.8",
     "@types/enzyme-adapter-react-16": "^1.0.6",
     "@types/react-test-renderer": "^16.9.3",
     "@types/sinon": "^9.0.8",
+    "@types/testing-library__react-hooks": "^3.4.1",
     "dotenv": "^8.2.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.5",
@@ -76,6 +78,7 @@
       "src/**/*.tsx",
       "src/utils/*.ts",
       "src/services/*.ts",
+      "src/customHooks/*.ts",
       "!src/utils/getPropertyKey.ts",
       "!src/components/navBar/NavBar.tsx",
       "!src/index.tsx",

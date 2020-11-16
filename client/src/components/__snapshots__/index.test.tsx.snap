@@ -52,13 +52,13 @@ exports[`Aufgabe component => main component Should match snapShot with the Aufg
               ondisplayStopSequence={[Function]}
               stateDND={
                 Object {
+                  "suggestions": Object {
+                    "items": Array [],
+                    "title": "Suggestion",
+                  },
                   "trajekt": Object {
                     "items": Array [],
                     "title": "Stop sequence",
-                  },
-                  "vorschlag": Object {
-                    "items": Array [],
-                    "title": "Suggestion",
                   },
                 }
               }
@@ -1151,7 +1151,7 @@ exports[`Aufgabe component => main component Should match snapShot with the Aufg
                                         "leave": [Function],
                                       }
                                     }
-                                    key="rc_animate_1605266553529"
+                                    key="rc_animate_1605537783642"
                                     transitionAppear={false}
                                     transitionEnter={true}
                                     transitionLeave={true}
@@ -1160,7 +1160,7 @@ exports[`Aufgabe component => main component Should match snapShot with the Aufg
                                       destroyInactivePanel={false}
                                       forceRender={false}
                                       isActive={true}
-                                      key="rc_animate_1605266553529"
+                                      key="rc_animate_1605537783642"
                                       prefixCls="ant-collapse"
                                       role={null}
                                     >
@@ -1804,7 +1804,7 @@ exports[`Aufgabe component => main component Should match snapShot with the Aufg
                                                                       "leave": [Function],
                                                                     }
                                                                   }
-                                                                  key="rc_animate_1605266553529"
+                                                                  key="rc_animate_1605537783642"
                                                                   transitionAppear={false}
                                                                   transitionEnter={true}
                                                                   transitionLeave={true}
@@ -1813,7 +1813,7 @@ exports[`Aufgabe component => main component Should match snapShot with the Aufg
                                                                     destroyInactivePanel={false}
                                                                     forceRender={false}
                                                                     isActive={false}
-                                                                    key="rc_animate_1605266553529"
+                                                                    key="rc_animate_1605537783642"
                                                                     prefixCls="ant-collapse"
                                                                     role={null}
                                                                   />
@@ -1846,523 +1846,23 @@ exports[`Aufgabe component => main component Should match snapShot with the Aufg
             </Memo(SaveStopsSequenceForm)>
           </div>
         </Col>
-        <Col
-          xs={24}
-        >
-          <div
-            className="ant-col ant-col-xs-24"
-            style={
-              Object {
-                "paddingBottom": 4,
-                "paddingLeft": 4,
-                "paddingRight": 4,
-                "paddingTop": 4,
-              }
-            }
-          >
-            <Memo(SearchInput)
-              handleSelectAutoSearch={[Function]}
-              stations={Array []}
-            >
-              <div
-                style={
-                  Object {
-                    "position": "absolute",
-                    "right": "9vh",
-                    "top": "8vh",
-                    "width": "75%",
-                    "zIndex": 400,
-                  }
-                }
-              >
-                <ForwardRef(AutoComplete)
-                  id="search"
-                  onChange={[Function]}
-                  onSelect={[Function]}
-                  open={false}
-                  placeholder="Enter stops name"
-                  style={
-                    Object {
-                      "width": "100%",
-                    }
-                  }
-                  value=""
-                >
-                  <ForwardRef(InternalSelect)
-                    className="ant-select-auto-complete"
-                    id="search"
-                    mode="SECRET_COMBOBOX_MODE_DO_NOT_USE"
-                    onChange={[Function]}
-                    onSelect={[Function]}
-                    open={false}
-                    placeholder="Enter stops name"
-                    prefixCls="ant-select"
-                    style={
-                      Object {
-                        "width": "100%",
-                      }
-                    }
-                    value=""
-                  >
-                    <Select
-                      className="ant-select-auto-complete"
-                      clearIcon={<ForwardRef(CloseCircleFilled) />}
-                      dropdownClassName=""
-                      id="search"
-                      inputIcon={[Function]}
-                      listHeight={256}
-                      listItemHeight={24}
-                      menuItemSelectedIcon={null}
-                      mode="combobox"
-                      notFoundContent={null}
-                      onChange={[Function]}
-                      onSelect={[Function]}
-                      open={false}
-                      placeholder="Enter stops name"
-                      prefixCls="ant-select"
-                      removeIcon={<ForwardRef(CloseOutlined) />}
-                      style={
-                        Object {
-                          "width": "100%",
-                        }
-                      }
-                      transitionName="slide-up"
-                      value=""
-                    >
-                      <ForwardRef(Select)
-                        className="ant-select-auto-complete"
-                        clearIcon={<ForwardRef(CloseCircleFilled) />}
-                        dropdownClassName=""
-                        id="search"
-                        inputIcon={[Function]}
-                        listHeight={256}
-                        listItemHeight={24}
-                        menuItemSelectedIcon={null}
-                        mode="combobox"
-                        notFoundContent={null}
-                        onChange={[Function]}
-                        onSelect={[Function]}
-                        open={false}
-                        placeholder="Enter stops name"
-                        prefixCls="ant-select"
-                        removeIcon={<ForwardRef(CloseOutlined) />}
-                        style={
-                          Object {
-                            "width": "100%",
-                          }
-                        }
-                        transitionName="slide-up"
-                        value=""
-                      >
-                        <div
-                          className="ant-select ant-select-auto-complete ant-select-single ant-select-show-search"
-                          onBlur={[Function]}
-                          onFocus={[Function]}
-                          onKeyDown={[Function]}
-                          onKeyUp={[Function]}
-                          onMouseDown={[Function]}
-                          style={
-                            Object {
-                              "width": "100%",
-                            }
-                          }
-                        >
-                          <SelectTrigger
-                            containerWidth={null}
-                            dropdownClassName=""
-                            empty={true}
-                            getTriggerDOMNode={[Function]}
-                            popupElement={
-                              <ForwardRef(OptionList)
-                                childrenAsData={true}
-                                defaultActiveFirstOption={false}
-                                flattenOptions={Array []}
-                                height={256}
-                                id="search"
-                                itemHeight={24}
-                                menuItemSelectedIcon={null}
-                                multiple={false}
-                                notFoundContent={null}
-                                onActiveValue={[Function]}
-                                onMouseEnter={[Function]}
-                                onSelect={[Function]}
-                                onToggleOpen={[Function]}
-                                open={false}
-                                options={Array []}
-                                prefixCls="ant-select"
-                                searchValue=""
-                                values={Set {}}
-                                virtual={true}
-                              />
-                            }
-                            prefixCls="ant-select"
-                            transitionName="slide-up"
-                            visible={false}
-                          >
-                            <Trigger
-                              action={Array []}
-                              afterPopupVisibleChange={[Function]}
-                              autoDestroy={false}
-                              blurDelay={0.15}
-                              builtinPlacements={
-                                Object {
-                                  "bottomLeft": Object {
-                                    "offset": Array [
-                                      0,
-                                      4,
-                                    ],
-                                    "overflow": Object {
-                                      "adjustX": 0,
-                                      "adjustY": 1,
-                                    },
-                                    "points": Array [
-                                      "tl",
-                                      "bl",
-                                    ],
-                                  },
-                                  "bottomRight": Object {
-                                    "offset": Array [
-                                      0,
-                                      4,
-                                    ],
-                                    "overflow": Object {
-                                      "adjustX": 0,
-                                      "adjustY": 1,
-                                    },
-                                    "points": Array [
-                                      "tr",
-                                      "br",
-                                    ],
-                                  },
-                                  "topLeft": Object {
-                                    "offset": Array [
-                                      0,
-                                      -4,
-                                    ],
-                                    "overflow": Object {
-                                      "adjustX": 0,
-                                      "adjustY": 1,
-                                    },
-                                    "points": Array [
-                                      "bl",
-                                      "tl",
-                                    ],
-                                  },
-                                  "topRight": Object {
-                                    "offset": Array [
-                                      0,
-                                      -4,
-                                    ],
-                                    "overflow": Object {
-                                      "adjustX": 0,
-                                      "adjustY": 1,
-                                    },
-                                    "points": Array [
-                                      "br",
-                                      "tr",
-                                    ],
-                                  },
-                                }
-                              }
-                              defaultPopupVisible={false}
-                              destroyPopupOnHide={false}
-                              focusDelay={0}
-                              getDocument={[Function]}
-                              getPopupClassNameFromAlign={[Function]}
-                              getTriggerDOMNode={[Function]}
-                              hideAction={Array []}
-                              mask={false}
-                              maskClosable={true}
-                              mouseEnterDelay={0}
-                              mouseLeaveDelay={0.1}
-                              onPopupAlign={[Function]}
-                              onPopupVisibleChange={[Function]}
-                              popup={
-                                <div>
-                                  <ForwardRef(OptionList)
-                                    childrenAsData={true}
-                                    defaultActiveFirstOption={false}
-                                    flattenOptions={Array []}
-                                    height={256}
-                                    id="search"
-                                    itemHeight={24}
-                                    menuItemSelectedIcon={null}
-                                    multiple={false}
-                                    notFoundContent={null}
-                                    onActiveValue={[Function]}
-                                    onMouseEnter={[Function]}
-                                    onSelect={[Function]}
-                                    onToggleOpen={[Function]}
-                                    open={false}
-                                    options={Array []}
-                                    prefixCls="ant-select"
-                                    searchValue=""
-                                    values={Set {}}
-                                    virtual={true}
-                                  />
-                                </div>
-                              }
-                              popupAlign={Object {}}
-                              popupClassName="ant-select-dropdown-empty"
-                              popupPlacement="bottomLeft"
-                              popupStyle={
-                                Object {
-                                  "minWidth": null,
-                                  "width": null,
-                                }
-                              }
-                              popupTransitionName="slide-up"
-                              popupVisible={false}
-                              prefixCls="ant-select-dropdown"
-                              showAction={Array []}
-                            >
-                              <Selector
-                                accessibilityIndex={0}
-                                activeValue={null}
-                                className="ant-select-auto-complete"
-                                clearIcon={<ForwardRef(CloseCircleFilled) />}
-                                domRef={
-                                  Object {
-                                    "current": <div
-                                      class="ant-select-selector"
-                                    >
-                                      <span
-                                        class="ant-select-selection-search"
-                                      >
-                                        <input
-                                          aria-activedescendant="search_list_0"
-                                          aria-autocomplete="list"
-                                          aria-controls="search_list"
-                                          aria-expanded="false"
-                                          aria-haspopup="listbox"
-                                          aria-owns="search_list"
-                                          autocomplete="off"
-                                          class="ant-select-selection-search-input"
-                                          id="search"
-                                          role="combobox"
-                                          type="search"
-                                          value=""
-                                        />
-                                      </span>
-                                      <span
-                                        class="ant-select-selection-placeholder"
-                                      >
-                                        Enter stops name
-                                      </span>
-                                    </div>,
-                                  }
-                                }
-                                dropdownClassName=""
-                                id="search"
-                                inputElement={null}
-                                inputIcon={[Function]}
-                                key="trigger"
-                                listHeight={256}
-                                listItemHeight={24}
-                                menuItemSelectedIcon={null}
-                                mode="combobox"
-                                multiple={false}
-                                notFoundContent={null}
-                                onChange={[Function]}
-                                onSearch={[Function]}
-                                onSearchSubmit={[Function]}
-                                onSelect={[Function]}
-                                onToggleOpen={[Function]}
-                                open={false}
-                                placeholder="Enter stops name"
-                                prefixCls="ant-select"
-                                removeIcon={<ForwardRef(CloseOutlined) />}
-                                searchValue=""
-                                showSearch={true}
-                                style={
-                                  Object {
-                                    "width": "100%",
-                                  }
-                                }
-                                tokenWithEnter={false}
-                                transitionName="slide-up"
-                                value=""
-                                values={Array []}
-                              >
-                                <div
-                                  className="ant-select-selector"
-                                  onClick={[Function]}
-                                  onMouseDown={[Function]}
-                                >
-                                  <SingleSelector
-                                    accessibilityIndex={0}
-                                    activeValue={null}
-                                    className="ant-select-auto-complete"
-                                    clearIcon={<ForwardRef(CloseCircleFilled) />}
-                                    domRef={
-                                      Object {
-                                        "current": <div
-                                          class="ant-select-selector"
-                                        >
-                                          <span
-                                            class="ant-select-selection-search"
-                                          >
-                                            <input
-                                              aria-activedescendant="search_list_0"
-                                              aria-autocomplete="list"
-                                              aria-controls="search_list"
-                                              aria-expanded="false"
-                                              aria-haspopup="listbox"
-                                              aria-owns="search_list"
-                                              autocomplete="off"
-                                              class="ant-select-selection-search-input"
-                                              id="search"
-                                              role="combobox"
-                                              type="search"
-                                              value=""
-                                            />
-                                          </span>
-                                          <span
-                                            class="ant-select-selection-placeholder"
-                                          >
-                                            Enter stops name
-                                          </span>
-                                        </div>,
-                                      }
-                                    }
-                                    dropdownClassName=""
-                                    id="search"
-                                    inputElement={null}
-                                    inputIcon={[Function]}
-                                    inputRef={
-                                      Object {
-                                        "current": <input
-                                          aria-activedescendant="search_list_0"
-                                          aria-autocomplete="list"
-                                          aria-controls="search_list"
-                                          aria-expanded="false"
-                                          aria-haspopup="listbox"
-                                          aria-owns="search_list"
-                                          autocomplete="off"
-                                          class="ant-select-selection-search-input"
-                                          id="search"
-                                          role="combobox"
-                                          type="search"
-                                          value=""
-                                        />,
-                                      }
-                                    }
-                                    listHeight={256}
-                                    listItemHeight={24}
-                                    menuItemSelectedIcon={null}
-                                    mode="combobox"
-                                    multiple={false}
-                                    notFoundContent={null}
-                                    onChange={[Function]}
-                                    onInputChange={[Function]}
-                                    onInputCompositionEnd={[Function]}
-                                    onInputCompositionStart={[Function]}
-                                    onInputKeyDown={[Function]}
-                                    onInputMouseDown={[Function]}
-                                    onInputPaste={[Function]}
-                                    onSearch={[Function]}
-                                    onSearchSubmit={[Function]}
-                                    onSelect={[Function]}
-                                    onToggleOpen={[Function]}
-                                    open={false}
-                                    placeholder="Enter stops name"
-                                    prefixCls="ant-select"
-                                    removeIcon={<ForwardRef(CloseOutlined) />}
-                                    searchValue=""
-                                    showSearch={true}
-                                    style={
-                                      Object {
-                                        "width": "100%",
-                                      }
-                                    }
-                                    tokenWithEnter={false}
-                                    transitionName="slide-up"
-                                    value=""
-                                    values={Array []}
-                                  >
-                                    <span
-                                      className="ant-select-selection-search"
-                                    >
-                                      <Input
-                                        accessibilityIndex={0}
-                                        attrs={Object {}}
-                                        editable={true}
-                                        id="search"
-                                        inputElement={null}
-                                        onChange={[Function]}
-                                        onCompositionEnd={[Function]}
-                                        onCompositionStart={[Function]}
-                                        onKeyDown={[Function]}
-                                        onMouseDown={[Function]}
-                                        onPaste={[Function]}
-                                        open={false}
-                                        prefixCls="ant-select"
-                                        value=""
-                                      >
-                                        <input
-                                          aria-activedescendant="search_list_0"
-                                          aria-autocomplete="list"
-                                          aria-controls="search_list"
-                                          aria-expanded={false}
-                                          aria-haspopup="listbox"
-                                          aria-owns="search_list"
-                                          autoComplete="off"
-                                          className="ant-select-selection-search-input"
-                                          id="search"
-                                          onChange={[Function]}
-                                          onCompositionEnd={[Function]}
-                                          onCompositionStart={[Function]}
-                                          onKeyDown={[Function]}
-                                          onMouseDown={[Function]}
-                                          onPaste={[Function]}
-                                          readOnly={false}
-                                          role="combobox"
-                                          style={
-                                            Object {
-                                              "opacity": null,
-                                            }
-                                          }
-                                          type="search"
-                                          unselectable={null}
-                                          value=""
-                                        />
-                                      </Input>
-                                    </span>
-                                    <span
-                                      className="ant-select-selection-placeholder"
-                                    >
-                                      Enter stops name
-                                    </span>
-                                  </SingleSelector>
-                                </div>
-                              </Selector>
-                            </Trigger>
-                          </SelectTrigger>
-                        </div>
-                      </ForwardRef(Select)>
-                    </Select>
-                  </ForwardRef(InternalSelect)>
-                </ForwardRef(AutoComplete)>
-              </div>
-            </Memo(SearchInput)>
-          </div>
-        </Col>
         <Component
           currentStopSequence={Object {}}
           distance={Array []}
+          handleSelectAutoSearch={[Function]}
           onAddAfterSelected={[Function]}
           onAddBeforSelected={[Function]}
           onDeleteMarkerFromMap={[Function]}
           selectMarkerOnMap={[Function]}
           stateDND={
             Object {
+              "suggestions": Object {
+                "items": Array [],
+                "title": "Suggestion",
+              },
               "trajekt": Object {
                 "items": Array [],
                 "title": "Stop sequence",
-              },
-              "vorschlag": Object {
-                "items": Array [],
-                "title": "Suggestion",
               },
             }
           }
@@ -2396,13 +1896,13 @@ exports[`Aufgabe component => main component Should match snapShot with the Aufg
               onclick={[Function]}
               stateDND={
                 Object {
+                  "suggestions": Object {
+                    "items": Array [],
+                    "title": "Suggestion",
+                  },
                   "trajekt": Object {
                     "items": Array [],
                     "title": "Stop sequence",
-                  },
-                  "vorschlag": Object {
-                    "items": Array [],
-                    "title": "Suggestion",
                   },
                 }
               }
@@ -2450,7 +1950,7 @@ exports[`Aufgabe component => main component Should match snapShot with the Aufg
                           style={Object {}}
                         >
                           <Droppable
-                            droppableId="vorschlag"
+                            droppableId="suggestions"
                           >
                             <div
                               style={

@@ -13,27 +13,7 @@ exports[`NavBar component Should Match snapshot with the Navbar component 1`] = 
   savedStopSequence={Object {}}
   stateDND={
     Object {
-      "trajekt": Object {
-        "items": Array [
-          Object {
-            "_id": "5f6205c60d5658001cd9480b",
-            "coord": Object {
-              "WGS84": Object {
-                "lat": 46.17831,
-                "lon": 6.08824,
-              },
-            },
-            "index": 0,
-            "modes": Array [
-              "4",
-              "5",
-            ],
-            "name": "Confignon, croisée",
-          },
-        ],
-        "title": "Stop sequence",
-      },
-      "vorschlag": Object {
+      "suggestions": Object {
         "items": Array [
           Object {
             "_id": "5f6206390d5658001cd959b40",
@@ -309,6 +289,26 @@ exports[`NavBar component Should Match snapshot with the Navbar component 1`] = 
           },
         ],
         "title": "Suggestion",
+      },
+      "trajekt": Object {
+        "items": Array [
+          Object {
+            "_id": "5f6205c60d5658001cd9480b",
+            "coord": Object {
+              "WGS84": Object {
+                "lat": 46.17831,
+                "lon": 6.08824,
+              },
+            },
+            "index": 0,
+            "modes": Array [
+              "4",
+              "5",
+            ],
+            "name": "Confignon, croisée",
+          },
+        ],
+        "title": "Stop sequence",
       },
     }
   }

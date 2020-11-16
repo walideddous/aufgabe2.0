@@ -12,7 +12,7 @@ import {
     },
   });
 
-export default async (modes:any )=> {
+export default async (modes:string )=> {
     const response = await authAxios.post("/graphql", {
         query: GET_STOPS_BY_MODES(modes),
       });

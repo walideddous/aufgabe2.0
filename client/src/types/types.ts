@@ -19,7 +19,7 @@ export interface Tstations {
   }
   
   export interface TstateDND {
-    vorschlag: {
+    suggestions: {
       title: string;
       items: {
         _id: string;

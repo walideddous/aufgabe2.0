@@ -171,8 +171,8 @@ const Map = ({
         color:
           selected && selected._id === el._id
             ? "red"
-            : stateDND.vorschlag.items.length &&
-              stateDND.vorschlag.items.map((el) => el._id).includes(el._id)
+            : stateDND.suggestions.items.length &&
+              stateDND.suggestions.items.map((el) => el._id).includes(el._id)
             ? "green"
             : "blue",
       });
@@ -213,8 +213,8 @@ const Map = ({
         color:
           selected && selected._id === el._id
             ? "red"
-            : stateDND.vorschlag.items.length &&
-              stateDND.vorschlag.items.map((el) => el._id).includes(el._id)
+            : stateDND.suggestions.items.length &&
+              stateDND.suggestions.items.map((el) => el._id).includes(el._id)
             ? "green"
             : "blue",
       });
@@ -283,6 +283,8 @@ import React, {
 import { Card, Col } from "antd";
 import * as L from "leaflet";
 
+import SearchInput from "../search/SearchInput";
+
 // Import leaflet markerCluster
 import "leaflet.markercluster";
 // Import leaflet context menu
@@ -302,6 +304,7 @@ interface TpropsOnMap {
   distance: Tdistance[];
   currentStopSequence: any;
   onAddBeforSelected: (e: string) => void;
+  handleSelectAutoSearch: (selectedStop: string) => void;
   onAddAfterSelected: (e: string) => void;
   onDeleteMarkerFromMap: (e: string) => void;
   selectMarkerOnMap: (el: Tstations, index: number) => void;
@@ -314,6 +317,7 @@ const Map = ({
   selected,
   distance,
   currentStopSequence,
+  handleSelectAutoSearch,
   onAddAfterSelected,
   onAddBeforSelected,
   onDeleteMarkerFromMap,
@@ -435,8 +439,8 @@ const Map = ({
         color:
           selected && selected._id === el._id
             ? "red"
-            : stateDND.vorschlag.items.length &&
-              stateDND.vorschlag.items.map((el) => el._id).includes(el._id)
+            : stateDND.suggestions.items.length &&
+              stateDND.suggestions.items.map((el) => el._id).includes(el._id)
             ? "green"
             : "blue",
       }).addTo(map.current);
@@ -486,6 +490,10 @@ const Map = ({
     <Fragment>
       <Col xxl={12} xs={24}>
         <Card bordered={true} title="Map">
+          <SearchInput
+            stations={stations}
+            handleSelectAutoSearch={handleSelectAutoSearch}
+          />
           <div id="mapId" style={{ height: "880px", zIndex: 0 }}></div>
         </Card>
       </Col>

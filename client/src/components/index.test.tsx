@@ -3,11 +3,11 @@ import Aufgabe from "./index";
 import { mount } from "enzyme";
 import toJSON from "enzyme-to-json";
 
-// Import the data to test with
-import { stations } from "../testUtils/testData";
-// Import services
+import { renderHook, act } from "@testing-library/react-hooks";
+import useIndexHooks from "../customHooks/useIndexHooks";
 
-import { act } from "@testing-library/react";
+import stopService from "../services/stopsService";
+import { queryStopSequence } from "../services/stopSequenceService";
 
 const setUp = () => {
   const component = mount(<Aufgabe />);
@@ -43,6 +43,97 @@ jest.mock("antd", () => {
   };
 });
 
+jest.mock("../services/stopsService.ts", () => {
+  return {
+    __esModule: true,
+    default: jest.fn(async () => [
+      {
+        _id: "5f6203bb0d5658001cd8f85a",
+        name: "Basel",
+        coord: {
+          WGS84: {
+            lat: 47.54741,
+            lon: 7.58956,
+          },
+        },
+        modes: [],
+      },
+      {
+        _id: "5f6203bb0d5658001cd8f85b",
+        name: "Lyon",
+        coord: {
+          WGS84: {
+            lat: 45.74506,
+            lon: 4.84184,
+          },
+        },
+        modes: [],
+      },
+    ]),
+  };
+});
+jest.mock("../services/stopSequenceService.ts", () => {
+  return {
+    __esModule: true,
+    default: jest.fn(async () => [
+      {
+        _id: "c03295ea-5a3f-43e8-83ea-7736ce82cfd9",
+        name: "St. Gallen to Zürich HB",
+        date: ["2020-10-16", "2020-11-27"],
+        schedule: [
+          {
+            day: ["monday", "tuesday", "wednesday", "thursday", "friday"],
+            time: [
+              {
+                start: "07:00",
+                end: "12:00",
+              },
+              {
+                start: "13:00",
+                end: "18:00",
+              },
+            ],
+          },
+          {
+            day: ["saturday", "sunday"],
+            time: [
+              {
+                start: "07:00",
+                end: "12:00",
+              },
+            ],
+          },
+        ],
+        modes: "13",
+        stopSequence: [
+          {
+            _id: "5f62045b0d5658001cd910c4",
+            name: "St. Gallen",
+            modes: ["13", "5"],
+            coord: {
+              WGS84: {
+                lat: 47.42318,
+                lon: 9.3699,
+              },
+            },
+          },
+          {
+            _id: "5f62045b0d5658001cd910c1",
+            name: "St. Gallen Bruggen",
+            modes: ["13"],
+            coord: {
+              WGS84: {
+                lat: 47.4072,
+                lon: 9.32965,
+              },
+            },
+          },
+        ],
+      },
+    ]),
+  };
+});
+
 describe("Aufgabe component => main component", () => {
   let wrappedComponent: any;
 
@@ -50,19 +141,50 @@ describe("Aufgabe component => main component", () => {
     wrappedComponent = setUp();
   });
 
-  afterEach(() => {
-    jest.clearAllMocks;
-  });
-
   it("Should match snapShot with the Aufgabe(index) component", () => {
     expect(toJSON(wrappedComponent)).toMatchSnapshot();
   });
 
-  it("Should dispatch the sendRequest function to fetch the Data", async () => {
-    const modeSelector = await wrappedComponent.find("#mode_selector").first();
+  afterEach(() => {
+    jest.clearAllMocks();
+    jest.resetAllMocks();
+  });
+
+  it("Should call API and return results when we select the mode", async () => {
+    const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
+    const selectMode = wrappedComponent.find("#mode_selector");
 
     act(() => {
-      modeSelector.simulate("change", { target: { value: "4" } });
+      result.current.sendRequest("4");
+
+      //selectMode.simulate("change", { target: { value: "4" } });
     });
+
+    await waitForNextUpdate();
+
+    expect(result.current.stations).toBe([
+      {
+        _id: "5f6203bb0d5658001cd8f85a",
+        name: "Basel",
+        coord: {
+          WGS84: {
+            lat: 47.54741,
+            lon: 7.58956,
+          },
+        },
+        modes: [],
+      },
+      {
+        _id: "5f6203bb0d5658001cd8f85b",
+        name: "Lyon",
+        coord: {
+          WGS84: {
+            lat: 45.74506,
+            lon: 4.84184,
+          },
+        },
+        modes: [],
+      },
+    ]);
   });
 });

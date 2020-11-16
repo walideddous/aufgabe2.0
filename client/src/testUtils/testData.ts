@@ -14,7 +14,7 @@ const table = () => {
 };
 
 export const stateDND = {
-  vorschlag: {
+  suggestions: {
     title: "Suggestion",
     items: table(),
   },

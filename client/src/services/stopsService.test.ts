@@ -14,7 +14,7 @@ describe("Test the stopService", ()=>{
     afterEach(() => server.resetHandlers()); 
 
     it("Should query stops by modes", async ()=>{
-        const result = await getStopsByMode(4)
+        const result = await getStopsByMode("4")
         expect(result.data.msg).toEqual("Stops succesfuly queried")
     })
 })

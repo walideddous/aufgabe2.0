@@ -82,8 +82,8 @@ const DragDrop = ({
     <Fragment>
       <DragDropContext onDragEnd={handleDragEnd}>
         <Col xs={24}>
-          <Card bordered={true} title={stateDND.vorschlag.title}>
-            <Droppable droppableId={"vorschlag"}>
+          <Card bordered={true} title={stateDND.suggestions.title}>
+            <Droppable droppableId={"suggestions"}>
               {(provided: any) => {
                 return (
                   <div
@@ -97,8 +97,8 @@ const DragDrop = ({
                         {...provided.droppableProps}
                         className={"droppable-col"}
                       >
-                        {stateDND.vorschlag.items &&
-                          stateDND.vorschlag.items
+                        {stateDND.suggestions.items &&
+                          stateDND.suggestions.items
                             .slice(0, 8)
                             .map((el: any, index: number) => {
                               return (
@@ -156,8 +156,8 @@ const DragDrop = ({
                           {...provided.droppableProps}
                           className={"droppable-col"}
                         >
-                          {stateDND.vorschlag.items &&
-                            stateDND.vorschlag.items
+                          {stateDND.suggestions.items &&
+                            stateDND.suggestions.items
                               .slice(8, 16)
                               .map((el: any, index: number) => {
                                 return (
