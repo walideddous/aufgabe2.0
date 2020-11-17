@@ -52,7 +52,7 @@ describe("LoadStopSequence component", () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    jest.resetAllMocks();
   });
 
   it("Should match the LoadStopSequence component snapshot", () => {
@@ -95,6 +95,8 @@ describe("LoadStopSequence component", () => {
 
   it("Should dispatch ondisplayStopSequence props function on select value in Auto-complete field ", () => {
     const AutoCompleteInput = shallowWrapper.find("#stopSequence_autoComplete");
+
+    AutoCompleteInput.simulate("change", "St. Gallen to Zürich HB");
 
     AutoCompleteInput.simulate("select", {
       target: {

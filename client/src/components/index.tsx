@@ -108,33 +108,3 @@ const Aufgabe: React.FC = () => {
 };
 
 export default Aufgabe;
-
-/*
-        {addStopSequence && (
-          <Fragment>
-            <Col xxl={8} xs={12}>
-              <SearchInput
-                stations={stations}
-                handleSelectAutoSearch={onSelectAutoSearch}
-              />
-            </Col>
-            <NavBar
-              isSending={isSending}
-              stateDND={stateDND}
-              stopSequenceList={stopSequenceList}
-              updateDate={updateDate}
-              currentMode={currentMode}
-              currentStopSequence={currentStopSequence}
-              savedStopSequence={savedStopSequence}
-              handleDeleteStopSequence={handleDeleteStopSequence}
-              onSendRequest={sendRequest}
-              onClearAll={clearAll}
-              handleUpdateAfterSave={handleUpdateAfterSave}
-              ondisplayStopSequence={handledisplayStopSequence}
-            />
-          </Fragment>
-        )}
-
-
-
-*/

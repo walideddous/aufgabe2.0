@@ -9,14 +9,14 @@ interface TporpsSearchInput {
   handleSelectAutoSearch: (selectedStop: string) => void;
 }
 
+// Auto complete component
+const { Option } = AutoComplete;
+
 const SearchInput = ({
   stations,
   handleSelectAutoSearch,
 }: TporpsSearchInput) => {
   const [search, setSearch] = useState("");
-
-  // Auto complete component
-  const { Option } = AutoComplete;
 
   const handleSelect = useCallback(
     (selectedStop: string) => {
@@ -31,8 +31,8 @@ const SearchInput = ({
       style={{
         position: "absolute",
         top: "8vh",
-        right: "9vh",
-        zIndex: 400,
+        right: "7vh",
+        zIndex: 1,
         width: "75%",
       }}
     >

@@ -2,9 +2,9 @@ import React from "react";
 import { shallow, mount } from "enzyme";
 import toJSON from "enzyme-to-json";
 import Searchinput from "./SearchInput";
-import { act } from "react-dom/test-utils";
 // Import the data to test With
 import { stations } from "../../testUtils/testData";
+import { act } from "@testing-library/react";
 
 const makeProps = (props: any) => ({
   stations: [],
@@ -13,7 +13,7 @@ const makeProps = (props: any) => ({
 });
 
 const setUp = (props: any) => {
-  const component = mount(<Searchinput {...props} />);
+  const component = shallow(<Searchinput {...props} />);
   return component;
 };
 
@@ -38,40 +38,31 @@ describe("Searchinput component", () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    jest.resetAllMocks();
   });
 
   it("Should match snapShot with the Seachinput component", () => {
     expect(toJSON(wrappedComponent)).toMatchSnapshot();
   });
 
-  it("Should set the input value on change event", async () => {
-    let searchField = wrappedComponent.find('input[type="search"]');
-    searchField.simulate("change", {
-      target: {
-        value: "Basel",
-      },
+  it("Should test the AutoComplete component", () => {
+    const searchField = wrappedComponent.find("#search");
+
+    act(() => {
+      searchField.simulate("change", "Basel");
     });
 
-    expect(wrappedComponent.find('input[type="search"]').props().value).toBe(
-      "Basel"
-    );
-  });
-
-  it("Should dispatch the props function handleSelectAutoSearch onSelect", async () => {
-    const shallowWrapper = shallow(
-      <Searchinput
-        {...makeProps({
-          stations,
-          handleSelectAutoSearch,
-        })}
-      />
+    const AutoCompleteOptionButton = wrappedComponent.find(
+      '#search Option[value="Basel"]'
     );
 
-    const selectField = shallowWrapper.find("#search");
+    expect(AutoCompleteOptionButton.length).toBeTruthy();
 
-    selectField.simulate("select");
+    act(() => {
+      searchField.simulate("select");
+    });
 
-    expect(handleSelectAutoSearch).toHaveBeenCalled();
+    expect(searchField.props().value).toBe("");
+    expect(handleSelectAutoSearch).toBeCalled();
   });
 });

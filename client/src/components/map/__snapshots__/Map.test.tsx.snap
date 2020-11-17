@@ -514,10 +514,10 @@ exports[`Map component Should match snapshot with the Map component 1`] = `
                 style={
                   Object {
                     "position": "absolute",
-                    "right": "9vh",
+                    "right": "7vh",
                     "top": "8vh",
                     "width": "75%",
-                    "zIndex": 400,
+                    "zIndex": 1,
                   }
                 }
               >

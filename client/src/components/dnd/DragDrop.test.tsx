@@ -67,4 +67,16 @@ describe("DragDrop component", () => {
     button.simulate("click");
     expect(onDelete).toHaveBeenCalled();
   });
+
+  it("Should test the window size to hide some button", () => {
+    Object.defineProperty(window, "innerWidth", {
+      writable: true,
+      configurable: true,
+      value: 500,
+    });
+
+    const button = mountWrapper.find("#item-suggestion");
+
+    expect(button.length).toBeLessThan(10);
+  });
 });

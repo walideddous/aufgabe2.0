@@ -125,7 +125,7 @@ describe("SaveStopSequenceForm component", () => {
     // Button
     const submitButton = mountWrapper.find("form").at(0);
 
-    // inputName.props().value = "walid";
+    inputName.props().value = "walid";
     dayInput.props().value = "Mo";
     selectDate1.props().value = "2020-11-10";
     selectDate2.props().value = "2020-12-10";

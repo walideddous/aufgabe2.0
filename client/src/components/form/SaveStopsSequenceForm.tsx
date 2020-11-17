@@ -15,6 +15,9 @@ import moment from "moment";
 
 import { PlusOutlined, MinusCircleOutlined } from "@ant-design/icons";
 
+// Impprr utils function
+import getFormatTags from "../../utils/getFormatTags";
+
 const { RangePicker } = TimePicker;
 const { Panel } = Collapse;
 const { Option } = Select;
@@ -54,28 +57,7 @@ const SaveStopsSequenceForm = ({ result }: Tprops) => {
     };
     */
 
-    const formatTags = {
-      date: `${moment(values.date[0]).format("YYYY.MM.DD")} - ${moment(
-        values.date[1]
-      ).format("YYYY.MM.DD")}`,
-      displayedtags: values.time.map((el: any) => {
-        if (values.day.length === 8) {
-          return `All days ${moment(el.timePicker[0]).format(
-            "hh:mm"
-          )} - ${moment(el.timePicker[1]).format("hh:mm")}`;
-        } else if (values.day.length === 1) {
-          return `${values.day[0]} ${moment(el.timePicker[0]).format(
-            "hh:mm"
-          )} - ${moment(el.timePicker[1]).format("hh:mm")}`;
-        } else {
-          return `${values.day[0]} - ${
-            values.day[values.day.length - 1]
-          } ${moment(el.timePicker[0]).format("hh:mm")} - ${moment(
-            el.timePicker[1]
-          ).format("hh:mm")}`;
-        }
-      }),
-    };
+    const formatTags = getFormatTags(values);
 
     setTags((prev: any) => {
       if (prev) {
@@ -86,6 +68,11 @@ const SaveStopsSequenceForm = ({ result }: Tprops) => {
     });
     result(formatTags);
     setAddSchedule(false);
+    console.log(
+      form.setFieldsValue({
+        name: "walid",
+      })
+    );
     form.resetFields();
   };
 
@@ -175,6 +162,7 @@ const SaveStopsSequenceForm = ({ result }: Tprops) => {
                   {(fields, { add, remove }) => (
                     <>
                       <div style={{ display: "flex", paddingBottom: "20px" }}>
+                        <span>Time</span>
                         <Button
                           id="addTime_Button"
                           type="dashed"
@@ -232,7 +220,7 @@ const SaveStopsSequenceForm = ({ result }: Tprops) => {
                 </Form.Item>
               </Fragment>
             )}
-            <Collapse defaultActiveKey="3">
+            <Collapse defaultActiveKey={addSchedule ? "3" : "2"}>
               <Panel header="Stop sequence schedule" key="2">
                 <div
                   id="time_result"
@@ -265,6 +253,9 @@ const SaveStopsSequenceForm = ({ result }: Tprops) => {
                     </div>
                   ))}
                 </div>
+                <Button type="dashed" id="clear_all">
+                  Clear all
+                </Button>
               </Panel>
             </Collapse>
           </Form>

@@ -12,7 +12,7 @@ import { getProperty } from "../utils/getPropertyKey";
 import { calculateDistanceAndSort } from "../utils/getDistanceFromLatLonInKm";
 
 // Import services
-import stopsService from "../services/stopsService";
+import {getStopsByMode} from "../services/stopsService";
 import {
   createStopSequence,
   deleteStopSequence,
@@ -61,12 +61,13 @@ export default function useIndexHooks() {
       try {
         console.log("start fetching");
         // GraphQl
-        const stops = await stopsService(modes);
+        const stops = await getStopsByMode(modes);
+        console.log(stops)
         const stopSequence = await queryStopSequence(modes);
         //stopSequence
 
         console.log("end fetching");
-        if (stops ) {
+        if (stops || stopSequence ) {
           const { haltestelleByMode } = stops.data.data;
           const { stopSequenceByMode } = stopSequence.data.data;
           setStations(haltestelleByMode);

@@ -44,12 +44,10 @@ const DragDrop = ({
     var element = document.getElementById("item-highlighted");
     if (element) {
       //@ts-ignore
-      /*
       element.scrollIntoView({
         behavior: "smooth",
         block: "nearest",
       });
-      */
     }
   }, []);
   useEffect(() => {
@@ -110,7 +108,7 @@ const DragDrop = ({
                                   {(provided) => {
                                     return (
                                       <div
-                                        className="item-suggestion "
+                                        className="item-suggestion"
                                         ref={provided.innerRef}
                                         {...provided.draggableProps}
                                         {...provided.dragHandleProps}

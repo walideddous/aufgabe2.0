@@ -387,7 +387,7 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                           key="5f6206390d5658001cd959b40"
                         >
                           <div
-                            className="item-suggestion "
+                            className="item-suggestion"
                             style={Object {}}
                           >
                             <span
@@ -514,7 +514,7 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                           key="5f6206390d5658001cd959b41"
                         >
                           <div
-                            className="item-suggestion "
+                            className="item-suggestion"
                             style={Object {}}
                           >
                             <span
@@ -641,7 +641,7 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                           key="5f6206390d5658001cd959b42"
                         >
                           <div
-                            className="item-suggestion "
+                            className="item-suggestion"
                             style={Object {}}
                           >
                             <span
@@ -768,7 +768,7 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                           key="5f6206390d5658001cd959b43"
                         >
                           <div
-                            className="item-suggestion "
+                            className="item-suggestion"
                             style={Object {}}
                           >
                             <span
@@ -895,7 +895,7 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                           key="5f6206390d5658001cd959b44"
                         >
                           <div
-                            className="item-suggestion "
+                            className="item-suggestion"
                             style={Object {}}
                           >
                             <span
@@ -1022,7 +1022,7 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                           key="5f6206390d5658001cd959b45"
                         >
                           <div
-                            className="item-suggestion "
+                            className="item-suggestion"
                             style={Object {}}
                           >
                             <span
@@ -1149,7 +1149,7 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                           key="5f6206390d5658001cd959b46"
                         >
                           <div
-                            className="item-suggestion "
+                            className="item-suggestion"
                             style={Object {}}
                           >
                             <span
@@ -1276,7 +1276,7 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                           key="5f6206390d5658001cd959b47"
                         >
                           <div
-                            className="item-suggestion "
+                            className="item-suggestion"
                             style={Object {}}
                           >
                             <span

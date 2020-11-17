@@ -6,7 +6,7 @@ import toJSON from "enzyme-to-json";
 import { renderHook, act } from "@testing-library/react-hooks";
 import useIndexHooks from "../customHooks/useIndexHooks";
 
-import stopService from "../services/stopsService";
+import { getStopsByMode } from "../services/stopsService";
 import { queryStopSequence } from "../services/stopSequenceService";
 
 const setUp = () => {
@@ -43,127 +43,113 @@ jest.mock("antd", () => {
   };
 });
 
+jest.mock("../services/stopsService.ts", () => ({
+  getStopsByMode: jest.fn(() =>
+    Promise.resolve({
+      data: {},
+    })
+  ),
+}));
+
+jest.mock("../services/stopSequenceService.ts", () => ({
+  ...jest.requireActual("../services/stopSequenceService.ts"),
+  queryStopSequence: jest.fn(() =>
+    Promise.resolve({
+      data: {},
+    })
+  ),
+}));
+
 describe("Aufgabe component => main component", () => {
   let wrappedComponent: any;
-  let spyOnConsole: any;
+  let spyOnConsoleLog: any;
+  let spyOnConsoleWarn: any;
 
-  beforeEach(() => {
-    wrappedComponent = setUp();
-    spyOnConsole = spyOn(console, "log");
-  });
-
-  afterEach(() => {
-    jest.clearAllMocks();
-    jest.resetAllMocks();
-  });
-
-  it("Should match snapShot with the Aufgabe(index) component", () => {
-    expect(toJSON(wrappedComponent)).toMatchSnapshot();
-  });
-
-  it("Should dispatch the console log if we don't have stop in Backend", async () => {
-    const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
-
-    act(() => {
-      result.current.sendRequest("4");
+  describe("Fetch data functionality", () => {
+    beforeEach(() => {
+      wrappedComponent = setUp();
+      spyOnConsoleLog = spyOn(console, "log");
+      spyOnConsoleWarn = spyOn(console, "error");
     });
 
-    await waitForNextUpdate();
+    afterEach(() => {
+      jest.resetAllMocks();
+    });
 
-    expect(result.current.stations.length).toBeTruthy();
+    it("Should match snapShot with the Aufgabe(index) component", () => {
+      expect(toJSON(wrappedComponent)).toMatchSnapshot();
+    });
+
+    it("Should dispatch the console log if we don't have stops or stopSequence in Backend", async () => {
+      const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
+
+      act(() => {
+        result.current.sendRequest("4");
+      });
+
+      await waitForNextUpdate();
+
+      expect(spyOnConsoleLog).toBeCalledWith(
+        "stops or stopSequence don't exists"
+      );
+    });
+    it("Should dispatch the console Warn if we catch error from tryCatch block", async () => {
+      //@ts-ignore
+      getStopsByMode.mockImplementation(() => Promise.reject("error"));
+      //@ts-ignore
+      queryStopSequence.mockImplementation(() => Promise.reject("error"));
+      const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
+
+      act(() => {
+        result.current.sendRequest("4");
+      });
+
+      await waitForNextUpdate();
+
+      expect(spyOnConsoleWarn).toBeCalled();
+    });
+    it("Should set the state if we get data from the Backend", async () => {
+      //@ts-ignore
+      getStopsByMode.mockImplementation(() =>
+        Promise.resolve({
+          data: {
+            data: {
+              haltestelleByMode: [
+                { _id: "1", name: "Basel" },
+                { _id: "2", name: "Genf" },
+              ],
+            },
+          },
+        })
+      );
+      //@ts-ignore
+      queryStopSequence.mockImplementation(() =>
+        Promise.resolve({
+          data: {
+            data: {
+              stopSequenceByMode: [
+                { _id: "1", name: "St. Gallen to Zürich HB" },
+              ],
+            },
+          },
+        })
+      );
+      const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
+
+      act(() => {
+        result.current.sendRequest("4");
+      });
+
+      await waitForNextUpdate();
+
+      expect(result.current.stations.length).toBe(2);
+      expect(result.current.stopSequenceList.length).toBe(1);
+    });
+  });
+
+  describe("Save stopSequence functionality", () => {
+    it("First test", () => {
+      expect(true).toBe(true);
+    });
   });
 });
-
-/*
-jest.mock("../services/stopsService.ts", () => {
-  return {
-    __esModule: true,
-    default: jest.fn(async () => [
-      {
-        _id: "5f6203bb0d5658001cd8f85a",
-        name: "Basel",
-        coord: {
-          WGS84: {
-            lat: 47.54741,
-            lon: 7.58956,
-          },
-        },
-        modes: [],
-      },
-      {
-        _id: "5f6203bb0d5658001cd8f85b",
-        name: "Lyon",
-        coord: {
-          WGS84: {
-            lat: 45.74506,
-            lon: 4.84184,
-          },
-        },
-        modes: [],
-      },
-    ]),
-  };
-});
-jest.mock("../services/stopSequenceService.ts", () => {
-  return {
-    __esModule: true,
-    default: jest.fn(async () => [
-      {
-        _id: "c03295ea-5a3f-43e8-83ea-7736ce82cfd9",
-        name: "St. Gallen to Zürich HB",
-        date: ["2020-10-16", "2020-11-27"],
-        schedule: [
-          {
-            day: ["monday", "tuesday", "wednesday", "thursday", "friday"],
-            time: [
-              {
-                start: "07:00",
-                end: "12:00",
-              },
-              {
-                start: "13:00",
-                end: "18:00",
-              },
-            ],
-          },
-          {
-            day: ["saturday", "sunday"],
-            time: [
-              {
-                start: "07:00",
-                end: "12:00",
-              },
-            ],
-          },
-        ],
-        modes: "13",
-        stopSequence: [
-          {
-            _id: "5f62045b0d5658001cd910c4",
-            name: "St. Gallen",
-            modes: ["13", "5"],
-            coord: {
-              WGS84: {
-                lat: 47.42318,
-                lon: 9.3699,
-              },
-            },
-          },
-          {
-            _id: "5f62045b0d5658001cd910c1",
-            name: "St. Gallen Bruggen",
-            modes: ["13"],
-            coord: {
-              WGS84: {
-                lat: 47.4072,
-                lon: 9.32965,
-              },
-            },
-          },
-        ],
-      },
-    ]),
-  };
-});
-
-*/

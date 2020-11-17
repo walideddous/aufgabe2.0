@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Aufgabe component => main component Should match snapShot with the Aufgabe(index) component 1`] = `
+exports[`Aufgabe component => main component Fetch data functionality Should match snapShot with the Aufgabe(index) component 1`] = `
 <Aufgabe>
   <div
     className="Prototyp"
@@ -1151,7 +1151,7 @@ exports[`Aufgabe component => main component Should match snapShot with the Aufg
                                         "leave": [Function],
                                       }
                                     }
-                                    key="rc_animate_1605549408795"
+                                    key="rc_animate_1605621620338"
                                     transitionAppear={false}
                                     transitionEnter={true}
                                     transitionLeave={true}
@@ -1160,7 +1160,7 @@ exports[`Aufgabe component => main component Should match snapShot with the Aufg
                                       destroyInactivePanel={false}
                                       forceRender={false}
                                       isActive={true}
-                                      key="rc_animate_1605549408795"
+                                      key="rc_animate_1605621620338"
                                       prefixCls="ant-collapse"
                                       role={null}
                                     >
@@ -1625,13 +1625,13 @@ exports[`Aufgabe component => main component Should match snapShot with the Aufg
                                                   </div>
                                                   <Collapse
                                                     bordered={true}
-                                                    defaultActiveKey="3"
+                                                    defaultActiveKey="2"
                                                   >
                                                     <Collapse
                                                       accordion={false}
                                                       bordered={true}
                                                       className="ant-collapse-icon-position-left"
-                                                      defaultActiveKey="3"
+                                                      defaultActiveKey="2"
                                                       destroyInactivePanel={false}
                                                       expandIcon={[Function]}
                                                       onChange={[Function]}
@@ -1653,7 +1653,7 @@ exports[`Aufgabe component => main component Should match snapShot with the Aufg
                                                           destroyInactivePanel={false}
                                                           expandIcon={[Function]}
                                                           header="Stop sequence schedule"
-                                                          isActive={false}
+                                                          isActive={true}
                                                           key="2"
                                                           onItemClick={[Function]}
                                                           openAnimation={
@@ -1674,7 +1674,7 @@ exports[`Aufgabe component => main component Should match snapShot with the Aufg
                                                             forceRender={false}
                                                             header="Stop sequence schedule"
                                                             headerClass=""
-                                                            isActive={false}
+                                                            isActive={true}
                                                             onItemClick={[Function]}
                                                             openAnimation={
                                                               Object {
@@ -1688,10 +1688,10 @@ exports[`Aufgabe component => main component Should match snapShot with the Aufg
                                                             showArrow={true}
                                                           >
                                                             <div
-                                                              className="ant-collapse-item"
+                                                              className="ant-collapse-item ant-collapse-item-active"
                                                             >
                                                               <div
-                                                                aria-expanded="false"
+                                                                aria-expanded="true"
                                                                 className="ant-collapse-header"
                                                                 onClick={[Function]}
                                                                 onKeyPress={[Function]}
@@ -1700,6 +1700,7 @@ exports[`Aufgabe component => main component Should match snapShot with the Aufg
                                                               >
                                                                 <ForwardRef(RightOutlined)
                                                                   className="ant-collapse-arrow"
+                                                                  rotate={90}
                                                                 >
                                                                   <AntdIcon
                                                                     className="ant-collapse-arrow"
@@ -1724,6 +1725,7 @@ exports[`Aufgabe component => main component Should match snapShot with the Aufg
                                                                         "theme": "outlined",
                                                                       }
                                                                     }
+                                                                    rotate={90}
                                                                   >
                                                                     <span
                                                                       aria-label="right"
@@ -1753,6 +1755,12 @@ exports[`Aufgabe component => main component Should match snapShot with the Aufg
                                                                             "theme": "outlined",
                                                                           }
                                                                         }
+                                                                        style={
+                                                                          Object {
+                                                                            "msTransform": "rotate(90deg)",
+                                                                            "transform": "rotate(90deg)",
+                                                                          }
+                                                                        }
                                                                       >
                                                                         <svg
                                                                           aria-hidden="true"
@@ -1762,6 +1770,12 @@ exports[`Aufgabe component => main component Should match snapShot with the Aufg
                                                                           focusable="false"
                                                                           height="1em"
                                                                           key="svg-right"
+                                                                          style={
+                                                                            Object {
+                                                                              "msTransform": "rotate(90deg)",
+                                                                              "transform": "rotate(90deg)",
+                                                                            }
+                                                                          }
                                                                           viewBox="64 64 896 896"
                                                                           width="1em"
                                                                         >
@@ -1804,7 +1818,7 @@ exports[`Aufgabe component => main component Should match snapShot with the Aufg
                                                                       "leave": [Function],
                                                                     }
                                                                   }
-                                                                  key="rc_animate_1605549408795"
+                                                                  key="rc_animate_1605621620338"
                                                                   transitionAppear={false}
                                                                   transitionEnter={true}
                                                                   transitionLeave={true}
@@ -1812,11 +1826,89 @@ exports[`Aufgabe component => main component Should match snapShot with the Aufg
                                                                   <PanelContent
                                                                     destroyInactivePanel={false}
                                                                     forceRender={false}
-                                                                    isActive={false}
-                                                                    key="rc_animate_1605549408795"
+                                                                    isActive={true}
+                                                                    key="rc_animate_1605621620338"
                                                                     prefixCls="ant-collapse"
                                                                     role={null}
-                                                                  />
+                                                                  >
+                                                                    <div
+                                                                      className="ant-collapse-content ant-collapse-content-active"
+                                                                      role={null}
+                                                                    >
+                                                                      <div
+                                                                        className="ant-collapse-content-box"
+                                                                      >
+                                                                        <div
+                                                                          id="time_result"
+                                                                          style={
+                                                                            Object {
+                                                                              "height": "200px",
+                                                                              "overflowY": "auto",
+                                                                            }
+                                                                          }
+                                                                        >
+                                                                          <div
+                                                                            key="0"
+                                                                          >
+                                                                            <h3
+                                                                              id="date_output"
+                                                                            />
+                                                                            <div
+                                                                              style={
+                                                                                Object {
+                                                                                  "display": "flex",
+                                                                                  "flexWrap": "wrap",
+                                                                                  "marginBottom": "0.5em",
+                                                                                }
+                                                                              }
+                                                                            />
+                                                                          </div>
+                                                                        </div>
+                                                                        <Button
+                                                                          block={false}
+                                                                          ghost={false}
+                                                                          htmlType="button"
+                                                                          id="clear_all"
+                                                                          loading={false}
+                                                                          type="dashed"
+                                                                        >
+                                                                          <Wave>
+                                                                            <button
+                                                                              className="ant-btn ant-btn-dashed"
+                                                                              id="clear_all"
+                                                                              onClick={[Function]}
+                                                                              type="button"
+                                                                            >
+                                                                              <LoadingIcon
+                                                                                existIcon={false}
+                                                                                loading={false}
+                                                                                prefixCls="ant-btn"
+                                                                              >
+                                                                                <CSSMotion
+                                                                                  motionName="ant-btn-loading-icon-motion"
+                                                                                  onAppearActive={[Function]}
+                                                                                  onAppearStart={[Function]}
+                                                                                  onEnterActive={[Function]}
+                                                                                  onEnterStart={[Function]}
+                                                                                  onLeaveActive={[Function]}
+                                                                                  onLeaveStart={[Function]}
+                                                                                  removeOnLeave={true}
+                                                                                  visible={false}
+                                                                                >
+                                                                                  <DomWrapper />
+                                                                                </CSSMotion>
+                                                                              </LoadingIcon>
+                                                                              <span
+                                                                                key=".0"
+                                                                              >
+                                                                                Clear all
+                                                                              </span>
+                                                                            </button>
+                                                                          </Wave>
+                                                                        </Button>
+                                                                      </div>
+                                                                    </div>
+                                                                  </PanelContent>
                                                                 </AnimateChild>
                                                               </Animate>
                                                             </div>

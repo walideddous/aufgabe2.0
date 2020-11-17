@@ -1,6 +1,6 @@
 import {rest} from "msw"
 import {setupServer} from "msw/node"
-import getStopsByMode from "./stopsService"
+import {getStopsByMode} from "./stopsService"
 
 const server = setupServer(
     rest.post("http://ems-dev.m.mdv:8101/graphql",(req,res,ctx)=>{
