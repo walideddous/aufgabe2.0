@@ -1,6 +1,6 @@
 import React from "react";
 import Aufgabe from "./index";
-import { mount, shallow } from "enzyme";
+import { mount } from "enzyme";
 import toJSON from "enzyme-to-json";
 
 import { renderHook, act } from "@testing-library/react-hooks";
@@ -10,7 +10,7 @@ import { getStopsByMode } from "../services/stopsService";
 import { queryStopSequence } from "../services/stopSequenceService";
 
 const setUp = () => {
-  const component = shallow(<Aufgabe />);
+  const component = mount(<Aufgabe />);
   return component;
 };
 
