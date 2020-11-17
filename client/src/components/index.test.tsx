@@ -1,6 +1,6 @@
 import React from "react";
 import Aufgabe from "./index";
-import { mount } from "enzyme";
+import { mount, shallow } from "enzyme";
 import toJSON from "enzyme-to-json";
 
 import { renderHook, act } from "@testing-library/react-hooks";
@@ -10,39 +10,14 @@ import { getStopsByMode } from "../services/stopsService";
 import { queryStopSequence } from "../services/stopSequenceService";
 
 const setUp = () => {
-  const component = mount(<Aufgabe />);
+  const component = shallow(<Aufgabe />);
   return component;
 };
 
 // Mock the map component
 jest.mock("./map/Map.tsx", () => () => <div id="mapMock">Map mocked</div>);
 
-// Mock the antdesign Select component
-jest.mock("antd", () => {
-  const antd = jest.requireActual("antd");
-
-  const Select = ({ children, onChange }: any) => {
-    return (
-      <select
-        onChange={(e: any) => {
-          onChange(e.target.value);
-        }}
-      >
-        {children}
-      </select>
-    );
-  };
-
-  Select.Option = ({ children, otherProps }: any) => {
-    return <option {...otherProps}>{children}</option>;
-  };
-
-  return {
-    ...antd,
-    Select,
-  };
-});
-
+// Mock the different services that call the Backend API
 jest.mock("../services/stopsService.ts", () => ({
   getStopsByMode: jest.fn(() =>
     Promise.resolve({
@@ -74,6 +49,13 @@ describe("Aufgabe component => main component", () => {
 
     afterEach(() => {
       jest.resetAllMocks();
+    });
+
+    afterAll(() => {
+      //@ts-ignore
+      getStopsByMode.mockRestore();
+      //@ts-ignore
+      queryStopSequence.mockRestore();
     });
 
     it("Should match snapShot with the Aufgabe(index) component", () => {
@@ -144,12 +126,6 @@ describe("Aufgabe component => main component", () => {
 
       expect(result.current.stations.length).toBe(2);
       expect(result.current.stopSequenceList.length).toBe(1);
-    });
-  });
-
-  describe("Save stopSequence functionality", () => {
-    it("First test", () => {
-      expect(true).toBe(true);
     });
   });
 });

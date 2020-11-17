@@ -37,7 +37,7 @@ const SearchInput = ({
       }}
     >
       <AutoComplete
-        id="search"
+        id="stops_autoComplete"
         value={search}
         placeholder="Enter stops name"
         open={search ? true : false}

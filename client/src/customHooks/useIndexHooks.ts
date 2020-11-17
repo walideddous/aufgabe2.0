@@ -12,7 +12,7 @@ import { getProperty } from "../utils/getPropertyKey";
 import { calculateDistanceAndSort } from "../utils/getDistanceFromLatLonInKm";
 
 // Import services
-import {getStopsByMode} from "../services/stopsService";
+import { getStopsByMode } from "../services/stopsService";
 import {
   createStopSequence,
   deleteStopSequence,
@@ -60,14 +60,13 @@ export default function useIndexHooks() {
       // send the actual request
       try {
         console.log("start fetching");
-        // GraphQl
+        // Stops
         const stops = await getStopsByMode(modes);
-        console.log(stops)
-        const stopSequence = await queryStopSequence(modes);
         //stopSequence
+        const stopSequence = await queryStopSequence(modes);
 
         console.log("end fetching");
-        if (stops || stopSequence ) {
+        if (stops || stopSequence) {
           const { haltestelleByMode } = stops.data.data;
           const { stopSequenceByMode } = stopSequence.data.data;
           setStations(haltestelleByMode);
@@ -89,6 +88,7 @@ export default function useIndexHooks() {
   // Select the Station when you click on the button to show the suggestion
   const clickOnDrop = useCallback(
     (e: any, index: number) => {
+      console.log("clickOnDrop", e)
       const { _id, name, coord, modes } = e;
       const response = { _id, name, coord, modes };
       setSelected({ ...response, index });
@@ -123,6 +123,7 @@ export default function useIndexHooks() {
   // add the stations to the Stop sequence Field when you click on button suggestion
   const handleAddStopsOnCLick = useCallback(
     (input: any) => {
+      console.log("handleAddStopsOnCLick", input)
       const { _id, name, modes, coord } = input;
       const response = { _id, name, modes, coord };
       var vorschläge = calculateDistanceAndSort(response, stations);
@@ -169,6 +170,7 @@ export default function useIndexHooks() {
   // Delete the button from Drop Part
   const handleDeleteOnDND = useCallback(
     (input: any, index: number) => {
+      console.log("handleDeleteOnDND", input)
       let vorschläge: any;
       if (
         selected &&
@@ -294,6 +296,7 @@ export default function useIndexHooks() {
   // to choose the station from the input options
   const onSelectAutoSearch = useCallback(
     (selectedStop: string) => {
+      console.log("onSelectAutoSearch", selectedStop)
       const elementSelected = stations.filter(
         (el) => el.name === selectedStop
       )[0];
@@ -372,6 +375,7 @@ export default function useIndexHooks() {
   // To Drag and Drop from source to the destination
   const handleDragEnd = useCallback(
     ({ destination, source }: any) => {
+      console.log("handleDragEnd", { destination, source })
       if (!destination) {
         return;
       }
@@ -411,6 +415,7 @@ export default function useIndexHooks() {
   // Context menu to add the stop After the selected stops in the drop Menu
   const handleAddAfterSelected = useCallback(
     (e: string) => {
+      console.log("handleAddAfterSelected", e)
       const response = stations.filter((el) => el.name === e)[0];
       if (
         selected &&
@@ -464,6 +469,7 @@ export default function useIndexHooks() {
   // Context menu to add the stop before the selected stops in the drop Menu
   const handleAddBeforSelected = useCallback(
     (e: string) => {
+      console.log("handleAddBeforSelected", e)
       const response = stations.filter((el: any) => el.name === e)[0];
       if (
         selected &&
@@ -515,6 +521,7 @@ export default function useIndexHooks() {
   // Click on Marker on Map
   const clickOnMapMarker = useCallback(
     (el: Tstations, index: number) => {
+      console.log("clickOnMapMarker", el)
       const newValue = {
         ...el,
         coord: {
@@ -562,6 +569,7 @@ export default function useIndexHooks() {
   // Delete marker from map
   const handleDeleteMarkerFromMap = useCallback(
     (e: any) => {
+      console.log("handleDeleteMarkerFromMap", e)
       const response = stations.filter((el, i) => el.name === e)[0];
       if (
         stateDND.trajekt.items.filter((item: any) => item._id === response._id)
@@ -578,6 +586,7 @@ export default function useIndexHooks() {
 
   // Reset and delete all
   const clearAll = useCallback(() => {
+    console.log("clearAll")
     setSelected(undefined);
     setCurrentStopSequence({});
     setStateDND({
@@ -595,6 +604,7 @@ export default function useIndexHooks() {
   // Save the stop sequence
   const saveStopSequence = useCallback(
     async (formInput: any) => {
+      console.log("saveStopSequence", formInput)
       const { items } = stateDND.trajekt;
 
       if (isSending) return;
@@ -639,6 +649,7 @@ export default function useIndexHooks() {
 
   // Display the stop sequence on map
   const handledisplayStopSequence = useCallback((input: any) => {
+    console.log("handledisplayStopSequence", input)
     setCurrentStopSequence({ ...input });
     setStateDND((prev) => {
       return {
@@ -659,6 +670,7 @@ export default function useIndexHooks() {
 
   // Update button after stop sequence have been saved
   const handleUpdateAfterSave = useCallback(() => {
+    console.log("handleUpdateAfterSave")
     // filter the saved stop sequence by mode and added to th stopSequenceList
     if (savedStopSequence.length) {
       const flteredStopSeqenceByMode = savedStopSequence.filter(
@@ -674,6 +686,7 @@ export default function useIndexHooks() {
   // Delete the stop sequence by Id
   const handleDeleteStopSequence = useCallback(
     async (id: string) => {
+      console.log("handleDeleteStopSequence", id)
       if (isSending) return; // update state
       setIsSending(true);
       // send the actual request

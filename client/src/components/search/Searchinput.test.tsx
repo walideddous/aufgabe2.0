@@ -46,14 +46,14 @@ describe("Searchinput component", () => {
   });
 
   it("Should test the AutoComplete component", () => {
-    const searchField = wrappedComponent.find("#search");
+    const searchField = wrappedComponent.find("#stops_autoComplete");
 
     act(() => {
       searchField.simulate("change", "Basel");
     });
 
     const AutoCompleteOptionButton = wrappedComponent.find(
-      '#search Option[value="Basel"]'
+      '#stops_autoComplete Option[value="Basel"]'
     );
 
     expect(AutoCompleteOptionButton.length).toBeTruthy();

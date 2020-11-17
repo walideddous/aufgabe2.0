@@ -13,7 +13,7 @@ exports[`Searchinput component Should match snapShot with the Seachinput compone
   }
 >
   <ForwardRef(AutoComplete)
-    id="search"
+    id="stops_autoComplete"
     onChange={[Function]}
     onSelect={[Function]}
     open={false}

@@ -3,33 +3,6 @@ import SaveStopsSequenceForm from "./SaveStopsSequenceForm";
 import { mount } from "enzyme";
 import toJSON from "enzyme-to-json";
 
-jest.mock("antd", () => {
-  const antd = jest.requireActual("antd");
-
-  const Select = ({ children, onChange }: any) => {
-    return (
-      <select
-        onChange={(e: any) => {
-          onChange(e.target.value);
-        }}
-      >
-        {children}
-      </select>
-    );
-  };
-
-  Select.Option = ({ children, otherProps }: any) => {
-    return <option {...otherProps}> {children} </option>;
-  };
-
-  return {
-    ...antd,
-    Select,
-  };
-});
-
-const spyOnConsoleWarn = jest.spyOn(console, "warn").mockImplementation();
-
 const makeProps = (props: any) => ({
   result() {},
   ...props,
@@ -42,6 +15,7 @@ const setUp = (props: any) => {
 
 describe("SaveStopSequenceForm component", () => {
   let mountWrapper: any;
+  const spyOnConsoleWarn = jest.spyOn(console, "warn").mockImplementation();
   const result = jest.fn();
 
   beforeEach(() => {
@@ -49,7 +23,6 @@ describe("SaveStopSequenceForm component", () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
     jest.resetAllMocks();
   });
 
