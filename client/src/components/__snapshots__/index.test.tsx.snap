@@ -1907,7 +1907,7 @@ exports[`Aufgabe component => main component Fetch data functionality Should mat
                                         "leave": [Function],
                                       }
                                     }
-                                    key="rc_animate_1605784254663"
+                                    key="rc_animate_1605789455600"
                                     transitionAppear={false}
                                     transitionEnter={true}
                                     transitionLeave={true}
@@ -1916,7 +1916,7 @@ exports[`Aufgabe component => main component Fetch data functionality Should mat
                                       destroyInactivePanel={false}
                                       forceRender={false}
                                       isActive={true}
-                                      key="rc_animate_1605784254663"
+                                      key="rc_animate_1605789455600"
                                       prefixCls="ant-collapse"
                                       role={null}
                                     >
@@ -2574,7 +2574,7 @@ exports[`Aufgabe component => main component Fetch data functionality Should mat
                                                                       "leave": [Function],
                                                                     }
                                                                   }
-                                                                  key="rc_animate_1605784254663"
+                                                                  key="rc_animate_1605789455600"
                                                                   transitionAppear={false}
                                                                   transitionEnter={true}
                                                                   transitionLeave={true}
@@ -2583,7 +2583,7 @@ exports[`Aufgabe component => main component Fetch data functionality Should mat
                                                                     destroyInactivePanel={false}
                                                                     forceRender={false}
                                                                     isActive={true}
-                                                                    key="rc_animate_1605784254663"
+                                                                    key="rc_animate_1605789455600"
                                                                     prefixCls="ant-collapse"
                                                                     role={null}
                                                                   >

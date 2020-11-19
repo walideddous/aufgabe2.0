@@ -561,7 +561,7 @@ export default function useIndexHooks() {
   // Delete marker from map
   const handleDeleteMarkerFromMap = useCallback(
     (e: string) => {
-      const response = stations.filter((el, i) => el.name === e)[0];
+      const response = stations.filter((el) => el.name === e)[0];
       if (
         stateDND.trajekt.items.filter((item: any) => item._id === response._id)
           .length

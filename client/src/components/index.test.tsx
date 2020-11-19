@@ -59,7 +59,7 @@ describe("Aufgabe component => main component", () => {
                       lon: 7.58956,
                     },
                   },
-                  modes: [],
+                  modes: ["4"],
                 },
                 {
                   _id: "5f6203bb0d5658001cd8f85b",
@@ -70,7 +70,7 @@ describe("Aufgabe component => main component", () => {
                       lon: 4.84184,
                     },
                   },
-                  modes: [],
+                  modes: ["4"],
                 },
               ],
             },
@@ -586,6 +586,70 @@ describe("Aufgabe component => main component", () => {
       });
 
       expect(result.current.selected?.name).toBe("Basel");
+    });
+    it("Should check the handleDeleteOnDND function", async () => {
+      const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
+
+      act(() => {
+        result.current.sendRequest("4");
+      });
+
+      await waitForNextUpdate();
+
+      expect(result.current.stateDND.trajekt.items.length).toBe(0);
+
+      act(() => {
+        result.current.onSelectAutoSearch("Basel");
+      });
+      act(() => {
+        result.current.onSelectAutoSearch("Lyon");
+      });
+
+      expect(result.current.stateDND.trajekt.items.length).toBe(2);
+
+      act(() => {
+        result.current.handleDeleteOnDND(
+          {
+            _id: "5f6203bb0d5658001cd8f85a",
+            name: "Basel",
+            coord: {
+              WGS84: {
+                lat: 47.54741,
+                lon: 7.58956,
+              },
+            },
+            modes: ["4"],
+          },
+          0
+        );
+      });
+
+      expect(result.current.stateDND.trajekt.items.length).toBe(1);
+
+      act(() => {
+        result.current.onSelectAutoSearch("Basel");
+      });
+
+      expect(result.current.stateDND.trajekt.items.length).toBe(2);
+
+      act(() => {
+        result.current.handleDeleteOnDND(
+          {
+            _id: "5f6203bb0d5658001cd8f85a",
+            name: "Basel",
+            coord: {
+              WGS84: {
+                lat: 47.54741,
+                lon: 7.58956,
+              },
+            },
+            modes: ["4"],
+          },
+          1
+        );
+      });
+
+      expect(result.current.stateDND.trajekt.items.length).toBe(1);
     });
   });
 });
