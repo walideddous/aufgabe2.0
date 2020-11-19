@@ -40,7 +40,6 @@ const Aufgabe: React.FC = () => {
     handledisplayStopSequence,
     handleUpdateAfterSave,
     handleDeleteStopSequence,
-    result,
   } = useIndexHooks();
   return (
     <div className="Prototyp" style={{ position: "relative" }}>
@@ -76,7 +75,7 @@ const Aufgabe: React.FC = () => {
         ) : (
           <Fragment>
             <Col xs={24}>
-              <SaveStopsSequenceForm result={result} />
+              <SaveStopsSequenceForm />
             </Col>
             <Map
               stations={stations}

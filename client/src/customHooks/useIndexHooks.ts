@@ -14,9 +14,9 @@ import { calculateDistanceAndSort } from "../utils/getDistanceFromLatLonInKm";
 // Import services
 import { getStopsByMode } from "../services/stopsService";
 import {
-  createStopSequence,
-  deleteStopSequence,
-  queryStopSequence,
+  saveStopSequenceRequest,
+  deleteStopSequenceRequest,
+  queryStopSequenceRequest,
 } from "../services/stopSequenceService";
 
 export default function useIndexHooks() {
@@ -62,11 +62,11 @@ export default function useIndexHooks() {
         console.log("start fetching");
         // Stops
         const stops = await getStopsByMode(modes);
-        //stopSequence
-        const stopSequence = await queryStopSequence(modes);
+        //StopSequence
+        const stopSequence = await queryStopSequenceRequest(modes);
 
         console.log("end fetching");
-        if (stops || stopSequence) {
+        if (Object.keys(stops).length || Object.keys(stopSequence).length) {
           const { haltestelleByMode } = stops.data.data;
           const { stopSequenceByMode } = stopSequence.data.data;
           setStations(haltestelleByMode);
@@ -88,7 +88,6 @@ export default function useIndexHooks() {
   // Select the Station when you click on the button to show the suggestion
   const clickOnDrop = useCallback(
     (e: any, index: number) => {
-      console.log("clickOnDrop", e)
       const { _id, name, coord, modes } = e;
       const response = { _id, name, coord, modes };
       setSelected({ ...response, index });
@@ -123,7 +122,6 @@ export default function useIndexHooks() {
   // add the stations to the Stop sequence Field when you click on button suggestion
   const handleAddStopsOnCLick = useCallback(
     (input: any) => {
-      console.log("handleAddStopsOnCLick", input)
       const { _id, name, modes, coord } = input;
       const response = { _id, name, modes, coord };
       var vorschläge = calculateDistanceAndSort(response, stations);
@@ -170,7 +168,6 @@ export default function useIndexHooks() {
   // Delete the button from Drop Part
   const handleDeleteOnDND = useCallback(
     (input: any, index: number) => {
-      console.log("handleDeleteOnDND", input)
       let vorschläge: any;
       if (
         selected &&
@@ -296,7 +293,6 @@ export default function useIndexHooks() {
   // to choose the station from the input options
   const onSelectAutoSearch = useCallback(
     (selectedStop: string) => {
-      console.log("onSelectAutoSearch", selectedStop)
       const elementSelected = stations.filter(
         (el) => el.name === selectedStop
       )[0];
@@ -375,7 +371,6 @@ export default function useIndexHooks() {
   // To Drag and Drop from source to the destination
   const handleDragEnd = useCallback(
     ({ destination, source }: any) => {
-      console.log("handleDragEnd", { destination, source })
       if (!destination) {
         return;
       }
@@ -415,7 +410,6 @@ export default function useIndexHooks() {
   // Context menu to add the stop After the selected stops in the drop Menu
   const handleAddAfterSelected = useCallback(
     (e: string) => {
-      console.log("handleAddAfterSelected", e)
       const response = stations.filter((el) => el.name === e)[0];
       if (
         selected &&
@@ -469,7 +463,6 @@ export default function useIndexHooks() {
   // Context menu to add the stop before the selected stops in the drop Menu
   const handleAddBeforSelected = useCallback(
     (e: string) => {
-      console.log("handleAddBeforSelected", e)
       const response = stations.filter((el: any) => el.name === e)[0];
       if (
         selected &&
@@ -521,7 +514,6 @@ export default function useIndexHooks() {
   // Click on Marker on Map
   const clickOnMapMarker = useCallback(
     (el: Tstations, index: number) => {
-      console.log("clickOnMapMarker", el)
       const newValue = {
         ...el,
         coord: {
@@ -568,8 +560,7 @@ export default function useIndexHooks() {
 
   // Delete marker from map
   const handleDeleteMarkerFromMap = useCallback(
-    (e: any) => {
-      console.log("handleDeleteMarkerFromMap", e)
+    (e: string) => {
       const response = stations.filter((el, i) => el.name === e)[0];
       if (
         stateDND.trajekt.items.filter((item: any) => item._id === response._id)
@@ -586,7 +577,6 @@ export default function useIndexHooks() {
 
   // Reset and delete all
   const clearAll = useCallback(() => {
-    console.log("clearAll")
     setSelected(undefined);
     setCurrentStopSequence({});
     setStateDND({
@@ -604,7 +594,6 @@ export default function useIndexHooks() {
   // Save the stop sequence
   const saveStopSequence = useCallback(
     async (formInput: any) => {
-      console.log("saveStopSequence", formInput)
       const { items } = stateDND.trajekt;
 
       if (isSending) return;
@@ -621,15 +610,14 @@ export default function useIndexHooks() {
       setIsSending(true);
       // send the actual request
       try {
-        console.log("send the saved Stop sequence");
         // REST_API
-        const result = await createStopSequence(body);
-        if (!result) {
-          console.error("Result not found");
-          message.error("cannot save the stop sequence");
+        const result = await saveStopSequenceRequest(body);
+        if (!Object.keys(result).length) {
+          console.error("Couldn't save the stop sequence");
         }
         console.log(result.data.msg);
         if (result.data.msg) {
+          console.log("Stop sequence succesfully saved");
           message.success(result.data.msg);
           // Set the state of stopSequence List
           setSavedStopSequence((prev) => {
@@ -639,7 +627,6 @@ export default function useIndexHooks() {
         }
       } catch (error) {
         console.error(error, "error from trycatch");
-        message.error(error);
       }
       // once the request is sent, update state again
       setIsSending(false);
@@ -649,7 +636,6 @@ export default function useIndexHooks() {
 
   // Display the stop sequence on map
   const handledisplayStopSequence = useCallback((input: any) => {
-    console.log("handledisplayStopSequence", input)
     setCurrentStopSequence({ ...input });
     setStateDND((prev) => {
       return {
@@ -661,16 +647,9 @@ export default function useIndexHooks() {
       };
     });
   }, []);
-  /*
-      clickOnDrop(
-        input.stopSequence[input.stopSequence.length - 1],
-        input.stopSequence.length - 1
-      );
-  */
 
   // Update button after stop sequence have been saved
   const handleUpdateAfterSave = useCallback(() => {
-    console.log("handleUpdateAfterSave")
     // filter the saved stop sequence by mode and added to th stopSequenceList
     if (savedStopSequence.length) {
       const flteredStopSeqenceByMode = savedStopSequence.filter(
@@ -686,19 +665,16 @@ export default function useIndexHooks() {
   // Delete the stop sequence by Id
   const handleDeleteStopSequence = useCallback(
     async (id: string) => {
-      console.log("handleDeleteStopSequence", id)
       if (isSending) return; // update state
       setIsSending(true);
       // send the actual request
       try {
         console.log("delete the stop sequence");
         // REST_API
-        const result = await deleteStopSequence(id);
-        if (!result) {
-          console.error("Result not found");
-          message.error("cannot delete the stop sequence");
+        const result = await deleteStopSequenceRequest(id);
+        if (!Object.keys(result).length) {
+          console.error("Couldn't delete the Stop sequence");
         }
-        console.log(result.data.msg);
         if (result.data.msg) {
           message.success(result.data.msg);
           // Set the state of stopSequence List
@@ -710,15 +686,12 @@ export default function useIndexHooks() {
         }
       } catch (error) {
         console.error(error, "error from trycatch");
-        message.error(error);
       }
       // once the request is sent, update state again
       setIsSending(false);
     },
     [clearAll, isSending]
   );
-
-  const result = () => {};
 
   return {
     stations,
@@ -730,6 +703,7 @@ export default function useIndexHooks() {
     updateDate,
     currentMode,
     currentStopSequence,
+    savedStopSequence,
     sendRequest,
     clickOnDrop,
     handleAddStopsOnCLick,
@@ -745,6 +719,5 @@ export default function useIndexHooks() {
     handledisplayStopSequence,
     handleUpdateAfterSave,
     handleDeleteStopSequence,
-    result,
   };
 }

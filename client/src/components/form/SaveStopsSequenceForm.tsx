@@ -22,11 +22,7 @@ const { RangePicker } = TimePicker;
 const { Panel } = Collapse;
 const { Option } = Select;
 
-interface Tprops {
-  result: (input: any) => void;
-}
-
-const SaveStopsSequenceForm = ({ result }: Tprops) => {
+const SaveStopsSequenceForm = () => {
   // get this form to clear the input form after submit
   const [form] = Form.useForm();
   const [addSchedule, setAddSchedule] = useState(false);
@@ -66,7 +62,6 @@ const SaveStopsSequenceForm = ({ result }: Tprops) => {
         return [{ ...formatTags }];
       }
     });
-    result(formatTags);
     setAddSchedule(false);
     console.log(
       form.setFieldsValue({

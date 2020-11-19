@@ -7,19 +7,19 @@ const authAxios = axios.create({
     authorization: "Bearer " + process.env.REACT_APP_JSON_SECRET_KEY,
   },
 });
-const queryStopSequence = async (modes: any) => {
+const queryStopSequenceRequest = async (modes: string) => {
   const response = await authAxios.post("/graphql", {
     query: GET_STOP_SEQUENCE_BY_MODES(modes),
   });
   return response;
 };
-const createStopSequence = async (body: any) => {
+const saveStopSequenceRequest = async (body: any) => {
   const response = await authAxios.put("/savedStopSequence", body);
   return response;
 };
-const deleteStopSequence = async (id: any) => {
+const deleteStopSequenceRequest = async (id: string) => {
   const response = await authAxios.delete(`/savedStopSequence/${id}`);
   return response;
 };
 
-export { queryStopSequence, createStopSequence, deleteStopSequence };
+export { queryStopSequenceRequest, saveStopSequenceRequest, deleteStopSequenceRequest };

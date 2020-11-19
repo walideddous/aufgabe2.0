@@ -1,9 +1,9 @@
 import { rest } from "msw";
 import { setupServer } from "msw/node";
 import {
-  createStopSequence,
-  deleteStopSequence,
-  queryStopSequence,
+  saveStopSequenceRequest,
+  deleteStopSequenceRequest,
+  queryStopSequenceRequest,
 } from "./stopSequenceService";
 
 const serverCreate = setupServer(
@@ -44,16 +44,16 @@ describe("Test the stopSequenceService", () => {
   afterAll(() => serverCreate.close());
   afterEach(() => serverCreate.resetHandlers());
 
-  it("Should create new stopSequence", async () => {
-    const result = await createStopSequence(4);
+  it("Should save stopSequence by mode", async () => {
+    const result = await saveStopSequenceRequest("4");
     expect(result.data.msg).toEqual("StopSequence successly created");
   });
   it("Should delete stopSequence byID", async () => {
-    const result = await deleteStopSequence("id");
+    const result = await deleteStopSequenceRequest("1");
     expect(result.data.msg).toEqual("StopSequence successly deleted");
   });
   it("Should Query stop sequence by mode", async () => {
-    const result = await queryStopSequence(4);
+    const result = await queryStopSequenceRequest("4");
     expect(result.data.msg).toEqual("StopSequence succesfully queried");
   });
 });
