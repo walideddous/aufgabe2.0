@@ -209,7 +209,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                             "leave": [Function],
                           }
                         }
-                        key="rc_animate_1605789453862"
+                        key="rc_animate_1605862251384"
                         transitionAppear={false}
                         transitionEnter={true}
                         transitionLeave={true}
@@ -218,7 +218,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                           destroyInactivePanel={false}
                           forceRender={false}
                           isActive={true}
-                          key="rc_animate_1605789453862"
+                          key="rc_animate_1605862251384"
                           prefixCls="ant-collapse"
                           role={null}
                         >
@@ -255,13 +255,9 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                   }
                                 }
                                 id="formWrapper"
-                                initialValues={
-                                  Object {
-                                    "remember": true,
-                                  }
-                                }
                                 layout="vertical"
                                 name="basic"
+                                onFieldsChange={[Function]}
                                 onFinish={[Function]}
                                 requiredMark={false}
                               >
@@ -293,12 +289,8 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                       }
                                     }
                                     id="formWrapper"
-                                    initialValues={
-                                      Object {
-                                        "remember": true,
-                                      }
-                                    }
                                     name="basic"
+                                    onFieldsChange={[Function]}
                                     onFinish={[Function]}
                                     onFinishFailed={[Function]}
                                   >
@@ -876,7 +868,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                           "leave": [Function],
                                                         }
                                                       }
-                                                      key="rc_animate_1605789453862"
+                                                      key="rc_animate_1605862251384"
                                                       transitionAppear={false}
                                                       transitionEnter={true}
                                                       transitionLeave={true}
@@ -885,7 +877,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                         destroyInactivePanel={false}
                                                         forceRender={false}
                                                         isActive={true}
-                                                        key="rc_animate_1605789453862"
+                                                        key="rc_animate_1605862251384"
                                                         prefixCls="ant-collapse"
                                                         role={null}
                                                       >

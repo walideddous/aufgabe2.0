@@ -39,6 +39,9 @@ const DragDrop = ({
   useEffect(() => {
     window.addEventListener("resize", resize);
     resize();
+    return () => {
+      window.removeEventListener("resize", resize);
+    };
   });
   const scrollToBottom = useCallback(() => {
     var element = document.getElementById("item-highlighted");
