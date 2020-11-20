@@ -225,7 +225,13 @@ const DragDrop = ({
         </Col>
         <Col xs={24}>
           <Card bordered={true} title={stateDND.trajekt.title}>
-            <div style={{ height: "370px", overflowY: "auto" }}>
+            <div
+              style={
+                stateDND.trajekt.items.length
+                  ? { height: "370px", overflowY: "auto" }
+                  : {}
+              }
+            >
               <Droppable droppableId={"trajekt"}>
                 {(provided: any) => {
                   return (

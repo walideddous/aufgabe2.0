@@ -7,15 +7,11 @@ import {
   Button,
   DatePicker,
   Collapse,
-  Space,
   Select,
   Tag,
 } from "antd";
-import moment from "moment";
 
-import { PlusOutlined, MinusCircleOutlined } from "@ant-design/icons";
-
-// Impprr utils function
+// import utils function
 import getFormatTags from "../../utils/getFormatTags";
 
 const { RangePicker } = TimePicker;
@@ -26,49 +22,62 @@ const SaveStopsSequenceForm = () => {
   // get this form to clear the input form after submit
   const [form] = Form.useForm();
   const [addSchedule, setAddSchedule] = useState(false);
-  const [tags, setTags] = useState<{ date: string; displayedtags: [] }[]>([
+  const [tags, setTags] = useState<
     {
-      date: "",
-      displayedtags: [],
-    },
-  ]);
+      date: string;
+      displayedtags: {
+        day: string;
+        time: string[];
+      }[];
+    }[]
+  >([]);
 
   const onFinish = (values: any) => {
-    /*
-    const format = {
-      date: `${moment(values.date[0]).format("YYYY.MM.DD")} - ${moment(
-        values.date[1]
-      ).format("YYYY.MM.DD")}`,
-      dayTime: [
-        {
-          day: values.day,
-          time: values.time.map((el: any) => {
-            return [
-              moment(el.timePicker[0]).format("hh:mm"),
-              moment(el.timePicker[1]).format("hh:mm"),
-            ];
-          }),
-        },
-      ],
-    };
-    */
-
     const formatTags = getFormatTags(values);
+
+    console.log(formatTags);
 
     setTags((prev: any) => {
       if (prev) {
-        return prev.concat({ ...formatTags });
+        if (!prev.filter((el: any) => el.date === formatTags.date).length) {
+          return prev.concat({ ...formatTags });
+        }
+        for (let i = 0; i < prev.length; i++) {
+          if (prev[i].date === formatTags.date) {
+            prev[i].displayedtags.concat(formatTags.displayedtags);
+          }
+        }
+        return prev;
       } else {
         return [{ ...formatTags }];
       }
     });
-    setAddSchedule(false);
-    console.log(
-      form.setFieldsValue({
-        name: "walid",
-      })
-    );
+
     form.resetFields();
+  };
+
+  console.log(tags);
+
+  const [name, setName] = useState("");
+  const [date, setDate] = useState<any>();
+  const [day, setDay] = useState<any>();
+  const [time, setTime] = useState<any>();
+
+  const handleNameChange = (e: any) => {
+    const { value } = e.target;
+    setName(value);
+  };
+
+  const handleDateChange = (date: any, dateString: string[]) => {
+    setDate(dateString);
+  };
+
+  const handleDayChange = (days: any) => {
+    setDay(days);
+  };
+
+  const handleTimeChange = (time: any, timeString: string[]) => {
+    setTime(timeString);
   };
 
   return (
@@ -76,11 +85,11 @@ const SaveStopsSequenceForm = () => {
       <Collapse defaultActiveKey="1">
         <Panel header="Stop sequence save form" key="1">
           <Form
+            autoComplete="off"
             id="formWrapper"
             layout="vertical"
-            name="basic"
+            name="dynamic_form_nest_item"
             requiredMark={false}
-            initialValues={{ remember: true }}
             form={form}
             onFinish={onFinish}
           >
@@ -89,7 +98,12 @@ const SaveStopsSequenceForm = () => {
               name="name"
               rules={[{ required: true, message: "Please give a Name" }]}
             >
-              <Input id="name-input" allowClear />
+              <Input
+                id="name-input"
+                value={name}
+                onChange={handleNameChange}
+                allowClear
+              />
             </Form.Item>
             {!addSchedule && (
               <div style={{ paddingBottom: "20px" }}>
@@ -107,6 +121,19 @@ const SaveStopsSequenceForm = () => {
             {addSchedule && (
               <Fragment>
                 <Form.Item
+                  label="Date"
+                  name="date"
+                  rules={[
+                    { required: true, message: "Please give a Date interval" },
+                  ]}
+                >
+                  <DatePicker.RangePicker
+                    id="date-input"
+                    value={date}
+                    onChange={handleDateChange}
+                  />
+                </Form.Item>
+                <Form.Item
                   id="dayPicker-form"
                   label="Day"
                   name="day"
@@ -116,7 +143,8 @@ const SaveStopsSequenceForm = () => {
                     allowClear
                     id="dayPicker-input"
                     mode="tags"
-                    style={{ width: "100%" }}
+                    value={day}
+                    onChange={handleDayChange}
                   >
                     <Option key="1" value="Mon">
                       Monday
@@ -144,61 +172,18 @@ const SaveStopsSequenceForm = () => {
                     </Option>
                   </Select>
                 </Form.Item>
+
                 <Form.Item
-                  label="Date"
-                  name="date"
-                  rules={[
-                    { required: true, message: "Please give a Date interval" },
-                  ]}
+                  name="time"
+                  label="Time"
+                  rules={[{ required: true, message: "Missing time" }]}
                 >
-                  <DatePicker.RangePicker id="date-input" />
+                  <RangePicker
+                    format="HH:mm"
+                    value={time}
+                    onChange={handleTimeChange}
+                  />
                 </Form.Item>
-                <Form.List name="time">
-                  {(fields, { add, remove }) => (
-                    <>
-                      <div style={{ display: "flex", paddingBottom: "20px" }}>
-                        <span>Time</span>
-                        <Button
-                          id="addTime_Button"
-                          type="dashed"
-                          onClick={() => add()}
-                          icon={<PlusOutlined />}
-                        >
-                          Add time
-                        </Button>
-                        <div>
-                          {fields.map((field) => (
-                            <Space
-                              key={field.key}
-                              style={{
-                                display: "flex",
-                              }}
-                              align="baseline"
-                            >
-                              <Form.Item
-                                {...field}
-                                name={[field.name, "timePicker"]}
-                                fieldKey={[field.fieldKey, "timePicker"]}
-                                rules={[
-                                  { required: true, message: "Missing time" },
-                                ]}
-                              >
-                                <RangePicker
-                                  format="HH:mm"
-                                  id="timePicker-input"
-                                />
-                              </Form.Item>
-                              <MinusCircleOutlined
-                                id="remove_timePicker"
-                                onClick={() => remove(field.name)}
-                              />
-                            </Space>
-                          ))}
-                        </div>
-                      </div>
-                    </>
-                  )}
-                </Form.List>
                 <Form.Item>
                   <Button id="save_button" type="primary" htmlType="submit">
                     Save schedule
@@ -215,39 +200,12 @@ const SaveStopsSequenceForm = () => {
                 </Form.Item>
               </Fragment>
             )}
-            <Collapse defaultActiveKey={addSchedule ? "3" : "2"}>
+            <Collapse defaultActiveKey="3">
               <Panel header="Stop sequence schedule" key="2">
                 <div
                   id="time_result"
                   style={{ height: "200px", overflowY: "auto" }}
-                >
-                  {tags.map((el: any, index: number) => (
-                    <div key={index}>
-                      <h3 id="date_output">{el.date}</h3>
-                      <div
-                        style={{
-                          display: "flex",
-                          flexWrap: "wrap",
-                          marginBottom: "0.5em",
-                        }}
-                      >
-                        {el.displayedtags &&
-                          el.displayedtags.map((el: string, index: number) => (
-                            <Tag
-                              closable
-                              id="time_output"
-                              key={index}
-                              style={{
-                                minWidth: "253px",
-                              }}
-                            >
-                              {el}
-                            </Tag>
-                          ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                ></div>
                 <Button type="dashed" id="clear_all">
                   Clear all
                 </Button>
@@ -261,3 +219,7 @@ const SaveStopsSequenceForm = () => {
 };
 
 export default React.memo(SaveStopsSequenceForm);
+
+/*
+type="primary" htmlType="submit"
+*/

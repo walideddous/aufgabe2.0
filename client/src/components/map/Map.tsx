@@ -414,6 +414,8 @@ const Map = ({
       !selected ? position.zoom : responsiveZoom.zoom
     );
 
+    const markers = L.markerClusterGroup();
+
     //@ts-ignore
     stationsRef.current.forEach((el: any, index: number) => {
       const marker = L.circleMarker(el.coord.WGS84, {
@@ -443,7 +445,7 @@ const Map = ({
               stateDND.suggestions.items.map((el) => el._id).includes(el._id)
             ? "green"
             : "blue",
-      }).addTo(map.current);
+      }).addTo(markers);
 
       marker.bindTooltip(el.name);
       marker.on("click", () => clickOnMarker(el, index));
@@ -453,7 +455,7 @@ const Map = ({
       color: "red",
     });
 
-    map.current.addLayer(polyline);
+    map.current.addLayer(polyline).addLayer(markers);
   }, [
     stopSequenceMarkers,
     selected,

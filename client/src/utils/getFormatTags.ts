@@ -1,29 +1,32 @@
-import moment from "moment";
-
 const getFormatTags = (values: any) => {
-  return {
-    date: `${moment(values.date[0]).format("YYYY.MM.DD")} - ${moment(
-      values.date[1]
-    ).format("YYYY.MM.DD")}`,
-    displayedtags: values.time.map((el: any) => {
-      if (values.day.length === 8) {
-        return `All days ${moment(el.timePicker[0]).format("hh:mm")} - ${moment(
-          el.timePicker[1]
-        ).format("hh:mm")}`;
-      } else if (values.day.length === 1) {
-        return `${values.day[0]} ${moment(el.timePicker[0]).format(
-          "hh:mm"
-        )} - ${moment(el.timePicker[1]).format("hh:mm")}`;
-      } else {
-        return `${values.day[0]} - ${
-          values.day[values.day.length - 1]
-        } ${moment(el.timePicker[0]).format("hh:mm")} - ${moment(
-          el.timePicker[1]
-        ).format("hh:mm")}`;
-      }
-    }),
-  };
-};
+  let date= `${(values.date[0]).format("YYYY.MM.DD")} - ${(
+    values.date[1]
+  ).format("YYYY.MM.DD")}`
 
+  if(values.day.length===1){
+    return {
+      date,
+      displayedtags:[`${values.day[0]} ${(values.time[0]).format(
+        "HH:mm"
+      )} - ${(values.time[1]).format("HH:mm")}`]
+    }
+  } else if(values.day.length === 8){
+    return {
+      date ,
+      displayedtags: [`All days ${(values.time[0]).format("HH:mm")} - ${(
+        values.time[1]
+      ).format("HH:mm")}`]
+    }
+  } else {
+    return {
+      date,
+      displayedtags:[`${values.day[0]} - ${
+        values.day[values.day.length - 1]
+      } ${(values.time[0]).format("HH:mm")} - ${(
+        values.time[1]
+      ).format("HH:mm")}`]
+    }
+  }
+};
 
 export default getFormatTags
