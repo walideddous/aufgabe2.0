@@ -5,7 +5,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 // Import composents
 import DragDrop from "./dnd/DragDrop";
 import Map from "./map/Map";
-import SaveStopsSequenceForm from "./form/SaveStopsSequenceForm";
+import SaveStopsSequenceForm from "./form/SaveStopSequenceForm";
 import LoadStopSequence from "./loadStopSequenceForm/LoadStopSequence";
 
 // Import Custom Hook
@@ -75,7 +75,10 @@ const Aufgabe: React.FC = () => {
         ) : (
           <Fragment>
             <Col xs={24}>
-              <SaveStopsSequenceForm />
+              <SaveStopsSequenceForm
+                stateDND={stateDND}
+                saveStopSequence={saveStopSequence}
+              />
             </Col>
             <Map
               stations={stations}

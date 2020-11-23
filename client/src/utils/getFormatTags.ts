@@ -1,32 +1,54 @@
-const getFormatTags = (values: any) => {
-  let date= `${(values.date[0]).format("YYYY.MM.DD")} - ${(
-    values.date[1]
-  ).format("YYYY.MM.DD")}`
+export  const getFormatTags = (values: any) => {
+  const { date, day, timeList } = values;
 
-  if(values.day.length===1){
+  if (day.length === 1) {
     return {
-      date,
-      displayedtags:[`${values.day[0]} ${(values.time[0]).format(
-        "HH:mm"
-      )} - ${(values.time[1]).format("HH:mm")}`]
-    }
-  } else if(values.day.length === 8){
+      date: `${date[0].format("YYYY.MM.DD")} - ${date[1].format("YYYY.MM.DD")}`,
+      displayedtags: timeList.map((element: any) => {
+        return `${day[0]} ${element.time[0].format(
+          "HH:mm"
+        )} - ${element.time[1].format("HH:mm")}`;
+      }),
+    };
+  } else if (day.length === 8) {
     return {
-      date ,
-      displayedtags: [`All days ${(values.time[0]).format("HH:mm")} - ${(
-        values.time[1]
-      ).format("HH:mm")}`]
-    }
+      date: `${date[0].format("YYYY.MM.DD")} - ${date[1].format("YYYY.MM.DD")}`,
+      displayedtags: timeList.map((element: any) => {
+        return `All days ${element.time[0].format(
+          "HH:mm"
+        )} - ${element.time[1].format("HH:mm")}`;
+      }),
+    };
   } else {
     return {
-      date,
-      displayedtags:[`${values.day[0]} - ${
-        values.day[values.day.length - 1]
-      } ${(values.time[0]).format("HH:mm")} - ${(
-        values.time[1]
-      ).format("HH:mm")}`]
-    }
+      date: `${date[0].format("YYYY.MM.DD")} - ${date[1].format("YYYY.MM.DD")}`,
+      displayedtags: timeList.map((element: any) => {
+        return `${day[0]} - ${day[day.length - 1]} ${element.time[0].format(
+          "HH:mm"
+        )} - ${element.time[1].format("HH:mm")}`;
+      }),
+    };
   }
 };
 
-export default getFormatTags
+export  const getFormatTags1 = (values: any) => {
+  return values.schedule.map((element: any) => {
+    const { dayTime, date } = element;
+    return {
+      date,
+      displayedTags : dayTime.map((dayTime: any) => {
+        const { day, time } = dayTime;
+        if (day.length === 1) {
+          return  `${day[0]} ${time[0]} - ${time[1]}`
+
+        } else if (day.length === 8) {
+          return `All days ${time[0]} - ${time[1]}`
+        } else {
+          return `${day[0]} - ${day[day.length - 1]} ${time[0]} - ${time[1]}`
+        }
+      })
+    }
+  });
+};
+
+

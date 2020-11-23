@@ -1,5 +1,5 @@
 import React from "react";
-import SaveStopsSequenceForm from "./SaveStopsSequenceForm";
+import SaveStopSequenceForm from "./SaveStopSequenceForm";
 import { mount } from "enzyme";
 import toJSON from "enzyme-to-json";
 
@@ -9,7 +9,7 @@ const makeProps = (props: any) => ({
 });
 
 const setUp = (props: any) => {
-  const mountWrapper = mount(<SaveStopsSequenceForm {...props} />);
+  const mountWrapper = mount(<SaveStopSequenceForm {...props} />);
   return mountWrapper;
 };
 
@@ -31,37 +31,37 @@ describe("SaveStopSequenceForm component", () => {
   });
 
   it("Should display the input form when we click on add schedule button", () => {
-    const addButton = mountWrapper.find("#AddSchedule-button").at(0);
+    const addButton = mountWrapper.find("#addSchedule_button").at(0);
     addButton.simulate("click");
     mountWrapper.update();
 
-    expect(mountWrapper.find("#Cancel-button").at(0).length).toBe(1);
+    expect(mountWrapper.find("#cancel_button").at(0).length).toBe(1);
   });
 
   it("Should display the input form when we click on add schedule button", () => {
-    const addButton = mountWrapper.find("#AddSchedule-button").at(0);
+    const addButton = mountWrapper.find("#addSchedule_button").at(0);
     addButton.simulate("click");
 
-    expect(mountWrapper.find("#Cancel-button").at(0).length).toBe(1);
+    expect(mountWrapper.find("#cancel_button").at(0).length).toBe(1);
   });
 
   it("Should hide the input form on click on Cancel", () => {
-    const addButton = mountWrapper.find("#AddSchedule-button").at(0);
+    const addButton = mountWrapper.find("#addSchedule_button").at(0);
     addButton.simulate("click");
 
-    const cancelButton = mountWrapper.find("#Cancel-button").at(0);
+    const cancelButton = mountWrapper.find("#cancel_button").at(0);
     cancelButton.simulate("click");
 
-    expect(mountWrapper.find("#Cancel-button").length).toBe(0);
+    expect(mountWrapper.find("#cancel_button").length).toBe(0);
   });
 
   it("Should remove timePicker on Click on remove time Picker button", () => {
-    mountWrapper.find("#AddSchedule-button").at(0).simulate("click");
+    mountWrapper.find("#addSchedule_button").at(0).simulate("click");
 
-    const timePickerButton = mountWrapper.find("#addTime_Button").at(0);
+    const timePickerButton = mountWrapper.find("#addTime_button").at(0);
 
     timePickerButton.simulate("click");
-    expect(mountWrapper.find("#timePicker-input").at(0).length).toBe(1);
+    expect(mountWrapper.find("#timePicker_input").at(0).length).toBe(1);
 
     const removeTimePickerButton = mountWrapper
       .find("#remove_timePicker")
@@ -69,11 +69,11 @@ describe("SaveStopSequenceForm component", () => {
 
     removeTimePickerButton.simulate("click");
 
-    expect(mountWrapper.find("#timePicker-input").at(0).length).toBe(0);
+    expect(mountWrapper.find("#timePicker_input").at(0).length).toBe(0);
   });
 
   it("Should display console warn when we submit and the Fields are Empty", () => {
-    mountWrapper.find("#AddSchedule-button").at(0).simulate("click");
+    mountWrapper.find("#addSchedule_button").at(0).simulate("click");
 
     const submitButton = mountWrapper.find("form").at(0);
     //Submit form
@@ -86,15 +86,15 @@ describe("SaveStopSequenceForm component", () => {
 
   it("Should display tags as wanted after submit", () => {
     // Click on the Button
-    mountWrapper.find("#AddSchedule-button").at(0).simulate("click");
-    mountWrapper.find("#addTime_Button").at(0).simulate("click");
-    // Input fild
-    const inputName = mountWrapper.find("#name-input").at(0);
-    const dayInput = mountWrapper.find("#dayPicker-input").at(0);
-    const selectDate1 = mountWrapper.find("#date-input").at(0);
-    const selectDate2 = mountWrapper.find("#date-input").at(1);
-    const selectTime1 = mountWrapper.find("#timePicker-input").at(0);
-    const selectTime2 = mountWrapper.find("#timePicker-input").at(1);
+    mountWrapper.find("#addSchedule_button").at(0).simulate("click");
+    mountWrapper.find("#addTime_button").at(0).simulate("click");
+    // Input field
+    const inputName = mountWrapper.find("#name_input").at(0);
+    const dayInput = mountWrapper.find("#dayPicker_input").at(0);
+    const selectDate1 = mountWrapper.find("#date_input").at(0);
+    const selectDate2 = mountWrapper.find("#date_input").at(1);
+    const selectTime1 = mountWrapper.find("#timePicker_input").at(0);
+    const selectTime2 = mountWrapper.find("#timePicker_input").at(1);
     // Button
     const submitButton = mountWrapper.find("form").at(0);
 

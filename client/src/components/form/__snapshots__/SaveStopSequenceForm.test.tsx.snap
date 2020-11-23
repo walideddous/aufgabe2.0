@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`SaveStopSequenceForm component Should matches snapshot with the SaveStopSequenceForm component 1`] = `
-<Memo(SaveStopsSequenceForm)
+<Memo(SaveStopSequenceForm)
   result={[MockFunction]}
 >
   <Card
@@ -209,7 +209,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                             "leave": [Function],
                           }
                         }
-                        key="rc_animate_1605862251384"
+                        key="rc_animate_1606148716957"
                         transitionAppear={false}
                         transitionEnter={true}
                         transitionLeave={true}
@@ -218,7 +218,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                           destroyInactivePanel={false}
                           forceRender={false}
                           isActive={true}
-                          key="rc_animate_1605862251384"
+                          key="rc_animate_1606148716957"
                           prefixCls="ant-collapse"
                           role={null}
                         >
@@ -230,11 +230,12 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                               className="ant-collapse-content-box"
                             >
                               <ForwardRef(InternalForm)
+                                autoComplete="off"
                                 form={
                                   Object {
                                     "__INTERNAL__": Object {
                                       "itemRef": [Function],
-                                      "name": "basic",
+                                      "name": "dynamic_form_nest_item",
                                     },
                                     "getFieldError": [Function],
                                     "getFieldInstance": [Function],
@@ -256,19 +257,19 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                 }
                                 id="formWrapper"
                                 layout="vertical"
-                                name="basic"
-                                onFieldsChange={[Function]}
+                                name="dynamic_form_nest_item"
                                 onFinish={[Function]}
                                 requiredMark={false}
                               >
                                 <SizeContextProvider>
                                   <ForwardRef(Form)
+                                    autoComplete="off"
                                     className="ant-form ant-form-vertical ant-form-hide-required-mark"
                                     form={
                                       Object {
                                         "__INTERNAL__": Object {
                                           "itemRef": [Function],
-                                          "name": "basic",
+                                          "name": "dynamic_form_nest_item",
                                         },
                                         "getFieldError": [Function],
                                         "getFieldInstance": [Function],
@@ -289,12 +290,12 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                       }
                                     }
                                     id="formWrapper"
-                                    name="basic"
-                                    onFieldsChange={[Function]}
+                                    name="dynamic_form_nest_item"
                                     onFinish={[Function]}
                                     onFinishFailed={[Function]}
                                   >
                                     <form
+                                      autoComplete="off"
                                       className="ant-form ant-form-vertical ant-form-hide-required-mark"
                                       id="formWrapper"
                                       onSubmit={[Function]}
@@ -336,7 +337,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                               Object {
                                                 "__INTERNAL__": Object {
                                                   "itemRef": [Function],
-                                                  "name": "basic",
+                                                  "name": "dynamic_form_nest_item",
                                                 },
                                                 "getFieldError": [Function],
                                                 "getFieldInstance": [Function],
@@ -391,7 +392,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                 style={Object {}}
                                               >
                                                 <FormItemLabel
-                                                  htmlFor="basic_name"
+                                                  htmlFor="dynamic_form_nest_item_name"
                                                   label="Name"
                                                   name="name"
                                                   prefixCls="ant-form"
@@ -415,7 +416,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                     >
                                                       <label
                                                         className="ant-form-item-required"
-                                                        htmlFor="basic_name"
+                                                        htmlFor="dynamic_form_nest_item_name"
                                                         title="Name"
                                                       >
                                                         Name
@@ -464,7 +465,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                           >
                                                             <Input
                                                               allowClear={true}
-                                                              id="name-input"
+                                                              id="name_input"
                                                               onChange={[Function]}
                                                               type="text"
                                                             >
@@ -474,7 +475,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                                 element={
                                                                   <input
                                                                     className="ant-input"
-                                                                    id="name-input"
+                                                                    id="name_input"
                                                                     onBlur={[Function]}
                                                                     onChange={[Function]}
                                                                     onFocus={[Function]}
@@ -484,7 +485,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                                 }
                                                                 focused={false}
                                                                 handleReset={[Function]}
-                                                                id="name-input"
+                                                                id="name_input"
                                                                 inputType="input"
                                                                 onChange={[Function]}
                                                                 prefixCls="ant-input"
@@ -498,7 +499,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                                 >
                                                                   <input
                                                                     className="ant-input"
-                                                                    id="name-input"
+                                                                    id="name_input"
                                                                     onBlur={[Function]}
                                                                     onChange={[Function]}
                                                                     onFocus={[Function]}
@@ -633,7 +634,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                           block={false}
                                           ghost={false}
                                           htmlType="button"
-                                          id="AddSchedule-button"
+                                          id="addSchedule_button"
                                           loading={false}
                                           onClick={[Function]}
                                           type="primary"
@@ -641,7 +642,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                           <Wave>
                                             <button
                                               className="ant-btn ant-btn-primary"
-                                              id="AddSchedule-button"
+                                              id="addSchedule_button"
                                               onClick={[Function]}
                                               type="button"
                                             >
@@ -675,13 +676,13 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                       </div>
                                       <Collapse
                                         bordered={true}
-                                        defaultActiveKey="2"
+                                        defaultActiveKey="3"
                                       >
                                         <Collapse
                                           accordion={false}
                                           bordered={true}
                                           className="ant-collapse-icon-position-left"
-                                          defaultActiveKey="2"
+                                          defaultActiveKey="3"
                                           destroyInactivePanel={false}
                                           expandIcon={[Function]}
                                           onChange={[Function]}
@@ -703,7 +704,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                               destroyInactivePanel={false}
                                               expandIcon={[Function]}
                                               header="Stop sequence schedule"
-                                              isActive={true}
+                                              isActive={false}
                                               key="2"
                                               onItemClick={[Function]}
                                               openAnimation={
@@ -724,7 +725,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                 forceRender={false}
                                                 header="Stop sequence schedule"
                                                 headerClass=""
-                                                isActive={true}
+                                                isActive={false}
                                                 onItemClick={[Function]}
                                                 openAnimation={
                                                   Object {
@@ -738,10 +739,10 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                 showArrow={true}
                                               >
                                                 <div
-                                                  className="ant-collapse-item ant-collapse-item-active"
+                                                  className="ant-collapse-item"
                                                 >
                                                   <div
-                                                    aria-expanded="true"
+                                                    aria-expanded="false"
                                                     className="ant-collapse-header"
                                                     onClick={[Function]}
                                                     onKeyPress={[Function]}
@@ -750,7 +751,6 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                   >
                                                     <ForwardRef(RightOutlined)
                                                       className="ant-collapse-arrow"
-                                                      rotate={90}
                                                     >
                                                       <AntdIcon
                                                         className="ant-collapse-arrow"
@@ -775,7 +775,6 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                             "theme": "outlined",
                                                           }
                                                         }
-                                                        rotate={90}
                                                       >
                                                         <span
                                                           aria-label="right"
@@ -805,12 +804,6 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                                 "theme": "outlined",
                                                               }
                                                             }
-                                                            style={
-                                                              Object {
-                                                                "msTransform": "rotate(90deg)",
-                                                                "transform": "rotate(90deg)",
-                                                              }
-                                                            }
                                                           >
                                                             <svg
                                                               aria-hidden="true"
@@ -820,12 +813,6 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                               focusable="false"
                                                               height="1em"
                                                               key="svg-right"
-                                                              style={
-                                                                Object {
-                                                                  "msTransform": "rotate(90deg)",
-                                                                  "transform": "rotate(90deg)",
-                                                                }
-                                                              }
                                                               viewBox="64 64 896 896"
                                                               width="1em"
                                                             >
@@ -868,7 +855,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                           "leave": [Function],
                                                         }
                                                       }
-                                                      key="rc_animate_1605862251384"
+                                                      key="rc_animate_1606148716957"
                                                       transitionAppear={false}
                                                       transitionEnter={true}
                                                       transitionLeave={true}
@@ -876,89 +863,11 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                       <PanelContent
                                                         destroyInactivePanel={false}
                                                         forceRender={false}
-                                                        isActive={true}
-                                                        key="rc_animate_1605862251384"
+                                                        isActive={false}
+                                                        key="rc_animate_1606148716957"
                                                         prefixCls="ant-collapse"
                                                         role={null}
-                                                      >
-                                                        <div
-                                                          className="ant-collapse-content ant-collapse-content-active"
-                                                          role={null}
-                                                        >
-                                                          <div
-                                                            className="ant-collapse-content-box"
-                                                          >
-                                                            <div
-                                                              id="time_result"
-                                                              style={
-                                                                Object {
-                                                                  "height": "200px",
-                                                                  "overflowY": "auto",
-                                                                }
-                                                              }
-                                                            >
-                                                              <div
-                                                                key="0"
-                                                              >
-                                                                <h3
-                                                                  id="date_output"
-                                                                />
-                                                                <div
-                                                                  style={
-                                                                    Object {
-                                                                      "display": "flex",
-                                                                      "flexWrap": "wrap",
-                                                                      "marginBottom": "0.5em",
-                                                                    }
-                                                                  }
-                                                                />
-                                                              </div>
-                                                            </div>
-                                                            <Button
-                                                              block={false}
-                                                              ghost={false}
-                                                              htmlType="button"
-                                                              id="clear_all"
-                                                              loading={false}
-                                                              type="dashed"
-                                                            >
-                                                              <Wave>
-                                                                <button
-                                                                  className="ant-btn ant-btn-dashed"
-                                                                  id="clear_all"
-                                                                  onClick={[Function]}
-                                                                  type="button"
-                                                                >
-                                                                  <LoadingIcon
-                                                                    existIcon={false}
-                                                                    loading={false}
-                                                                    prefixCls="ant-btn"
-                                                                  >
-                                                                    <CSSMotion
-                                                                      motionName="ant-btn-loading-icon-motion"
-                                                                      onAppearActive={[Function]}
-                                                                      onAppearStart={[Function]}
-                                                                      onEnterActive={[Function]}
-                                                                      onEnterStart={[Function]}
-                                                                      onLeaveActive={[Function]}
-                                                                      onLeaveStart={[Function]}
-                                                                      removeOnLeave={true}
-                                                                      visible={false}
-                                                                    >
-                                                                      <DomWrapper />
-                                                                    </CSSMotion>
-                                                                  </LoadingIcon>
-                                                                  <span
-                                                                    key=".0"
-                                                                  >
-                                                                    Clear all
-                                                                  </span>
-                                                                </button>
-                                                              </Wave>
-                                                            </Button>
-                                                          </div>
-                                                        </div>
-                                                      </PanelContent>
+                                                      />
                                                     </AnimateChild>
                                                   </Animate>
                                                 </div>
@@ -985,5 +894,5 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
       </div>
     </div>
   </Card>
-</Memo(SaveStopsSequenceForm)>
+</Memo(SaveStopSequenceForm)>
 `;
