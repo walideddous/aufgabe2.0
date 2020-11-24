@@ -39,6 +39,12 @@ export default function useIndexHooks() {
   const [updateDate, setUpdateDate] = useState<string>("");
   const [currentMode, setCurrentMode] = useState<string>("");
   const [currentStopSequence, setCurrentStopSequence] = useState({});
+  const [loadStopSequenceSection, setLoadStopSequenceSection] = useState(true);
+
+  // set the mode Load or New
+  const loadMode = useCallback((value: boolean) => {
+    setLoadStopSequenceSection(value);
+  },[]);
 
   // Send the request when you click on get the Data button
   const sendRequest = useCallback(
@@ -595,6 +601,7 @@ export default function useIndexHooks() {
   const saveStopSequence = useCallback(
     async (formInput: any) => {
       const { items } = stateDND.trajekt;
+      console.log("formInput", formInput);
 
       if (isSending) return;
       if (!items.length) return;
@@ -704,6 +711,8 @@ export default function useIndexHooks() {
     currentMode,
     currentStopSequence,
     savedStopSequence,
+    loadStopSequenceSection,
+    loadMode,
     sendRequest,
     clickOnDrop,
     handleAddStopsOnCLick,

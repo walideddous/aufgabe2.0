@@ -24,10 +24,17 @@ const { Option } = Select;
 
 interface Tprops {
   stateDND: TstateDND;
+  currentStopSequence: any;
+  loadStopSequenceSection: boolean;
   saveStopSequence: (formData: any) => void;
 }
 
-const SaveStopSequenceForm = ({ stateDND, saveStopSequence }: Tprops) => {
+const SaveStopSequenceForm = ({
+  stateDND,
+  currentStopSequence,
+  loadStopSequenceSection,
+  saveStopSequence,
+}: Tprops) => {
   const [form] = Form.useForm();
   const [addSchedule, setAddSchedule] = useState(false);
   const [tags, setTags] = useState<
@@ -49,14 +56,27 @@ const SaveStopSequenceForm = ({ stateDND, saveStopSequence }: Tprops) => {
   }>();
 
   useEffect(() => {
+    if (Object.keys(currentStopSequence).length) {
+      const dataToSave = {
+        name: currentStopSequence.name,
+        schedule: currentStopSequence.schedule,
+      };
+      setSavedForm(dataToSave);
+    } else {
+      setSavedForm({ name: "", schedule: [] });
+    }
+  }, [currentStopSequence]);
+
+  useEffect(() => {
     if (savedForm?.schedule.length) {
       const result = getFormatTags1(savedForm);
       setTags(result);
+    } else {
+      setTags([]);
     }
   }, [savedForm]);
 
   const onFinish = (values: any) => {
-    console.log("onFinish click", values);
     const data = {
       date: `${values.date[0].format("YYYY.MM.DD")}-${values.date[1].format(
         "YYYY.MM.DD"
@@ -113,13 +133,18 @@ const SaveStopSequenceForm = ({ stateDND, saveStopSequence }: Tprops) => {
 
   return (
     <Card bordered={true}>
-      <Collapse defaultActiveKey="1">
+      <Collapse
+        activeKey={
+          !Object.keys(currentStopSequence).length && loadStopSequenceSection
+            ? "2"
+            : "1"
+        }
+      >
         <Panel header="Stop sequence save form" key="1">
           <Form
             autoComplete="off"
             id="formWrapper"
             layout="vertical"
-            name="dynamic_form_nest_item"
             requiredMark={false}
             form={form}
             onFinish={onFinish}
@@ -131,6 +156,7 @@ const SaveStopSequenceForm = ({ stateDND, saveStopSequence }: Tprops) => {
             >
               <Input
                 id="name_input"
+                placeholder="Enter the stop sequence name"
                 value={name}
                 onChange={handleNameChange}
                 allowClear
@@ -205,42 +231,33 @@ const SaveStopSequenceForm = ({ stateDND, saveStopSequence }: Tprops) => {
                 </Form.Item>
                 <Form.List name="timeList">
                   {(fields, { add, remove }) => {
-                    console.log(fields);
                     return (
                       <div style={{ display: "flex", flexDirection: "column" }}>
-                        <p>Time</p>
                         <div style={{ display: "flex" }}>
-                          <Form.Item
-                            name="time"
-                            rules={[
-                              { required: true, message: "Missing time" },
-                            ]}
-                          >
-                            <RangePicker format="HH:mm" id="timePicker_input" />
-                          </Form.Item>
-                          <Form.Item>
+                          <Form.Item label="Time">
                             <Button
                               id="addTime_button"
                               type="dashed"
-                              onClick={() => add("", 1)}
+                              onClick={() => add()}
                               icon={<PlusOutlined />}
                             >
                               Add time
                             </Button>
                           </Form.Item>
-                          <div>
-                            {fields.map((field) => (
+                          <div style={{ paddingTop: "30px" }}>
+                            {fields.map((field, index) => (
                               <Space
                                 key={field.key}
                                 style={{ display: "flex" }}
                                 align="baseline"
                               >
                                 <Form.Item
-                                  {...field}
                                   name={[field.name, "time"]}
-                                  fieldKey={[field.fieldKey, "time"]}
                                   rules={[
-                                    { required: true, message: "Missing time" },
+                                    {
+                                      required: true,
+                                      message: "Missing time",
+                                    },
                                   ]}
                                 >
                                   <RangePicker
@@ -277,7 +294,14 @@ const SaveStopSequenceForm = ({ stateDND, saveStopSequence }: Tprops) => {
               </Fragment>
             )}
             <Collapse activeKey={tags.length ? "2" : ""}>
-              <Panel header="Stop sequence schedule" key="2">
+              <Panel
+                header={
+                  currentStopSequence.name && tags.length
+                    ? `${currentStopSequence.name} schedule`
+                    : "Stop sequence schedule"
+                }
+                key="2"
+              >
                 <div
                   id="time_result"
                   style={{ height: "200px", overflowY: "auto" }}
@@ -290,7 +314,7 @@ const SaveStopSequenceForm = ({ stateDND, saveStopSequence }: Tprops) => {
                           <Fragment>
                             {tag.displayedTags.map(
                               (el: string, indexTag: number) => (
-                                <Tag key={indexTag} closable>
+                                <Tag key={indexTag} closable onClose={() => {}}>
                                   {el}
                                 </Tag>
                               )
@@ -308,8 +332,10 @@ const SaveStopSequenceForm = ({ stateDND, saveStopSequence }: Tprops) => {
                   }
                   onClick={() => {
                     if (tags.length && stateDND.trajekt.items.length) {
+                      console.log(form.getFieldValue(name));
                       saveStopSequence({
                         ...savedForm,
+                        name,
                       });
                     }
                   }}

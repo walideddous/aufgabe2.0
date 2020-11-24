@@ -315,73 +315,39 @@ exports[`NavBar component Should Match snapshot with the Navbar component 1`] = 
   stopSequenceList={
     Array [
       Object {
-        "_id": "c03295ea-5a3f-43e8-83ea-7736ce82cfd9",
-        "date": Array [
-          "2020-10-16",
-          "2020-11-27",
-        ],
-        "modes": "13",
-        "name": "St. Gallen to Zürich HB",
+        "_id": "638b7703-d171-4e5f-8e78-21258f75cee4",
+        "modes": "4",
+        "name": "asdsadsa",
         "schedule": Array [
           Object {
-            "day": Array [
-              "monday",
-              "tuesday",
-              "wednesday",
-              "thursday",
-              "friday",
-            ],
-            "time": Array [
+            "date": "2020.11.24-2020.12.16",
+            "dayTime": Array [
               Object {
-                "end": "12:00",
-                "start": "07:00",
-              },
-              Object {
-                "end": "18:00",
-                "start": "13:00",
-              },
-            ],
-          },
-          Object {
-            "day": Array [
-              "saturday",
-              "sunday",
-            ],
-            "time": Array [
-              Object {
-                "end": "12:00",
-                "start": "07:00",
+                "day": Array [
+                  "Mon",
+                ],
+                "time": Array [
+                  "05:00",
+                  "11:00",
+                ],
               },
             ],
           },
         ],
         "stopSequence": Array [
           Object {
-            "_id": "5f62045b0d5658001cd910c4",
+            "_id": "5f62060e0d5658001cd95358",
             "coord": Object {
               "WGS84": Object {
-                "lat": 47.42318,
-                "lon": 9.3699,
+                "lat": 47.39761,
+                "lon": 8.4606,
               },
             },
             "modes": Array [
-              "13",
+              "4",
               "5",
             ],
-            "name": "St. Gallen",
-          },
-          Object {
-            "_id": "5f62045b0d5658001cd910c1",
-            "coord": Object {
-              "WGS84": Object {
-                "lat": 47.4072,
-                "lon": 9.32965,
-              },
-            },
-            "modes": Array [
-              "13",
-            ],
-            "name": "St. Gallen Bruggen",
+            "name": "Schlieren, Gasometerbrücke",
           },
         ],
       },
@@ -709,7 +675,7 @@ exports[`NavBar component Should Match snapshot with the Navbar component 1`] = 
             <MenuItem
               onClick={[Function]}
             >
-              St. Gallen to Zürich HB
+              asdsadsa
             </MenuItem>
           </Menu>
         }

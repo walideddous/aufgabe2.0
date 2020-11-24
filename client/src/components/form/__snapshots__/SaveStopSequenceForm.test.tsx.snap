@@ -2,7 +2,348 @@
 
 exports[`SaveStopSequenceForm component Should matches snapshot with the SaveStopSequenceForm component 1`] = `
 <Memo(SaveStopSequenceForm)
-  result={[MockFunction]}
+  currentStopSequence={
+    Object {
+      "_id": "638b7703-d171-4e5f-8e78-21258f75cee4",
+      "modes": "4",
+      "name": "asdsadsa",
+      "schedule": Array [
+        Object {
+          "date": "2020.11.24-2020.12.16",
+          "dayTime": Array [
+            Object {
+              "day": Array [
+                "Mon",
+              ],
+              "time": Array [
+                "05:00",
+                "11:00",
+              ],
+            },
+          ],
+        },
+      ],
+      "stopSequence": Array [
+        Object {
+          "_id": "5f62060e0d5658001cd95358",
+          "coord": Object {
+            "WGS84": Object {
+              "lat": 47.39761,
+              "lon": 8.4606,
+            },
+          },
+          "modes": Array [
+            "4",
+            "5",
+          ],
+          "name": "Schlieren, Gasometerbrücke",
+        },
+      ],
+    }
+  }
+  loadStopSequenceSection={false}
+  saveStopSequence={[MockFunction]}
+  stateDND={
+    Object {
+      "suggestions": Object {
+        "items": Array [
+          Object {
+            "_id": "5f6206390d5658001cd959b40",
+            "angle": -83.19868517601843,
+            "coord": Object {
+              "WGS84": Object {
+                "lat": 46.17857,
+                "lon": 6.08606,
+              },
+            },
+            "distance": 0.17031643195093935,
+            "modes": Array [
+              "4",
+              "5",
+            ],
+            "name": "Bernex 1",
+          },
+          Object {
+            "_id": "5f6206390d5658001cd959b41",
+            "angle": -83.19868517601843,
+            "coord": Object {
+              "WGS84": Object {
+                "lat": 46.17857,
+                "lon": 6.08606,
+              },
+            },
+            "distance": 0.17031643195093935,
+            "modes": Array [
+              "4",
+              "5",
+            ],
+            "name": "Bernex 1",
+          },
+          Object {
+            "_id": "5f6206390d5658001cd959b42",
+            "angle": -83.19868517601843,
+            "coord": Object {
+              "WGS84": Object {
+                "lat": 46.17857,
+                "lon": 6.08606,
+              },
+            },
+            "distance": 0.17031643195093935,
+            "modes": Array [
+              "4",
+              "5",
+            ],
+            "name": "Bernex 1",
+          },
+          Object {
+            "_id": "5f6206390d5658001cd959b43",
+            "angle": -83.19868517601843,
+            "coord": Object {
+              "WGS84": Object {
+                "lat": 46.17857,
+                "lon": 6.08606,
+              },
+            },
+            "distance": 0.17031643195093935,
+            "modes": Array [
+              "4",
+              "5",
+            ],
+            "name": "Bernex 1",
+          },
+          Object {
+            "_id": "5f6206390d5658001cd959b44",
+            "angle": -83.19868517601843,
+            "coord": Object {
+              "WGS84": Object {
+                "lat": 46.17857,
+                "lon": 6.08606,
+              },
+            },
+            "distance": 0.17031643195093935,
+            "modes": Array [
+              "4",
+              "5",
+            ],
+            "name": "Bernex 1",
+          },
+          Object {
+            "_id": "5f6206390d5658001cd959b45",
+            "angle": -83.19868517601843,
+            "coord": Object {
+              "WGS84": Object {
+                "lat": 46.17857,
+                "lon": 6.08606,
+              },
+            },
+            "distance": 0.17031643195093935,
+            "modes": Array [
+              "4",
+              "5",
+            ],
+            "name": "Bernex 1",
+          },
+          Object {
+            "_id": "5f6206390d5658001cd959b46",
+            "angle": -83.19868517601843,
+            "coord": Object {
+              "WGS84": Object {
+                "lat": 46.17857,
+                "lon": 6.08606,
+              },
+            },
+            "distance": 0.17031643195093935,
+            "modes": Array [
+              "4",
+              "5",
+            ],
+            "name": "Bernex 1",
+          },
+          Object {
+            "_id": "5f6206390d5658001cd959b47",
+            "angle": -83.19868517601843,
+            "coord": Object {
+              "WGS84": Object {
+                "lat": 46.17857,
+                "lon": 6.08606,
+              },
+            },
+            "distance": 0.17031643195093935,
+            "modes": Array [
+              "4",
+              "5",
+            ],
+            "name": "Bernex 1",
+          },
+          Object {
+            "_id": "5f6206390d5658001cd959b48",
+            "angle": -83.19868517601843,
+            "coord": Object {
+              "WGS84": Object {
+                "lat": 46.17857,
+                "lon": 6.08606,
+              },
+            },
+            "distance": 0.17031643195093935,
+            "modes": Array [
+              "4",
+              "5",
+            ],
+            "name": "Bernex 1",
+          },
+          Object {
+            "_id": "5f6206390d5658001cd959b49",
+            "angle": -83.19868517601843,
+            "coord": Object {
+              "WGS84": Object {
+                "lat": 46.17857,
+                "lon": 6.08606,
+              },
+            },
+            "distance": 0.17031643195093935,
+            "modes": Array [
+              "4",
+              "5",
+            ],
+            "name": "Bernex 1",
+          },
+          Object {
+            "_id": "5f6206390d5658001cd959b410",
+            "angle": -83.19868517601843,
+            "coord": Object {
+              "WGS84": Object {
+                "lat": 46.17857,
+                "lon": 6.08606,
+              },
+            },
+            "distance": 0.17031643195093935,
+            "modes": Array [
+              "4",
+              "5",
+            ],
+            "name": "Bernex 1",
+          },
+          Object {
+            "_id": "5f6206390d5658001cd959b411",
+            "angle": -83.19868517601843,
+            "coord": Object {
+              "WGS84": Object {
+                "lat": 46.17857,
+                "lon": 6.08606,
+              },
+            },
+            "distance": 0.17031643195093935,
+            "modes": Array [
+              "4",
+              "5",
+            ],
+            "name": "Bernex 1",
+          },
+          Object {
+            "_id": "5f6206390d5658001cd959b412",
+            "angle": -83.19868517601843,
+            "coord": Object {
+              "WGS84": Object {
+                "lat": 46.17857,
+                "lon": 6.08606,
+              },
+            },
+            "distance": 0.17031643195093935,
+            "modes": Array [
+              "4",
+              "5",
+            ],
+            "name": "Bernex 1",
+          },
+          Object {
+            "_id": "5f6206390d5658001cd959b413",
+            "angle": -83.19868517601843,
+            "coord": Object {
+              "WGS84": Object {
+                "lat": 46.17857,
+                "lon": 6.08606,
+              },
+            },
+            "distance": 0.17031643195093935,
+            "modes": Array [
+              "4",
+              "5",
+            ],
+            "name": "Bernex 1",
+          },
+          Object {
+            "_id": "5f6206390d5658001cd959b414",
+            "angle": -83.19868517601843,
+            "coord": Object {
+              "WGS84": Object {
+                "lat": 46.17857,
+                "lon": 6.08606,
+              },
+            },
+            "distance": 0.17031643195093935,
+            "modes": Array [
+              "4",
+              "5",
+            ],
+            "name": "Bernex 1",
+          },
+          Object {
+            "_id": "5f6206390d5658001cd959b415",
+            "angle": -83.19868517601843,
+            "coord": Object {
+              "WGS84": Object {
+                "lat": 46.17857,
+                "lon": 6.08606,
+              },
+            },
+            "distance": 0.17031643195093935,
+            "modes": Array [
+              "4",
+              "5",
+            ],
+            "name": "Bernex 1",
+          },
+          Object {
+            "_id": "5f6206390d5658001cd959b416",
+            "angle": -83.19868517601843,
+            "coord": Object {
+              "WGS84": Object {
+                "lat": 46.17857,
+                "lon": 6.08606,
+              },
+            },
+            "distance": 0.17031643195093935,
+            "modes": Array [
+              "4",
+              "5",
+            ],
+            "name": "Bernex 1",
+          },
+        ],
+        "title": "Suggestion",
+      },
+      "trajekt": Object {
+        "items": Array [
+          Object {
+            "_id": "5f6205c60d5658001cd9480b",
+            "coord": Object {
+              "WGS84": Object {
+                "lat": 46.17831,
+                "lon": 6.08824,
+              },
+            },
+            "index": 0,
+            "modes": Array [
+              "4",
+              "5",
+            ],
+            "name": "Confignon, croisée",
+          },
+        ],
+        "title": "Stop sequence",
+      },
+    }
+  }
 >
   <Card
     bordered={true}
@@ -15,14 +356,14 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
         style={Object {}}
       >
         <Collapse
+          activeKey="1"
           bordered={true}
-          defaultActiveKey="1"
         >
           <Collapse
             accordion={false}
+            activeKey="1"
             bordered={true}
             className="ant-collapse-icon-position-left"
-            defaultActiveKey="1"
             destroyInactivePanel={false}
             expandIcon={[Function]}
             onChange={[Function]}
@@ -209,7 +550,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                             "leave": [Function],
                           }
                         }
-                        key="rc_animate_1606148716957"
+                        key="rc_animate_1606243138224"
                         transitionAppear={false}
                         transitionEnter={true}
                         transitionLeave={true}
@@ -218,7 +559,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                           destroyInactivePanel={false}
                           forceRender={false}
                           isActive={true}
-                          key="rc_animate_1606148716957"
+                          key="rc_animate_1606243138224"
                           prefixCls="ant-collapse"
                           role={null}
                         >
@@ -235,7 +576,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                   Object {
                                     "__INTERNAL__": Object {
                                       "itemRef": [Function],
-                                      "name": "dynamic_form_nest_item",
+                                      "name": undefined,
                                     },
                                     "getFieldError": [Function],
                                     "getFieldInstance": [Function],
@@ -257,7 +598,6 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                 }
                                 id="formWrapper"
                                 layout="vertical"
-                                name="dynamic_form_nest_item"
                                 onFinish={[Function]}
                                 requiredMark={false}
                               >
@@ -269,7 +609,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                       Object {
                                         "__INTERNAL__": Object {
                                           "itemRef": [Function],
-                                          "name": "dynamic_form_nest_item",
+                                          "name": undefined,
                                         },
                                         "getFieldError": [Function],
                                         "getFieldInstance": [Function],
@@ -290,7 +630,6 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                       }
                                     }
                                     id="formWrapper"
-                                    name="dynamic_form_nest_item"
                                     onFinish={[Function]}
                                     onFinishFailed={[Function]}
                                   >
@@ -337,7 +676,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                               Object {
                                                 "__INTERNAL__": Object {
                                                   "itemRef": [Function],
-                                                  "name": "dynamic_form_nest_item",
+                                                  "name": undefined,
                                                 },
                                                 "getFieldError": [Function],
                                                 "getFieldInstance": [Function],
@@ -392,7 +731,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                 style={Object {}}
                                               >
                                                 <FormItemLabel
-                                                  htmlFor="dynamic_form_nest_item_name"
+                                                  htmlFor="name"
                                                   label="Name"
                                                   name="name"
                                                   prefixCls="ant-form"
@@ -416,7 +755,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                     >
                                                       <label
                                                         className="ant-form-item-required"
-                                                        htmlFor="dynamic_form_nest_item_name"
+                                                        htmlFor="name"
                                                         title="Name"
                                                       >
                                                         Name
@@ -461,12 +800,13 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                           className="ant-form-item-control-input-content"
                                                         >
                                                           <Component
-                                                            update={1}
+                                                            update={3}
                                                           >
                                                             <Input
                                                               allowClear={true}
                                                               id="name_input"
                                                               onChange={[Function]}
+                                                              placeholder="Enter the stop sequence name"
                                                               type="text"
                                                             >
                                                               <ClearableLabeledInput
@@ -480,6 +820,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                                     onChange={[Function]}
                                                                     onFocus={[Function]}
                                                                     onKeyDown={[Function]}
+                                                                    placeholder="Enter the stop sequence name"
                                                                     type="text"
                                                                   />
                                                                 }
@@ -488,6 +829,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                                 id="name_input"
                                                                 inputType="input"
                                                                 onChange={[Function]}
+                                                                placeholder="Enter the stop sequence name"
                                                                 prefixCls="ant-input"
                                                                 triggerFocus={[Function]}
                                                                 type="text"
@@ -504,6 +846,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                                     onChange={[Function]}
                                                                     onFocus={[Function]}
                                                                     onKeyDown={[Function]}
+                                                                    placeholder="Enter the stop sequence name"
                                                                     style={null}
                                                                     type="text"
                                                                     value=""
@@ -675,14 +1018,14 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                         </Button>
                                       </div>
                                       <Collapse
+                                        activeKey="2"
                                         bordered={true}
-                                        defaultActiveKey="3"
                                       >
                                         <Collapse
                                           accordion={false}
+                                          activeKey="2"
                                           bordered={true}
                                           className="ant-collapse-icon-position-left"
-                                          defaultActiveKey="3"
                                           destroyInactivePanel={false}
                                           expandIcon={[Function]}
                                           onChange={[Function]}
@@ -703,8 +1046,8 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                               accordion={false}
                                               destroyInactivePanel={false}
                                               expandIcon={[Function]}
-                                              header="Stop sequence schedule"
-                                              isActive={false}
+                                              header="asdsadsa schedule"
+                                              isActive={true}
                                               key="2"
                                               onItemClick={[Function]}
                                               openAnimation={
@@ -723,9 +1066,9 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                 destroyInactivePanel={false}
                                                 expandIcon={[Function]}
                                                 forceRender={false}
-                                                header="Stop sequence schedule"
+                                                header="asdsadsa schedule"
                                                 headerClass=""
-                                                isActive={false}
+                                                isActive={true}
                                                 onItemClick={[Function]}
                                                 openAnimation={
                                                   Object {
@@ -739,10 +1082,10 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                 showArrow={true}
                                               >
                                                 <div
-                                                  className="ant-collapse-item"
+                                                  className="ant-collapse-item ant-collapse-item-active"
                                                 >
                                                   <div
-                                                    aria-expanded="false"
+                                                    aria-expanded="true"
                                                     className="ant-collapse-header"
                                                     onClick={[Function]}
                                                     onKeyPress={[Function]}
@@ -751,6 +1094,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                   >
                                                     <ForwardRef(RightOutlined)
                                                       className="ant-collapse-arrow"
+                                                      rotate={90}
                                                     >
                                                       <AntdIcon
                                                         className="ant-collapse-arrow"
@@ -775,6 +1119,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                             "theme": "outlined",
                                                           }
                                                         }
+                                                        rotate={90}
                                                       >
                                                         <span
                                                           aria-label="right"
@@ -804,6 +1149,12 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                                 "theme": "outlined",
                                                               }
                                                             }
+                                                            style={
+                                                              Object {
+                                                                "msTransform": "rotate(90deg)",
+                                                                "transform": "rotate(90deg)",
+                                                              }
+                                                            }
                                                           >
                                                             <svg
                                                               aria-hidden="true"
@@ -813,6 +1164,12 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                               focusable="false"
                                                               height="1em"
                                                               key="svg-right"
+                                                              style={
+                                                                Object {
+                                                                  "msTransform": "rotate(90deg)",
+                                                                  "transform": "rotate(90deg)",
+                                                                }
+                                                              }
                                                               viewBox="64 64 896 896"
                                                               width="1em"
                                                             >
@@ -825,7 +1182,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                         </span>
                                                       </AntdIcon>
                                                     </ForwardRef(RightOutlined)>
-                                                    Stop sequence schedule
+                                                    asdsadsa schedule
                                                   </div>
                                                   <Animate
                                                     animation={
@@ -855,7 +1212,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                           "leave": [Function],
                                                         }
                                                       }
-                                                      key="rc_animate_1606148716957"
+                                                      key="rc_animate_1606243138224"
                                                       transitionAppear={false}
                                                       transitionEnter={true}
                                                       transitionLeave={true}
@@ -863,11 +1220,220 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                       <PanelContent
                                                         destroyInactivePanel={false}
                                                         forceRender={false}
-                                                        isActive={false}
-                                                        key="rc_animate_1606148716957"
+                                                        isActive={true}
+                                                        key="rc_animate_1606243138224"
                                                         prefixCls="ant-collapse"
                                                         role={null}
-                                                      />
+                                                      >
+                                                        <div
+                                                          className="ant-collapse-content ant-collapse-content-active"
+                                                          role={null}
+                                                        >
+                                                          <div
+                                                            className="ant-collapse-content-box"
+                                                          >
+                                                            <div
+                                                              id="time_result"
+                                                              style={
+                                                                Object {
+                                                                  "height": "200px",
+                                                                  "overflowY": "auto",
+                                                                }
+                                                              }
+                                                            >
+                                                              <h3>
+                                                                2020.11.24-2020.12.16
+                                                              </h3>
+                                                              <Tag
+                                                                closable={true}
+                                                                key="0"
+                                                                onClose={[Function]}
+                                                              >
+                                                                <span
+                                                                  className="ant-tag"
+                                                                  style={
+                                                                    Object {
+                                                                      "backgroundColor": undefined,
+                                                                    }
+                                                                  }
+                                                                >
+                                                                  Mon 05:00 - 11:00
+                                                                  <ForwardRef(CloseOutlined)
+                                                                    className="ant-tag-close-icon"
+                                                                    onClick={[Function]}
+                                                                  >
+                                                                    <AntdIcon
+                                                                      className="ant-tag-close-icon"
+                                                                      icon={
+                                                                        Object {
+                                                                          "icon": Object {
+                                                                            "attrs": Object {
+                                                                              "focusable": "false",
+                                                                              "viewBox": "64 64 896 896",
+                                                                            },
+                                                                            "children": Array [
+                                                                              Object {
+                                                                                "attrs": Object {
+                                                                                  "d": "M563.8 512l262.5-312.9c4.4-5.2.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9A7.95 7.95 0 00203 838h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z",
+                                                                                },
+                                                                                "tag": "path",
+                                                                              },
+                                                                            ],
+                                                                            "tag": "svg",
+                                                                          },
+                                                                          "name": "close",
+                                                                          "theme": "outlined",
+                                                                        }
+                                                                      }
+                                                                      onClick={[Function]}
+                                                                    >
+                                                                      <span
+                                                                        aria-label="close"
+                                                                        className="anticon anticon-close ant-tag-close-icon"
+                                                                        onClick={[Function]}
+                                                                        role="img"
+                                                                        tabIndex={-1}
+                                                                      >
+                                                                        <IconReact
+                                                                          className=""
+                                                                          icon={
+                                                                            Object {
+                                                                              "icon": Object {
+                                                                                "attrs": Object {
+                                                                                  "focusable": "false",
+                                                                                  "viewBox": "64 64 896 896",
+                                                                                },
+                                                                                "children": Array [
+                                                                                  Object {
+                                                                                    "attrs": Object {
+                                                                                      "d": "M563.8 512l262.5-312.9c4.4-5.2.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9A7.95 7.95 0 00203 838h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z",
+                                                                                    },
+                                                                                    "tag": "path",
+                                                                                  },
+                                                                                ],
+                                                                                "tag": "svg",
+                                                                              },
+                                                                              "name": "close",
+                                                                              "theme": "outlined",
+                                                                            }
+                                                                          }
+                                                                        >
+                                                                          <svg
+                                                                            aria-hidden="true"
+                                                                            className=""
+                                                                            data-icon="close"
+                                                                            fill="currentColor"
+                                                                            focusable="false"
+                                                                            height="1em"
+                                                                            key="svg-close"
+                                                                            viewBox="64 64 896 896"
+                                                                            width="1em"
+                                                                          >
+                                                                            <path
+                                                                              d="M563.8 512l262.5-312.9c4.4-5.2.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9A7.95 7.95 0 00203 838h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z"
+                                                                              key="svg-close-svg-0"
+                                                                            />
+                                                                          </svg>
+                                                                        </IconReact>
+                                                                      </span>
+                                                                    </AntdIcon>
+                                                                  </ForwardRef(CloseOutlined)>
+                                                                </span>
+                                                              </Tag>
+                                                            </div>
+                                                            <Button
+                                                              block={false}
+                                                              disabled={false}
+                                                              ghost={false}
+                                                              htmlType="button"
+                                                              id="save_stopSequence"
+                                                              loading={false}
+                                                              onClick={[Function]}
+                                                              type="primary"
+                                                            >
+                                                              <Wave>
+                                                                <button
+                                                                  className="ant-btn ant-btn-primary"
+                                                                  disabled={false}
+                                                                  id="save_stopSequence"
+                                                                  onClick={[Function]}
+                                                                  type="button"
+                                                                >
+                                                                  <LoadingIcon
+                                                                    existIcon={false}
+                                                                    loading={false}
+                                                                    prefixCls="ant-btn"
+                                                                  >
+                                                                    <CSSMotion
+                                                                      motionName="ant-btn-loading-icon-motion"
+                                                                      onAppearActive={[Function]}
+                                                                      onAppearStart={[Function]}
+                                                                      onEnterActive={[Function]}
+                                                                      onEnterStart={[Function]}
+                                                                      onLeaveActive={[Function]}
+                                                                      onLeaveStart={[Function]}
+                                                                      removeOnLeave={true}
+                                                                      visible={false}
+                                                                    >
+                                                                      <DomWrapper />
+                                                                    </CSSMotion>
+                                                                  </LoadingIcon>
+                                                                  <span
+                                                                    key=".0"
+                                                                  >
+                                                                    Save
+                                                                  </span>
+                                                                </button>
+                                                              </Wave>
+                                                            </Button>
+                                                            <Button
+                                                              block={false}
+                                                              disabled={false}
+                                                              ghost={false}
+                                                              htmlType="button"
+                                                              id="clear_all"
+                                                              loading={false}
+                                                              onClick={[Function]}
+                                                              type="dashed"
+                                                            >
+                                                              <Wave>
+                                                                <button
+                                                                  className="ant-btn ant-btn-dashed"
+                                                                  disabled={false}
+                                                                  id="clear_all"
+                                                                  onClick={[Function]}
+                                                                  type="button"
+                                                                >
+                                                                  <LoadingIcon
+                                                                    existIcon={false}
+                                                                    loading={false}
+                                                                    prefixCls="ant-btn"
+                                                                  >
+                                                                    <CSSMotion
+                                                                      motionName="ant-btn-loading-icon-motion"
+                                                                      onAppearActive={[Function]}
+                                                                      onAppearStart={[Function]}
+                                                                      onEnterActive={[Function]}
+                                                                      onEnterStart={[Function]}
+                                                                      onLeaveActive={[Function]}
+                                                                      onLeaveStart={[Function]}
+                                                                      removeOnLeave={true}
+                                                                      visible={false}
+                                                                    >
+                                                                      <DomWrapper />
+                                                                    </CSSMotion>
+                                                                  </LoadingIcon>
+                                                                  <span
+                                                                    key=".0"
+                                                                  >
+                                                                    Clear all
+                                                                  </span>
+                                                                </button>
+                                                              </Wave>
+                                                            </Button>
+                                                          </div>
+                                                        </div>
+                                                      </PanelContent>
                                                     </AnimateChild>
                                                   </Animate>
                                                 </div>

@@ -22,9 +22,9 @@ const Aufgabe: React.FC = () => {
     stateDND,
     isSending,
     stopSequenceList,
-    updateDate,
-    currentMode,
     currentStopSequence,
+    loadStopSequenceSection,
+    loadMode,
     sendRequest,
     clickOnDrop,
     handleAddStopsOnCLick,
@@ -41,6 +41,7 @@ const Aufgabe: React.FC = () => {
     handleUpdateAfterSave,
     handleDeleteStopSequence,
   } = useIndexHooks();
+
   return (
     <div className="Prototyp" style={{ position: "relative" }}>
       <Row gutter={[8, 8]}>
@@ -48,7 +49,7 @@ const Aufgabe: React.FC = () => {
           <LoadStopSequence
             stateDND={stateDND}
             stopSequenceList={stopSequenceList}
-            currentStopSequence={currentStopSequence}
+            loadMode={loadMode}
             onSendRequest={sendRequest}
             handleUpdateAfterSave={handleUpdateAfterSave}
             onClearAll={clearAll}
@@ -77,6 +78,8 @@ const Aufgabe: React.FC = () => {
             <Col xs={24}>
               <SaveStopsSequenceForm
                 stateDND={stateDND}
+                currentStopSequence={currentStopSequence}
+                loadStopSequenceSection={loadStopSequenceSection}
                 saveStopSequence={saveStopSequence}
               />
             </Col>

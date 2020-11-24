@@ -42,115 +42,81 @@ export const selected = {
 
 export const stopSequenceList = [
   {
-    _id: "c03295ea-5a3f-43e8-83ea-7736ce82cfd9",
-    name: "St. Gallen to Zürich HB",
-    date: ["2020-10-16", "2020-11-27"],
-    schedule: [
-      {
-        day: ["monday", "tuesday", "wednesday", "thursday", "friday"],
-        time: [
+      _id: "638b7703-d171-4e5f-8e78-21258f75cee4",
+      name: "asdsadsa",
+      modes: "4",
+      schedule: [
           {
-            start: "07:00",
-            end: "12:00",
-          },
+              date: "2020.11.24-2020.12.16",
+              dayTime: [
+                  {
+                      day: [
+                          "Mon"
+                      ],
+                      time: [
+                          "05:00",
+                          "11:00"
+                      ]
+                  }
+              ]
+          }
+      ],
+      stopSequence: [
           {
-            start: "13:00",
-            end: "18:00",
-          },
-        ],
-      },
-      {
-        day: ["saturday", "sunday"],
-        time: [
-          {
-            start: "07:00",
-            end: "12:00",
-          },
-        ],
-      },
-    ],
-    modes: "13",
-    stopSequence: [
-      {
-        _id: "5f62045b0d5658001cd910c4",
-        name: "St. Gallen",
-        modes: ["13", "5"],
-        coord: {
-          WGS84: {
-            lat: 47.42318,
-            lon: 9.3699,
-          },
-        },
-      },
-      {
-        _id: "5f62045b0d5658001cd910c1",
-        name: "St. Gallen Bruggen",
-        modes: ["13"],
-        coord: {
-          WGS84: {
-            lat: 47.4072,
-            lon: 9.32965,
-          },
-        },
-      },
-    ],
-  },
-];
+              _id: "5f62060e0d5658001cd95358",
+              name: "Schlieren, Gasometerbrücke",
+              modes: [
+                  "4",
+                  "5"
+              ],
+              coord: {
+                  WGS84: {
+                      lat: 47.39761,
+                      lon: 8.4606
+                  }
+              }
+          }
+      ]
+  }
+]
 
-export const currentStopSequence = {
-  _id: "c03295ea-5a3f-43e8-83ea-7736ce82cfd9",
-  name: "St. Gallen to Zürich HB",
-  date: ["2020-10-16", "2020-11-27"],
+export const currentStopSequence =   {
+  _id: "638b7703-d171-4e5f-8e78-21258f75cee4",
+  name: "asdsadsa",
+  modes: "4",
   schedule: [
-    {
-      day: ["monday", "tuesday", "wednesday", "thursday", "friday"],
-      time: [
-        {
-          start: "07:00",
-          end: "12:00",
-        },
-        {
-          start: "13:00",
-          end: "18:00",
-        },
-      ],
-    },
-    {
-      day: ["saturday", "sunday"],
-      time: [
-        {
-          start: "07:00",
-          end: "12:00",
-        },
-      ],
-    },
+      {
+          date: "2020.11.24-2020.12.16",
+          dayTime: [
+              {
+                  day: [
+                      "Mon"
+                  ],
+                  time: [
+                      "05:00",
+                      "11:00"
+                  ]
+              }
+          ]
+      }
   ],
-  modes: "13",
   stopSequence: [
-    {
-      _id: "5f62045b0d5658001cd910c4",
-      name: "St. Gallen",
-      modes: ["13", "5"],
-      coord: {
-        WGS84: {
-          lat: 47.42318,
-          lon: 9.3699,
-        },
-      },
-    },
-    {
-      _id: "5f62045b0d5658001cd910c1",
-      name: "St. Gallen Bruggen",
-      modes: ["13"],
-      coord: {
-        WGS84: {
-          lat: 47.4072,
-          lon: 9.32965,
-        },
-      },
-    },
-  ],
-};
+      {
+          _id: "5f62060e0d5658001cd95358",
+          name: "Schlieren, Gasometerbrücke",
+          modes: [
+              "4",
+              "5"
+          ],
+          coord: {
+              WGS84: {
+                  lat: 47.39761,
+                  lon: 8.4606
+              }
+          }
+      }
+  ]
+}
 
 export const distance = [
   {

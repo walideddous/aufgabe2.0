@@ -14,6 +14,7 @@ const makeProps = (props: any) => ({
   stopSequenceList: [],
   stateDND: {},
   currentStopSequence: {},
+  loadMode() {},
   handleUpdateAfterSave() {},
   onSendRequest() {},
   ondisplayStopSequence() {},
@@ -35,6 +36,7 @@ describe("LoadStopSequence component", () => {
   const ondisplayStopSequence = jest.fn();
   const handleDeleteStopSequence = jest.fn();
   const onClearAll = jest.fn();
+  const loadMode = jest.fn();
 
   beforeEach(() => {
     shallowWrapper = setUp(
@@ -42,6 +44,7 @@ describe("LoadStopSequence component", () => {
         stopSequenceList,
         stateDND,
         currentStopSequence,
+        loadMode,
         handleUpdateAfterSave,
         onSendRequest,
         ondisplayStopSequence,
@@ -79,6 +82,7 @@ describe("LoadStopSequence component", () => {
     });
 
     expect(onClearAll).toHaveBeenCalled();
+    expect(loadMode).toHaveBeenCalledWith(false);
   });
 
   it("Should dispatch the handleUpdateAfterSave props function when we choose load button", () => {
@@ -91,6 +95,7 @@ describe("LoadStopSequence component", () => {
     });
 
     expect(handleUpdateAfterSave).toHaveBeenCalled();
+    expect(loadMode).toHaveBeenCalledWith(true);
   });
 
   it("Should dispatch ondisplayStopSequence props function on select value in Auto-complete field ", () => {

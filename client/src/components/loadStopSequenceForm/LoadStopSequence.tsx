@@ -4,7 +4,7 @@ import { AutoComplete, Radio, Card, Form, Select } from "antd";
 interface TLoadStopSequence {
   stopSequenceList: any;
   stateDND: any;
-  currentStopSequence: any;
+  loadMode: (value: boolean) => void;
   onClearAll: () => void;
   onSendRequest: (modes: string) => void;
   handleUpdateAfterSave: () => void;
@@ -15,7 +15,7 @@ interface TLoadStopSequence {
 const LoadStopSequence = ({
   stopSequenceList,
   stateDND,
-  currentStopSequence,
+  loadMode,
   handleUpdateAfterSave,
   onSendRequest,
   ondisplayStopSequence,
@@ -58,15 +58,17 @@ const LoadStopSequence = ({
       if (value === "load") {
         setShow(true);
         handleUpdateAfterSave();
+        loadMode(true);
       }
       if (value === "new") {
         setShow(false);
         onClearAll();
         setSearch("");
+        loadMode(false);
       }
       setRadioButton(value);
     },
-    [onClearAll, handleUpdateAfterSave]
+    [onClearAll, handleUpdateAfterSave, loadMode]
   );
 
   return (
@@ -124,7 +126,7 @@ const LoadStopSequence = ({
               }}
               onSelect={handleSelect}
               value={search}
-              placeholder="Enter stop sequence name"
+              placeholder="Seach stop sequence by name"
               allowClear={true}
             >
               {stopSequenceList &&

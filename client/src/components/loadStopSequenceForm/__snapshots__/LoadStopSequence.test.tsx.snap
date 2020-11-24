@@ -108,12 +108,12 @@ exports[`LoadStopSequence component Should match the LoadStopSequence component 
         id="stopSequence_autoComplete"
         onChange={[Function]}
         onSelect={[Function]}
-        placeholder="Enter stop sequence name"
+        placeholder="Seach stop sequence by name"
         value=""
       >
         <Option
-          key="c03295ea-5a3f-43e8-83ea-7736ce82cfd9"
-          value="St. Gallen to Zürich HB"
+          key="638b7703-d171-4e5f-8e78-21258f75cee4"
+          value="asdsadsa"
         >
           <i
             className="fas fa-subway"
@@ -124,7 +124,7 @@ exports[`LoadStopSequence component Should match the LoadStopSequence component 
               }
             }
           />
-          St. Gallen to Zürich HB
+          asdsadsa
         </Option>
       </ForwardRef(AutoComplete)>
     </FormItem>

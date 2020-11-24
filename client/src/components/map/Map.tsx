@@ -287,6 +287,7 @@ import SearchInput from "../search/SearchInput";
 
 // Import leaflet markerCluster
 import "leaflet.markercluster";
+
 // Import leaflet context menu
 import "leaflet-contextmenu";
 import "leaflet-contextmenu/dist/leaflet.contextmenu.css";
