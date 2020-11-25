@@ -69,21 +69,33 @@ const SaveStopSequenceForm = ({
 
   useEffect(() => {
     if (savedForm?.schedule.length) {
-      const result = getFormatTags1(savedForm);
-      setTags(result);
+      const savedFormFormated = getFormatTags1(savedForm);
+      setTags(savedFormFormated);
     } else {
       setTags([]);
     }
   }, [savedForm]);
 
   const onFinish = (values: any) => {
+    console.log("values", values);
+    let { name, date, day, time, timeList } = values;
+
+    if (timeList) {
+      const timeListTable = timeList.filter((el: any) => el.time);
+      timeList = [{ time }];
+      for (let i = 0; i < timeListTable.length; i++) {
+        // delete the bug in antd timeList
+        timeList = timeList.concat(timeListTable[i]);
+      }
+    } else {
+      timeList = [{ time }];
+    }
+
     const data = {
-      date: `${values.date[0].format("YYYY.MM.DD")}-${values.date[1].format(
-        "YYYY.MM.DD"
-      )}`,
-      dayTime: values.timeList.map((element: any) => {
+      date: `${date[0].format("YYYY.MM.DD")}-${date[1].format("YYYY.MM.DD")}`,
+      dayTime: timeList.map((element: any) => {
         return {
-          day: values.day,
+          day: day,
           time: [
             element.time[0].format("HH:mm"),
             element.time[1].format("HH:mm"),
@@ -96,12 +108,12 @@ const SaveStopSequenceForm = ({
       if (prev) {
         return {
           ...prev,
-          name: values.name,
+          name: name,
           schedule: prev.schedule.concat(data),
         };
       } else {
         return {
-          name: values.name,
+          name: name,
           schedule: [{ ...data }],
         };
       }
@@ -111,7 +123,7 @@ const SaveStopSequenceForm = ({
       timeList: [],
     });
 
-    form.resetFields(["date", "day"]);
+    form.resetFields(["date", "day", "time"]);
   };
 
   const [name, setName] = useState("");
@@ -130,6 +142,9 @@ const SaveStopSequenceForm = ({
   const handleDayChange = (days: any) => {
     setDay(days);
   };
+
+  console.log("tags", tags);
+  console.log("savedForm", savedForm);
 
   return (
     <Card bordered={true}>
@@ -152,7 +167,7 @@ const SaveStopSequenceForm = ({
             <Form.Item
               label="Name"
               name="name"
-              rules={[{ required: true, message: "Please give a Name" }]}
+              rules={[{ required: true, message: "Missing name" }]}
             >
               <Input
                 id="name_input"
@@ -180,9 +195,7 @@ const SaveStopSequenceForm = ({
                 <Form.Item
                   label="Date"
                   name="date"
-                  rules={[
-                    { required: true, message: "Please give a Date interval" },
-                  ]}
+                  rules={[{ required: true, message: "Missing date" }]}
                 >
                   <DatePicker.RangePicker
                     id="date_input"
@@ -194,10 +207,11 @@ const SaveStopSequenceForm = ({
                   id="dayPicker_form"
                   label="Day"
                   name="day"
-                  rules={[{ required: true, message: "Please give a day" }]}
+                  rules={[{ required: true, message: "Missing day" }]}
                 >
                   <Select
                     allowClear
+                    placeholder="Select day"
                     id="dayPicker_input"
                     mode="tags"
                     value={day}
@@ -229,12 +243,29 @@ const SaveStopSequenceForm = ({
                     </Option>
                   </Select>
                 </Form.Item>
-                <Form.List name="timeList">
-                  {(fields, { add, remove }) => {
-                    return (
-                      <div style={{ display: "flex", flexDirection: "column" }}>
-                        <div style={{ display: "flex" }}>
-                          <Form.Item label="Time">
+                <div style={{ display: "flex", flexWrap: "wrap" }}>
+                  <Form.Item
+                    name="time"
+                    label="Time"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Missing time",
+                      },
+                    ]}
+                  >
+                    <RangePicker format="HH:mm" id="timePicker_input" />
+                  </Form.Item>
+                  <Form.List name="timeList">
+                    {(fields, { add, remove }) => {
+                      return (
+                        <div
+                          style={{
+                            display: "flex",
+                            paddingTop: "30px",
+                          }}
+                        >
+                          <Form.Item>
                             <Button
                               id="addTime_button"
                               type="dashed"
@@ -244,22 +275,14 @@ const SaveStopSequenceForm = ({
                               Add time
                             </Button>
                           </Form.Item>
-                          <div style={{ paddingTop: "30px" }}>
-                            {fields.map((field, index) => (
+                          <div>
+                            {fields.map((field) => (
                               <Space
                                 key={field.key}
                                 style={{ display: "flex" }}
                                 align="baseline"
                               >
-                                <Form.Item
-                                  name={[field.name, "time"]}
-                                  rules={[
-                                    {
-                                      required: true,
-                                      message: "Missing time",
-                                    },
-                                  ]}
-                                >
+                                <Form.Item name={[field.name, "time"]}>
                                   <RangePicker
                                     format="HH:mm"
                                     id={`timePicker_input${field.name}`}
@@ -273,10 +296,10 @@ const SaveStopSequenceForm = ({
                             ))}
                           </div>
                         </div>
-                      </div>
-                    );
-                  }}
-                </Form.List>
+                      );
+                    }}
+                  </Form.List>
+                </div>
                 <Form.Item>
                   <Button id="save_schedule" type="primary" htmlType="submit">
                     Save schedule
@@ -314,7 +337,12 @@ const SaveStopSequenceForm = ({
                           <Fragment>
                             {tag.displayedTags.map(
                               (el: string, indexTag: number) => (
-                                <Tag key={indexTag} closable onClose={() => {}}>
+                                <Tag
+                                  id={`dayTime_tags${indexTag}`}
+                                  key={indexTag}
+                                  closable
+                                  onClose={() => {}}
+                                >
                                   {el}
                                 </Tag>
                               )
@@ -332,7 +360,6 @@ const SaveStopSequenceForm = ({
                   }
                   onClick={() => {
                     if (tags.length && stateDND.trajekt.items.length) {
-                      console.log(form.getFieldValue(name));
                       saveStopSequence({
                         ...savedForm,
                         name,

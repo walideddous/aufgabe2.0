@@ -1909,7 +1909,7 @@ exports[`Aufgabe component => main component Fetch data functionality Should mat
                                         "leave": [Function],
                                       }
                                     }
-                                    key="rc_animate_1606243138420"
+                                    key="rc_animate_1606310693446"
                                     transitionAppear={false}
                                     transitionEnter={true}
                                     transitionLeave={true}
@@ -1918,7 +1918,7 @@ exports[`Aufgabe component => main component Fetch data functionality Should mat
                                       destroyInactivePanel={false}
                                       forceRender={false}
                                       isActive={false}
-                                      key="rc_animate_1606243138420"
+                                      key="rc_animate_1606310693446"
                                       prefixCls="ant-collapse"
                                       role={null}
                                     />
