@@ -46,7 +46,8 @@ Overview
 1. Click on New button
 2. Select mode
 
-https://user-images.githubusercontent.com/58551055/100370553-be905880-3006-11eb-8ee6-4f7ecc35ea72.gif
+![1,2](https://user-images.githubusercontent.com/58551055/100370553-be905880-3006-11eb-8ee6-4f7ecc35ea72.gif)
+
 ```
 
 
