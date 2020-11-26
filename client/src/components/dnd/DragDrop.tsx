@@ -58,7 +58,7 @@ const DragDrop = ({
   }, []);
 
   useEffect(() => {
-    scrollToBottom();
+    //scrollToBottom();
   });
 
   const handleClick = useCallback(

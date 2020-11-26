@@ -625,7 +625,7 @@ export default function useIndexHooks() {
         console.log(result.data.msg);
         if (result.data.msg) {
           console.log("Stop sequence succesfully saved");
-          message.success(result.data.msg);
+          message.success(`Stop sequence succesfully ${result.data.msg}`);
           // Set the state of stopSequence List
           setSavedStopSequence((prev) => {
             return prev.concat({ ...body });

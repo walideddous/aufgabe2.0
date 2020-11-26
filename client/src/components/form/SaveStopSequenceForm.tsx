@@ -215,7 +215,7 @@ const SaveStopSequenceForm = ({
             >
               <Input
                 id="name_input"
-                placeholder="Enter the stop sequence name"
+                placeholder="Enter stop sequence name"
                 value={name}
                 onChange={handleNameChange}
                 allowClear
