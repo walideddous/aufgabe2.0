@@ -29,11 +29,11 @@ const locationType = new GraphQLObjectType({
 });
 
 // Time type
-const timeType = new GraphQLObjectType({
+const dayTime = new GraphQLObjectType({
   name: "Time",
   fields: () => ({
-    start: { type: GraphQLString },
-    end: { type: GraphQLString },
+    day: { type: GraphQLList(GraphQLString) },
+    time: { type: GraphQLList(GraphQLString) },
   }),
 });
 
@@ -41,8 +41,8 @@ const timeType = new GraphQLObjectType({
 const scheduleType = new GraphQLObjectType({
   name: "Schedule",
   fields: () => ({
-    day: { type: GraphQLList(GraphQLString) },
-    time: { type: GraphQLList(timeType) },
+    date: { type: GraphQLString },
+    dayTime: { type: GraphQLList(dayTime) }
   }),
 });
 
@@ -64,7 +64,6 @@ const StopSequenceType = new GraphQLObjectType({
     _id: { type: GraphQLID },
     name: { type: GraphQLString },
     modes: { type: GraphQLString },
-    date: { type: GraphQLList(GraphQLString) },
     schedule: { type: GraphQLList(scheduleType) },
     stopSequence: { type: GraphQLList(HaltestelleType) },
   }),

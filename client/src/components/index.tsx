@@ -47,7 +47,6 @@ const Aufgabe: React.FC = () => {
       <Row gutter={[8, 8]}>
         <Col xs={24}>
           <LoadStopSequence
-            stateDND={stateDND}
             stopSequenceList={stopSequenceList}
             loadMode={loadMode}
             onSendRequest={sendRequest}
@@ -99,6 +98,7 @@ const Aufgabe: React.FC = () => {
               <DragDrop
                 stateDND={stateDND}
                 selected={selected}
+                onClearAll={clearAll}
                 handleAddStopsOnCLick={handleAddStopsOnCLick}
                 handleDragEnd={handleDragEnd}
                 onclick={clickOnDrop}

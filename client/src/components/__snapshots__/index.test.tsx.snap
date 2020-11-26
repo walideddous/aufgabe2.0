@@ -50,18 +50,6 @@ exports[`Aufgabe component => main component Fetch data functionality Should mat
               onClearAll={[Function]}
               onSendRequest={[Function]}
               ondisplayStopSequence={[Function]}
-              stateDND={
-                Object {
-                  "suggestions": Object {
-                    "items": Array [],
-                    "title": "Suggestion",
-                  },
-                  "trajekt": Object {
-                    "items": Array [],
-                    "title": "Stop sequence",
-                  },
-                }
-              }
               stopSequenceList={Array []}
             >
               <Card>
@@ -1677,6 +1665,61 @@ exports[`Aufgabe component => main component Fetch data functionality Should mat
                                 </div>
                               </Row>
                             </FormItem>
+                            <div
+                              style={
+                                Object {
+                                  "display": "flex",
+                                  "justifyContent": "flex-end",
+                                }
+                              }
+                            >
+                              <Button
+                                block={false}
+                                danger={true}
+                                disabled={true}
+                                ghost={false}
+                                htmlType="button"
+                                id="delete_stopSequence"
+                                loading={false}
+                                onClick={[Function]}
+                                type="primary"
+                              >
+                                <Wave>
+                                  <button
+                                    className="ant-btn ant-btn-primary ant-btn-dangerous"
+                                    disabled={true}
+                                    id="delete_stopSequence"
+                                    onClick={[Function]}
+                                    type="button"
+                                  >
+                                    <LoadingIcon
+                                      existIcon={false}
+                                      loading={false}
+                                      prefixCls="ant-btn"
+                                    >
+                                      <CSSMotion
+                                        motionName="ant-btn-loading-icon-motion"
+                                        onAppearActive={[Function]}
+                                        onAppearStart={[Function]}
+                                        onEnterActive={[Function]}
+                                        onEnterStart={[Function]}
+                                        onLeaveActive={[Function]}
+                                        onLeaveStart={[Function]}
+                                        removeOnLeave={true}
+                                        visible={false}
+                                      >
+                                        <DomWrapper />
+                                      </CSSMotion>
+                                    </LoadingIcon>
+                                    <span
+                                      key=".0"
+                                    >
+                                      Delete stop sequence
+                                    </span>
+                                  </button>
+                                </Wave>
+                              </Button>
+                            </div>
                           </form>
                         </ForwardRef(Form)>
                       </SizeContextProvider>
@@ -1909,7 +1952,7 @@ exports[`Aufgabe component => main component Fetch data functionality Should mat
                                         "leave": [Function],
                                       }
                                     }
-                                    key="rc_animate_1606310693446"
+                                    key="rc_animate_1606387572447"
                                     transitionAppear={false}
                                     transitionEnter={true}
                                     transitionLeave={true}
@@ -1918,7 +1961,7 @@ exports[`Aufgabe component => main component Fetch data functionality Should mat
                                       destroyInactivePanel={false}
                                       forceRender={false}
                                       isActive={false}
-                                      key="rc_animate_1606310693446"
+                                      key="rc_animate_1606387572447"
                                       prefixCls="ant-collapse"
                                       role={null}
                                     />
@@ -1982,6 +2025,7 @@ exports[`Aufgabe component => main component Fetch data functionality Should mat
             <Memo(DragDrop)
               handleAddStopsOnCLick={[Function]}
               handleDragEnd={[Function]}
+              onClearAll={[Function]}
               onDelete={[Function]}
               onclick={[Function]}
               stateDND={
@@ -2111,6 +2155,7 @@ exports[`Aufgabe component => main component Fetch data functionality Should mat
                   >
                     <Card
                       bordered={true}
+                      extra={null}
                       title="Stop sequence"
                     >
                       <div

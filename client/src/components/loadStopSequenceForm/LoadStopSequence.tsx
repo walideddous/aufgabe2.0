@@ -1,9 +1,8 @@
 import React, { useState, useCallback } from "react";
-import { AutoComplete, Radio, Card, Form, Select } from "antd";
+import { AutoComplete, Radio, Card, Form, Select, Button } from "antd";
 
 interface TLoadStopSequence {
   stopSequenceList: any;
-  stateDND: any;
   loadMode: (value: boolean) => void;
   onClearAll: () => void;
   onSendRequest: (modes: string) => void;
@@ -14,7 +13,6 @@ interface TLoadStopSequence {
 
 const LoadStopSequence = ({
   stopSequenceList,
-  stateDND,
   loadMode,
   handleUpdateAfterSave,
   onSendRequest,
@@ -27,6 +25,13 @@ const LoadStopSequence = ({
   const [selectValue, setSelectValue] = useState("Choose mode");
   const [radioButton, setRadioButton] = useState("load");
   const [show, setShow] = useState(true);
+  const [selectedStopSequence, setSelectedStopSequence] = useState<{
+    _id: string;
+    name: string;
+    modes: string;
+    schedule: {}[];
+    stopSequence: {}[];
+  }>();
 
   // Auto complete component
   const { Option } = AutoComplete;
@@ -47,7 +52,10 @@ const LoadStopSequence = ({
       const response = stopSequenceList.filter(
         (el: any) => el.name === input
       )[0];
-      ondisplayStopSequence(response);
+      if (response) {
+        ondisplayStopSequence(response);
+        setSelectedStopSequence(response);
+      }
     },
     [stopSequenceList, ondisplayStopSequence]
   );
@@ -124,8 +132,8 @@ const LoadStopSequence = ({
               onChange={(input: string) => {
                 setSearch(input);
               }}
-              onSelect={handleSelect}
               value={search}
+              onSelect={handleSelect}
               placeholder="Seach stop sequence by name"
               allowClear={true}
             >
@@ -148,23 +156,25 @@ const LoadStopSequence = ({
             </AutoComplete>
           </Form.Item>
         )}
+        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+          <Button
+            type="primary"
+            id="delete_stopSequence"
+            danger
+            disabled={selectedStopSequence?.name === search ? false : true}
+            onClick={() => {
+              if (selectedStopSequence?._id) {
+                handleDeleteStopSequence(selectedStopSequence._id);
+                setSearch("");
+              }
+            }}
+          >
+            Delete stop sequence
+          </Button>
+        </div>
       </Form>
     </Card>
   );
 };
 
 export default React.memo(LoadStopSequence);
-
-/*
-
-        <Button
-          type="primary"
-          danger
-          disabled={stateDND.trajekt.items.length ? false : true}
-          onClick={() => {
-            onClearAll();
-          }}
-        >
-          Reset
-        </Button>
-*/

@@ -9,6 +9,7 @@ import { stateDND, selected } from "../../testUtils/testData";
 const makeProps = (props: any) => ({
   stateDND: {},
   selected: {},
+  onClearAll() {},
   handleDragEnd() {},
   handleAddStopsOnCLick() {},
   onclick() {},
@@ -28,12 +29,14 @@ describe("DragDrop component", () => {
   const handleAddStopsOnCLick = jest.fn();
   const onclick = jest.fn();
   const onDelete = jest.fn();
+  const onClearAll = jest.fn();
 
   beforeEach(() => {
     mountWrapper = setUp(
       makeProps({
         stateDND,
         selected,
+        onClearAll,
         handleDragEnd,
         handleAddStopsOnCLick,
         onclick,
@@ -78,5 +81,10 @@ describe("DragDrop component", () => {
     const button = mountWrapper.find("#item-suggestion");
 
     expect(button.length).toBeLessThan(10);
+  });
+  it("Should reset the stop sequence onClick on the reset Button ", () => {
+    const clearAllButton = mountWrapper.find("#clearAll_button").at(0);
+    clearAllButton.simulate("click");
+    expect(onClearAll).toBeCalled();
   });
 });

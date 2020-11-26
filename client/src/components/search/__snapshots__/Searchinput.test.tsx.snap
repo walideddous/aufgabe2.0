@@ -4,10 +4,10 @@ exports[`Searchinput component Should match snapShot with the Seachinput compone
 <div
   style={
     Object {
+      "left": "7vh",
       "position": "absolute",
-      "right": "7vh",
-      "top": "8vh",
-      "width": "75%",
+      "top": "10%",
+      "width": "40vh",
       "zIndex": 1,
     }
   }

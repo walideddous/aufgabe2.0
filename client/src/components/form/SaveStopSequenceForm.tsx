@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useEffect } from "react";
+import React, { useState, useCallback, Fragment, useEffect } from "react";
 import {
   Card,
   Form,
@@ -14,7 +14,7 @@ import {
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 
 // import utils function
-import { getFormatTags1 } from "../../utils/getFormatTags";
+import { getFormatTags } from "../../utils/getFormatTags";
 // import types
 import { TstateDND } from "../../types/types";
 
@@ -36,6 +36,7 @@ const SaveStopSequenceForm = ({
   saveStopSequence,
 }: Tprops) => {
   const [form] = Form.useForm();
+  const [name, setName] = useState("");
   const [addSchedule, setAddSchedule] = useState(false);
   const [tags, setTags] = useState<
     {
@@ -69,7 +70,7 @@ const SaveStopSequenceForm = ({
 
   useEffect(() => {
     if (savedForm?.schedule.length) {
-      const savedFormFormated = getFormatTags1(savedForm);
+      const savedFormFormated = getFormatTags(savedForm);
       setTags(savedFormFormated);
     } else {
       setTags([]);
@@ -77,9 +78,9 @@ const SaveStopSequenceForm = ({
   }, [savedForm]);
 
   const onFinish = (values: any) => {
-    console.log("values", values);
     let { name, date, day, time, timeList } = values;
 
+    // To refactor the data
     if (timeList) {
       const timeListTable = timeList.filter((el: any) => el.time);
       timeList = [{ time }];
@@ -106,11 +107,31 @@ const SaveStopSequenceForm = ({
 
     setSavedForm((prev: any) => {
       if (prev) {
-        return {
-          ...prev,
-          name: name,
-          schedule: prev.schedule.concat(data),
-        };
+        if (prev.schedule.filter((el: any) => el.date === data.date).length) {
+          const sameDateIndex = prev.schedule
+            .map((el: any) => el.date)
+            .indexOf(data.date);
+          return {
+            ...prev,
+            name: name,
+            schedule: prev.schedule.map((el: any, index: number) => {
+              if (sameDateIndex === index) {
+                return {
+                  ...el,
+                  dayTime: el.dayTime.concat(data.dayTime),
+                };
+              } else {
+                return el;
+              }
+            }),
+          };
+        } else {
+          return {
+            ...prev,
+            name: name,
+            schedule: prev.schedule.concat(data),
+          };
+        }
       } else {
         return {
           name: name,
@@ -126,25 +147,48 @@ const SaveStopSequenceForm = ({
     form.resetFields(["date", "day", "time"]);
   };
 
-  const [name, setName] = useState("");
-  const [date, setDate] = useState<any>();
-  const [day, setDay] = useState<any>();
-
   const handleNameChange = (e: any) => {
     const { value } = e.target;
     setName(value);
   };
 
-  const handleDateChange = (date: any, dateString: string[]) => {
-    setDate(dateString);
-  };
-
-  const handleDayChange = (days: any) => {
-    setDay(days);
-  };
-
-  console.log("tags", tags);
-  console.log("savedForm", savedForm);
+  const handleDeleteTags = useCallback(
+    (tagsIndex: number, displayedTagsIndex: number) => {
+      setSavedForm((prevValues: any) => {
+        if (
+          prevValues.schedule[tagsIndex] &&
+          prevValues.schedule[tagsIndex].dayTime.length
+        ) {
+          if (prevValues.schedule[tagsIndex].dayTime.length === 1) {
+            return {
+              name: prevValues.name,
+              schedule: prevValues.schedule.filter(
+                (el: any, index: number) => index !== tagsIndex
+              ),
+            };
+          } else {
+            return {
+              name: prevValues.name,
+              schedule: prevValues.schedule.map((el: any, index: number) => {
+                if (index === tagsIndex) {
+                  return {
+                    ...el,
+                    dayTime: el.dayTime.filter(
+                      (el: any, indexFilter: number) =>
+                        indexFilter !== displayedTagsIndex
+                    ),
+                  };
+                } else {
+                  return el;
+                }
+              }),
+            };
+          }
+        }
+      });
+    },
+    []
+  );
 
   return (
     <Card bordered={true}>
@@ -197,11 +241,7 @@ const SaveStopSequenceForm = ({
                   name="date"
                   rules={[{ required: true, message: "Missing date" }]}
                 >
-                  <DatePicker.RangePicker
-                    id="date_input"
-                    value={date}
-                    onChange={handleDateChange}
-                  />
+                  <DatePicker.RangePicker id="date_input" />
                 </Form.Item>
                 <Form.Item
                   id="dayPicker_form"
@@ -214,8 +254,6 @@ const SaveStopSequenceForm = ({
                     placeholder="Select day"
                     id="dayPicker_input"
                     mode="tags"
-                    value={day}
-                    onChange={handleDayChange}
                   >
                     <Option key="1" value="Mon">
                       Monday
@@ -330,18 +368,24 @@ const SaveStopSequenceForm = ({
                   style={{ height: "200px", overflowY: "auto" }}
                 >
                   {tags &&
-                    tags.map((tag: any, index: number) => {
+                    tags.map((tag: any, tagsIndex: number) => {
                       return (
-                        <Fragment key={index}>
+                        <Fragment key={tagsIndex}>
                           <h3>{tag.date}</h3>
                           <Fragment>
                             {tag.displayedTags.map(
-                              (el: string, indexTag: number) => (
+                              (el: string, displayedTagsIndex: number) => (
                                 <Tag
-                                  id={`dayTime_tags${indexTag}`}
-                                  key={indexTag}
-                                  closable
-                                  onClose={() => {}}
+                                  visible={true}
+                                  closable={true}
+                                  id={`dayTime_tags${displayedTagsIndex}`}
+                                  key={tagsIndex + displayedTagsIndex}
+                                  onClose={() => {
+                                    handleDeleteTags(
+                                      tagsIndex,
+                                      displayedTagsIndex
+                                    );
+                                  }}
                                 >
                                   {el}
                                 </Tag>
@@ -359,7 +403,16 @@ const SaveStopSequenceForm = ({
                     tags.length && stateDND.trajekt.items.length ? false : true
                   }
                   onClick={() => {
-                    if (tags.length && stateDND.trajekt.items.length) {
+                    if (
+                      tags.length &&
+                      stateDND.trajekt.items.length &&
+                      currentStopSequence.name
+                    ) {
+                      saveStopSequence({
+                        ...savedForm,
+                        name: currentStopSequence.name,
+                      });
+                    } else {
                       saveStopSequence({
                         ...savedForm,
                         name,

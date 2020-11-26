@@ -583,6 +583,7 @@ export default function useIndexHooks() {
 
   // Reset and delete all
   const clearAll = useCallback(() => {
+    console.log("dispatched")
     setSelected(undefined);
     setCurrentStopSequence({});
     setStateDND({
@@ -601,7 +602,6 @@ export default function useIndexHooks() {
   const saveStopSequence = useCallback(
     async (formInput: any) => {
       const { items } = stateDND.trajekt;
-      console.log("formInput", formInput);
 
       if (isSending) return;
       if (!items.length) return;

@@ -16,6 +16,9 @@ app.use(express.json());
 // enable `cors` to set HTTP response header: Access-Control-Allow-Origin: *
 app.use(cors());
 
+// Route
+app.get("/", (req, res) => res.send("API is Running"));
+
 // Middelware for the jsonwebtoken
 app.use((req, _, next) => {
   let accessToken;
@@ -37,6 +40,7 @@ app.use((req, _, next) => {
   }
 });
 
+
 // use GraphQl
 app.use(
   "/graphql",
@@ -45,10 +49,8 @@ app.use(
     graphiql: true,
   })
 );
-app.use("",require("./routes/stopSequence"))
+app.use("", require("./routes/stopSequence"))
 
-// Route
-app.get("/", (req, res) => res.send("API is Running"));
 
 const PORT = process.env.PORT || 5000;
 
@@ -63,5 +65,6 @@ process.on("unhandledRejection", (err, promise) => {
   // Close server && exit process
   server.close(() => process.exit(1));
 });
+
 
 module.exports = server;

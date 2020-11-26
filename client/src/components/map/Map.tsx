@@ -425,16 +425,23 @@ const Map = ({
         contextmenuWidth: "200",
         contextmenuInheritItems: false,
         contextmenuItems: [
-          { text: "Close" },
+          { index: 0, text: "Close" },
           {
+            index: 1,
+            separator: true,
+          },
+          {
+            index: 2,
             text: "Add before the highlighted stations",
             callback: addBeforSelected,
           },
           {
+            index: 3,
             text: "Add after the highlighted stations",
             callback: addAfterSelected,
           },
           {
+            index: 4,
             text: "Delete",
             callback: deleteMarkerFromMap,
           },
@@ -493,11 +500,11 @@ const Map = ({
     <Fragment>
       <Col xxl={12} xs={24}>
         <Card bordered={true} title="Map">
+          <div id="mapId" style={{ height: "60vh", zIndex: 0 }} />
           <SearchInput
             stations={stations}
             handleSelectAutoSearch={handleSelectAutoSearch}
           />
-          <div id="mapId" style={{ height: "880px", zIndex: 0 }}></div>
         </Card>
       </Col>
     </Fragment>

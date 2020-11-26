@@ -113,7 +113,7 @@ exports[`LoadStopSequence component Should match the LoadStopSequence component 
       >
         <Option
           key="638b7703-d171-4e5f-8e78-21258f75cee4"
-          value="asdsadsa"
+          value="Walid"
         >
           <i
             className="fas fa-subway"
@@ -124,10 +124,32 @@ exports[`LoadStopSequence component Should match the LoadStopSequence component 
               }
             }
           />
-          asdsadsa
+          Walid
         </Option>
       </ForwardRef(AutoComplete)>
     </FormItem>
+    <div
+      style={
+        Object {
+          "display": "flex",
+          "justifyContent": "flex-end",
+        }
+      }
+    >
+      <Button
+        block={false}
+        danger={true}
+        disabled={true}
+        ghost={false}
+        htmlType="button"
+        id="delete_stopSequence"
+        loading={false}
+        onClick={[Function]}
+        type="primary"
+      >
+        Delete stop sequence
+      </Button>
+    </div>
   </ForwardRef(InternalForm)>
 </Card>
 `;

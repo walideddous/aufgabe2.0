@@ -4,6 +4,7 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
 <Memo(DragDrop)
   handleAddStopsOnCLick={[MockFunction]}
   handleDragEnd={[MockFunction]}
+  onClearAll={[MockFunction]}
   onDelete={[MockFunction]}
   onclick={[MockFunction]}
   selected={
@@ -2445,6 +2446,18 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
       >
         <Card
           bordered={true}
+          extra={
+            <ForwardRef(InternalButton)
+              block={false}
+              ghost={false}
+              htmlType="button"
+              id="clearAll_button"
+              loading={false}
+              onClick={[Function]}
+            >
+              Reset
+            </ForwardRef(InternalButton)>
+          }
           title="Stop sequence"
         >
           <div
@@ -2461,6 +2474,52 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                   className="ant-card-head-title"
                 >
                   Stop sequence
+                </div>
+                <div
+                  className="ant-card-extra"
+                >
+                  <Button
+                    block={false}
+                    ghost={false}
+                    htmlType="button"
+                    id="clearAll_button"
+                    loading={false}
+                    onClick={[Function]}
+                  >
+                    <Wave>
+                      <button
+                        className="ant-btn"
+                        id="clearAll_button"
+                        onClick={[Function]}
+                        type="button"
+                      >
+                        <LoadingIcon
+                          existIcon={false}
+                          loading={false}
+                          prefixCls="ant-btn"
+                        >
+                          <CSSMotion
+                            motionName="ant-btn-loading-icon-motion"
+                            onAppearActive={[Function]}
+                            onAppearStart={[Function]}
+                            onEnterActive={[Function]}
+                            onEnterStart={[Function]}
+                            onLeaveActive={[Function]}
+                            onLeaveStart={[Function]}
+                            removeOnLeave={true}
+                            visible={false}
+                          >
+                            <DomWrapper />
+                          </CSSMotion>
+                        </LoadingIcon>
+                        <span
+                          key=".0"
+                        >
+                          Reset
+                        </span>
+                      </button>
+                    </Wave>
+                  </Button>
                 </div>
               </div>
             </div>

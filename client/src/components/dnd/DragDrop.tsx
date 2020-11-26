@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect, Fragment } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { Card, Col } from "antd";
+import { Card, Col, Button } from "antd";
 import { DeleteOutlined, ArrowUpOutlined } from "@ant-design/icons";
 
 // Typescript
@@ -10,6 +10,7 @@ import { Tstations, TstateDND } from "../../types/types";
 interface TporpsDND {
   stateDND: TstateDND;
   selected: Tstations | undefined;
+  onClearAll: () => void;
   onclick: (e: any, index: number) => void;
   handleAddStopsOnCLick: (e: any) => void;
   onDelete: (e: any, index: number) => void;
@@ -19,6 +20,7 @@ interface TporpsDND {
 const DragDrop = ({
   stateDND,
   selected,
+  onClearAll,
   handleAddStopsOnCLick,
   handleDragEnd,
   onclick,
@@ -49,10 +51,12 @@ const DragDrop = ({
       //@ts-ignore
       element.scrollIntoView({
         behavior: "smooth",
-        block: "nearest",
+
+        inline: "nearest",
       });
     }
   }, []);
+
   useEffect(() => {
     scrollToBottom();
   });
@@ -224,7 +228,17 @@ const DragDrop = ({
           </Card>
         </Col>
         <Col xs={24}>
-          <Card bordered={true} title={stateDND.trajekt.title}>
+          <Card
+            bordered={true}
+            title={stateDND.trajekt.title}
+            extra={
+              stateDND.trajekt.items.length ? (
+                <Button id="clearAll_button" onClick={() => onClearAll()}>
+                  Reset
+                </Button>
+              ) : null
+            }
+          >
             <div
               style={
                 stateDND.trajekt.items.length

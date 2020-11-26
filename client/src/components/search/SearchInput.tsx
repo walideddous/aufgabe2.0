@@ -29,11 +29,13 @@ const SearchInput = ({
   return (
     <div
       style={{
+        display: "flex",
+        justifyContent: "center",
         position: "absolute",
-        top: "8vh",
-        right: "7vh",
-        zIndex: 1,
-        width: "75%",
+        top: "100px",
+        zIndex: 10,
+        width: "100%",
+        paddingRight: "50px",
       }}
     >
       <AutoComplete
@@ -42,11 +44,11 @@ const SearchInput = ({
         placeholder="Enter stops name"
         open={search ? true : false}
         onSelect={handleSelect}
-        onChange={(input: string) => {
+        onSearch={(input: string) => {
           setSearch(input);
         }}
         style={{
-          width: "100%",
+          width: "75%",
         }}
       >
         {stations &&

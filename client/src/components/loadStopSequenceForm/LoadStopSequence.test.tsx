@@ -1,19 +1,13 @@
 import React from "react";
-import { mount, shallow } from "enzyme";
+import { shallow } from "enzyme";
 import toJSON from "enzyme-to-json";
 import LoadStopSequence from "./LoadStopSequence";
 
 // import data to test
-import {
-  stopSequenceList,
-  stateDND,
-  currentStopSequence,
-} from "../../testUtils/testData";
+import { stopSequenceList } from "../../testUtils/testData";
 
 const makeProps = (props: any) => ({
   stopSequenceList: [],
-  stateDND: {},
-  currentStopSequence: {},
   loadMode() {},
   handleUpdateAfterSave() {},
   onSendRequest() {},
@@ -42,8 +36,6 @@ describe("LoadStopSequence component", () => {
     shallowWrapper = setUp(
       makeProps({
         stopSequenceList,
-        stateDND,
-        currentStopSequence,
         loadMode,
         handleUpdateAfterSave,
         onSendRequest,
@@ -101,14 +93,19 @@ describe("LoadStopSequence component", () => {
   it("Should dispatch ondisplayStopSequence props function on select value in Auto-complete field ", () => {
     const AutoCompleteInput = shallowWrapper.find("#stopSequence_autoComplete");
 
-    AutoCompleteInput.simulate("change", "St. Gallen to Zürich HB");
-
-    AutoCompleteInput.simulate("select", {
-      target: {
-        value: "St. Gallen to Zürich HB",
-      },
-    });
+    AutoCompleteInput.props().onChange("Walid");
+    AutoCompleteInput.props().onSelect("Walid");
 
     expect(ondisplayStopSequence).toHaveBeenCalled();
+  });
+
+  it("Schould delete the stop sequence when click on the delete stop sequence button", () => {
+    const AutoCompleteInput = shallowWrapper.find("#stopSequence_autoComplete");
+
+    AutoCompleteInput.props().onSelect("Walid");
+    shallowWrapper.update();
+    shallowWrapper.find("#delete_stopSequence").at(0).simulate("click");
+
+    expect(handleDeleteStopSequence).toBeCalled();
   });
 });
