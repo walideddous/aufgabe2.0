@@ -3,6 +3,7 @@ import { AutoComplete, Radio, Card, Form, Select, Button } from "antd";
 
 interface TLoadStopSequence {
   stopSequenceList: any;
+  currentStopSequence: any;
   loadMode: (value: boolean) => void;
   onClearAll: () => void;
   onSendRequest: (modes: string) => void;
@@ -13,6 +14,7 @@ interface TLoadStopSequence {
 
 const LoadStopSequence = ({
   stopSequenceList,
+  currentStopSequence,
   loadMode,
   handleUpdateAfterSave,
   onSendRequest,
@@ -25,13 +27,6 @@ const LoadStopSequence = ({
   const [selectValue, setSelectValue] = useState("Choose mode");
   const [radioButton, setRadioButton] = useState("load");
   const [show, setShow] = useState(true);
-  const [selectedStopSequence, setSelectedStopSequence] = useState<{
-    _id: string;
-    name: string;
-    modes: string;
-    schedule: {}[];
-    stopSequence: {}[];
-  }>();
 
   // Auto complete component
   const { Option } = AutoComplete;
@@ -54,7 +49,6 @@ const LoadStopSequence = ({
       )[0];
       if (response) {
         ondisplayStopSequence(response);
-        setSelectedStopSequence(response);
       }
     },
     [stopSequenceList, ondisplayStopSequence]
@@ -126,52 +120,61 @@ const LoadStopSequence = ({
           </Select>
         </Form.Item>
         {show && (
-          <Form.Item label="Stop sequence name">
-            <AutoComplete
-              id="stopSequence_autoComplete"
-              onChange={(input: string) => {
-                setSearch(input);
-              }}
-              value={search}
-              onSelect={handleSelect}
-              placeholder="Seach stop sequence by name"
-              allowClear={true}
-            >
-              {stopSequenceList &&
-                stopSequenceList
-                  .filter((el: any) =>
-                    el.name
-                      .toLowerCase()
-                      .startsWith(search ? search.toLowerCase() : "")
-                  )
-                  .map((el: any) => (
-                    <Option value={el.name} key={el._id}>
-                      <i
-                        className="fas fa-subway"
-                        style={{ color: "#1890ff", margin: "0 10px" }}
-                      ></i>
-                      {el.name}
-                    </Option>
-                  ))}
-            </AutoComplete>
-          </Form.Item>
+          <>
+            <Form.Item label="Stop sequence name">
+              <AutoComplete
+                id="stopSequence_autoComplete"
+                onChange={(input: string) => {
+                  setSearch(input);
+                }}
+                value={search}
+                onSelect={handleSelect}
+                placeholder="Seach stop sequence by name"
+                allowClear={true}
+              >
+                {stopSequenceList &&
+                  stopSequenceList
+                    .filter((el: any) =>
+                      el.name
+                        .toLowerCase()
+                        .startsWith(search ? search.toLowerCase() : "")
+                    )
+                    .map((el: any) => (
+                      <Option value={el.name} key={el._id}>
+                        <i
+                          className="fas fa-subway"
+                          style={{ color: "#1890ff", margin: "0 10px" }}
+                        ></i>
+                        {el.name}
+                      </Option>
+                    ))}
+              </AutoComplete>
+            </Form.Item>
+            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+              <Button
+                type="primary"
+                id="delete_stopSequence"
+                danger
+                disabled={
+                  search &&
+                  currentStopSequence &&
+                  search === currentStopSequence.name
+                    ? false
+                    : true
+                }
+                onClick={() => {
+                  if (currentStopSequence) {
+                    const { _id } = currentStopSequence;
+                    handleDeleteStopSequence(_id);
+                    setSearch("");
+                  }
+                }}
+              >
+                Delete stop sequence
+              </Button>
+            </div>
+          </>
         )}
-        <div style={{ display: "flex", justifyContent: "flex-end" }}>
-          <Button
-            type="primary"
-            id="delete_stopSequence"
-            danger
-            disabled={selectedStopSequence?.name === search ? false : true}
-            onClick={() => {
-              if (selectedStopSequence?._id) {
-                handleDeleteStopSequence(selectedStopSequence._id);
-                setSearch("");
-              }
-            }}
-          >
-            Delete stop sequence
-          </Button>
-        </div>
       </Form>
     </Card>
   );

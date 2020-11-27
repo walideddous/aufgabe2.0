@@ -583,7 +583,6 @@ export default function useIndexHooks() {
 
   // Reset and delete all
   const clearAll = useCallback(() => {
-    console.log("dispatched")
     setSelected(undefined);
     setCurrentStopSequence({});
     setStateDND({

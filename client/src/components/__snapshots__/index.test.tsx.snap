@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Aufgabe component => main component Fetch data functionality Should match snapShot with the Aufgabe(index) component 1`] = `
+exports[`Test the customHooks of the /components/index.tsx Should match snapShot with the Aufgabe(index) component 1`] = `
 <Aufgabe>
   <div
     className="Prototyp"
@@ -44,6 +44,7 @@ exports[`Aufgabe component => main component Fetch data functionality Should mat
             }
           >
             <Memo(LoadStopSequence)
+              currentStopSequence={Object {}}
               handleDeleteStopSequence={[Function]}
               handleUpdateAfterSave={[Function]}
               loadMode={[Function]}
@@ -1952,7 +1953,7 @@ exports[`Aufgabe component => main component Fetch data functionality Should mat
                                         "leave": [Function],
                                       }
                                     }
-                                    key="rc_animate_1606387572447"
+                                    key="rc_animate_1606480456337"
                                     transitionAppear={false}
                                     transitionEnter={true}
                                     transitionLeave={true}
@@ -1961,7 +1962,7 @@ exports[`Aufgabe component => main component Fetch data functionality Should mat
                                       destroyInactivePanel={false}
                                       forceRender={false}
                                       isActive={false}
-                                      key="rc_animate_1606387572447"
+                                      key="rc_animate_1606480456337"
                                       prefixCls="ant-collapse"
                                       role={null}
                                     />

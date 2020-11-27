@@ -48,6 +48,7 @@ const Aufgabe: React.FC = () => {
         <Col xs={24}>
           <LoadStopSequence
             stopSequenceList={stopSequenceList}
+            currentStopSequence={currentStopSequence}
             loadMode={loadMode}
             onSendRequest={sendRequest}
             handleUpdateAfterSave={handleUpdateAfterSave}

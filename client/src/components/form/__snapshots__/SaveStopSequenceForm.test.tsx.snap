@@ -512,7 +512,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                             "leave": [Function],
                           }
                         }
-                        key="rc_animate_1606387572253"
+                        key="rc_animate_1606480456022"
                         transitionAppear={false}
                         transitionEnter={true}
                         transitionLeave={true}
@@ -521,7 +521,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                           destroyInactivePanel={false}
                           forceRender={false}
                           isActive={true}
-                          key="rc_animate_1606387572253"
+                          key="rc_animate_1606480456022"
                           prefixCls="ant-collapse"
                           role={null}
                         >
@@ -768,7 +768,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                               allowClear={true}
                                                               id="name_input"
                                                               onChange={[Function]}
-                                                              placeholder="Enter the stop sequence name"
+                                                              placeholder="Enter stop sequence name"
                                                               type="text"
                                                             >
                                                               <ClearableLabeledInput
@@ -782,7 +782,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                                     onChange={[Function]}
                                                                     onFocus={[Function]}
                                                                     onKeyDown={[Function]}
-                                                                    placeholder="Enter the stop sequence name"
+                                                                    placeholder="Enter stop sequence name"
                                                                     type="text"
                                                                   />
                                                                 }
@@ -791,7 +791,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                                 id="name_input"
                                                                 inputType="input"
                                                                 onChange={[Function]}
-                                                                placeholder="Enter the stop sequence name"
+                                                                placeholder="Enter stop sequence name"
                                                                 prefixCls="ant-input"
                                                                 triggerFocus={[Function]}
                                                                 type="text"
@@ -808,7 +808,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                                     onChange={[Function]}
                                                                     onFocus={[Function]}
                                                                     onKeyDown={[Function]}
-                                                                    placeholder="Enter the stop sequence name"
+                                                                    placeholder="Enter stop sequence name"
                                                                     style={null}
                                                                     type="text"
                                                                     value=""
@@ -1160,7 +1160,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                           "leave": [Function],
                                                         }
                                                       }
-                                                      key="rc_animate_1606387572253"
+                                                      key="rc_animate_1606480456022"
                                                       transitionAppear={false}
                                                       transitionEnter={true}
                                                       transitionLeave={true}
@@ -1169,7 +1169,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                         destroyInactivePanel={false}
                                                         forceRender={false}
                                                         isActive={false}
-                                                        key="rc_animate_1606387572253"
+                                                        key="rc_animate_1606480456022"
                                                         prefixCls="ant-collapse"
                                                         role={null}
                                                       />

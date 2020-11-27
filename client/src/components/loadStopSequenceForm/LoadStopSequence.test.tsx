@@ -4,10 +4,14 @@ import toJSON from "enzyme-to-json";
 import LoadStopSequence from "./LoadStopSequence";
 
 // import data to test
-import { stopSequenceList } from "../../testUtils/testData";
+import {
+  stopSequenceList,
+  currentStopSequence,
+} from "../../testUtils/testData";
 
 const makeProps = (props: any) => ({
   stopSequenceList: [],
+  currentStopSequence: {},
   loadMode() {},
   handleUpdateAfterSave() {},
   onSendRequest() {},
@@ -36,6 +40,7 @@ describe("LoadStopSequence component", () => {
     shallowWrapper = setUp(
       makeProps({
         stopSequenceList,
+        currentStopSequence,
         loadMode,
         handleUpdateAfterSave,
         onSendRequest,
@@ -91,6 +96,14 @@ describe("LoadStopSequence component", () => {
   });
 
   it("Should dispatch ondisplayStopSequence props function on select value in Auto-complete field ", () => {
+    const radioButton = shallowWrapper.find("#radioButton");
+
+    radioButton.simulate("change", {
+      target: {
+        value: "load",
+      },
+    });
+
     const AutoCompleteInput = shallowWrapper.find("#stopSequence_autoComplete");
 
     AutoCompleteInput.props().onChange("Walid");
@@ -99,13 +112,22 @@ describe("LoadStopSequence component", () => {
     expect(ondisplayStopSequence).toHaveBeenCalled();
   });
 
-  it("Schould delete the stop sequence when click on the delete stop sequence button", () => {
+  it("Schould delete the stop sequence when we click on the delete stop sequence button", () => {
+    const radioButton = shallowWrapper.find("#radioButton");
+
+    radioButton.simulate("change", {
+      target: {
+        value: "load",
+      },
+    });
+
     const AutoCompleteInput = shallowWrapper.find("#stopSequence_autoComplete");
 
+    AutoCompleteInput.props().onChange("Walid");
     AutoCompleteInput.props().onSelect("Walid");
-    shallowWrapper.update();
+
     shallowWrapper.find("#delete_stopSequence").at(0).simulate("click");
 
-    expect(handleDeleteStopSequence).toBeCalled();
+    expect(handleDeleteStopSequence).toBeCalledWith(currentStopSequence._id);
   });
 });

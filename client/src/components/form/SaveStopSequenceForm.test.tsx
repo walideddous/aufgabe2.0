@@ -7,7 +7,6 @@ import moment from "moment";
 // import some data to run test with
 import { stateDND, currentStopSequence } from "../../testUtils/testData";
 import { act } from "@testing-library/react";
-import { watchFile } from "fs";
 
 const makeProps = (props: any) => ({
   stateDND: {},
@@ -112,14 +111,8 @@ describe("SaveStopSequenceForm component", () => {
 
     mountWrapper.find("#addSchedule_button").at(0).simulate("click");
 
-    act(async () => {
-      //Submit form
-      await mountWrapper
-        .find("#formWrapper")
-        .at(0)
-        .props()
-        .onFinish(formValues);
-    });
+    mountWrapper.find("#formWrapper").at(0).props().onFinish(formValues);
+    mountWrapper.update();
 
     mountWrapper.find("#save_stopSequence").at(0).simulate("click");
 
@@ -149,43 +142,21 @@ describe("SaveStopSequenceForm component", () => {
 
     expect(mountWrapper.find("#dayTime_tags0").at(0).length).toBe(0);
   });
+  it("Should delete Tag when we click on x icon on Tags  ", () => {
+    mountWrapper = setUp(
+      makeProps({
+        currentStopSequence,
+        stateDND,
+      })
+    );
+
+    const closeTagButton = mountWrapper.find("#dayTime_tags0").at(0);
+    act(() => {
+      closeTagButton.props().onClose();
+    });
+
+    mountWrapper.update();
+
+    expect(mountWrapper.find("#dayTime_tags0").at(0).length).toBe(0);
+  });
 });
-
-/*
-    // Click on the Button
-    mountWrapper.find("#addSchedule_button").at(0).simulate("click");
-
-    const inputName = mountWrapper.find("#name_input").at(0);
-    const selectDate1 = mountWrapper.find("#date_input").at(0);
-    const selectDate2 = mountWrapper.find("#date_input").at(1);
-    const dayInput = mountWrapper.find("#dayPicker_input").at(0);
-    const selectTime1 = mountWrapper.find("#timePicker_input").at(0);
-    const selectTime2 = mountWrapper.find("#timePicker_input").at(1);
-
-    inputName.props().value = "Walid";
-    expect(mountWrapper.find("#name_input").at(0).props().value).toBe("Walid");
-
-    dayInput.props().value = "Mon";
-    expect(mountWrapper.find("#dayPicker_input").at(0).props().value).toBe(
-      "Mon"
-    );
-    selectDate1.props().value = "2020.11.24";
-    selectDate2.props().value = "2020.12.16";
-    expect(mountWrapper.find("#date_input").at(0).props().value).toBe(
-      "2020.11.24"
-    );
-    expect(mountWrapper.find("#date_input").at(1).props().value).toBe(
-      "2020.12.16"
-    );
-
-    selectTime1.props().value = "05:00";
-    selectTime2.props().value = "11:00";
-    expect(mountWrapper.find("#timePicker_input").at(0).props().value).toBe(
-      "05:00"
-    );
-    expect(mountWrapper.find("#timePicker_input").at(1).props().value).toBe(
-      "11:00"
-    );
-
-
-*/

@@ -42,7 +42,7 @@ interface TpropsOnMap {
 const Map = ({
   stations,
   stateDND,
-  selected,
+  selected, 
   distance,
   currentStopSequence,
   handleSelectAutoSearch,
@@ -284,7 +284,6 @@ import { Card, Col } from "antd";
 import * as L from "leaflet";
 
 import SearchInput from "../search/SearchInput";
-
 // Import leaflet markerCluster
 import "leaflet.markercluster";
 
