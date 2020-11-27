@@ -34,3 +34,16 @@ export interface Tstations {
       }[];
     };
   }
+
+  export interface TcurrentStopSequence{
+    modes : string,
+    name: string,
+    schedule :{
+      date : string,
+      dayTime:{
+        day: string[],
+        time:string[]
+      }[]
+    }[],
+    stopSequence: Tstations[]
+  }

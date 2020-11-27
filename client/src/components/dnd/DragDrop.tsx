@@ -51,14 +51,14 @@ const DragDrop = ({
       //@ts-ignore
       element.scrollIntoView({
         behavior: "smooth",
-
-        inline: "nearest",
+        block: "nearest",
+        inline: "end",
       });
     }
   }, []);
 
   useEffect(() => {
-    //scrollToBottom();
+    scrollToBottom();
   });
 
   const handleClick = useCallback(

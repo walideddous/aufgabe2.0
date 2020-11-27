@@ -39,7 +39,7 @@ export default function useIndexHooks() {
   const [updateDate, setUpdateDate] = useState<string>("");
   const [currentMode, setCurrentMode] = useState<string>("");
   const [currentStopSequence, setCurrentStopSequence] = useState({});
-  const [loadStopSequenceSection, setLoadStopSequenceSection] = useState(true);
+  const [loadStopSequenceSection, setLoadStopSequenceSection] = useState<boolean>(true);
 
   // set the mode Load or New
   const loadMode = useCallback((value: boolean) => {
@@ -527,6 +527,9 @@ export default function useIndexHooks() {
           WGS84: { lat: el.coord.WGS84[0], lon: el.coord.WGS84[1] },
         },
       };
+
+      if(selected?._id === el._id) return 
+
       if (
         stateDND.trajekt.items.filter((item: any) => item._id === el._id)
           .length === 0
@@ -561,7 +564,7 @@ export default function useIndexHooks() {
         });
       }
     },
-    [stations, stateDND.trajekt.items, handleAddStopsOnCLick]
+    [stations, stateDND.trajekt.items,selected, handleAddStopsOnCLick]
   );
 
   // Delete marker from map
