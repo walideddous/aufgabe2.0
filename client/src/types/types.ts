@@ -17,7 +17,7 @@ export interface Tstations {
     to: Tstations;
     distance: number;
   }
-  
+
   export interface TstateDND {
     suggestions: {
       title: string;

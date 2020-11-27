@@ -10,8 +10,8 @@ import { Tstations, TstateDND } from "../../types/types";
 interface TporpsDND {
   stateDND: TstateDND;
   selected: Tstations | undefined;
-  onClearAll: () => void;
-  onclick: (e: any, index: number) => void;
+  onResetStopSequence: () => void;
+  onClick: (e: any, index: number) => void;
   handleAddStopsOnCLick: (e: any) => void;
   onDelete: (e: any, index: number) => void;
   handleDragEnd: (e: any) => void;
@@ -20,14 +20,14 @@ interface TporpsDND {
 const DragDrop = ({
   stateDND,
   selected,
-  onClearAll,
+  onResetStopSequence,
   handleAddStopsOnCLick,
   handleDragEnd,
-  onclick,
+  onClick,
   onDelete,
 }: TporpsDND) => {
-  const [clicked, setClicked] = useState(false);
-  const [hide, setHide] = useState(false);
+  const [clicked, setClicked] = useState<boolean>(false);
+  const [hide, setHide] = useState<boolean>(false);
 
   const resize = () => {
     //@ts-ignore
@@ -63,10 +63,10 @@ const DragDrop = ({
 
   const handleClick = useCallback(
     (e: any, index: number) => {
-      onclick(e, index);
+      onClick(e, index);
       setClicked(!clicked);
     },
-    [onclick, setClicked, clicked]
+    [onClick, setClicked, clicked]
   );
 
   const handleDelete = useCallback(
@@ -233,7 +233,10 @@ const DragDrop = ({
             title={stateDND.trajekt.title}
             extra={
               stateDND.trajekt.items.length ? (
-                <Button id="clearAll_button" onClick={() => onClearAll()}>
+                <Button
+                  id="clearAll_button"
+                  onClick={() => onResetStopSequence()}
+                >
                   Reset
                 </Button>
               ) : null

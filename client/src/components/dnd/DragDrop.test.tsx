@@ -9,10 +9,10 @@ import { stateDND, selected } from "../../testUtils/testData";
 const makeProps = (props: any) => ({
   stateDND: {},
   selected: {},
-  onClearAll() {},
+  onResetStopSequence() {},
   handleDragEnd() {},
   handleAddStopsOnCLick() {},
-  onclick() {},
+  onClick() {},
   onDelete() {},
   ...props,
 });
@@ -27,19 +27,19 @@ describe("DragDrop component", () => {
 
   const handleDragEnd = jest.fn();
   const handleAddStopsOnCLick = jest.fn();
-  const onclick = jest.fn();
+  const onClick = jest.fn();
   const onDelete = jest.fn();
-  const onClearAll = jest.fn();
+  const onResetStopSequence = jest.fn();
 
   beforeEach(() => {
     mountWrapper = setUp(
       makeProps({
         stateDND,
         selected,
-        onClearAll,
+        onResetStopSequence,
         handleDragEnd,
         handleAddStopsOnCLick,
-        onclick,
+        onClick,
         onDelete,
       })
     );
@@ -62,7 +62,7 @@ describe("DragDrop component", () => {
   it("Should dispatch onclick function when we click on clickStops span", () => {
     const button = mountWrapper.find("#clickStops");
     button.simulate("click");
-    expect(onclick).toHaveBeenCalled();
+    expect(onClick).toHaveBeenCalled();
   });
 
   it("Should dispatch onDelete function when we click on delete Icon", () => {
@@ -85,6 +85,6 @@ describe("DragDrop component", () => {
   it("Should reset the stop sequence onClick on the reset Button ", () => {
     const clearAllButton = mountWrapper.find("#clearAll_button").at(0);
     clearAllButton.simulate("click");
-    expect(onClearAll).toBeCalled();
+    expect(onResetStopSequence).toBeCalled();
   });
 });

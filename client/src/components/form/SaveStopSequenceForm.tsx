@@ -58,11 +58,7 @@ const SaveStopSequenceForm = ({
 
   useEffect(() => {
     if (Object.keys(currentStopSequence).length) {
-      const dataToSave = {
-        name: currentStopSequence.name,
-        schedule: currentStopSequence.schedule,
-      };
-      setSavedForm(dataToSave);
+      setSavedForm(currentStopSequence);
     } else {
       setSavedForm({ name: "", schedule: [] });
     }
@@ -211,7 +207,11 @@ const SaveStopSequenceForm = ({
             <Form.Item
               label="Name"
               name="name"
-              rules={[{ required: true, message: "Missing name" }]}
+              rules={
+                currentStopSequence.name
+                  ? [{ required: true, message: "Missing name" }]
+                  : [{ required: false }]
+              }
             >
               <Input
                 id="name_input"
@@ -357,7 +357,11 @@ const SaveStopSequenceForm = ({
             <Collapse activeKey={tags.length ? "2" : ""}>
               <Panel
                 header={
-                  currentStopSequence.name && tags.length
+                  name && currentStopSequence.name && tags.length
+                    ? `${name} schedule`
+                    : name && !currentStopSequence.name && tags.length
+                    ? `${name} schedule`
+                    : !name && currentStopSequence.name && tags.length
                     ? `${currentStopSequence.name} schedule`
                     : "Stop sequence schedule"
                 }
@@ -365,7 +369,11 @@ const SaveStopSequenceForm = ({
               >
                 <div
                   id="time_result"
-                  style={{ height: "200px", overflowY: "auto" }}
+                  style={{
+                    height: "200px",
+                    overflowY: "auto",
+                    paddingBottom: "20px",
+                  }}
                 >
                   {tags &&
                     tags.map((tag: any, tagsIndex: number) => {
@@ -400,7 +408,12 @@ const SaveStopSequenceForm = ({
                   type="primary"
                   id="save_stopSequence"
                   disabled={
-                    tags.length && stateDND.trajekt.items.length ? false : true
+                    tags.length &&
+                    stateDND.trajekt.items.length &&
+                    JSON.stringify(savedForm) !==
+                      JSON.stringify(currentStopSequence)
+                      ? false
+                      : true
                   }
                   onClick={() => {
                     if (

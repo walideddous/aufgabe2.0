@@ -1,5 +1,5 @@
 import React from "react";
-import { mount } from "enzyme";
+import { mount, ReactWrapper } from "enzyme";
 import toJSON from "enzyme-to-json";
 
 import { renderHook, act } from "@testing-library/react-hooks";
@@ -29,7 +29,7 @@ jest.mock("../services/stopSequenceService.ts", () => ({
 describe("Test the customHooks of the /components/index.tsx", () => {
   const Aufgabe = require("../components/index").default;
 
-  let wrappedComponent: any;
+  let wrappedComponent: ReactWrapper;
   let spyOnConsoleLog: any;
   let spyOnConsoleError: any;
 

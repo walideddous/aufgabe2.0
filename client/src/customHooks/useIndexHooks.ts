@@ -582,9 +582,8 @@ export default function useIndexHooks() {
   );
 
   // Reset and delete all
-  const clearAll = useCallback(() => {
+  const resetStopSequence = useCallback(() => {
     setSelected(undefined);
-    setCurrentStopSequence({});
     setStateDND({
       suggestions: {
         title: "Suggestion",
@@ -596,6 +595,12 @@ export default function useIndexHooks() {
       },
     });
   }, []);
+
+  // Clear all and delete all
+  const clearAll = useCallback(() => {
+    resetStopSequence()
+    setCurrentStopSequence({});
+  }, [resetStopSequence]);
 
   // Save the stop sequence
   const saveStopSequence = useCallback(
@@ -723,6 +728,7 @@ export default function useIndexHooks() {
     clickOnMapMarker,
     handleDeleteMarkerFromMap,
     clearAll,
+    resetStopSequence,
     saveStopSequence,
     handledisplayStopSequence,
     handleUpdateAfterSave,

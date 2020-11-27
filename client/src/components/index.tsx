@@ -36,6 +36,7 @@ const Aufgabe: React.FC = () => {
     clickOnMapMarker,
     handleDeleteMarkerFromMap,
     clearAll,
+    resetStopSequence,
     saveStopSequence,
     handledisplayStopSequence,
     handleUpdateAfterSave,
@@ -99,10 +100,10 @@ const Aufgabe: React.FC = () => {
               <DragDrop
                 stateDND={stateDND}
                 selected={selected}
-                onClearAll={clearAll}
+                onResetStopSequence={resetStopSequence}
                 handleAddStopsOnCLick={handleAddStopsOnCLick}
                 handleDragEnd={handleDragEnd}
-                onclick={clickOnDrop}
+                onClick={clickOnDrop}
                 onDelete={handleDeleteOnDND}
               />
             </Col>
