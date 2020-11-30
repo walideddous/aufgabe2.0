@@ -102,7 +102,7 @@ describe("SaveStopSequenceForm component", () => {
 
   it("Should save information after click on the save stopSequence button", () => {
     const formValues = {
-      name: "Walid",
+      name: "Test1",
       day: ["Mon", "Tue"],
       date: [moment(), moment()],
       time: [moment(), moment()],

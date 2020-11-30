@@ -30,12 +30,12 @@ const SearchInput = ({
     <div
       style={{
         display: "flex",
-        justifyContent: "center",
+        justifyContent: "start",
         position: "absolute",
         top: "100px",
         zIndex: 10,
-        width: "100%",
-        paddingRight: "0px",
+        width: "70%",
+        left: "20%",
       }}
     >
       <AutoComplete
@@ -48,7 +48,7 @@ const SearchInput = ({
           setSearch(input);
         }}
         style={{
-          width: "70%",
+          width: "100%",
         }}
       >
         {stations &&

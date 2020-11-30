@@ -113,7 +113,7 @@ exports[`LoadStopSequence component Should match the LoadStopSequence component 
       >
         <Option
           key="638b7703-d171-4e5f-8e78-21258f75cee4"
-          value="Walid"
+          value="Test"
         >
           <i
             className="fas fa-subway"
@@ -124,7 +124,7 @@ exports[`LoadStopSequence component Should match the LoadStopSequence component 
               }
             }
           />
-          Walid
+          Test
         </Option>
       </ForwardRef(AutoComplete)>
     </FormItem>

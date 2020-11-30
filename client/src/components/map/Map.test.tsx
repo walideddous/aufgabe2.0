@@ -1,4 +1,5 @@
 import React from "react";
+import * as L from "leaflet";
 import { mount } from "enzyme";
 import toJSON from "enzyme-to-json";
 import Map from "./Map";

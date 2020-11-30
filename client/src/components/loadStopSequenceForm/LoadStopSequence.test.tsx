@@ -106,8 +106,8 @@ describe("LoadStopSequence component", () => {
 
     const AutoCompleteInput = shallowWrapper.find("#stopSequence_autoComplete");
 
-    AutoCompleteInput.props().onChange("Walid");
-    AutoCompleteInput.props().onSelect("Walid");
+    AutoCompleteInput.props().onChange("Test");
+    AutoCompleteInput.props().onSelect("Test");
 
     expect(ondisplayStopSequence).toHaveBeenCalled();
   });
@@ -123,8 +123,8 @@ describe("LoadStopSequence component", () => {
 
     const AutoCompleteInput = shallowWrapper.find("#stopSequence_autoComplete");
 
-    AutoCompleteInput.props().onChange("Walid");
-    AutoCompleteInput.props().onSelect("Walid");
+    AutoCompleteInput.props().onChange("Test");
+    AutoCompleteInput.props().onSelect("Test");
 
     shallowWrapper.find("#delete_stopSequence").at(0).simulate("click");
 

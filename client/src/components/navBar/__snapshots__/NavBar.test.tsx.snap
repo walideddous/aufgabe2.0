@@ -317,7 +317,7 @@ exports[`NavBar component Should Match snapshot with the Navbar component 1`] = 
       Object {
         "_id": "638b7703-d171-4e5f-8e78-21258f75cee4",
         "modes": "4",
-        "name": "Walid",
+        "name": "Test",
         "schedule": Array [
           Object {
             "date": "2020.11.24-2020.12.16",
@@ -675,7 +675,7 @@ exports[`NavBar component Should Match snapshot with the Navbar component 1`] = 
             <MenuItem
               onClick={[Function]}
             >
-              Walid
+              Test
             </MenuItem>
           </Menu>
         }

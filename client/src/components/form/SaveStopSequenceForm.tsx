@@ -410,8 +410,10 @@ const SaveStopSequenceForm = ({
                   disabled={
                     tags.length &&
                     stateDND.trajekt.items.length &&
-                    JSON.stringify(savedForm) !==
-                      JSON.stringify(currentStopSequence)
+                    JSON.stringify({
+                      ...savedForm,
+                      stopSequence: stateDND.trajekt.items,
+                    }) !== JSON.stringify(currentStopSequence)
                       ? false
                       : true
                   }
