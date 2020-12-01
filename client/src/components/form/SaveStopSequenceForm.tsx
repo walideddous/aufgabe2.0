@@ -207,11 +207,7 @@ const SaveStopSequenceForm = ({
             <Form.Item
               label="Name"
               name="name"
-              rules={
-                currentStopSequence.name
-                  ? [{ required: true, message: "Missing name" }]
-                  : [{ required: false }]
-              }
+              rules={[{ required: true, message: "Missing name" }]}
             >
               <Input
                 id="name_input"
@@ -412,6 +408,7 @@ const SaveStopSequenceForm = ({
                     stateDND.trajekt.items.length &&
                     JSON.stringify({
                       ...savedForm,
+                      name: name !== "" ? name : savedForm?.name,
                       stopSequence: stateDND.trajekt.items,
                     }) !== JSON.stringify(currentStopSequence)
                       ? false

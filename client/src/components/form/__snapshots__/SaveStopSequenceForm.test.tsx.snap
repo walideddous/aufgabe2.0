@@ -512,7 +512,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                             "leave": [Function],
                           }
                         }
-                        key="rc_animate_1606747853976"
+                        key="rc_animate_1606845883722"
                         transitionAppear={false}
                         transitionEnter={true}
                         transitionLeave={true}
@@ -521,7 +521,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                           destroyInactivePanel={false}
                           forceRender={false}
                           isActive={true}
-                          key="rc_animate_1606747853976"
+                          key="rc_animate_1606845883722"
                           prefixCls="ant-collapse"
                           role={null}
                         >
@@ -607,7 +607,8 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                         rules={
                                           Array [
                                             Object {
-                                              "required": false,
+                                              "message": "Missing name",
+                                              "required": true,
                                             },
                                           ]
                                         }
@@ -624,7 +625,8 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                           rules={
                                             Array [
                                               Object {
-                                                "required": false,
+                                                "message": "Missing name",
+                                                "required": true,
                                               },
                                             ]
                                           }
@@ -673,7 +675,8 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                             rules={
                                               Array [
                                                 Object {
-                                                  "required": false,
+                                                  "message": "Missing name",
+                                                  "required": true,
                                                 },
                                               ]
                                             }
@@ -694,12 +697,13 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                   label="Name"
                                                   name="name"
                                                   prefixCls="ant-form"
-                                                  required={false}
+                                                  required={true}
                                                   requiredMark={false}
                                                   rules={
                                                     Array [
                                                       Object {
-                                                        "required": false,
+                                                        "message": "Missing name",
+                                                        "required": true,
                                                       },
                                                     ]
                                                   }
@@ -712,7 +716,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                       style={Object {}}
                                                     >
                                                       <label
-                                                        className=""
+                                                        className="ant-form-item-required"
                                                         htmlFor="name"
                                                         title="Name"
                                                       >
@@ -734,7 +738,8 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                   rules={
                                                     Array [
                                                       Object {
-                                                        "required": false,
+                                                        "message": "Missing name",
+                                                        "required": true,
                                                       },
                                                     ]
                                                   }
@@ -1155,7 +1160,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                           "leave": [Function],
                                                         }
                                                       }
-                                                      key="rc_animate_1606747853976"
+                                                      key="rc_animate_1606845883722"
                                                       transitionAppear={false}
                                                       transitionEnter={true}
                                                       transitionLeave={true}
@@ -1164,7 +1169,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                         destroyInactivePanel={false}
                                                         forceRender={false}
                                                         isActive={false}
-                                                        key="rc_animate_1606747853976"
+                                                        key="rc_animate_1606845883722"
                                                         prefixCls="ant-collapse"
                                                         role={null}
                                                       />

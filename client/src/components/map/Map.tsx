@@ -190,6 +190,7 @@ const Map = ({
             callback: deleteMarkerFromMap,
           },
         ],
+        id: "Marker",
         color:
           selected && selected._id === el._id
             ? "red"

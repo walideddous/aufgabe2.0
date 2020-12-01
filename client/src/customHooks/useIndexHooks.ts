@@ -41,6 +41,8 @@ export default function useIndexHooks() {
   const [currentStopSequence, setCurrentStopSequence] = useState({});
   const [loadStopSequenceSection, setLoadStopSequenceSection] = useState<boolean>(true);
 
+console.log("trajekt",stateDND.trajekt.items)
+
   // set the mode Load or New
   const loadMode = useCallback((value: boolean) => {
     setLoadStopSequenceSection(value);
@@ -171,7 +173,7 @@ export default function useIndexHooks() {
     [stations, stateDND.trajekt.items, selected]
   );
 
-  // Delete the button from Drop Part
+  // Delete the button from Drop Component
   const handleDeleteOnDND = useCallback(
     (input: any, index: number) => {
       let vorschläge: any;
@@ -537,7 +539,6 @@ export default function useIndexHooks() {
         handleAddStopsOnCLick(newValue);
       } else {
         setSelected({ ...newValue, index });
-
         var vorschläge = calculateDistanceAndSort(newValue, stations);
         // Delete the repetition from the Suggestion Field
         vorschläge = vorschläge.filter(

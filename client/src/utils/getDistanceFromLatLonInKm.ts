@@ -116,7 +116,7 @@ function getDistanceFromLatLonInKm(
   var lat = Math.pow(lat2 - lat1, 2);
   var lon = Math.pow(lon2 - lon1, 2);
   var d = lat + lon;
-  var c = R * d; // Distance in km
-  return c;
+  var c = Math.sqrt(d)
+  return c * 100 ;
 }
 */
