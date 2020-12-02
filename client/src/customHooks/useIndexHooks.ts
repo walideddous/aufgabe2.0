@@ -41,8 +41,6 @@ export default function useIndexHooks() {
   const [currentStopSequence, setCurrentStopSequence] = useState({});
   const [loadStopSequenceSection, setLoadStopSequenceSection] = useState<boolean>(true);
 
-console.log("trajekt",stateDND.trajekt.items)
-
   // set the mode Load or New
   const loadMode = useCallback((value: boolean) => {
     setLoadStopSequenceSection(value);
