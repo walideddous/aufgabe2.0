@@ -11,6 +11,12 @@ import LoadStopSequence from "./loadStopSequenceForm/LoadStopSequence";
 // Import Custom Hook
 import useIndexHooks from "../customHooks/useIndexHooks";
 
+import "../App.css";
+
+// Import antd & leaflet
+import "antd/dist/antd.css";
+import "leaflet/dist/leaflet.css";
+
 // Custom Loader
 const antIcon = <LoadingOutlined style={{ fontSize: 100 }} spin />;
 

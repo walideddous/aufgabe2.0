@@ -17,3 +17,55 @@
   },
   "include": ["src"]
 }
+
+
+
+/*
+
+  "paths": {
+    "react": [
+      "../common/node_modules/react",
+    ],
+    "antd": [
+      "../common/node_modules/antd",
+    ],
+    "@ant-design": [
+      "../common/node_modules/@ant-design"
+    ],
+    "leaflet": [
+      "../common/node_modules/leaflet"
+    ],
+    "leaflet.markercluster": [
+      "../common/node_modules/leaflet.markercluster"
+    ],
+    "leaflet-contextmenu": [
+      "../common/node_modules/leaflet-contextmenu"
+    ],
+    "leaflet-contextmenu/dist/leaflet.contextmenu.css": [
+      "../common/node_modules/leaflet-contextmenu/dist/leaflet.contextmenu.css"
+    ],
+    "react-beautiful-dnd": [
+      "../common/node_modules/react-beautiful-dnd"
+    ]
+  },
+  "typeRoots": [
+    "./node_modules/@types",
+    "./node_modules/@jest",
+  ],
+  "types": [
+    "types",
+    "react",
+    "react-dom",
+    "jest",
+    "enzyme",
+    "enzyme-adapter-react-16",
+    "testing-library_jest-dom",
+    "testing-library_react-hooks",
+    "leaflet",
+    "leaflet-markercluster",
+    "react-beautiful-dnd",
+    "react-test-renderer",
+    "uuid",
+  ]
+
+*/
