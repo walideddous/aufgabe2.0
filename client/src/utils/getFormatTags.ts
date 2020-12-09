@@ -3,7 +3,7 @@ export  const getFormatTags = (values: any) => {
     const { dayTime, date } = element;
     return {
       date,
-      displayedTags : dayTime.map((dayTime: any) => {
+      displayedTags : dayTime.map((dayTime: any, index:number) => {
         const { day, time } = dayTime;
         if (day.length === 1) {
           return  `${day[0]} ${time[0]} - ${time[1]}`
@@ -11,7 +11,7 @@ export  const getFormatTags = (values: any) => {
         } else if (day.length === 8) {
           return `All days ${time[0]} - ${time[1]}`
         } else {
-          return `${day[0]} - ${day[day.length - 1]} ${time[0]} - ${time[1]}`
+          return `${day} ${time[0]} - ${time[1]}`
         }
       })
     }
