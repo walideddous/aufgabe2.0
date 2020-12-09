@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Test the customHooks of the /components/index.tsx Should match snapShot with the Aufgabe(index) component 1`] = `
+exports[`Test the customHooks of the /components/index.tsx Should match snapShot with the main component => component/index 1`] = `
 <Aufgabe>
   <div
     className="Prototyp"
@@ -45,11 +45,11 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
           >
             <Memo(LoadStopSequence)
               currentStopSequence={Object {}}
-              handleDeleteStopSequence={[Function]}
-              handleUpdateAfterSave={[Function]}
-              loadMode={[Function]}
               onClearAll={[Function]}
+              onDeleteStopSequence={[Function]}
+              onLoadMode={[Function]}
               onSendRequest={[Function]}
+              onUpdateAfterSave={[Function]}
               ondisplayStopSequence={[Function]}
               stopSequenceList={Array []}
             >
@@ -1748,7 +1748,7 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
             <Memo(SaveStopSequenceForm)
               currentStopSequence={Object {}}
               loadStopSequenceSection={true}
-              saveStopSequence={[Function]}
+              onSaveStopSequence={[Function]}
               stateDND={
                 Object {
                   "suggestions": Object {
@@ -1953,7 +1953,7 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                                         "leave": [Function],
                                       }
                                     }
-                                    key="rc_animate_1607096279038"
+                                    key="rc_animate_1607533531942"
                                     transitionAppear={false}
                                     transitionEnter={true}
                                     transitionLeave={true}
@@ -1962,7 +1962,7 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                                       destroyInactivePanel={false}
                                       forceRender={false}
                                       isActive={false}
-                                      key="rc_animate_1607096279038"
+                                      key="rc_animate_1607533531942"
                                       prefixCls="ant-collapse"
                                       role={null}
                                     />
@@ -1983,11 +1983,11 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
         <Component
           currentStopSequence={Object {}}
           distance={Array []}
-          handleSelectAutoSearch={[Function]}
           onAddAfterSelected={[Function]}
           onAddBeforSelected={[Function]}
+          onClickOnMapMarker={[Function]}
           onDeleteMarkerFromMap={[Function]}
-          selectMarkerOnMap={[Function]}
+          onSelectAutoSearch={[Function]}
           stateDND={
             Object {
               "suggestions": Object {
@@ -2024,10 +2024,10 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
             }
           >
             <Memo(DragDrop)
-              handleAddStopsOnCLick={[Function]}
-              handleDragEnd={[Function]}
-              onClick={[Function]}
-              onDelete={[Function]}
+              onAddStopsOnCLick={[Function]}
+              onClickOnDrop={[Function]}
+              onDeleteDND={[Function]}
+              onDragEnd={[Function]}
               onResetStopSequence={[Function]}
               stateDND={
                 Object {

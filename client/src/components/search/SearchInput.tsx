@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { AutoComplete } from "antd";
 
 // Typescript
@@ -18,14 +18,6 @@ const SearchInput = ({
 }: TporpsSearchInput) => {
   const [search, setSearch] = useState("");
 
-  const handleSelect = useCallback(
-    (selectedStop: string) => {
-      setSearch("");
-      handleSelectAutoSearch(selectedStop);
-    },
-    [handleSelectAutoSearch]
-  );
-
   return (
     <div
       style={{
@@ -43,7 +35,10 @@ const SearchInput = ({
         value={search}
         placeholder="Enter stops name"
         open={search ? true : false}
-        onSelect={handleSelect}
+        onSelect={(selectedStop: string) => {
+          setSearch("");
+          handleSelectAutoSearch(selectedStop);
+        }}
         onSearch={(input: string) => {
           setSearch(input);
         }}

@@ -7,13 +7,13 @@ import {
 } from "./stopSequenceService";
 
 const serverCreate = setupServer(
-  rest.put("http://ems-dev.m.mdv:8059/savedStopSequence", (req, res, ctx) => {
+  rest.put("http://ems-dev.m.mdv:8101/savedStopSequence", (req, res, ctx) => {
     return res(ctx.status(200), ctx.json({ msg: "StopSequence successly created" }));
   }),
-  rest.delete("http://ems-dev.m.mdv:8059/savedStopSequence/:savedStopSequenceID", (req, res, ctx) => {
+  rest.delete("http://ems-dev.m.mdv:8101/savedStopSequence/:savedStopSequenceID", (req, res, ctx) => {
     return res(ctx.status(200), ctx.json({ msg: "StopSequence successly deleted" }));
   }),
-  rest.post("http://ems-dev.m.mdv:8059/graphql",(req,res,ctx)=>{
+  rest.post("http://ems-dev.m.mdv:8101/graphql",(req,res,ctx)=>{
     return res(ctx.status(200), ctx.json({ msg: "StopSequence succesfully queried" }));
   }),
   rest.put("*", (req, res, ctx) => {

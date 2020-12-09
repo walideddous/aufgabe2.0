@@ -4,7 +4,8 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
 <Memo(SaveStopSequenceForm)
   currentStopSequence={Object {}}
   loadStopSequenceSection={false}
-  saveStopSequence={[MockFunction]}
+  onSaveStopSequence={[MockFunction]}
+  saveStopSequence={[Function]}
   stateDND={
     Object {
       "suggestions": Object {
@@ -512,7 +513,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                             "leave": [Function],
                           }
                         }
-                        key="rc_animate_1607096278924"
+                        key="rc_animate_1607533530717"
                         transitionAppear={false}
                         transitionEnter={true}
                         transitionLeave={true}
@@ -521,7 +522,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                           destroyInactivePanel={false}
                           forceRender={false}
                           isActive={true}
-                          key="rc_animate_1607096278924"
+                          key="rc_animate_1607533530717"
                           prefixCls="ant-collapse"
                           role={null}
                         >
@@ -1160,7 +1161,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                           "leave": [Function],
                                                         }
                                                       }
-                                                      key="rc_animate_1607096278924"
+                                                      key="rc_animate_1607533530717"
                                                       transitionAppear={false}
                                                       transitionEnter={true}
                                                       transitionLeave={true}
@@ -1169,7 +1170,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                         destroyInactivePanel={false}
                                                         forceRender={false}
                                                         isActive={false}
-                                                        key="rc_animate_1607096278924"
+                                                        key="rc_animate_1607533530717"
                                                         prefixCls="ant-collapse"
                                                         role={null}
                                                       />

@@ -2,10 +2,14 @@
 
 exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] = `
 <Memo(DragDrop)
-  handleAddStopsOnCLick={[MockFunction]}
-  handleDragEnd={[MockFunction]}
-  onClick={[MockFunction]}
-  onDelete={[MockFunction]}
+  handleAddStopsOnCLick={[Function]}
+  handleDragEnd={[Function]}
+  onAddStopsOnCLick={[MockFunction]}
+  onClick={[Function]}
+  onClickOnDrop={[MockFunction]}
+  onDelete={[Function]}
+  onDeleteDND={[MockFunction]}
+  onDragEnd={[MockFunction]}
   onResetStopSequence={[MockFunction]}
   selected={
     Object {

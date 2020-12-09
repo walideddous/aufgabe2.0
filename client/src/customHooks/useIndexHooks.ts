@@ -42,12 +42,12 @@ export default function useIndexHooks() {
   const [loadStopSequenceSection, setLoadStopSequenceSection] = useState<boolean>(true);
 
   // set the mode Load or New
-  const loadMode = useCallback((value: boolean) => {
+  const handleLoadMode = useCallback((value: boolean) => {
     setLoadStopSequenceSection(value);
   },[]);
 
   // Send the request when you click on get the Data button
-  const sendRequest = useCallback(
+  const handleSendRequest = useCallback(
     async (modes) => {
       if (isSending) return;
       // update state
@@ -91,8 +91,8 @@ export default function useIndexHooks() {
     [isSending]
   );
 
-  // Select the Station when you click on the button to show the suggestion
-  const clickOnDrop = useCallback(
+  // Select the Station in drop part from the drapDrop component to show the suggestion 
+  const handleClickOnDrop = useCallback(
     (e: any, index: number) => {
       const { _id, name, coord, modes } = e;
       const response = { _id, name, coord, modes };
@@ -125,7 +125,7 @@ export default function useIndexHooks() {
     [stations, stateDND.trajekt.items]
   );
 
-  // add the stations to the Stop sequence Field when you click on button suggestion
+  // add the stations to the Stop sequence field when we click on button suggestion
   const handleAddStopsOnCLick = useCallback(
     (input: any) => {
       const { _id, name, modes, coord } = input;
@@ -171,7 +171,7 @@ export default function useIndexHooks() {
     [stations, stateDND.trajekt.items, selected]
   );
 
-  // Delete the button from Drop Component
+  // Delete stops from Drop Component
   const handleDeleteOnDND = useCallback(
     (input: any, index: number) => {
       let vorschläge: any;
@@ -296,8 +296,8 @@ export default function useIndexHooks() {
     [stations, stateDND, selected]
   );
 
-  // to choose the station from the input options
-  const onSelectAutoSearch = useCallback(
+  // to select stops from the Stop search input field
+  const handleSelectAutoSearch = useCallback(
     (selectedStop: string) => {
       const elementSelected = stations.filter(
         (el) => el.name === selectedStop
@@ -408,9 +408,9 @@ export default function useIndexHooks() {
       const index = stateDND.trajekt.items
         .map((el: any) => el._id)
         .indexOf(itemCopy._id);
-      clickOnDrop(itemCopy, index);
+      handleClickOnDrop(itemCopy, index);
     },
-    [stateDND, clickOnDrop]
+    [stateDND, handleClickOnDrop]
   );
 
   // Context menu to add the stop After the selected stops in the drop Menu
@@ -518,7 +518,7 @@ export default function useIndexHooks() {
   );
 
   // Click on Marker on Map
-  const clickOnMapMarker = useCallback(
+  const handleClickOnMapMarker = useCallback(
     (el: Tstations, index: number) => {
       const newValue = {
         ...el,
@@ -584,7 +584,7 @@ export default function useIndexHooks() {
   );
 
   // Reset and delete all
-  const resetStopSequence = useCallback(() => {
+  const handleResetStopSequence = useCallback(() => {
     setSelected(undefined);
     setStateDND({
       suggestions: {
@@ -599,13 +599,13 @@ export default function useIndexHooks() {
   }, []);
 
   // Clear all and delete all
-  const clearAll = useCallback(() => {
-    resetStopSequence()
+  const handleClearAll = useCallback(() => {
+    handleResetStopSequence()
     setCurrentStopSequence({});
-  }, [resetStopSequence]);
+  }, [handleResetStopSequence]);
 
   // Save the stop sequence
-  const saveStopSequence = useCallback(
+  const handleSaveStopSequence = useCallback(
     async (formInput: any) => {
       const { items } = stateDND.trajekt;
 
@@ -636,7 +636,7 @@ export default function useIndexHooks() {
           setSavedStopSequence((prev) => {
             return prev.concat({ ...body });
           });
-          clearAll();
+          handleClearAll();
         }
       } catch (error) {
         console.error(error, "error from trycatch");
@@ -644,7 +644,7 @@ export default function useIndexHooks() {
       // once the request is sent, update state again
       setIsSending(false);
     },
-    [stateDND.trajekt, isSending, currentMode, clearAll]
+    [stateDND.trajekt, isSending, currentMode, handleClearAll]
   );
 
   // Display the stop sequence on map
@@ -694,7 +694,7 @@ export default function useIndexHooks() {
           setStopSequenceList((prev) => {
             return prev.filter((el: any) => el._id !== id);
           });
-          clearAll();
+          handleClearAll();
           setCurrentStopSequence({});
         }
       } catch (error) {
@@ -703,7 +703,7 @@ export default function useIndexHooks() {
       // once the request is sent, update state again
       setIsSending(false);
     },
-    [clearAll, isSending]
+    [handleClearAll, isSending]
   );
 
   return {
@@ -718,20 +718,20 @@ export default function useIndexHooks() {
     currentStopSequence,
     savedStopSequence,
     loadStopSequenceSection,
-    loadMode,
-    sendRequest,
-    clickOnDrop,
+    handleLoadMode,
+    handleSendRequest,
+    handleClickOnDrop,
     handleAddStopsOnCLick,
     handleDeleteOnDND,
-    onSelectAutoSearch,
+    handleSelectAutoSearch,
     handleDragEnd,
     handleAddAfterSelected,
     handleAddBeforSelected,
-    clickOnMapMarker,
+    handleClickOnMapMarker,
     handleDeleteMarkerFromMap,
-    clearAll,
-    resetStopSequence,
-    saveStopSequence,
+    handleClearAll,
+    handleResetStopSequence,
+    handleSaveStopSequence,
     handledisplayStopSequence,
     handleUpdateAfterSave,
     handleDeleteStopSequence,

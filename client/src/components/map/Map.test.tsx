@@ -26,6 +26,11 @@ const makeProps = (props: any) => ({
   ...props,
 });
 
+jest.mock("leaflet", () => ({
+  ...jest.requireActual("leaflet"),
+  markerClusterGroup: jest.fn(() => "markerCluster"),
+}));
+
 const setUp = (props: any) => {
   const div = global.document.createElement("div");
   global.document.body.appendChild(div);
@@ -36,11 +41,11 @@ const setUp = (props: any) => {
 describe("Map component", () => {
   let wrapper: any;
 
-  const handleSelectAutoSearch = jest.fn();
-  const onAddAfterSelected = jest.fn();
+  const onSelectAutoSearch = jest.fn();
   const onAddBeforSelected = jest.fn();
+  const onAddAfterSelected = jest.fn();
   const onDeleteMarkerFromMap = jest.fn();
-  const selectMarkerOnMap = jest.fn();
+  const onClickOnMapMarker = jest.fn();
 
   beforeEach(() => {
     const div = global.document.createElement("div");
@@ -53,11 +58,11 @@ describe("Map component", () => {
         selected,
         currentStopSequence,
         distance,
-        handleSelectAutoSearch,
-        onAddAfterSelected,
+        onSelectAutoSearch,
         onAddBeforSelected,
+        onAddAfterSelected,
         onDeleteMarkerFromMap,
-        selectMarkerOnMap,
+        onClickOnMapMarker,
       })
     );
   });

@@ -15,11 +15,12 @@ import {
 // Mock the map component
 jest.mock("./map/Map.tsx", () => () => <div id="mapMock">Map mocked</div>);
 
-// Mock the different services that call the Backend API
+// Mock the stops services that call the Backend API
 jest.mock("../services/stopsService.ts", () => ({
   getStopsByMode: jest.fn(),
 }));
 
+// Mock the stopSequence services that call the Backend API
 jest.mock("../services/stopSequenceService.ts", () => ({
   queryStopSequenceRequest: jest.fn(),
   deleteStopSequenceRequest: jest.fn(),
@@ -92,15 +93,15 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     jest.resetAllMocks();
   });
 
-  it("Should match snapShot with the Aufgabe(index) component", () => {
+  it("Should match snapShot with the main component => component/index", () => {
     expect(toJSON(wrappedComponent)).toMatchSnapshot();
   });
 
-  it("Should set the state if we get data from the Backend", async () => {
+  it("Should store the data in local if we send a request to the Backend", async () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.sendRequest("4");
+      result.current.handleSendRequest("4");
     });
 
     await waitForNextUpdate();
@@ -109,15 +110,17 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     expect(result.current.stopSequenceList.length).toBe(1);
   });
 
-  it("Should dispatch the console log if we don't have stops or stopSequence in Backend", async () => {
+  it("Should dispatch the console log if we don't find stops or stopSequence in Backend", async () => {
+    // Mock the response of the backend to get an empty object
     //@ts-ignore
     getStopsByMode.mockImplementation(() => Promise.resolve({}));
     //@ts-ignore
     queryStopSequenceRequest.mockImplementation(() => Promise.resolve({}));
+
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.sendRequest("4");
+      result.current.handleSendRequest("4");
     });
 
     await waitForNextUpdate();
@@ -127,6 +130,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     );
   });
   it("Should dispatch the console Warn if we catch error from tryCatch block", async () => {
+    // Mock the response of the backend to get an error
     //@ts-ignore
     getStopsByMode.mockImplementation(() => Promise.reject("error"));
     //@ts-ignore
@@ -134,7 +138,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.sendRequest("4");
+      result.current.handleSendRequest("4");
     });
 
     await waitForNextUpdate();
@@ -145,14 +149,14 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.sendRequest("4");
+      result.current.handleSendRequest("4");
     });
     await waitForNextUpdate();
 
     expect(result.current.stations.length).toBe(2);
     expect(result.current.stateDND.trajekt.items.length).toBe(0);
     act(() => {
-      result.current.onSelectAutoSearch("Basel");
+      result.current.handleSelectAutoSearch("Basel");
     });
 
     expect(result.current.stateDND.trajekt.items.length).toBe(1);
@@ -161,7 +165,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.sendRequest("4");
+      result.current.handleSendRequest("4");
     });
 
     await waitForNextUpdate();
@@ -174,11 +178,11 @@ describe("Test the customHooks of the /components/index.tsx", () => {
 
     expect(result.current.currentStopSequence).not.toBeNull();
   });
-  it("Should select the stop and calculate the distance distance when we trigger the clickOnDrop function", async () => {
+  it("Should select the stop and calculate the distance when we trigger the clickOnDrop function", async () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.sendRequest("4");
+      result.current.handleSendRequest("4");
     });
 
     await waitForNextUpdate();
@@ -186,7 +190,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     expect(result.current.stations.length).toBe(2);
     expect(result.current.stopSequenceList.length).toBe(1);
     act(() => {
-      result.current.clickOnDrop(
+      result.current.handleClickOnDrop(
         {
           _id: "5f6203bb0d5658001cd8f85b",
           name: "Lyon",
@@ -208,7 +212,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.sendRequest("4");
+      result.current.handleSendRequest("4");
     });
 
     await waitForNextUpdate();
@@ -216,7 +220,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     expect(result.current.stations.length).toBe(2);
     expect(result.current.stopSequenceList.length).toBe(1);
     act(() => {
-      result.current.clickOnDrop(
+      result.current.handleClickOnDrop(
         {
           _id: "5f6203bb0d5658001cd8f85b",
           name: "Lyon",
@@ -238,7 +242,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.sendRequest("4");
+      result.current.handleSendRequest("4");
     });
 
     await waitForNextUpdate();
@@ -269,7 +273,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.sendRequest("4");
+      result.current.handleSendRequest("4");
     });
 
     await waitForNextUpdate();
@@ -278,7 +282,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     expect(result.current.stopSequenceList.length).toBe(1);
 
     act(() => {
-      result.current.clickOnMapMarker(
+      result.current.handleClickOnMapMarker(
         {
           _id: "5f6203bb0d5658001cd8f85b",
           name: "Lyon",
@@ -338,7 +342,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     );
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
     act(() => {
-      result.current.sendRequest("4");
+      result.current.handleSendRequest("4");
     });
 
     await waitForNextUpdate();
@@ -360,7 +364,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.saveStopSequence("1");
+      result.current.handleSaveStopSequence("1");
     });
 
     expect(spyOnConsoleError).not.toBeCalled();
@@ -378,17 +382,17 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.sendRequest("4");
+      result.current.handleSendRequest("4");
     });
 
     await waitForNextUpdate();
 
     act(() => {
-      result.current.onSelectAutoSearch("Basel");
+      result.current.handleSelectAutoSearch("Basel");
     });
 
     act(() => {
-      result.current.saveStopSequence("formInput");
+      result.current.handleSaveStopSequence("formInput");
     });
 
     await waitForNextUpdate();
@@ -402,17 +406,17 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.sendRequest("4");
+      result.current.handleSendRequest("4");
     });
 
     await waitForNextUpdate();
 
     act(() => {
-      result.current.onSelectAutoSearch("Basel");
+      result.current.handleSelectAutoSearch("Basel");
     });
 
     act(() => {
-      result.current.saveStopSequence("formInput");
+      result.current.handleSaveStopSequence("formInput");
     });
 
     await waitForNextUpdate();
@@ -426,17 +430,17 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.sendRequest("4");
+      result.current.handleSendRequest("4");
     });
 
     await waitForNextUpdate();
 
     act(() => {
-      result.current.onSelectAutoSearch("Basel");
+      result.current.handleSelectAutoSearch("Basel");
     });
 
     act(() => {
-      result.current.saveStopSequence("formInput");
+      result.current.handleSaveStopSequence("formInput");
     });
 
     await waitForNextUpdate();
@@ -447,13 +451,13 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.sendRequest("4");
+      result.current.handleSendRequest("4");
     });
 
     await waitForNextUpdate();
 
     act(() => {
-      result.current.onSelectAutoSearch("Basel");
+      result.current.handleSelectAutoSearch("Basel");
     });
 
     act(() => {
@@ -466,13 +470,13 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.sendRequest("4");
+      result.current.handleSendRequest("4");
     });
 
     await waitForNextUpdate();
 
     act(() => {
-      result.current.onSelectAutoSearch("Basel");
+      result.current.handleSelectAutoSearch("Basel");
     });
 
     act(() => {
@@ -494,17 +498,17 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.sendRequest("4");
+      result.current.handleSendRequest("4");
     });
 
     await waitForNextUpdate();
 
     act(() => {
-      result.current.onSelectAutoSearch("Basel");
+      result.current.handleSelectAutoSearch("Basel");
     });
 
     act(() => {
-      result.current.saveStopSequence("formInput");
+      result.current.handleSaveStopSequence("formInput");
     });
 
     await waitForNextUpdate();
@@ -520,7 +524,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.sendRequest("4");
+      result.current.handleSendRequest("4");
     });
 
     await waitForNextUpdate();
@@ -528,7 +532,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     expect(result.current.stateDND.trajekt.items.length).toBe(0);
 
     act(() => {
-      result.current.onSelectAutoSearch("Basel");
+      result.current.handleSelectAutoSearch("Basel");
     });
 
     expect(result.current.stateDND.trajekt.items.length).toBe(1);
@@ -543,7 +547,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.sendRequest("4");
+      result.current.handleSendRequest("4");
     });
 
     await waitForNextUpdate();
@@ -551,16 +555,16 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     expect(result.current.stateDND.trajekt.items.length).toBe(0);
 
     act(() => {
-      result.current.onSelectAutoSearch("Basel");
+      result.current.handleSelectAutoSearch("Basel");
     });
     act(() => {
-      result.current.onSelectAutoSearch("Lyon");
+      result.current.handleSelectAutoSearch("Lyon");
     });
 
     expect(result.current.stateDND.trajekt.items.length).toBe(2);
 
     act(() => {
-      result.current.clickOnMapMarker(
+      result.current.handleClickOnMapMarker(
         {
           _id: "5f6203bb0d5658001cd8f85a",
           name: "Basel",
@@ -582,7 +586,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.sendRequest("4");
+      result.current.handleSendRequest("4");
     });
 
     await waitForNextUpdate();
@@ -590,10 +594,10 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     expect(result.current.stateDND.trajekt.items.length).toBe(0);
 
     act(() => {
-      result.current.onSelectAutoSearch("Basel");
+      result.current.handleSelectAutoSearch("Basel");
     });
     act(() => {
-      result.current.onSelectAutoSearch("Lyon");
+      result.current.handleSelectAutoSearch("Lyon");
     });
 
     expect(result.current.stateDND.trajekt.items.length).toBe(2);
@@ -618,7 +622,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     expect(result.current.stateDND.trajekt.items.length).toBe(1);
 
     act(() => {
-      result.current.onSelectAutoSearch("Basel");
+      result.current.handleSelectAutoSearch("Basel");
     });
 
     expect(result.current.stateDND.trajekt.items.length).toBe(2);

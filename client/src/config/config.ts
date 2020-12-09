@@ -1,4 +1,4 @@
-export const GRAPHQL_API = "http://ems-dev.m.mdv:8059";
+export const GRAPHQL_API = "http://ems-dev.m.mdv:8101";
 
 export const TEST_API = "http://ems-dev.m.mdv:8101/result";
 

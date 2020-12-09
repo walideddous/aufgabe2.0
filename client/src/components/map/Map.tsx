@@ -28,11 +28,11 @@ interface TpropsOnMap {
   selected: Tstations | undefined;
   distance: Tdistance[];
   currentStopSequence: any;
+  onSelectAutoSearch: (selectedStop: string) => void;
   onAddBeforSelected: (e: string) => void;
-  handleSelectAutoSearch: (selectedStop: string) => void;
   onAddAfterSelected: (e: string) => void;
   onDeleteMarkerFromMap: (e: string) => void;
-  selectMarkerOnMap: (el: Tstations, index: number) => void;
+  onClickOnMapMarker: (el: Tstations, index: number) => void;
 }
 
 // Map component
@@ -42,11 +42,11 @@ const Map = ({
   selected,
   distance,
   currentStopSequence,
-  handleSelectAutoSearch,
-  onAddAfterSelected,
+  onSelectAutoSearch,
   onAddBeforSelected,
+  onAddAfterSelected,
   onDeleteMarkerFromMap,
-  selectMarkerOnMap,
+  onClickOnMapMarker,
 }: TpropsOnMap) => {
   const map: any = useRef(null);
   const layerRef: any = useRef(null);
@@ -94,9 +94,9 @@ const Map = ({
 
   const clickOnMarker = useCallback(
     (el: any, index: number) => {
-      selectMarkerOnMap(el, index);
+      onClickOnMapMarker(el, index);
     },
-    [selectMarkerOnMap]
+    [onClickOnMapMarker]
   );
 
   const addBeforSelected = useCallback(
@@ -248,7 +248,7 @@ const Map = ({
           <div id="mapId" style={{ height: "60vh", zIndex: 0 }} />
           <SearchInput
             stations={stations}
-            handleSelectAutoSearch={handleSelectAutoSearch}
+            handleSelectAutoSearch={onSelectAutoSearch}
           />
         </Card>
       </Col>

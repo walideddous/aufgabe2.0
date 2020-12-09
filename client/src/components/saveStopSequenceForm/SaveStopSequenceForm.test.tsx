@@ -24,14 +24,14 @@ const setUp = (props: any) => {
 describe("SaveStopSequenceForm component", () => {
   let mountWrapper: any;
   const spyOnConsoleWarn = jest.spyOn(console, "warn").mockImplementation();
-  const saveStopSequence = jest.fn();
+  const onSaveStopSequence = jest.fn();
 
   beforeEach(() => {
     mountWrapper = setUp(
       makeProps({
         stateDND,
-        saveStopSequence,
         loadStopSequenceSection: false,
+        onSaveStopSequence,
       })
     );
   });
@@ -116,7 +116,7 @@ describe("SaveStopSequenceForm component", () => {
 
     mountWrapper.find("#save_stopSequence").at(0).simulate("click");
 
-    expect(saveStopSequence).toBeCalled();
+    expect(onSaveStopSequence).toBeCalled();
   });
 
   it("Should display tags when we load stop sequence", () => {

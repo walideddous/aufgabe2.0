@@ -3,9 +3,9 @@ import { Row, Spin, Col } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 
 // Import composents
-import DragDrop from "./dnd/DragDrop";
+import DragDrop from "./dragDrop/DragDrop";
 import Map from "./map/Map";
-import SaveStopsSequenceForm from "./form/SaveStopSequenceForm";
+import SaveStopsSequenceForm from "./saveStopSequenceForm/SaveStopSequenceForm";
 import LoadStopSequence from "./loadStopSequenceForm/LoadStopSequence";
 
 // Import Custom Hook
@@ -30,20 +30,20 @@ const Aufgabe: React.FC = () => {
     stopSequenceList,
     currentStopSequence,
     loadStopSequenceSection,
-    loadMode,
-    sendRequest,
-    clickOnDrop,
+    handleLoadMode,
+    handleSendRequest,
+    handleClickOnDrop,
     handleAddStopsOnCLick,
     handleDeleteOnDND,
-    onSelectAutoSearch,
+    handleSelectAutoSearch,
     handleDragEnd,
     handleAddAfterSelected,
     handleAddBeforSelected,
-    clickOnMapMarker,
+    handleClickOnMapMarker,
     handleDeleteMarkerFromMap,
-    clearAll,
-    resetStopSequence,
-    saveStopSequence,
+    handleClearAll,
+    handleResetStopSequence,
+    handleSaveStopSequence,
     handledisplayStopSequence,
     handleUpdateAfterSave,
     handleDeleteStopSequence,
@@ -56,11 +56,11 @@ const Aufgabe: React.FC = () => {
           <LoadStopSequence
             stopSequenceList={stopSequenceList}
             currentStopSequence={currentStopSequence}
-            loadMode={loadMode}
-            onSendRequest={sendRequest}
-            handleUpdateAfterSave={handleUpdateAfterSave}
-            onClearAll={clearAll}
-            handleDeleteStopSequence={handleDeleteStopSequence}
+            onLoadMode={handleLoadMode}
+            onSendRequest={handleSendRequest}
+            onUpdateAfterSave={handleUpdateAfterSave}
+            onClearAll={handleClearAll}
+            onDeleteStopSequence={handleDeleteStopSequence}
             ondisplayStopSequence={handledisplayStopSequence}
           />
         </Col>
@@ -87,7 +87,7 @@ const Aufgabe: React.FC = () => {
                 stateDND={stateDND}
                 currentStopSequence={currentStopSequence}
                 loadStopSequenceSection={loadStopSequenceSection}
-                saveStopSequence={saveStopSequence}
+                onSaveStopSequence={handleSaveStopSequence}
               />
             </Col>
             <Map
@@ -96,21 +96,21 @@ const Aufgabe: React.FC = () => {
               selected={selected}
               distance={distance}
               currentStopSequence={currentStopSequence}
-              handleSelectAutoSearch={onSelectAutoSearch}
+              onSelectAutoSearch={handleSelectAutoSearch}
               onAddBeforSelected={handleAddBeforSelected}
               onAddAfterSelected={handleAddAfterSelected}
               onDeleteMarkerFromMap={handleDeleteMarkerFromMap}
-              selectMarkerOnMap={clickOnMapMarker}
+              onClickOnMapMarker={handleClickOnMapMarker}
             />
             <Col xxl={12} xs={24}>
               <DragDrop
                 stateDND={stateDND}
                 selected={selected}
-                onResetStopSequence={resetStopSequence}
-                handleAddStopsOnCLick={handleAddStopsOnCLick}
-                handleDragEnd={handleDragEnd}
-                onClick={clickOnDrop}
-                onDelete={handleDeleteOnDND}
+                onResetStopSequence={handleResetStopSequence}
+                onAddStopsOnCLick={handleAddStopsOnCLick}
+                onDragEnd={handleDragEnd}
+                onClickOnDrop={handleClickOnDrop}
+                onDeleteDND={handleDeleteOnDND}
               />
             </Col>
           </Fragment>

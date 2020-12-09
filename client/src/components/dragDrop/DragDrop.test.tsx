@@ -25,11 +25,11 @@ const setUp = (props: any) => {
 describe("DragDrop component", () => {
   let mountWrapper: ReactWrapper;
 
-  const handleDragEnd = jest.fn();
-  const handleAddStopsOnCLick = jest.fn();
-  const onClick = jest.fn();
-  const onDelete = jest.fn();
   const onResetStopSequence = jest.fn();
+  const onAddStopsOnCLick = jest.fn();
+  const onDragEnd = jest.fn();
+  const onClickOnDrop = jest.fn();
+  const onDeleteDND = jest.fn();
 
   beforeEach(() => {
     mountWrapper = setUp(
@@ -37,10 +37,10 @@ describe("DragDrop component", () => {
         stateDND,
         selected,
         onResetStopSequence,
-        handleDragEnd,
-        handleAddStopsOnCLick,
-        onClick,
-        onDelete,
+        onAddStopsOnCLick,
+        onDragEnd,
+        onClickOnDrop,
+        onDeleteDND,
       })
     );
   });
@@ -56,19 +56,19 @@ describe("DragDrop component", () => {
   it("Should dispatch handleAddStopsOnCLick function when we click on addStopsButton span", () => {
     const button = mountWrapper.find("#addStopsButton").at(0);
     button.simulate("click");
-    expect(handleAddStopsOnCLick).toHaveBeenCalled();
+    expect(onAddStopsOnCLick).toHaveBeenCalled();
   });
 
   it("Should dispatch onclick function when we click on clickStops span", () => {
     const button = mountWrapper.find("#clickStops");
     button.simulate("click");
-    expect(onClick).toHaveBeenCalled();
+    expect(onClickOnDrop).toHaveBeenCalled();
   });
 
   it("Should dispatch onDelete function when we click on delete Icon", () => {
     const button = mountWrapper.find("#deleteStopButton");
     button.simulate("click");
-    expect(onDelete).toHaveBeenCalled();
+    expect(onDeleteDND).toHaveBeenCalled();
   });
 
   it("Should test the window size to hide some button", () => {

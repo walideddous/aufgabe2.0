@@ -4,23 +4,23 @@ import { AutoComplete, Radio, Card, Form, Select, Button } from "antd";
 interface TLoadStopSequence {
   stopSequenceList: any;
   currentStopSequence: any;
-  loadMode: (value: boolean) => void;
-  onClearAll: () => void;
+  onLoadMode: (value: boolean) => void;
   onSendRequest: (modes: string) => void;
-  handleUpdateAfterSave: () => void;
-  handleDeleteStopSequence: (id: string) => void;
+  onUpdateAfterSave: () => void;
+  onClearAll: () => void;
+  onDeleteStopSequence: (id: string) => void;
   ondisplayStopSequence: (stopSequence: any) => void;
 }
 
 const LoadStopSequence = ({
   stopSequenceList,
   currentStopSequence,
-  loadMode,
-  handleUpdateAfterSave,
+  onLoadMode,
   onSendRequest,
-  ondisplayStopSequence,
-  handleDeleteStopSequence,
+  onUpdateAfterSave,
   onClearAll,
+  onDeleteStopSequence,
+  ondisplayStopSequence,
 }: TLoadStopSequence) => {
   const [form] = Form.useForm();
   const [search, setSearch] = useState("");
@@ -59,18 +59,18 @@ const LoadStopSequence = ({
       const { value } = e.target;
       if (value === "load") {
         setShow(true);
-        handleUpdateAfterSave();
-        loadMode(true);
+        onUpdateAfterSave();
+        onLoadMode(true);
       }
       if (value === "new") {
         setShow(false);
         onClearAll();
         setSearch("");
-        loadMode(false);
+        onLoadMode(false);
       }
       setRadioButton(value);
     },
-    [onClearAll, handleUpdateAfterSave, loadMode]
+    [onClearAll, onUpdateAfterSave, onLoadMode]
   );
 
   return (
@@ -165,7 +165,7 @@ const LoadStopSequence = ({
                 onClick={() => {
                   if (currentStopSequence) {
                     const { _id } = currentStopSequence;
-                    handleDeleteStopSequence(_id);
+                    onDeleteStopSequence(_id);
                     setSearch("");
                   }
                 }}

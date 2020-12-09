@@ -26,14 +26,14 @@ interface Tprops {
   stateDND: TstateDND;
   currentStopSequence: any;
   loadStopSequenceSection: boolean;
-  saveStopSequence: (formData: any) => void;
+  onSaveStopSequence: (formData: any) => void;
 }
 
 const SaveStopSequenceForm = ({
   stateDND,
   currentStopSequence,
   loadStopSequenceSection,
-  saveStopSequence,
+  onSaveStopSequence,
 }: Tprops) => {
   const [form] = Form.useForm();
   const [name, setName] = useState("");
@@ -143,11 +143,6 @@ const SaveStopSequenceForm = ({
     form.resetFields(["date", "day", "time"]);
   };
 
-  const handleNameChange = (e: any) => {
-    const { value } = e.target;
-    setName(value);
-  };
-
   const handleDeleteTags = useCallback(
     (tagsIndex: number, displayedTagsIndex: number) => {
       setSavedForm((prevValues: any) => {
@@ -213,7 +208,7 @@ const SaveStopSequenceForm = ({
                 id="name_input"
                 placeholder="Enter stop sequence name"
                 value={name}
-                onChange={handleNameChange}
+                onChange={(e) => setName(e.target.value)}
                 allowClear
               />
             </Form.Item>
@@ -420,12 +415,12 @@ const SaveStopSequenceForm = ({
                       stateDND.trajekt.items.length &&
                       currentStopSequence.name
                     ) {
-                      saveStopSequence({
+                      onSaveStopSequence({
                         ...savedForm,
                         name: currentStopSequence.name,
                       });
                     } else {
-                      saveStopSequence({
+                      onSaveStopSequence({
                         ...savedForm,
                         name,
                       });

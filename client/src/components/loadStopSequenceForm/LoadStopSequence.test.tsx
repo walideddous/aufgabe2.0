@@ -29,24 +29,24 @@ const setUp = (props: any) => {
 describe("LoadStopSequence component", () => {
   let shallowWrapper: any;
 
-  const handleUpdateAfterSave = jest.fn();
+  const onLoadMode = jest.fn();
   const onSendRequest = jest.fn();
-  const ondisplayStopSequence = jest.fn();
-  const handleDeleteStopSequence = jest.fn();
+  const onUpdateAfterSave = jest.fn();
   const onClearAll = jest.fn();
-  const loadMode = jest.fn();
+  const onDeleteStopSequence = jest.fn();
+  const ondisplayStopSequence = jest.fn();
 
   beforeEach(() => {
     shallowWrapper = setUp(
       makeProps({
         stopSequenceList,
         currentStopSequence,
-        loadMode,
-        handleUpdateAfterSave,
+        onLoadMode,
         onSendRequest,
-        ondisplayStopSequence,
-        handleDeleteStopSequence,
+        onUpdateAfterSave,
         onClearAll,
+        onDeleteStopSequence,
+        ondisplayStopSequence,
       })
     );
   });
@@ -79,7 +79,7 @@ describe("LoadStopSequence component", () => {
     });
 
     expect(onClearAll).toHaveBeenCalled();
-    expect(loadMode).toHaveBeenCalledWith(false);
+    expect(onLoadMode).toHaveBeenCalledWith(false);
   });
 
   it("Should dispatch the handleUpdateAfterSave props function when we choose load button", () => {
@@ -91,8 +91,8 @@ describe("LoadStopSequence component", () => {
       },
     });
 
-    expect(handleUpdateAfterSave).toHaveBeenCalled();
-    expect(loadMode).toHaveBeenCalledWith(true);
+    expect(onUpdateAfterSave).toHaveBeenCalled();
+    expect(onLoadMode).toHaveBeenCalledWith(true);
   });
 
   it("Should dispatch ondisplayStopSequence props function on select value in Auto-complete field ", () => {
@@ -128,6 +128,6 @@ describe("LoadStopSequence component", () => {
 
     shallowWrapper.find("#delete_stopSequence").at(0).simulate("click");
 
-    expect(handleDeleteStopSequence).toBeCalledWith(currentStopSequence._id);
+    expect(onDeleteStopSequence).toBeCalledWith(currentStopSequence._id);
   });
 });

@@ -11,20 +11,20 @@ interface TporpsDND {
   stateDND: TstateDND;
   selected: Tstations | undefined;
   onResetStopSequence: () => void;
-  onClick: (e: any, index: number) => void;
-  handleAddStopsOnCLick: (e: any) => void;
-  onDelete: (e: any, index: number) => void;
-  handleDragEnd: (e: any) => void;
+  onAddStopsOnCLick: (e: any) => void;
+  onDragEnd: (e: any) => void;
+  onClickOnDrop: (e: any, index: number) => void;
+  onDeleteDND: (e: any, index: number) => void;
 }
 
 const DragDrop = ({
   stateDND,
   selected,
   onResetStopSequence,
-  handleAddStopsOnCLick,
-  handleDragEnd,
-  onClick,
-  onDelete,
+  onAddStopsOnCLick,
+  onDragEnd,
+  onClickOnDrop,
+  onDeleteDND,
 }: TporpsDND) => {
   const [clicked, setClicked] = useState<boolean>(false);
   const [hide, setHide] = useState<boolean>(false);
@@ -61,31 +61,9 @@ const DragDrop = ({
     scrollToBottom();
   });
 
-  const handleClick = useCallback(
-    (e: any, index: number) => {
-      onClick(e, index);
-      setClicked(!clicked);
-    },
-    [onClick, setClicked, clicked]
-  );
-
-  const handleDelete = useCallback(
-    (e: any, index: number) => {
-      onDelete(e, index);
-    },
-    [onDelete]
-  );
-
-  const addStopsOnCLick = useCallback(
-    (el: any) => {
-      handleAddStopsOnCLick(el);
-    },
-    [handleAddStopsOnCLick]
-  );
-
   return (
     <Fragment>
-      <DragDropContext onDragEnd={handleDragEnd}>
+      <DragDropContext onDragEnd={onDragEnd}>
         <Col xs={24}>
           <Card bordered={true} title={stateDND.suggestions.title}>
             <Droppable droppableId={"suggestions"}>
@@ -124,7 +102,7 @@ const DragDrop = ({
                                           id="addStopsButton"
                                           style={{ width: "90%" }}
                                           onClick={() => {
-                                            addStopsOnCLick(el);
+                                            onAddStopsOnCLick(el);
                                           }}
                                         >
                                           {el.name} "{el.distance.toFixed(3)}{" "}
@@ -185,7 +163,7 @@ const DragDrop = ({
                                               width: "90%",
                                             }}
                                             onClick={() => {
-                                              addStopsOnCLick(el);
+                                              onAddStopsOnCLick(el);
                                             }}
                                           >
                                             {el.name} "{el.distance.toFixed(3)}{" "}
@@ -289,7 +267,8 @@ const DragDrop = ({
                                     <span
                                       id="clickStops"
                                       onClick={() => {
-                                        handleClick(el, index);
+                                        onClickOnDrop(el, index);
+                                        setClicked(!clicked);
                                       }}
                                       style={{ width: "90%" }}
                                     >
@@ -307,7 +286,7 @@ const DragDrop = ({
                                         boxShadow: "0px 2px 2px lightgray",
                                       }}
                                       onClick={() => {
-                                        handleDelete(el, index);
+                                        onDeleteDND(el, index);
                                       }}
                                     >
                                       <DeleteOutlined />
