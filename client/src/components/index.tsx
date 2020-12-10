@@ -90,18 +90,20 @@ const Aufgabe: React.FC = () => {
                 onSaveStopSequence={handleSaveStopSequence}
               />
             </Col>
-            <Map
-              stations={stations}
-              stateDND={stateDND}
-              selected={selected}
-              distance={distance}
-              currentStopSequence={currentStopSequence}
-              onSelectAutoSearch={handleSelectAutoSearch}
-              onAddBeforSelected={handleAddBeforSelected}
-              onAddAfterSelected={handleAddAfterSelected}
-              onDeleteMarkerFromMap={handleDeleteMarkerFromMap}
-              onClickOnMapMarker={handleClickOnMapMarker}
-            />
+            <Col xxl={12} xs={24}>
+              <Map
+                stations={stations}
+                stateDND={stateDND}
+                selected={selected}
+                distance={distance}
+                currentStopSequence={currentStopSequence}
+                onSelectAutoSearch={handleSelectAutoSearch}
+                onAddBeforSelected={handleAddBeforSelected}
+                onAddAfterSelected={handleAddAfterSelected}
+                onDeleteMarkerFromMap={handleDeleteMarkerFromMap}
+                onClickOnMapMarker={handleClickOnMapMarker}
+              />
+            </Col>
             <Col xxl={12} xs={24}>
               <DragDrop
                 stateDND={stateDND}

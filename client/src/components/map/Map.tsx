@@ -5,7 +5,6 @@ import React, {
   useCallback,
   useRef,
 } from "react";
-import { Card, Col } from "antd";
 import * as L from "leaflet";
 
 import SearchInput from "../search/SearchInput";
@@ -243,15 +242,11 @@ const Map = ({
 
   return (
     <Fragment>
-      <Col xxl={12} xs={24}>
-        <Card bordered={true} title="Map">
-          <div id="mapId" style={{ height: "60vh", zIndex: 0 }} />
-          <SearchInput
-            stations={stations}
-            handleSelectAutoSearch={onSelectAutoSearch}
-          />
-        </Card>
-      </Col>
+      <div id="mapId" style={{ height: "60vh", zIndex: 0 }} />
+      <SearchInput
+        stations={stations}
+        handleSelectAutoSearch={onSelectAutoSearch}
+      />
     </Fragment>
   );
 };

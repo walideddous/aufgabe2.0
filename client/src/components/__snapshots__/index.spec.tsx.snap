@@ -1953,7 +1953,7 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                                         "leave": [Function],
                                       }
                                     }
-                                    key="rc_animate_1607594009952"
+                                    key="rc_animate_1607620215418"
                                     transitionAppear={false}
                                     transitionEnter={true}
                                     transitionLeave={true}
@@ -1962,7 +1962,7 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                                       destroyInactivePanel={false}
                                       forceRender={false}
                                       isActive={false}
-                                      key="rc_animate_1607594009952"
+                                      key="rc_animate_1607620215418"
                                       prefixCls="ant-collapse"
                                       role={null}
                                     />
@@ -1980,34 +1980,51 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
             </Memo(SaveStopSequenceForm)>
           </div>
         </Col>
-        <Component
-          currentStopSequence={Object {}}
-          distance={Array []}
-          onAddAfterSelected={[Function]}
-          onAddBeforSelected={[Function]}
-          onClickOnMapMarker={[Function]}
-          onDeleteMarkerFromMap={[Function]}
-          onSelectAutoSearch={[Function]}
-          stateDND={
-            Object {
-              "suggestions": Object {
-                "items": Array [],
-                "title": "Suggestion",
-              },
-              "trajekt": Object {
-                "items": Array [],
-                "title": "Stop sequence",
-              },
-            }
-          }
-          stations={Array []}
+        <Col
+          xs={24}
+          xxl={12}
         >
           <div
-            id="mapMock"
+            className="ant-col ant-col-xs-24 ant-col-xxl-12"
+            style={
+              Object {
+                "paddingBottom": 4,
+                "paddingLeft": 4,
+                "paddingRight": 4,
+                "paddingTop": 4,
+              }
+            }
           >
-            Map mocked
+            <Component
+              currentStopSequence={Object {}}
+              distance={Array []}
+              onAddAfterSelected={[Function]}
+              onAddBeforSelected={[Function]}
+              onClickOnMapMarker={[Function]}
+              onDeleteMarkerFromMap={[Function]}
+              onSelectAutoSearch={[Function]}
+              stateDND={
+                Object {
+                  "suggestions": Object {
+                    "items": Array [],
+                    "title": "Suggestion",
+                  },
+                  "trajekt": Object {
+                    "items": Array [],
+                    "title": "Stop sequence",
+                  },
+                }
+              }
+              stations={Array []}
+            >
+              <div
+                id="mapMock"
+              >
+                Map mocked
+              </div>
+            </Component>
           </div>
-        </Component>
+        </Col>
         <Col
           xs={24}
           xxl={12}
@@ -2102,7 +2119,6 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                           }
                         >
                           <Card
-                            bordered={true}
                             title="Suggestion"
                           >
                             <div
@@ -2243,7 +2259,6 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                           }
                         >
                           <Card
-                            bordered={true}
                             extra={null}
                             title="Stop sequence"
                           >

@@ -24,7 +24,7 @@ const SearchInput = ({
         display: "flex",
         justifyContent: "start",
         position: "absolute",
-        top: "100px",
+        top: "40px",
         zIndex: 10,
         width: "70%",
         left: "20%",

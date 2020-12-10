@@ -8,7 +8,7 @@ exports[`Searchinput component Should match snapShot with the Seachinput compone
       "justifyContent": "start",
       "left": "20%",
       "position": "absolute",
-      "top": "100px",
+      "top": "40px",
       "width": "70%",
       "zIndex": 10,
     }

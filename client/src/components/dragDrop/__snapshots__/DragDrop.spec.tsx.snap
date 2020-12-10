@@ -341,7 +341,6 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
         style={Object {}}
       >
         <Card
-          bordered={true}
           title="Suggestion"
         >
           <div
@@ -2449,7 +2448,6 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
         style={Object {}}
       >
         <Card
-          bordered={true}
           extra={
             <ForwardRef(InternalButton)
               block={false}
