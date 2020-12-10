@@ -1953,7 +1953,7 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                                         "leave": [Function],
                                       }
                                     }
-                                    key="rc_animate_1607537913086"
+                                    key="rc_animate_1607594009952"
                                     transitionAppear={false}
                                     transitionEnter={true}
                                     transitionLeave={true}
@@ -1962,7 +1962,7 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                                       destroyInactivePanel={false}
                                       forceRender={false}
                                       isActive={false}
-                                      key="rc_animate_1607537913086"
+                                      key="rc_animate_1607594009952"
                                       prefixCls="ant-collapse"
                                       role={null}
                                     />
@@ -2045,157 +2045,287 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
               <DragDropContext
                 onDragEnd={[Function]}
               >
-                <Col
-                  xs={24}
-                >
-                  <div
-                    className="ant-col ant-col-xs-24"
-                    style={
-                      Object {
-                        "paddingBottom": 4,
-                        "paddingLeft": 4,
-                        "paddingRight": 4,
-                        "paddingTop": 4,
-                      }
-                    }
+                <ErrorBoundary>
+                  <App
+                    contextId="0"
+                    dragHandleUsageInstructions="
+  Press space bar to start a drag.
+  When dragging you can use the arrow keys to move the item around and escape to cancel.
+  Some screen readers may require you to be in focus mode or to use your pass through key
+"
+                    onDragEnd={[Function]}
+                    setCallbacks={[Function]}
                   >
-                    <Card
-                      bordered={true}
-                      title="Suggestion"
+                    <Provider
+                      context={
+                        Object {
+                          "$$typeof": Symbol(react.context),
+                          "Consumer": Object {
+                            "$$typeof": Symbol(react.context),
+                            "_calculateChangedBits": null,
+                            "_context": [Circular],
+                          },
+                          "Provider": Object {
+                            "$$typeof": Symbol(react.provider),
+                            "_context": [Circular],
+                          },
+                          "_calculateChangedBits": null,
+                          "_currentRenderer": Object {},
+                          "_currentRenderer2": null,
+                          "_currentValue": null,
+                          "_currentValue2": null,
+                          "_threadCount": 0,
+                        }
+                      }
+                      store={
+                        Object {
+                          "dispatch": [Function],
+                          "getState": [Function],
+                          "replaceReducer": [Function],
+                          "subscribe": [Function],
+                          Symbol(observable): [Function],
+                        }
+                      }
                     >
-                      <div
-                        className="ant-card ant-card-bordered"
+                      <Col
+                        xs={24}
                       >
                         <div
-                          className="ant-card-head"
-                          style={Object {}}
+                          className="ant-col ant-col-xs-24"
+                          style={
+                            Object {
+                              "paddingBottom": 4,
+                              "paddingLeft": 4,
+                              "paddingRight": 4,
+                              "paddingTop": 4,
+                            }
+                          }
                         >
-                          <div
-                            className="ant-card-head-wrapper"
+                          <Card
+                            bordered={true}
+                            title="Suggestion"
                           >
                             <div
-                              className="ant-card-head-title"
-                            >
-                              Suggestion
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          className="ant-card-body"
-                          style={Object {}}
-                        >
-                          <Droppable
-                            droppableId="suggestions"
-                          >
-                            <div
-                              style={
-                                Object {
-                                  "display": "flex",
-                                }
-                              }
-                            >
-                              <Col
-                                lg={12}
-                                xs={24}
-                              >
-                                <div
-                                  className="ant-col ant-col-xs-24 ant-col-lg-12"
-                                  style={
-                                    Object {
-                                      "paddingBottom": 4,
-                                      "paddingLeft": 4,
-                                      "paddingRight": 4,
-                                      "paddingTop": 4,
-                                    }
-                                  }
-                                >
-                                  <div
-                                    className="droppable-col"
-                                  />
-                                </div>
-                              </Col>
-                              <Col
-                                lg={12}
-                              >
-                                <div
-                                  className="ant-col ant-col-lg-12"
-                                  style={
-                                    Object {
-                                      "paddingBottom": 4,
-                                      "paddingLeft": 4,
-                                      "paddingRight": 4,
-                                      "paddingTop": 4,
-                                    }
-                                  }
-                                >
-                                  <div
-                                    className="droppable-col"
-                                  />
-                                </div>
-                              </Col>
-                            </div>
-                          </Droppable>
-                        </div>
-                      </div>
-                    </Card>
-                  </div>
-                </Col>
-                <Col
-                  xs={24}
-                >
-                  <div
-                    className="ant-col ant-col-xs-24"
-                    style={
-                      Object {
-                        "paddingBottom": 4,
-                        "paddingLeft": 4,
-                        "paddingRight": 4,
-                        "paddingTop": 4,
-                      }
-                    }
-                  >
-                    <Card
-                      bordered={true}
-                      extra={null}
-                      title="Stop sequence"
-                    >
-                      <div
-                        className="ant-card ant-card-bordered"
-                      >
-                        <div
-                          className="ant-card-head"
-                          style={Object {}}
-                        >
-                          <div
-                            className="ant-card-head-wrapper"
-                          >
-                            <div
-                              className="ant-card-head-title"
-                            >
-                              Stop sequence
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          className="ant-card-body"
-                          style={Object {}}
-                        >
-                          <div
-                            style={Object {}}
-                          >
-                            <Droppable
-                              droppableId="trajekt"
+                              className="ant-card ant-card-bordered"
                             >
                               <div
-                                className="droppable-col"
-                              />
-                            </Droppable>
-                          </div>
+                                className="ant-card-head"
+                                style={Object {}}
+                              >
+                                <div
+                                  className="ant-card-head-wrapper"
+                                >
+                                  <div
+                                    className="ant-card-head-title"
+                                  >
+                                    Suggestion
+                                  </div>
+                                </div>
+                              </div>
+                              <div
+                                className="ant-card-body"
+                                style={Object {}}
+                              >
+                                <ConnectFunction
+                                  direction="vertical"
+                                  droppableId="suggestions"
+                                  getContainerForClone={[Function]}
+                                  ignoreContainerClipping={false}
+                                  isCombineEnabled={false}
+                                  isDropDisabled={false}
+                                  mode="standard"
+                                  renderClone={null}
+                                  type="DEFAULT"
+                                >
+                                  <Droppable
+                                    direction="vertical"
+                                    droppableId="suggestions"
+                                    getContainerForClone={[Function]}
+                                    ignoreContainerClipping={false}
+                                    isCombineEnabled={false}
+                                    isDropDisabled={false}
+                                    mode="standard"
+                                    placeholder={null}
+                                    renderClone={null}
+                                    shouldAnimatePlaceholder={false}
+                                    snapshot={
+                                      Object {
+                                        "draggingFromThisWith": null,
+                                        "draggingOverWith": null,
+                                        "isDraggingOver": false,
+                                        "isUsingPlaceholder": false,
+                                      }
+                                    }
+                                    type="DEFAULT"
+                                    updateViewportMaxScroll={[Function]}
+                                    useClone={null}
+                                  >
+                                    <div
+                                      style={
+                                        Object {
+                                          "display": "flex",
+                                        }
+                                      }
+                                    >
+                                      <Col
+                                        lg={12}
+                                        xs={24}
+                                      >
+                                        <div
+                                          className="ant-col ant-col-xs-24 ant-col-lg-12"
+                                          style={
+                                            Object {
+                                              "paddingBottom": 4,
+                                              "paddingLeft": 4,
+                                              "paddingRight": 4,
+                                              "paddingTop": 4,
+                                            }
+                                          }
+                                        >
+                                          <div
+                                            className="droppable-col"
+                                            data-rbd-droppable-context-id="0"
+                                            data-rbd-droppable-id="suggestions"
+                                          >
+                                            <AnimateInOut
+                                              on={null}
+                                              shouldAnimate={false}
+                                            />
+                                          </div>
+                                        </div>
+                                      </Col>
+                                      <Col
+                                        lg={12}
+                                      >
+                                        <div
+                                          className="ant-col ant-col-lg-12"
+                                          style={
+                                            Object {
+                                              "paddingBottom": 4,
+                                              "paddingLeft": 4,
+                                              "paddingRight": 4,
+                                              "paddingTop": 4,
+                                            }
+                                          }
+                                        >
+                                          <div
+                                            className="droppable-col"
+                                            data-rbd-droppable-context-id="0"
+                                            data-rbd-droppable-id="suggestions"
+                                          >
+                                            <AnimateInOut
+                                              on={null}
+                                              shouldAnimate={false}
+                                            />
+                                          </div>
+                                        </div>
+                                      </Col>
+                                    </div>
+                                  </Droppable>
+                                </ConnectFunction>
+                              </div>
+                            </div>
+                          </Card>
                         </div>
-                      </div>
-                    </Card>
-                  </div>
-                </Col>
+                      </Col>
+                      <Col
+                        xs={24}
+                      >
+                        <div
+                          className="ant-col ant-col-xs-24"
+                          style={
+                            Object {
+                              "paddingBottom": 4,
+                              "paddingLeft": 4,
+                              "paddingRight": 4,
+                              "paddingTop": 4,
+                            }
+                          }
+                        >
+                          <Card
+                            bordered={true}
+                            extra={null}
+                            title="Stop sequence"
+                          >
+                            <div
+                              className="ant-card ant-card-bordered"
+                            >
+                              <div
+                                className="ant-card-head"
+                                style={Object {}}
+                              >
+                                <div
+                                  className="ant-card-head-wrapper"
+                                >
+                                  <div
+                                    className="ant-card-head-title"
+                                  >
+                                    Stop sequence
+                                  </div>
+                                </div>
+                              </div>
+                              <div
+                                className="ant-card-body"
+                                style={Object {}}
+                              >
+                                <div
+                                  style={Object {}}
+                                >
+                                  <ConnectFunction
+                                    direction="vertical"
+                                    droppableId="trajekt"
+                                    getContainerForClone={[Function]}
+                                    ignoreContainerClipping={false}
+                                    isCombineEnabled={false}
+                                    isDropDisabled={false}
+                                    mode="standard"
+                                    renderClone={null}
+                                    type="DEFAULT"
+                                  >
+                                    <Droppable
+                                      direction="vertical"
+                                      droppableId="trajekt"
+                                      getContainerForClone={[Function]}
+                                      ignoreContainerClipping={false}
+                                      isCombineEnabled={false}
+                                      isDropDisabled={false}
+                                      mode="standard"
+                                      placeholder={null}
+                                      renderClone={null}
+                                      shouldAnimatePlaceholder={false}
+                                      snapshot={
+                                        Object {
+                                          "draggingFromThisWith": null,
+                                          "draggingOverWith": null,
+                                          "isDraggingOver": false,
+                                          "isUsingPlaceholder": false,
+                                        }
+                                      }
+                                      type="DEFAULT"
+                                      updateViewportMaxScroll={[Function]}
+                                      useClone={null}
+                                    >
+                                      <div
+                                        className="droppable-col"
+                                        data-rbd-droppable-context-id="0"
+                                        data-rbd-droppable-id="trajekt"
+                                      >
+                                        <AnimateInOut
+                                          on={null}
+                                          shouldAnimate={false}
+                                        />
+                                      </div>
+                                    </Droppable>
+                                  </ConnectFunction>
+                                </div>
+                              </div>
+                            </div>
+                          </Card>
+                        </div>
+                      </Col>
+                    </Provider>
+                  </App>
+                </ErrorBoundary>
               </DragDropContext>
             </Memo(DragDrop)>
           </div>

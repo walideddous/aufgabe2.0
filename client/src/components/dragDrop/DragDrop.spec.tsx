@@ -6,6 +6,34 @@ import DragDrop from "./DragDrop";
 // Import data to test
 import { stateDND, selected } from "../../testUtils/testData";
 
+// Mock the
+jest.mock("react-beautiful-dnd", () => ({
+  //@ts-ignore
+  Droppable: ({ children }) =>
+    children(
+      {
+        draggableProps: {
+          style: {},
+        },
+        innerRef: jest.fn(),
+      },
+      {}
+    ),
+  //@ts-ignore
+  Draggable: ({ children }) =>
+    children(
+      {
+        draggableProps: {
+          style: {},
+        },
+        innerRef: jest.fn(),
+      },
+      {}
+    ),
+  //@ts-ignore
+  DragDropContext: ({ children }) => children,
+}));
+
 const makeProps = (props: any) => ({
   stateDND: {},
   selected: {},
