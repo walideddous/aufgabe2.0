@@ -48,7 +48,7 @@ const scheduleType = new GraphQLObjectType({
 
 // Haltestelle Type
 const HaltestelleType = new GraphQLObjectType({
-  name: "Haltestelle",
+  name: "Haltestellen",
   fields: () => ({
     _id: { type: GraphQLID },
     name: { type: GraphQLString },
@@ -69,12 +69,24 @@ const StopSequenceType = new GraphQLObjectType({
   }),
 });
 
+const HaltestelleByDistanceType = new GraphQLObjectType({
+  name: "HaltestellenByDistance",
+  fields: () => ({
+    _id: { type: GraphQLID },
+    name: { type: GraphQLString },
+    modes: { type: GraphQLList(GraphQLString) },
+    coord: { type: locationType },
+    calcDistance: { type: GraphQLFloat }
+  }),
+});
+
+
 // Root Query
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
   fields: {
     // Query all the stops
-    haltestelles: {
+    haltestellen: {
       type: new GraphQLList(HaltestelleType),
       resolve(parentValue) {
         return (async function () {
@@ -125,6 +137,72 @@ const RootQuery = new GraphQLObjectType({
               const collection = db.collection("mdv.ojp.stops");
 
               result = await collection.find({ modes: args.modes }).toArray();
+            } else {
+              console.log("Mongo URI fehlt");
+            }
+          } catch (err) {
+            console.log(err.stack);
+          }
+          // Close connection
+          client.close();
+          console.log("data fetched and database closed ");
+          return result;
+        })();
+      },
+    },
+    // Get stop with the max distance of arg.distance
+    stopsByDistance: {
+      type: new GraphQLList(HaltestelleType),
+      args: { distance: { type: GraphQLFloat } },
+      resolve(parentValue, args) {
+        return (async function () {
+          let client;
+          let result;
+          try {
+            if (process.env.MONGO_URI) {
+              client = await MongoClient.connect(process.env.MONGO_URI);
+              console.log("Connected successfully to server");
+
+              // Get the dataBase
+              const db = client.db(dbName);
+
+              // Get the documents collection
+              const collection = db.collection("mdv.ojp.stops");
+
+              result = await collection.find({ _geo2d: { $near: { $maxDistance: args.distance, $geometry: { type: "Point", coordinates: [6.08824, 46.17831] } } } }).toArray();
+            } else {
+              console.log("Mongo URI fehlt");
+            }
+          } catch (err) {
+            console.log(err.stack);
+          }
+          // Close connection
+          client.close();
+          console.log("data fetched and database closed ");
+          return result;
+        })();
+      },
+    },
+    // Get sorted stops 
+    stopsSortedByDistance: {
+      type: new GraphQLList(HaltestelleByDistanceType),
+      args: { modes: { type: GraphQLString } },
+      resolve(parentValue, args) {
+        return (async function () {
+          let client;
+          let result;
+          try {
+            if (process.env.MONGO_URI) {
+              client = await MongoClient.connect(process.env.MONGO_URI);
+              console.log("Connected successfully to server");
+
+              // Get the dataBase
+              const db = client.db(dbName);
+
+              // Get the documents collection
+              const collection = db.collection("mdv.ojp.stops");
+
+              result = await collection.aggregate([{ $geoNear: { near: { type: "Point", coordinates: [6.08824, 46.17831] }, spherical: true, distanceField: "calcDistance" } }, { $match: { modes: args.modes } }]).toArray();
             } else {
               console.log("Mongo URI fehlt");
             }

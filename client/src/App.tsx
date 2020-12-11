@@ -21,3 +21,12 @@ function App() {
 }
 
 export default App;
+
+/*
+
+module.exports = {
+  //preset: "ts-jest",
+  //testEnvironment: 'jsdom'
+}
+
+*/

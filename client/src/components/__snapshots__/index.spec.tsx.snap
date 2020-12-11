@@ -1953,7 +1953,7 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                                         "leave": [Function],
                                       }
                                     }
-                                    key="rc_animate_1607620215418"
+                                    key="rc_animate_1607676593972"
                                     transitionAppear={false}
                                     transitionEnter={true}
                                     transitionLeave={true}
@@ -1962,7 +1962,7 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                                       destroyInactivePanel={false}
                                       forceRender={false}
                                       isActive={false}
-                                      key="rc_animate_1607620215418"
+                                      key="rc_animate_1607676593972"
                                       prefixCls="ant-collapse"
                                       role={null}
                                     />
