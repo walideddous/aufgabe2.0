@@ -74,7 +74,7 @@ const Map = ({
     return {
       lat: 46.8155135,
       lng: 8.224471999999992,
-      zoom: 5,
+      zoom: 9,
     };
   }, []);
   // Zoom reactive

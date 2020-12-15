@@ -598,7 +598,6 @@ exports[`NavBar component Should Match snapshot with the Navbar component 1`] = 
                     role="img"
                   >
                     <IconReact
-                      className=""
                       icon={
                         Object {
                           "icon": Object {
@@ -623,7 +622,6 @@ exports[`NavBar component Should Match snapshot with the Navbar component 1`] = 
                     >
                       <svg
                         aria-hidden="true"
-                        className=""
                         data-icon="down"
                         fill="currentColor"
                         focusable="false"
@@ -881,7 +879,6 @@ exports[`NavBar component Should Match snapshot with the Navbar component 1`] = 
                     role="img"
                   >
                     <IconReact
-                      className=""
                       icon={
                         Object {
                           "icon": Object {
@@ -906,7 +903,6 @@ exports[`NavBar component Should Match snapshot with the Navbar component 1`] = 
                     >
                       <svg
                         aria-hidden="true"
-                        className=""
                         data-icon="down"
                         fill="currentColor"
                         focusable="false"
@@ -986,12 +982,8 @@ exports[`NavBar component Should Match snapshot with the Navbar component 1`] = 
       }
     >
       <Button
-        block={false}
         disabled={true}
-        ghost={false}
-        htmlType="button"
         id="navbar_getData_button"
-        loading={false}
         onClick={[Function]}
         type="primary"
       >
@@ -1031,13 +1023,9 @@ exports[`NavBar component Should Match snapshot with the Navbar component 1`] = 
         </Wave>
       </Button>
       <Button
-        block={false}
         danger={true}
         disabled={false}
-        ghost={false}
-        htmlType="button"
         id="navbar_reset_button"
-        loading={false}
         onClick={[Function]}
         type="primary"
       >
@@ -1081,12 +1069,8 @@ exports[`NavBar component Should Match snapshot with the Navbar component 1`] = 
           className="ant-badge"
         >
           <Button
-            block={false}
             disabled={true}
-            ghost={false}
-            htmlType="button"
             id="navbar_update_button"
-            loading={false}
             onClick={[Function]}
             type="primary"
           >
@@ -1125,30 +1109,19 @@ exports[`NavBar component Should Match snapshot with the Navbar component 1`] = 
               </button>
             </Wave>
           </Button>
-          <Animate
-            animation={Object {}}
-            component=""
-            componentProps={Object {}}
-            onAppear={[Function]}
-            onEnd={[Function]}
-            onEnter={[Function]}
-            onLeave={[Function]}
-            showProp="data-show"
-            transitionAppear={true}
-            transitionEnter={true}
-            transitionLeave={true}
-            transitionName="ant-badge-zoom"
-          />
+          <CSSMotion
+            motionAppear={false}
+            motionName="ant-badge-zoom"
+            visible={false}
+          >
+            <DomWrapper />
+          </CSSMotion>
         </span>
       </Badge>
       <Button
-        block={false}
         danger={true}
         disabled={true}
-        ghost={false}
-        htmlType="button"
         id="navbar_delete_button"
-        loading={false}
         onClick={[Function]}
         type="primary"
       >

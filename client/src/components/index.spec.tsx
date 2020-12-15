@@ -49,28 +49,76 @@ describe("Test the customHooks of the /components/index.tsx", () => {
       Promise.resolve({
         data: {
           data: {
-            haltestelleByMode: [
+            PTStopItems: [
               {
-                _id: "5f6203bb0d5658001cd8f85a",
+                type: "stop",
                 name: "Basel",
-                coord: {
-                  WGS84: {
-                    lat: 47.54741,
-                    lon: 7.58956,
+                geojson: {
+                  type: "Feature",
+                  geometry: {
+                    type: "Point",
+                    coordinates: [7.58956, 47.54741],
                   },
                 },
-                modes: ["4"],
+                data: {
+                  _id: "5f6203bb0d5658001cd8f85a",
+                  key: "100050",
+                  name: "Basel",
+                  keyMapping: {
+                    gid: "134",
+                    diva: {
+                      ojp: "50",
+                    },
+                  },
+                  loc: {
+                    name: "Basel",
+                    omc: "23022212",
+                    placeId: "2",
+                    coord: null,
+                  },
+                  routes: [
+                    "ojp9101ZYHj20",
+                    "ojp9105LYHj20",
+                    "ojp9101ZYRj20",
+                    "ojp9105LYRj20",
+                  ],
+                  modes: ["4"],
+                },
               },
               {
-                _id: "5f6203bb0d5658001cd8f85b",
+                type: "stop",
                 name: "Lyon",
-                coord: {
-                  WGS84: {
-                    lat: 45.74506,
-                    lon: 4.84184,
+                geojson: {
+                  type: "Feature",
+                  geometry: {
+                    type: "Point",
+                    coordinates: [4.84184, 45.74506],
                   },
                 },
-                modes: ["4"],
+                data: {
+                  _id: "5f6203bb0d5658001cd8f85b",
+                  key: "100050",
+                  name: "Lyon",
+                  keyMapping: {
+                    gid: "134",
+                    diva: {
+                      ojp: "50",
+                    },
+                  },
+                  loc: {
+                    name: "Lyon",
+                    omc: "23022212",
+                    placeId: "2",
+                    coord: null,
+                  },
+                  routes: [
+                    "ojp9101ZYHj20",
+                    "ojp9105LYHj20",
+                    "ojp9101ZYRj20",
+                    "ojp9105LYRj20",
+                  ],
+                  modes: ["4"],
+                },
               },
             ],
           },
@@ -101,7 +149,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.handleSendRequest("4");
+      result.current.handleSendRequest(["4"]);
     });
 
     await waitForNextUpdate();
@@ -120,7 +168,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.handleSendRequest("4");
+      result.current.handleSendRequest(["4"]);
     });
 
     await waitForNextUpdate();
@@ -138,7 +186,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.handleSendRequest("4");
+      result.current.handleSendRequest(["4"]);
     });
 
     await waitForNextUpdate();
@@ -149,7 +197,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.handleSendRequest("4");
+      result.current.handleSendRequest(["4"]);
     });
     await waitForNextUpdate();
 
@@ -165,7 +213,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.handleSendRequest("4");
+      result.current.handleSendRequest(["4"]);
     });
 
     await waitForNextUpdate();
@@ -182,7 +230,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.handleSendRequest("4");
+      result.current.handleSendRequest(["4"]);
     });
 
     await waitForNextUpdate();
@@ -212,7 +260,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.handleSendRequest("4");
+      result.current.handleSendRequest(["4"]);
     });
 
     await waitForNextUpdate();
@@ -242,7 +290,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.handleSendRequest("4");
+      result.current.handleSendRequest(["4"]);
     });
 
     await waitForNextUpdate();
@@ -273,7 +321,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.handleSendRequest("4");
+      result.current.handleSendRequest(["4"]);
     });
 
     await waitForNextUpdate();
@@ -342,7 +390,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     );
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
     act(() => {
-      result.current.handleSendRequest("4");
+      result.current.handleSendRequest(["4"]);
     });
 
     await waitForNextUpdate();
@@ -382,7 +430,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.handleSendRequest("4");
+      result.current.handleSendRequest(["4"]);
     });
 
     await waitForNextUpdate();
@@ -406,7 +454,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.handleSendRequest("4");
+      result.current.handleSendRequest(["4"]);
     });
 
     await waitForNextUpdate();
@@ -430,7 +478,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.handleSendRequest("4");
+      result.current.handleSendRequest(["4"]);
     });
 
     await waitForNextUpdate();
@@ -451,7 +499,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.handleSendRequest("4");
+      result.current.handleSendRequest(["4"]);
     });
 
     await waitForNextUpdate();
@@ -470,7 +518,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.handleSendRequest("4");
+      result.current.handleSendRequest(["4"]);
     });
 
     await waitForNextUpdate();
@@ -498,7 +546,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.handleSendRequest("4");
+      result.current.handleSendRequest(["4"]);
     });
 
     await waitForNextUpdate();
@@ -524,7 +572,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.handleSendRequest("4");
+      result.current.handleSendRequest(["4"]);
     });
 
     await waitForNextUpdate();
@@ -547,7 +595,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.handleSendRequest("4");
+      result.current.handleSendRequest(["4"]);
     });
 
     await waitForNextUpdate();
@@ -586,7 +634,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.handleSendRequest("4");
+      result.current.handleSendRequest(["4"]);
     });
 
     await waitForNextUpdate();

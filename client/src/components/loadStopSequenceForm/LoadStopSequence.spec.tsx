@@ -66,7 +66,7 @@ describe("LoadStopSequence component", () => {
 
     modeSelector.simulate("change", "4");
 
-    expect(onSendRequest).toHaveBeenCalledWith("4");
+    expect(onSendRequest).toHaveBeenCalledWith(["4"]);
   });
 
   it("Should dispatch the onClearAll props function when we choose the new button", () => {

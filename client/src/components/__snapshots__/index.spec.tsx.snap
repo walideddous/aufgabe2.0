@@ -185,6 +185,9 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                                                         onBlur={[Function]}
                                                         onChange={[Function]}
                                                         onFocus={[Function]}
+                                                        onKeyDown={[Function]}
+                                                        onKeyPress={[Function]}
+                                                        onKeyUp={[Function]}
                                                         prefixCls="ant-radio-button"
                                                         style={Object {}}
                                                         type="radio"
@@ -201,6 +204,9 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                                                             onBlur={[Function]}
                                                             onChange={[Function]}
                                                             onFocus={[Function]}
+                                                            onKeyDown={[Function]}
+                                                            onKeyPress={[Function]}
+                                                            onKeyUp={[Function]}
                                                             type="radio"
                                                             value="load"
                                                           />
@@ -237,6 +243,9 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                                                         onBlur={[Function]}
                                                         onChange={[Function]}
                                                         onFocus={[Function]}
+                                                        onKeyDown={[Function]}
+                                                        onKeyPress={[Function]}
+                                                        onKeyUp={[Function]}
                                                         prefixCls="ant-radio-button"
                                                         style={Object {}}
                                                         type="radio"
@@ -253,6 +262,9 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                                                             onBlur={[Function]}
                                                             onChange={[Function]}
                                                             onFocus={[Function]}
+                                                            onKeyDown={[Function]}
+                                                            onKeyPress={[Function]}
+                                                            onKeyUp={[Function]}
                                                             type="radio"
                                                             value="new"
                                                           />
@@ -1092,7 +1104,6 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                                                               role="img"
                                                             >
                                                               <IconReact
-                                                                className=""
                                                                 icon={
                                                                   Object {
                                                                     "icon": Object {
@@ -1117,7 +1128,6 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                                                               >
                                                                 <svg
                                                                   aria-hidden="true"
-                                                                  className=""
                                                                   data-icon="down"
                                                                   fill="currentColor"
                                                                   focusable="false"
@@ -1675,13 +1685,9 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                               }
                             >
                               <Button
-                                block={false}
                                 danger={true}
                                 disabled={true}
-                                ghost={false}
-                                htmlType="button"
                                 id="delete_stopSequence"
-                                loading={false}
                                 onClick={[Function]}
                                 type="primary"
                               >
@@ -1774,7 +1780,6 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                   >
                     <Collapse
                       activeKey="2"
-                      bordered={true}
                     >
                       <Collapse
                         accordion={false}
@@ -1784,11 +1789,21 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                         destroyInactivePanel={false}
                         expandIcon={[Function]}
                         onChange={[Function]}
-                        openAnimation={
+                        openMotion={
                           Object {
-                            "appear": [Function],
-                            "enter": [Function],
-                            "leave": [Function],
+                            "leavedClassName": "ant-collapse-content-hidden",
+                            "motionAppear": false,
+                            "motionDeadline": 500,
+                            "motionName": "ant-motion-collapse",
+                            "onAppearActive": [Function],
+                            "onAppearEnd": [Function],
+                            "onAppearStart": [Function],
+                            "onEnterActive": [Function],
+                            "onEnterEnd": [Function],
+                            "onEnterStart": [Function],
+                            "onLeaveActive": [Function],
+                            "onLeaveEnd": [Function],
+                            "onLeaveStart": [Function],
                           }
                         }
                         prefixCls="ant-collapse"
@@ -1805,11 +1820,21 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                             isActive={false}
                             key="1"
                             onItemClick={[Function]}
-                            openAnimation={
+                            openMotion={
                               Object {
-                                "appear": [Function],
-                                "enter": [Function],
-                                "leave": [Function],
+                                "leavedClassName": "ant-collapse-content-hidden",
+                                "motionAppear": false,
+                                "motionDeadline": 500,
+                                "motionName": "ant-motion-collapse",
+                                "onAppearActive": [Function],
+                                "onAppearEnd": [Function],
+                                "onAppearStart": [Function],
+                                "onEnterActive": [Function],
+                                "onEnterEnd": [Function],
+                                "onEnterStart": [Function],
+                                "onLeaveActive": [Function],
+                                "onLeaveEnd": [Function],
+                                "onLeaveStart": [Function],
                               }
                             }
                             panelKey="1"
@@ -1825,11 +1850,21 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                               headerClass=""
                               isActive={false}
                               onItemClick={[Function]}
-                              openAnimation={
+                              openMotion={
                                 Object {
-                                  "appear": [Function],
-                                  "enter": [Function],
-                                  "leave": [Function],
+                                  "leavedClassName": "ant-collapse-content-hidden",
+                                  "motionAppear": false,
+                                  "motionDeadline": 500,
+                                  "motionName": "ant-motion-collapse",
+                                  "onAppearActive": [Function],
+                                  "onAppearEnd": [Function],
+                                  "onAppearStart": [Function],
+                                  "onEnterActive": [Function],
+                                  "onEnterEnd": [Function],
+                                  "onEnterStart": [Function],
+                                  "onLeaveActive": [Function],
+                                  "onLeaveEnd": [Function],
+                                  "onLeaveStart": [Function],
                                 }
                               }
                               panelKey="1"
@@ -1840,7 +1875,7 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                                 className="ant-collapse-item"
                               >
                                 <div
-                                  aria-expanded="false"
+                                  aria-expanded={false}
                                   className="ant-collapse-header"
                                   onClick={[Function]}
                                   onKeyPress={[Function]}
@@ -1880,7 +1915,6 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                                         role="img"
                                       >
                                         <IconReact
-                                          className=""
                                           icon={
                                             Object {
                                               "icon": Object {
@@ -1905,7 +1939,6 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                                         >
                                           <svg
                                             aria-hidden="true"
-                                            className=""
                                             data-icon="right"
                                             fill="currentColor"
                                             focusable="false"
@@ -1925,49 +1958,34 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                                   </ForwardRef(RightOutlined)>
                                   Stop sequence save form
                                 </div>
-                                <Animate
-                                  animation={
-                                    Object {
-                                      "appear": [Function],
-                                      "enter": [Function],
-                                      "leave": [Function],
-                                    }
-                                  }
-                                  component=""
-                                  componentProps={Object {}}
-                                  exclusive={true}
-                                  onAppear={[Function]}
-                                  onEnd={[Function]}
-                                  onEnter={[Function]}
-                                  onLeave={[Function]}
-                                  showProp="isActive"
-                                  transitionAppear={false}
-                                  transitionEnter={true}
-                                  transitionLeave={true}
+                                <CSSMotion
+                                  forceRender={false}
+                                  leavedClassName="ant-collapse-content-hidden"
+                                  motionAppear={false}
+                                  motionDeadline={500}
+                                  motionName="ant-motion-collapse"
+                                  onAppearActive={[Function]}
+                                  onAppearEnd={[Function]}
+                                  onAppearStart={[Function]}
+                                  onEnterActive={[Function]}
+                                  onEnterEnd={[Function]}
+                                  onEnterStart={[Function]}
+                                  onLeaveActive={[Function]}
+                                  onLeaveEnd={[Function]}
+                                  onLeaveStart={[Function]}
+                                  removeOnLeave={false}
+                                  visible={false}
                                 >
-                                  <AnimateChild
-                                    animation={
-                                      Object {
-                                        "appear": [Function],
-                                        "enter": [Function],
-                                        "leave": [Function],
-                                      }
-                                    }
-                                    key="rc_animate_1607676593972"
-                                    transitionAppear={false}
-                                    transitionEnter={true}
-                                    transitionLeave={true}
-                                  >
+                                  <DomWrapper>
                                     <PanelContent
-                                      destroyInactivePanel={false}
+                                      className="ant-collapse-content-hidden"
                                       forceRender={false}
                                       isActive={false}
-                                      key="rc_animate_1607676593972"
                                       prefixCls="ant-collapse"
                                       role={null}
                                     />
-                                  </AnimateChild>
-                                </Animate>
+                                  </DomWrapper>
+                                </CSSMotion>
                               </div>
                             </CollapsePanel>
                           </CollapsePanel>

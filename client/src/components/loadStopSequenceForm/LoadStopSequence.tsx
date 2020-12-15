@@ -5,7 +5,7 @@ interface TLoadStopSequence {
   stopSequenceList: any;
   currentStopSequence: any;
   onLoadMode: (value: boolean) => void;
-  onSendRequest: (modes: string) => void;
+  onSendRequest: (modes: string[]) => void;
   onUpdateAfterSave: () => void;
   onClearAll: () => void;
   onDeleteStopSequence: (id: string) => void;
@@ -35,7 +35,7 @@ const LoadStopSequence = ({
   const handleModeChange = useCallback(
     (value: any) => {
       if (value !== "Choose mode ") {
-        onSendRequest(value + "");
+        onSendRequest([value + ""]);
         setSelectValue(value + "");
       }
     },

@@ -137,13 +137,9 @@ exports[`LoadStopSequence component Should match the LoadStopSequence component 
       }
     >
       <Button
-        block={false}
         danger={true}
         disabled={true}
-        ghost={false}
-        htmlType="button"
         id="delete_stopSequence"
-        loading={false}
         onClick={[Function]}
         type="primary"
       >

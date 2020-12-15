@@ -466,7 +466,6 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                                     }
                                   >
                                     <IconReact
-                                      className=""
                                       icon={
                                         Object {
                                           "icon": Object {
@@ -491,7 +490,6 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                                     >
                                       <svg
                                         aria-hidden="true"
-                                        className=""
                                         data-icon="arrow-up"
                                         fill="currentColor"
                                         focusable="false"
@@ -593,7 +591,6 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                                     }
                                   >
                                     <IconReact
-                                      className=""
                                       icon={
                                         Object {
                                           "icon": Object {
@@ -618,7 +615,6 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                                     >
                                       <svg
                                         aria-hidden="true"
-                                        className=""
                                         data-icon="arrow-up"
                                         fill="currentColor"
                                         focusable="false"
@@ -720,7 +716,6 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                                     }
                                   >
                                     <IconReact
-                                      className=""
                                       icon={
                                         Object {
                                           "icon": Object {
@@ -745,7 +740,6 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                                     >
                                       <svg
                                         aria-hidden="true"
-                                        className=""
                                         data-icon="arrow-up"
                                         fill="currentColor"
                                         focusable="false"
@@ -847,7 +841,6 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                                     }
                                   >
                                     <IconReact
-                                      className=""
                                       icon={
                                         Object {
                                           "icon": Object {
@@ -872,7 +865,6 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                                     >
                                       <svg
                                         aria-hidden="true"
-                                        className=""
                                         data-icon="arrow-up"
                                         fill="currentColor"
                                         focusable="false"
@@ -974,7 +966,6 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                                     }
                                   >
                                     <IconReact
-                                      className=""
                                       icon={
                                         Object {
                                           "icon": Object {
@@ -999,7 +990,6 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                                     >
                                       <svg
                                         aria-hidden="true"
-                                        className=""
                                         data-icon="arrow-up"
                                         fill="currentColor"
                                         focusable="false"
@@ -1101,7 +1091,6 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                                     }
                                   >
                                     <IconReact
-                                      className=""
                                       icon={
                                         Object {
                                           "icon": Object {
@@ -1126,7 +1115,6 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                                     >
                                       <svg
                                         aria-hidden="true"
-                                        className=""
                                         data-icon="arrow-up"
                                         fill="currentColor"
                                         focusable="false"
@@ -1228,7 +1216,6 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                                     }
                                   >
                                     <IconReact
-                                      className=""
                                       icon={
                                         Object {
                                           "icon": Object {
@@ -1253,7 +1240,6 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                                     >
                                       <svg
                                         aria-hidden="true"
-                                        className=""
                                         data-icon="arrow-up"
                                         fill="currentColor"
                                         focusable="false"
@@ -1355,7 +1341,6 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                                     }
                                   >
                                     <IconReact
-                                      className=""
                                       icon={
                                         Object {
                                           "icon": Object {
@@ -1380,7 +1365,6 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                                     >
                                       <svg
                                         aria-hidden="true"
-                                        className=""
                                         data-icon="arrow-up"
                                         fill="currentColor"
                                         focusable="false"
@@ -1495,7 +1479,6 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                                     }
                                   >
                                     <IconReact
-                                      className=""
                                       icon={
                                         Object {
                                           "icon": Object {
@@ -1520,7 +1503,6 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                                     >
                                       <svg
                                         aria-hidden="true"
-                                        className=""
                                         data-icon="arrow-up"
                                         fill="currentColor"
                                         focusable="false"
@@ -1622,7 +1604,6 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                                     }
                                   >
                                     <IconReact
-                                      className=""
                                       icon={
                                         Object {
                                           "icon": Object {
@@ -1647,7 +1628,6 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                                     >
                                       <svg
                                         aria-hidden="true"
-                                        className=""
                                         data-icon="arrow-up"
                                         fill="currentColor"
                                         focusable="false"
@@ -1749,7 +1729,6 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                                     }
                                   >
                                     <IconReact
-                                      className=""
                                       icon={
                                         Object {
                                           "icon": Object {
@@ -1774,7 +1753,6 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                                     >
                                       <svg
                                         aria-hidden="true"
-                                        className=""
                                         data-icon="arrow-up"
                                         fill="currentColor"
                                         focusable="false"
@@ -1876,7 +1854,6 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                                     }
                                   >
                                     <IconReact
-                                      className=""
                                       icon={
                                         Object {
                                           "icon": Object {
@@ -1901,7 +1878,6 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                                     >
                                       <svg
                                         aria-hidden="true"
-                                        className=""
                                         data-icon="arrow-up"
                                         fill="currentColor"
                                         focusable="false"
@@ -2003,7 +1979,6 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                                     }
                                   >
                                     <IconReact
-                                      className=""
                                       icon={
                                         Object {
                                           "icon": Object {
@@ -2028,7 +2003,6 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                                     >
                                       <svg
                                         aria-hidden="true"
-                                        className=""
                                         data-icon="arrow-up"
                                         fill="currentColor"
                                         focusable="false"
@@ -2130,7 +2104,6 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                                     }
                                   >
                                     <IconReact
-                                      className=""
                                       icon={
                                         Object {
                                           "icon": Object {
@@ -2155,7 +2128,6 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                                     >
                                       <svg
                                         aria-hidden="true"
-                                        className=""
                                         data-icon="arrow-up"
                                         fill="currentColor"
                                         focusable="false"
@@ -2257,7 +2229,6 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                                     }
                                   >
                                     <IconReact
-                                      className=""
                                       icon={
                                         Object {
                                           "icon": Object {
@@ -2282,7 +2253,6 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                                     >
                                       <svg
                                         aria-hidden="true"
-                                        className=""
                                         data-icon="arrow-up"
                                         fill="currentColor"
                                         focusable="false"
@@ -2384,7 +2354,6 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                                     }
                                   >
                                     <IconReact
-                                      className=""
                                       icon={
                                         Object {
                                           "icon": Object {
@@ -2409,7 +2378,6 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                                     >
                                       <svg
                                         aria-hidden="true"
-                                        className=""
                                         data-icon="arrow-up"
                                         fill="currentColor"
                                         focusable="false"
@@ -2450,11 +2418,7 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
         <Card
           extra={
             <ForwardRef(InternalButton)
-              block={false}
-              ghost={false}
-              htmlType="button"
               id="clearAll_button"
-              loading={false}
               onClick={[Function]}
             >
               Reset
@@ -2481,11 +2445,7 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                   className="ant-card-extra"
                 >
                   <Button
-                    block={false}
-                    ghost={false}
-                    htmlType="button"
                     id="clearAll_button"
-                    loading={false}
                     onClick={[Function]}
                   >
                     <Wave>
@@ -2609,7 +2569,6 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                                 role="img"
                               >
                                 <IconReact
-                                  className=""
                                   icon={
                                     Object {
                                       "icon": Object {
@@ -2634,7 +2593,6 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                                 >
                                   <svg
                                     aria-hidden="true"
-                                    className=""
                                     data-icon="delete"
                                     fill="currentColor"
                                     focusable="false"

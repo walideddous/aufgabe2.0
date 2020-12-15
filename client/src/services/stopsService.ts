@@ -12,7 +12,7 @@ import {
     },
   });
 
-const getStopsByMode =  async (modes:string )=> {
+const getStopsByMode =  async (modes:string[] )=> {
     const response = await authAxios.post("/graphql", {
         query: GET_STOPS_BY_MODES(modes),
       });

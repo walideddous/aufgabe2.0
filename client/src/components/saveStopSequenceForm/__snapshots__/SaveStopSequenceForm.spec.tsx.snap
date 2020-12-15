@@ -320,7 +320,6 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
       >
         <Collapse
           activeKey="1"
-          bordered={true}
         >
           <Collapse
             accordion={false}
@@ -330,11 +329,21 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
             destroyInactivePanel={false}
             expandIcon={[Function]}
             onChange={[Function]}
-            openAnimation={
+            openMotion={
               Object {
-                "appear": [Function],
-                "enter": [Function],
-                "leave": [Function],
+                "leavedClassName": "ant-collapse-content-hidden",
+                "motionAppear": false,
+                "motionDeadline": 500,
+                "motionName": "ant-motion-collapse",
+                "onAppearActive": [Function],
+                "onAppearEnd": [Function],
+                "onAppearStart": [Function],
+                "onEnterActive": [Function],
+                "onEnterEnd": [Function],
+                "onEnterStart": [Function],
+                "onLeaveActive": [Function],
+                "onLeaveEnd": [Function],
+                "onLeaveStart": [Function],
               }
             }
             prefixCls="ant-collapse"
@@ -351,11 +360,21 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                 isActive={true}
                 key="1"
                 onItemClick={[Function]}
-                openAnimation={
+                openMotion={
                   Object {
-                    "appear": [Function],
-                    "enter": [Function],
-                    "leave": [Function],
+                    "leavedClassName": "ant-collapse-content-hidden",
+                    "motionAppear": false,
+                    "motionDeadline": 500,
+                    "motionName": "ant-motion-collapse",
+                    "onAppearActive": [Function],
+                    "onAppearEnd": [Function],
+                    "onAppearStart": [Function],
+                    "onEnterActive": [Function],
+                    "onEnterEnd": [Function],
+                    "onEnterStart": [Function],
+                    "onLeaveActive": [Function],
+                    "onLeaveEnd": [Function],
+                    "onLeaveStart": [Function],
                   }
                 }
                 panelKey="1"
@@ -371,11 +390,21 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                   headerClass=""
                   isActive={true}
                   onItemClick={[Function]}
-                  openAnimation={
+                  openMotion={
                     Object {
-                      "appear": [Function],
-                      "enter": [Function],
-                      "leave": [Function],
+                      "leavedClassName": "ant-collapse-content-hidden",
+                      "motionAppear": false,
+                      "motionDeadline": 500,
+                      "motionName": "ant-motion-collapse",
+                      "onAppearActive": [Function],
+                      "onAppearEnd": [Function],
+                      "onAppearStart": [Function],
+                      "onEnterActive": [Function],
+                      "onEnterEnd": [Function],
+                      "onEnterStart": [Function],
+                      "onLeaveActive": [Function],
+                      "onLeaveEnd": [Function],
+                      "onLeaveStart": [Function],
                     }
                   }
                   panelKey="1"
@@ -386,7 +415,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                     className="ant-collapse-item ant-collapse-item-active"
                   >
                     <div
-                      aria-expanded="true"
+                      aria-expanded={true}
                       className="ant-collapse-header"
                       onClick={[Function]}
                       onKeyPress={[Function]}
@@ -428,7 +457,6 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                             role="img"
                           >
                             <IconReact
-                              className=""
                               icon={
                                 Object {
                                   "icon": Object {
@@ -459,7 +487,6 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                             >
                               <svg
                                 aria-hidden="true"
-                                className=""
                                 data-icon="right"
                                 fill="currentColor"
                                 focusable="false"
@@ -485,44 +512,28 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                       </ForwardRef(RightOutlined)>
                       Stop sequence save form
                     </div>
-                    <Animate
-                      animation={
-                        Object {
-                          "appear": [Function],
-                          "enter": [Function],
-                          "leave": [Function],
-                        }
-                      }
-                      component=""
-                      componentProps={Object {}}
-                      exclusive={true}
-                      onAppear={[Function]}
-                      onEnd={[Function]}
-                      onEnter={[Function]}
-                      onLeave={[Function]}
-                      showProp="isActive"
-                      transitionAppear={false}
-                      transitionEnter={true}
-                      transitionLeave={true}
+                    <CSSMotion
+                      forceRender={false}
+                      leavedClassName="ant-collapse-content-hidden"
+                      motionAppear={false}
+                      motionDeadline={500}
+                      motionName="ant-motion-collapse"
+                      onAppearActive={[Function]}
+                      onAppearEnd={[Function]}
+                      onAppearStart={[Function]}
+                      onEnterActive={[Function]}
+                      onEnterEnd={[Function]}
+                      onEnterStart={[Function]}
+                      onLeaveActive={[Function]}
+                      onLeaveEnd={[Function]}
+                      onLeaveStart={[Function]}
+                      removeOnLeave={false}
+                      visible={true}
                     >
-                      <AnimateChild
-                        animation={
-                          Object {
-                            "appear": [Function],
-                            "enter": [Function],
-                            "leave": [Function],
-                          }
-                        }
-                        key="rc_animate_1607676593815"
-                        transitionAppear={false}
-                        transitionEnter={true}
-                        transitionLeave={true}
-                      >
+                      <DomWrapper>
                         <PanelContent
-                          destroyInactivePanel={false}
                           forceRender={false}
                           isActive={true}
-                          key="rc_animate_1607676593815"
                           prefixCls="ant-collapse"
                           role={null}
                         >
@@ -856,7 +867,6 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                                           tabIndex={-1}
                                                                         >
                                                                           <IconReact
-                                                                            className=""
                                                                             icon={
                                                                               Object {
                                                                                 "icon": Object {
@@ -881,7 +891,6 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                                           >
                                                                             <svg
                                                                               aria-hidden="true"
-                                                                              className=""
                                                                               data-icon="close-circle"
                                                                               fill="currentColor"
                                                                               focusable="false"
@@ -937,11 +946,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                         }
                                       >
                                         <Button
-                                          block={false}
-                                          ghost={false}
-                                          htmlType="button"
                                           id="addSchedule_button"
-                                          loading={false}
                                           onClick={[Function]}
                                           type="primary"
                                         >
@@ -982,7 +987,6 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                       </div>
                                       <Collapse
                                         activeKey=""
-                                        bordered={true}
                                       >
                                         <Collapse
                                           accordion={false}
@@ -992,11 +996,21 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                           destroyInactivePanel={false}
                                           expandIcon={[Function]}
                                           onChange={[Function]}
-                                          openAnimation={
+                                          openMotion={
                                             Object {
-                                              "appear": [Function],
-                                              "enter": [Function],
-                                              "leave": [Function],
+                                              "leavedClassName": "ant-collapse-content-hidden",
+                                              "motionAppear": false,
+                                              "motionDeadline": 500,
+                                              "motionName": "ant-motion-collapse",
+                                              "onAppearActive": [Function],
+                                              "onAppearEnd": [Function],
+                                              "onAppearStart": [Function],
+                                              "onEnterActive": [Function],
+                                              "onEnterEnd": [Function],
+                                              "onEnterStart": [Function],
+                                              "onLeaveActive": [Function],
+                                              "onLeaveEnd": [Function],
+                                              "onLeaveStart": [Function],
                                             }
                                           }
                                           prefixCls="ant-collapse"
@@ -1013,11 +1027,21 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                               isActive={false}
                                               key="2"
                                               onItemClick={[Function]}
-                                              openAnimation={
+                                              openMotion={
                                                 Object {
-                                                  "appear": [Function],
-                                                  "enter": [Function],
-                                                  "leave": [Function],
+                                                  "leavedClassName": "ant-collapse-content-hidden",
+                                                  "motionAppear": false,
+                                                  "motionDeadline": 500,
+                                                  "motionName": "ant-motion-collapse",
+                                                  "onAppearActive": [Function],
+                                                  "onAppearEnd": [Function],
+                                                  "onAppearStart": [Function],
+                                                  "onEnterActive": [Function],
+                                                  "onEnterEnd": [Function],
+                                                  "onEnterStart": [Function],
+                                                  "onLeaveActive": [Function],
+                                                  "onLeaveEnd": [Function],
+                                                  "onLeaveStart": [Function],
                                                 }
                                               }
                                               panelKey="2"
@@ -1033,11 +1057,21 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                 headerClass=""
                                                 isActive={false}
                                                 onItemClick={[Function]}
-                                                openAnimation={
+                                                openMotion={
                                                   Object {
-                                                    "appear": [Function],
-                                                    "enter": [Function],
-                                                    "leave": [Function],
+                                                    "leavedClassName": "ant-collapse-content-hidden",
+                                                    "motionAppear": false,
+                                                    "motionDeadline": 500,
+                                                    "motionName": "ant-motion-collapse",
+                                                    "onAppearActive": [Function],
+                                                    "onAppearEnd": [Function],
+                                                    "onAppearStart": [Function],
+                                                    "onEnterActive": [Function],
+                                                    "onEnterEnd": [Function],
+                                                    "onEnterStart": [Function],
+                                                    "onLeaveActive": [Function],
+                                                    "onLeaveEnd": [Function],
+                                                    "onLeaveStart": [Function],
                                                   }
                                                 }
                                                 panelKey="2"
@@ -1048,7 +1082,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                   className="ant-collapse-item"
                                                 >
                                                   <div
-                                                    aria-expanded="false"
+                                                    aria-expanded={false}
                                                     className="ant-collapse-header"
                                                     onClick={[Function]}
                                                     onKeyPress={[Function]}
@@ -1088,7 +1122,6 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                           role="img"
                                                         >
                                                           <IconReact
-                                                            className=""
                                                             icon={
                                                               Object {
                                                                 "icon": Object {
@@ -1113,7 +1146,6 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                           >
                                                             <svg
                                                               aria-hidden="true"
-                                                              className=""
                                                               data-icon="right"
                                                               fill="currentColor"
                                                               focusable="false"
@@ -1133,49 +1165,34 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                     </ForwardRef(RightOutlined)>
                                                     Stop sequence schedule
                                                   </div>
-                                                  <Animate
-                                                    animation={
-                                                      Object {
-                                                        "appear": [Function],
-                                                        "enter": [Function],
-                                                        "leave": [Function],
-                                                      }
-                                                    }
-                                                    component=""
-                                                    componentProps={Object {}}
-                                                    exclusive={true}
-                                                    onAppear={[Function]}
-                                                    onEnd={[Function]}
-                                                    onEnter={[Function]}
-                                                    onLeave={[Function]}
-                                                    showProp="isActive"
-                                                    transitionAppear={false}
-                                                    transitionEnter={true}
-                                                    transitionLeave={true}
+                                                  <CSSMotion
+                                                    forceRender={false}
+                                                    leavedClassName="ant-collapse-content-hidden"
+                                                    motionAppear={false}
+                                                    motionDeadline={500}
+                                                    motionName="ant-motion-collapse"
+                                                    onAppearActive={[Function]}
+                                                    onAppearEnd={[Function]}
+                                                    onAppearStart={[Function]}
+                                                    onEnterActive={[Function]}
+                                                    onEnterEnd={[Function]}
+                                                    onEnterStart={[Function]}
+                                                    onLeaveActive={[Function]}
+                                                    onLeaveEnd={[Function]}
+                                                    onLeaveStart={[Function]}
+                                                    removeOnLeave={false}
+                                                    visible={false}
                                                   >
-                                                    <AnimateChild
-                                                      animation={
-                                                        Object {
-                                                          "appear": [Function],
-                                                          "enter": [Function],
-                                                          "leave": [Function],
-                                                        }
-                                                      }
-                                                      key="rc_animate_1607676593815"
-                                                      transitionAppear={false}
-                                                      transitionEnter={true}
-                                                      transitionLeave={true}
-                                                    >
+                                                    <DomWrapper>
                                                       <PanelContent
-                                                        destroyInactivePanel={false}
+                                                        className="ant-collapse-content-hidden"
                                                         forceRender={false}
                                                         isActive={false}
-                                                        key="rc_animate_1607676593815"
                                                         prefixCls="ant-collapse"
                                                         role={null}
                                                       />
-                                                    </AnimateChild>
-                                                  </Animate>
+                                                    </DomWrapper>
+                                                  </CSSMotion>
                                                 </div>
                                               </CollapsePanel>
                                             </CollapsePanel>
@@ -1189,8 +1206,8 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                             </div>
                           </div>
                         </PanelContent>
-                      </AnimateChild>
-                    </Animate>
+                      </DomWrapper>
+                    </CSSMotion>
                   </div>
                 </CollapsePanel>
               </CollapsePanel>

@@ -8,6 +8,9 @@ import { TstateDND, Tstations, Tdistance } from "../types/types";
 // Get the property from Utils
 import { getProperty } from "../utils/getPropertyKey";
 
+// Import function to format the PTStopItems => variable that comm from the GraphQl query 
+import {formatPTStopItems } from "../utils/formatPTStopItems"
+
 // get the function to compare the distance between a point fix and a banch of punkt
 import { calculateDistanceAndSort } from "../utils/getDistanceFromLatLonInKm";
 
@@ -37,9 +40,11 @@ export default function useIndexHooks() {
   const [stopSequenceList, setStopSequenceList] = useState([]);
   const [savedStopSequence, setSavedStopSequence] = useState([]);
   const [updateDate, setUpdateDate] = useState<string>("");
-  const [currentMode, setCurrentMode] = useState<string>("");
+  const [currentMode, setCurrentMode] = useState<string[]>([]);
   const [currentStopSequence, setCurrentStopSequence] = useState({});
   const [loadStopSequenceSection, setLoadStopSequenceSection] = useState<boolean>(true);
+
+  console.log("stations",stations)
 
   // set the mode Load or New
   const handleLoadMode = useCallback((value: boolean) => {
@@ -67,15 +72,19 @@ export default function useIndexHooks() {
       try {
         console.log("start fetching");
         // Stops
+
         const stops = await getStopsByMode(modes);
         //StopSequence
-        const stopSequence = await queryStopSequenceRequest(modes);
+        const stopSequence  = await queryStopSequenceRequest(modes);
 
         console.log("end fetching");
+        // 
         if (Object.keys(stops).length || Object.keys(stopSequence).length) {
-          const { haltestelleByMode } = stops.data.data;
+          const { PTStopItems } = stops.data.data;
+          const stopsByMode = formatPTStopItems(PTStopItems)
           const { stopSequenceByMode } = stopSequence.data.data;
-          setStations(haltestelleByMode);
+
+          setStations(stopsByMode);
           setStopSequenceList(stopSequenceByMode);
           setCurrentMode(modes);
           setUpdateDate(Date().toString().substr(4, 24));
@@ -628,7 +637,6 @@ export default function useIndexHooks() {
         if (!Object.keys(result).length) {
           console.error("Couldn't save the stop sequence");
         }
-        console.log(result.data.msg);
         if (result.data.msg) {
           console.log("Stop sequence succesfully saved");
           message.success(`Stop sequence succesfully ${result.data.msg}`);
