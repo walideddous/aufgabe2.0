@@ -44,8 +44,6 @@ export default function useIndexHooks() {
   const [currentStopSequence, setCurrentStopSequence] = useState({});
   const [loadStopSequenceSection, setLoadStopSequenceSection] = useState<boolean>(true);
 
-  console.log("stations",stations)
-
   // set the mode Load or New
   const handleLoadMode = useCallback((value: boolean) => {
     setLoadStopSequenceSection(value);
@@ -82,10 +80,11 @@ export default function useIndexHooks() {
         if (Object.keys(stops).length || Object.keys(stopSequence).length) {
           const { PTStopItems } = stops.data.data;
           const stopsByMode = formatPTStopItems(PTStopItems)
-          const { stopSequenceByMode } = stopSequence.data.data;
+          const { RouteManagerItems } = stopSequence.data.data;
+
 
           setStations(stopsByMode);
-          setStopSequenceList(stopSequenceByMode);
+          setStopSequenceList(RouteManagerItems);
           setCurrentMode(modes);
           setUpdateDate(Date().toString().substr(4, 24));
         } else {
@@ -632,14 +631,15 @@ export default function useIndexHooks() {
       setIsSending(true);
       // send the actual request
       try {
-        // REST_API
+        // GraphQl
         const result = await saveStopSequenceRequest(body);
         if (!Object.keys(result).length) {
           console.error("Couldn't save the stop sequence");
         }
-        if (result.data.msg) {
+        const {RouteManagerAdd} = result.data.data
+        if (RouteManagerAdd) {
           console.log("Stop sequence succesfully saved");
-          message.success(`Stop sequence succesfully ${result.data.msg}`);
+          message.success(`Stop sequence succesfully`);
           // Set the state of stopSequence List
           setSavedStopSequence((prev) => {
             return prev.concat({ ...body });
@@ -691,13 +691,15 @@ export default function useIndexHooks() {
       // send the actual request
       try {
         console.log("delete the stop sequence");
-        // REST_API
+        // GraphQL
         const result = await deleteStopSequenceRequest(id);
         if (!Object.keys(result).length) {
           console.error("Couldn't delete the Stop sequence");
         }
-        if (result.data.msg) {
-          message.success(result.data.msg);
+
+        const {RouteManagerDelete} = result.data.data
+        if (RouteManagerDelete) {
+          message.success(`Stop sequence deleted succesfuly`);
           // Set the state of stopSequence List
           setStopSequenceList((prev) => {
             return prev.filter((el: any) => el._id !== id);

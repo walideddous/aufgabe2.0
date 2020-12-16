@@ -1,24 +1,25 @@
 import axios from "axios";
-import {  GET_STOP_SEQUENCE_BY_MODES } from "../config/config";
+import {GRAPHQL_API,  GET_STOP_SEQUENCE_BY_MODES, SAVE_STOP_SEQUENCE_BY_MODES, DELETE_STOP_SEQUENCE_BY_MODES } from "../config/config";
 
 const authAxios = axios.create({
-  baseURL: "http://ems-dev.m.mdv:8101",
-  headers: {
-    authorization: "Bearer " + process.env.REACT_APP_JSON_SECRET_KEY,
-  },
+  baseURL: GRAPHQL_API,
 });
-const queryStopSequenceRequest = async (modes: string) => {
+const queryStopSequenceRequest = async (modes: string[]) => {
   const response = await authAxios.post("/graphql", {
     query: GET_STOP_SEQUENCE_BY_MODES(modes),
   });
   return response;
 };
 const saveStopSequenceRequest = async (body: any) => {
-  const response = await authAxios.put("/savedStopSequence", body);
+  const response = await authAxios.post("/graphql", {
+    query: SAVE_STOP_SEQUENCE_BY_MODES(body),
+  });
   return response;
 };
 const deleteStopSequenceRequest = async (id: string) => {
-  const response = await authAxios.delete(`/savedStopSequence/${id}`);
+  const response = await authAxios.post("/graphql", {
+    query: DELETE_STOP_SEQUENCE_BY_MODES(id),
+  });
   return response;
 };
 

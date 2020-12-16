@@ -53,7 +53,7 @@ describe("Test the stopSequenceService", () => {
     expect(result.data.msg).toEqual("StopSequence successly deleted");
   });
   it("Should Query stop sequence by mode", async () => {
-    const result = await queryStopSequenceRequest("4");
+    const result = await queryStopSequenceRequest(["4"]);
     expect(result.data.msg).toEqual("StopSequence succesfully queried");
   });
 });
