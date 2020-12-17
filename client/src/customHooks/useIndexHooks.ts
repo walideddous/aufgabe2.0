@@ -82,7 +82,6 @@ export default function useIndexHooks() {
           const stopsByMode = formatPTStopItems(PTStopItems)
           const { RouteManagerItems } = stopSequence.data.data;
 
-
           setStations(stopsByMode);
           setStopSequenceList(RouteManagerItems);
           setCurrentMode(modes);

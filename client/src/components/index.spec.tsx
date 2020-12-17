@@ -130,7 +130,9 @@ describe("Test the customHooks of the /components/index.tsx", () => {
       Promise.resolve({
         data: {
           data: {
-            stopSequenceByMode: [{ _id: "1", name: "St. Gallen to Zürich HB" }],
+            RouteManagerItems: [
+              { _id: "1", name: "St. Gallen to Zürich HB", modes: ["4"] },
+            ],
           },
         },
       })
@@ -155,6 +157,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     await waitForNextUpdate();
 
     expect(result.current.stations.length).toBe(2);
+
     expect(result.current.stopSequenceList.length).toBe(1);
   });
 
@@ -384,7 +387,9 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     deleteStopSequenceRequest.mockImplementation(() =>
       Promise.resolve({
         data: {
-          msg: "deleted successfully",
+          data: {
+            RouteManagerDelete: 1,
+          },
         },
       })
     );
@@ -422,7 +427,9 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     saveStopSequenceRequest.mockImplementation(() =>
       Promise.resolve({
         data: {
-          msg: "succesfuly saved",
+          data: {
+            RouteManagerAdd: 1,
+          },
         },
       })
     );
@@ -538,7 +545,9 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     saveStopSequenceRequest.mockImplementation(() =>
       Promise.resolve({
         data: {
-          msg: "succesfuly saved",
+          data: {
+            RouteManagerAdd: 1,
+          },
         },
       })
     );

@@ -1,27 +1,17 @@
 import { rest } from "msw";
 import { setupServer } from "msw/node";
+
+import {GRAPHQL_API} from "../config/config"
 import {
   saveStopSequenceRequest,
   deleteStopSequenceRequest,
   queryStopSequenceRequest,
 } from "./stopSequenceService";
+import{currentStopSequence } from "../testUtils/testData"
 
 const serverCreate = setupServer(
-  rest.put("http://ems-dev.m.mdv:8101/savedStopSequence", (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json({ msg: "StopSequence successly created" }));
-  }),
-  rest.delete("http://ems-dev.m.mdv:8101/savedStopSequence/:savedStopSequenceID", (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json({ msg: "StopSequence successly deleted" }));
-  }),
-  rest.post("http://ems-dev.m.mdv:8101/graphql",(req,res,ctx)=>{
+  rest.post(`${GRAPHQL_API}/graphql`,(req,res,ctx)=>{
     return res(ctx.status(200), ctx.json({ msg: "StopSequence succesfully queried" }));
-  }),
-  rest.put("*", (req, res, ctx) => {
-    console.error(`Please add request handler for ${req.url.toString()}`);
-    return res(
-      ctx.status(500),
-      ctx.json({ error: "You must add request handler." })
-    );
   }),
   rest.post("*", (req, res, ctx) => {
     console.error(`Please add request handler for ${req.url.toString()}`);
@@ -30,13 +20,6 @@ const serverCreate = setupServer(
       ctx.json({ error: "You must add request handler." })
     );
   }),
-  rest.delete("*", (req, res, ctx) => {
-    console.error(`Please add request handler for ${req.url.toString()}`);
-    return res(
-      ctx.status(500),
-      ctx.json({ error: "You must add request handler." })
-    );
-  })
 );
 
 describe("Test the stopSequenceService", () => {
@@ -44,16 +27,16 @@ describe("Test the stopSequenceService", () => {
   afterAll(() => serverCreate.close());
   afterEach(() => serverCreate.resetHandlers());
 
-  it("Should save stopSequence by mode", async () => {
-    const result = await saveStopSequenceRequest("4");
-    expect(result.data.msg).toEqual("StopSequence successly created");
-  });
-  it("Should delete stopSequence byID", async () => {
-    const result = await deleteStopSequenceRequest("1");
-    expect(result.data.msg).toEqual("StopSequence successly deleted");
-  });
-  it("Should Query stop sequence by mode", async () => {
+  it("Should test the fetch stopSequence GraphQL query", async () => {
     const result = await queryStopSequenceRequest(["4"]);
+    expect(result.data.msg).toEqual("StopSequence succesfully queried");
+  });
+  it("Should test the save stopSequence GraphQL query", async () => {
+    const result = await saveStopSequenceRequest(currentStopSequence);
+    expect(result.data.msg).toEqual("StopSequence succesfully queried");
+  });
+  it("Should test the delete stopSequence GraphQL query", async () => {
+    const result = await deleteStopSequenceRequest("4");
     expect(result.data.msg).toEqual("StopSequence succesfully queried");
   });
 });

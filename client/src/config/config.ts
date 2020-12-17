@@ -42,8 +42,42 @@ export const GET_STOP_SEQUENCE_BY_MODES = (modes: string[] ) => {
 }
 
 export const SAVE_STOP_SEQUENCE_BY_MODES = (input:any) => {
-  return `mutation{RouteManagerAdd(input:"${input}")
-  }`
+  return `mutation{RouteManagerAdd(input:{
+    _id:"${input._id}"
+    name:"${input.name}"
+    schedule: [${input.schedule.map((el:any)=>(
+      `
+      {
+      date: "${el.date}"
+      dayTime: [${el.dayTime.map((el:any)=>(
+          `
+          {
+            day: [${el.day.map((el:any)=>(`"${el}"`))}]
+            time: ["${el.time[0]}","${el.time[1]}"]
+          }
+           `
+        ))} 
+      ]
+      } `
+    ))}
+  ]
+    modes: ["${input.modes}"]
+    stopSequence: [${input.stopSequence.map((el:any)=>(
+      `
+      {
+        _id: "${el._id}"
+        name: "${el.name}"
+        modes: [${el.modes.map((el:any)=>(`"${el}"`))}]
+        coord: {
+          WGS84:{
+            lat: ${el.coord.WGS84.lat}
+            lon: ${el.coord.WGS84.lon}
+          }
+        }
+      }
+      `
+    ))}]
+  })}`
 }
 
 export const DELETE_STOP_SEQUENCE_BY_MODES = (id:string) => {

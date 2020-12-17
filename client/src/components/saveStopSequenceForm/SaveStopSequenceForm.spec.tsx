@@ -23,7 +23,7 @@ const setUp = (props: any) => {
 
 describe("SaveStopSequenceForm component", () => {
   let mountWrapper: any;
-  const spyOnConsoleWarn = jest.spyOn(console, "warn").mockImplementation();
+  const spyOnConsoleError = jest.spyOn(console, "error").mockImplementation();
   const onSaveStopSequence = jest.fn();
 
   beforeEach(() => {
@@ -97,7 +97,9 @@ describe("SaveStopSequenceForm component", () => {
       e.preventDefault();
     });
 
-    expect(spyOnConsoleWarn).toHaveBeenCalled();
+    const divError = mountWrapper.find('[role="alert"]').at(0);
+
+    expect(divError).toBeTruthy();
   });
 
   it("Should save information after click on the save stopSequence button", () => {
