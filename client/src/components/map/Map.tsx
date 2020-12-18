@@ -10,6 +10,7 @@ import * as L from "leaflet";
 import SearchInput from "../search/SearchInput";
 // Import leaflet markerCluster
 import "leaflet.markercluster";
+import "./styles.min.css";
 
 // Import leaflet context menu
 import "leaflet-contextmenu";
