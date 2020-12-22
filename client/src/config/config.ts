@@ -42,7 +42,7 @@ export const GET_STOP_SEQUENCE_BY_MODES = (modes: string[] ) => {
 }
 
 export const SAVE_STOP_SEQUENCE_BY_MODES = (input:any) => {
-  return `mutation{RouteManagerAdd(input:{
+  return `mutation{RouteManagerAdd(data:{
     _id:"${input._id}"
     name:"${input.name}"
     schedule: [${input.schedule.map((el:any)=>(

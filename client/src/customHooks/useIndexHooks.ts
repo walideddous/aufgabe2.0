@@ -637,13 +637,15 @@ export default function useIndexHooks() {
         }
         const {RouteManagerAdd} = result.data.data
         if (RouteManagerAdd) {
-          console.log("Stop sequence succesfully saved");
-          message.success(`Stop sequence succesfully`);
+          console.log("Stop sequence successfully saved");
+          message.success(`Stop sequence succesfully saved`);
           // Set the state of stopSequence List
           setSavedStopSequence((prev) => {
             return prev.concat({ ...body });
           });
           handleClearAll();
+        }else {
+          console.log("Could't find the RouteManagerAdd value")
         }
       } catch (error) {
         console.error(error, "error from trycatch");
@@ -689,7 +691,6 @@ export default function useIndexHooks() {
       setIsSending(true);
       // send the actual request
       try {
-        console.log("delete the stop sequence");
         // GraphQL
         const result = await deleteStopSequenceRequest(id);
         if (!Object.keys(result).length) {
@@ -698,13 +699,15 @@ export default function useIndexHooks() {
 
         const {RouteManagerDelete} = result.data.data
         if (RouteManagerDelete) {
-          message.success(`Stop sequence deleted succesfuly`);
+          message.success(`Stop sequence successfully deleted`);
           // Set the state of stopSequence List
           setStopSequenceList((prev) => {
             return prev.filter((el: any) => el._id !== id);
           });
           handleClearAll();
           setCurrentStopSequence({});
+        } else {
+          console.log("Could't find the RouteManagerDelete value")
         }
       } catch (error) {
         console.error(error, "error from trycatch");
