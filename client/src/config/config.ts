@@ -20,23 +20,17 @@ export const GET_STOP_SEQUENCE_BY_MODES = (modes: string[] ) => {
     _id
     name
     schedule{
-      date
-      dayTime{
-        day
-        time
+      from
+      to
+      timeSlices{
+        weekDays
+        startTime
+        endTime        
       }
     }
     modes
     stopSequence{
-      _id
-      name
-      modes
-      coord{
-        WGS84{
-          lat
-          lon
-        }
-      }
+      keys
     }
   }}`
 }

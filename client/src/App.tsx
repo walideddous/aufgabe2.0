@@ -7,16 +7,21 @@ import Acceuil from "./components/react";
 import { Provider } from "react-redux";
 import Store from "./store";
 
+import { ApolloProvider } from "@apollo/client";
+import { client } from "./graphql";
+
 function App() {
   return (
-    <Provider store={Store}>
-      <Router>
-        <Switch>
-          <Route exact path="/" component={MainRoot} />
-          <Route exact path="/react" component={Acceuil} />
-        </Switch>
-      </Router>
-    </Provider>
+    <ApolloProvider client={client}>
+      <Provider store={Store}>
+        <Router>
+          <Switch>
+            <Route exact path="/" component={MainRoot} />
+            <Route exact path="/react" component={Acceuil} />
+          </Switch>
+        </Router>
+      </Provider>
+    </ApolloProvider>
   );
 }
 

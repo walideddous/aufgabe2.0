@@ -77,7 +77,7 @@ export function calculateDistanceAndSort(
     const lng1 = filteredTable[i].coord.WGS84.lon;
 
     // calculate the distance between a fix point and others points
-    let distance = getDistanceFromLatLonInKm(
+    let distance = getpreciseDistanceFromLatLonInKm(
       coord.WGS84.lat,
       coord.WGS84.lon,
       lat1,
@@ -105,7 +105,7 @@ export function calculateDistanceAndSort(
   return sortedTable.slice(0, 100);
 }
 
-
+/*
 function getDistanceFromLatLonInKm(
   lat1: number,
   lon1: number,
@@ -117,3 +117,4 @@ function getDistanceFromLatLonInKm(
   var d = lat + lon;
   return d ;
 }
+*/

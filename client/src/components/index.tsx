@@ -17,18 +17,6 @@ import "../App.css";
 import "antd/dist/antd.css";
 import "leaflet/dist/leaflet.css";
 
-import { gql } from "@apollo/client";
-import { GET_STOPS_BY_MODES } from "../config/config";
-import { client } from "../graphql";
-
-client
-  .query({
-    query: gql`
-      ${GET_STOPS_BY_MODES(["4"])}
-    `,
-  })
-  .then((result) => console.log(result));
-
 // Custom Loader
 const antIcon = <LoadingOutlined style={{ fontSize: 100 }} spin />;
 
@@ -102,7 +90,7 @@ const MainRoot: React.FC = () => {
                 onSaveStopSequence={handleSaveStopSequence}
               />
             </Col>
-            <Col xxl={12} xs={24}>
+            <Col xxl={12} xs={24} style={{ height: "60vh" }}>
               <Map
                 stations={stations}
                 stateDND={stateDND}

@@ -1,6 +1,10 @@
-import { useState, useCallback } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { v4 } from "uuid";
 import { message } from "antd";
+
+import { useLazyQuery } from "@apollo/client";
+import { GET_STOPS_BY_MODES } from "../graphql/stopsQuery";
+import { GET_STOP_SEQUENCE_BY_MODES } from "../graphql/stopSequencesQuery";
 
 // Typescript
 import { TstateDND, Tstations, Tdistance } from "../types/types";
@@ -8,18 +12,17 @@ import { TstateDND, Tstations, Tdistance } from "../types/types";
 // Get the property from Utils
 import { getProperty } from "../utils/getPropertyKey";
 
-// Import function to format the PTStopItems => variable that comm from the GraphQl query 
-import {formatPTStopItems } from "../utils/formatPTStopItems"
+// Import function to format the PTStopItems => variable that comm from the GraphQl query
+import { formatPTStopItems } from "../utils/formatPTStopItems";
 
 // get the function to compare the distance between a point fix and a banch of punkt
 import { calculateDistanceAndSort } from "../utils/getDistanceFromLatLonInKm";
 
 // Import services
-import { getStopsByMode } from "../services/stopsService";
+//import { getStopsByMode } from "../services/stopsService";
 import {
   saveStopSequenceRequest,
   deleteStopSequenceRequest,
-  queryStopSequenceRequest,
 } from "../services/stopSequenceService";
 
 export default function useIndexHooks() {
@@ -42,19 +45,47 @@ export default function useIndexHooks() {
   const [updateDate, setUpdateDate] = useState<string>("");
   const [currentMode, setCurrentMode] = useState<string[]>([]);
   const [currentStopSequence, setCurrentStopSequence] = useState({});
-  const [loadStopSequenceSection, setLoadStopSequenceSection] = useState<boolean>(true);
+  const [
+    loadStopSequenceSection,
+    setLoadStopSequenceSection,
+  ] = useState<boolean>(true);
+
+  const [queryStopSequenceRequest, stopSequenceResponse] = useLazyQuery(
+    GET_STOP_SEQUENCE_BY_MODES
+  );
+  const [getStopsByMode, stopsResponse] = useLazyQuery(GET_STOPS_BY_MODES);
+
+  console.log("result", stopSequenceResponse.data);
+
+  useEffect(() => {
+    if (stopsResponse.data && stopSequenceResponse.data) {
+      const { PTStopItems } = stopsResponse.data;
+      const { RouteManagerItems } = stopSequenceResponse.data;
+
+      const stopsByMode = formatPTStopItems(PTStopItems);
+      setStations(stopsByMode);
+      setUpdateDate(Date().toString().substr(4, 24));
+
+      /////// ----  To modifie the query  ----- ///////
+      console.log("RouteManagerItems", RouteManagerItems);
+
+      // End loading
+      setIsSending(false);
+    }
+  }, [stopsResponse, stopSequenceResponse]);
 
   // set the mode Load or New
   const handleLoadMode = useCallback((value: boolean) => {
     setLoadStopSequenceSection(value);
-  },[]);
+  }, []);
 
   // Send the request when you click on get the Data button
   const handleSendRequest = useCallback(
     async (modes) => {
-      if (isSending) return;
-      // update state
+      if (isSending) return console.log("Please wait");
+      // Start loading
       setIsSending(true);
+      setCurrentMode(modes);
       setSelected(undefined);
       setStateDND({
         suggestions: {
@@ -66,39 +97,19 @@ export default function useIndexHooks() {
           items: [],
         },
       });
-      // send the actual request
-      try {
-        console.log("start fetching");
-        // Stops
+      console.log("start fetching");
 
-        const stops = await getStopsByMode(modes);
-        //StopSequence
-        const stopSequence  = await queryStopSequenceRequest(modes);
+      // Dispatch the stops GraphQl query
+      getStopsByMode({ variables: { modes } });
+      // Dispatch the stopSequence GraphQl query
+      queryStopSequenceRequest({ variables: { modes } });
 
-        console.log("end fetching");
-        // 
-        if (Object.keys(stops).length || Object.keys(stopSequence).length) {
-          const { PTStopItems } = stops.data.data;
-          const stopsByMode = formatPTStopItems(PTStopItems)
-          const { RouteManagerItems } = stopSequence.data.data;
-
-          setStations(stopsByMode);
-          setStopSequenceList(RouteManagerItems);
-          setCurrentMode(modes);
-          setUpdateDate(Date().toString().substr(4, 24));
-        } else {
-          console.log("stops or stopSequence don't exists");
-        }
-      } catch (error) {
-        console.error(error, "error from trycatch");
-      }
-      // once the request is sent, update state again
-      setIsSending(false);
+      console.log("end fetching");
     },
-    [isSending]
+    [isSending, getStopsByMode, queryStopSequenceRequest]
   );
 
-  // Select the Station in drop part from the drapDrop component to show the suggestion 
+  // Select the Station in drop part from the drapDrop component to show the suggestion
   const handleClickOnDrop = useCallback(
     (e: any, index: number) => {
       const { _id, name, coord, modes } = e;
@@ -535,7 +546,7 @@ export default function useIndexHooks() {
         },
       };
 
-      if(selected?._id === el._id) return 
+      if (selected?._id === el._id) return;
 
       if (
         stateDND.trajekt.items.filter((item: any) => item._id === el._id)
@@ -570,7 +581,7 @@ export default function useIndexHooks() {
         });
       }
     },
-    [stations, stateDND.trajekt.items,selected, handleAddStopsOnCLick]
+    [stations, stateDND.trajekt.items, selected, handleAddStopsOnCLick]
   );
 
   // Delete marker from map
@@ -607,7 +618,7 @@ export default function useIndexHooks() {
 
   // Clear all and delete all
   const handleClearAll = useCallback(() => {
-    handleResetStopSequence()
+    handleResetStopSequence();
     setCurrentStopSequence({});
   }, [handleResetStopSequence]);
 
@@ -635,7 +646,7 @@ export default function useIndexHooks() {
         if (!Object.keys(result).length) {
           console.error("Couldn't save the stop sequence");
         }
-        const {RouteManagerAdd} = result.data.data
+        const { RouteManagerAdd } = result.data.data;
         if (RouteManagerAdd) {
           console.log("Stop sequence successfully saved");
           message.success(`Stop sequence succesfully saved`);
@@ -644,8 +655,8 @@ export default function useIndexHooks() {
             return prev.concat({ ...body });
           });
           handleClearAll();
-        }else {
-          console.log("Could't find the RouteManagerAdd value")
+        } else {
+          console.log("Could't find the RouteManagerAdd value");
         }
       } catch (error) {
         console.error(error, "error from trycatch");
@@ -697,7 +708,7 @@ export default function useIndexHooks() {
           console.error("Couldn't delete the Stop sequence");
         }
 
-        const {RouteManagerDelete} = result.data.data
+        const { RouteManagerDelete } = result.data.data;
         if (RouteManagerDelete) {
           message.success(`Stop sequence successfully deleted`);
           // Set the state of stopSequence List
@@ -707,7 +718,7 @@ export default function useIndexHooks() {
           handleClearAll();
           setCurrentStopSequence({});
         } else {
-          console.log("Could't find the RouteManagerDelete value")
+          console.log("Could't find the RouteManagerDelete value");
         }
       } catch (error) {
         console.error(error, "error from trycatch");
