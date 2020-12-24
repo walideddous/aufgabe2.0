@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Test the customHooks of the /components/index.tsx Should match snapShot with the main component => component/index 1`] = `
-<Aufgabe>
+<MainRoot>
   <div
     className="Prototyp"
     style={
@@ -2020,6 +2020,7 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
               onAddBeforSelected={[Function]}
               onClickOnMapMarker={[Function]}
               onDeleteMarkerFromMap={[Function]}
+              onResetStopSequence={[Function]}
               onSelectAutoSearch={[Function]}
               stateDND={
                 Object {
@@ -2366,5 +2367,5 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
       </div>
     </Row>
   </div>
-</Aufgabe>
+</MainRoot>
 `;

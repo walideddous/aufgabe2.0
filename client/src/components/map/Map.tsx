@@ -6,13 +6,14 @@ import React, {
   useRef,
 } from "react";
 import * as L from "leaflet";
+import { DeleteOutlined } from "@ant-design/icons";
 
 import SearchInput from "../search/SearchInput";
 // Import leaflet markerCluster
 import "leaflet.markercluster";
 import "./styles.min.css";
 
-// Import leaflet context menu
+// Import leaflet contextmenu
 import "leaflet-contextmenu";
 import "leaflet-contextmenu/dist/leaflet.contextmenu.css";
 
@@ -28,6 +29,7 @@ interface TpropsOnMap {
   selected: Tstations | undefined;
   distance: Tdistance[];
   currentStopSequence: any;
+  onResetStopSequence: () => void;
   onSelectAutoSearch: (selectedStop: string) => void;
   onAddBeforSelected: (e: string) => void;
   onAddAfterSelected: (e: string) => void;
@@ -42,6 +44,7 @@ const Map = ({
   selected,
   distance,
   currentStopSequence,
+  onResetStopSequence,
   onSelectAutoSearch,
   onAddBeforSelected,
   onAddAfterSelected,
@@ -248,6 +251,14 @@ const Map = ({
         stations={stations}
         handleSelectAutoSearch={onSelectAutoSearch}
       />
+      <div
+        className="trash_button"
+        onClick={() =>
+          stateDND.trajekt.items.length ? onResetStopSequence() : null
+        }
+      >
+        <DeleteOutlined style={{ paddingLeft: "8px" }} />
+      </div>
     </Fragment>
   );
 };

@@ -17,10 +17,22 @@ import "../App.css";
 import "antd/dist/antd.css";
 import "leaflet/dist/leaflet.css";
 
+import { gql } from "@apollo/client";
+import { GET_STOPS_BY_MODES } from "../config/config";
+import { client } from "../graphql";
+
+client
+  .query({
+    query: gql`
+      ${GET_STOPS_BY_MODES(["4"])}
+    `,
+  })
+  .then((result) => console.log(result));
+
 // Custom Loader
 const antIcon = <LoadingOutlined style={{ fontSize: 100 }} spin />;
 
-const Aufgabe: React.FC = () => {
+const MainRoot: React.FC = () => {
   const {
     stations,
     selected,
@@ -97,6 +109,7 @@ const Aufgabe: React.FC = () => {
                 selected={selected}
                 distance={distance}
                 currentStopSequence={currentStopSequence}
+                onResetStopSequence={handleResetStopSequence}
                 onSelectAutoSearch={handleSelectAutoSearch}
                 onAddBeforSelected={handleAddBeforSelected}
                 onAddAfterSelected={handleAddAfterSelected}
@@ -122,4 +135,4 @@ const Aufgabe: React.FC = () => {
   );
 };
 
-export default Aufgabe;
+export default MainRoot;

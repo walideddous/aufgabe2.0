@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Aufgabe from "./components/index";
+import MainRoot from "./components";
 import Acceuil from "./components/react";
 
 // Redux
@@ -12,7 +12,7 @@ function App() {
     <Provider store={Store}>
       <Router>
         <Switch>
-          <Route exact path="/" component={Aufgabe} />
+          <Route exact path="/" component={MainRoot} />
           <Route exact path="/react" component={Acceuil} />
         </Switch>
       </Router>
@@ -21,12 +21,3 @@ function App() {
 }
 
 export default App;
-
-/*
-
-module.exports = {
-  //preset: "ts-jest",
-  //testEnvironment: 'jsdom'
-}
-
-*/

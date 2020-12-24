@@ -66,3 +66,22 @@
     -o-stroke-opacity 0.3s ease-in;
   transition: stroke-dashoffset 0.3s ease-out, stroke-opacity 0.3s ease-in;
 }
+
+.trash_button {
+  position: absolute;
+  height: 30px;
+  width: 30px;
+  bottom: 20px;
+  left: 20px;
+  color: #000000;
+  background-color: #ffffff;
+  z-index: 10;
+  border-radius: 2px;
+  cursor: pointer;
+  line-height: 30px;
+  box-shadow: 0px 2px 3px 3px #ccc;
+}
+
+.trash_button:hover {
+  background-color: #f2f2f2;
+}

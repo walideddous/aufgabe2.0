@@ -28,14 +28,14 @@ jest.mock("../services/stopSequenceService.ts", () => ({
 }));
 
 describe("Test the customHooks of the /components/index.tsx", () => {
-  const Aufgabe = require("../components/index").default;
+  const MainRoot = require("../components/index").default;
 
   let wrappedComponent: ReactWrapper;
   let spyOnConsoleLog: any;
   let spyOnConsoleError: any;
 
   const setUp = () => {
-    const component = mount(<Aufgabe />);
+    const component = mount(<MainRoot />);
     return component;
   };
 
@@ -452,7 +452,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
 
     await waitForNextUpdate();
 
-    expect(spyOnConsoleLog).toBeCalledWith("Stop sequence succesfully saved");
+    expect(spyOnConsoleLog).toBeCalledWith("Stop sequence successfully saved");
   });
   it("Should catch the catch error when we trigger the saveStopSequence function", async () => {
     //@ts-ignore

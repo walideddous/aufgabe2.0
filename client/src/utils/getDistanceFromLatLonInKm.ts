@@ -2,12 +2,12 @@
 import {Tstations} from "../types/types"
 
 
-function getpreciseDistanceFromLatLonInKm(
+const getpreciseDistanceFromLatLonInKm = (
   lat1: number,
   lon1: number,
   lat2: number,
   lon2: number
-) {
+) => {
   var R = 6371; // Radius of the earth in km
   var dLat = deg2rad(lat2 - lat1); // deg2rad below
   var dLon = deg2rad(lon2 - lon1);
@@ -22,7 +22,7 @@ function getpreciseDistanceFromLatLonInKm(
   return d;
 }
 
-function deg2rad(deg: number) {
+const deg2rad =  (deg: number) => {
   return deg * (Math.PI / 180);
 }
 
@@ -77,7 +77,7 @@ export function calculateDistanceAndSort(
     const lng1 = filteredTable[i].coord.WGS84.lon;
 
     // calculate the distance between a fix point and others points
-    let distance = getpreciseDistanceFromLatLonInKm(
+    let distance = getDistanceFromLatLonInKm(
       coord.WGS84.lat,
       coord.WGS84.lon,
       lat1,
@@ -105,18 +105,15 @@ export function calculateDistanceAndSort(
   return sortedTable.slice(0, 100);
 }
 
-/*
+
 function getDistanceFromLatLonInKm(
   lat1: number,
   lon1: number,
   lat2: number,
   lon2: number
 ) {
-  var R = 6371; // Radius of the earth in km
   var lat = Math.pow(lat2 - lat1, 2);
   var lon = Math.pow(lon2 - lon1, 2);
   var d = lat + lon;
-  var c = Math.sqrt(d)
-  return c * 100 ;
+  return d ;
 }
-*/

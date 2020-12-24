@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, Fragment } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { Card, Col, Button } from "antd";
 import { DeleteOutlined, ArrowUpOutlined } from "@ant-design/icons";
@@ -44,21 +44,6 @@ const DragDrop = ({
     return () => {
       window.removeEventListener("resize", resize);
     };
-  });
-  const scrollToBottom = useCallback(() => {
-    var element = document.getElementById("item-highlighted");
-    if (element) {
-      //@ts-ignore
-      element.scrollIntoView({
-        behavior: "smooth",
-        block: "nearest",
-        inline: "end",
-      });
-    }
-  }, []);
-
-  useEffect(() => {
-    scrollToBottom();
   });
 
   return (
@@ -221,8 +206,19 @@ const DragDrop = ({
           >
             <div
               style={
-                stateDND.trajekt.items.length
-                  ? { height: "370px", overflowY: "auto" }
+                stateDND.trajekt.items.length > 0 &&
+                stateDND.trajekt.items.length < 7
+                  ? {
+                      height: "370px",
+                      overflowY: "auto",
+                    }
+                  : stateDND.trajekt.items.length >= 7
+                  ? {
+                      height: "370px",
+                      overflowY: "auto",
+                      display: "flex",
+                      flexDirection: "column-reverse",
+                    }
                   : {}
               }
             >

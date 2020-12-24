@@ -1,5 +1,5 @@
 import React from "react";
-import { mount } from "enzyme";
+import { mount, shallow } from "enzyme";
 import toJSON from "enzyme-to-json";
 import Map from "./Map";
 
@@ -18,6 +18,7 @@ const makeProps = (props: any) => ({
   selected: {},
   currentStopSequence: {},
   distance: [],
+  onResetStopSequence() {},
   handleSelectAutoSearch() {},
   onAddAfterSelected() {},
   onAddBeforSelected() {},
@@ -38,26 +39,28 @@ const setUp = (props: any) => {
   return component;
 };
 
-describe("Map component", () => {
-  let wrapper: any;
+const onResetStopSequence = jest.fn();
+const onSelectAutoSearch = jest.fn();
+const onAddBeforSelected = jest.fn();
+const onAddAfterSelected = jest.fn();
+const onDeleteMarkerFromMap = jest.fn();
+const onClickOnMapMarker = jest.fn();
 
-  const onSelectAutoSearch = jest.fn();
-  const onAddBeforSelected = jest.fn();
-  const onAddAfterSelected = jest.fn();
-  const onDeleteMarkerFromMap = jest.fn();
-  const onClickOnMapMarker = jest.fn();
+describe("Map component", () => {
+  const div = global.document.createElement("div");
+  global.document.body.appendChild(div);
+
+  let mountwrapper: any;
 
   beforeEach(() => {
-    const div = global.document.createElement("div");
-    global.document.body.appendChild(div);
-
-    wrapper = setUp(
+    mountwrapper = setUp(
       makeProps({
         stations,
         stateDND,
         selected,
         currentStopSequence,
         distance,
+        onResetStopSequence,
         onSelectAutoSearch,
         onAddBeforSelected,
         onAddAfterSelected,
@@ -73,6 +76,30 @@ describe("Map component", () => {
   });
 
   it("Should match snapshot with the Map component", () => {
-    expect(toJSON(wrapper)).toMatchSnapshot();
+    expect(toJSON(mountwrapper)).toMatchSnapshot();
   });
+});
+
+it("Should clear the map when we click on the trash button", () => {
+  const button = shallow(
+    <Map
+      {...makeProps({
+        stations,
+        stateDND,
+        selected,
+        currentStopSequence,
+        distance,
+        onResetStopSequence,
+        onSelectAutoSearch,
+        onAddBeforSelected,
+        onAddAfterSelected,
+        onDeleteMarkerFromMap,
+        onClickOnMapMarker,
+      })}
+    />
+  ).find("div[className='trash_button']");
+
+  button.simulate("click");
+
+  expect(onResetStopSequence).toBeCalled();
 });
