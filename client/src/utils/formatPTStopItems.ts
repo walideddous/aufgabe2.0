@@ -4,6 +4,7 @@ export const formatPTStopItems = (PTStopItems: any) => {
       _id: PTStopItem.data._id,
       name: PTStopItem.data.name,
       modes: PTStopItem.data.modes,
+      key:PTStopItem.data.key,
       coord: {
         WGS84: {
           lat: PTStopItem.geojson.geometry.coordinates[1],

@@ -2,9 +2,12 @@ import { useEffect, useState, useCallback } from "react";
 import { v4 } from "uuid";
 import { message } from "antd";
 
-import { useLazyQuery } from "@apollo/client";
+import { useLazyQuery, useMutation } from "@apollo/client";
 import { GET_STOPS_BY_MODES } from "../graphql/stopsQuery";
-import { GET_STOP_SEQUENCE_BY_MODES } from "../graphql/stopSequencesQuery";
+import {
+  GET_STOP_SEQUENCE_BY_MODES,
+  DELETE_STOP_SEQUENCE_BY_MODES,
+} from "../graphql/stopSequencesQuery";
 
 // Typescript
 import { TstateDND, Tstations, Tdistance } from "../types/types";
@@ -14,15 +17,14 @@ import { getProperty } from "../utils/getPropertyKey";
 
 // Import function to format the PTStopItems => variable that comm from the GraphQl query
 import { formatPTStopItems } from "../utils/formatPTStopItems";
+//
+import { formatStopSequenceItems } from "../utils/formatStopSequenceItems";
 
 // get the function to compare the distance between a point fix and a banch of punkt
 import { calculateDistanceAndSort } from "../utils/getDistanceFromLatLonInKm";
 
-// Import services
-//import { getStopsByMode } from "../services/stopsService";
 import {
   saveStopSequenceRequest,
-  deleteStopSequenceRequest,
 } from "../services/stopSequenceService";
 
 export default function useIndexHooks() {
@@ -54,21 +56,31 @@ export default function useIndexHooks() {
     GET_STOP_SEQUENCE_BY_MODES
   );
   const [getStopsByMode, stopsResponse] = useLazyQuery(GET_STOPS_BY_MODES);
-
-  console.log("result", stopSequenceResponse.data);
+  const [
+    deleteStopSequenceMutation,
+  ] = useMutation(DELETE_STOP_SEQUENCE_BY_MODES);
 
   useEffect(() => {
     if (stopsResponse.data && stopSequenceResponse.data) {
       const { PTStopItems } = stopsResponse.data;
       const { RouteManagerItems } = stopSequenceResponse.data;
 
-      const stopsByMode = formatPTStopItems(PTStopItems);
-      setStations(stopsByMode);
+      const stopsFormatted = formatPTStopItems(PTStopItems);
+      setStations(stopsFormatted);
       setUpdateDate(Date().toString().substr(4, 24));
 
       /////// ----  To modifie the query  ----- ///////
-      console.log("RouteManagerItems", RouteManagerItems);
+      const routeManagerFormatted = formatStopSequenceItems(
+        stopsFormatted,
+        RouteManagerItems
+      );
+      setStopSequenceList(routeManagerFormatted);
+      // End loading
+      setIsSending(false);
+    }
 
+    if (stopsResponse.error && stopSequenceResponse.error) {
+      message.error("Couldn't query the data");
       // End loading
       setIsSending(false);
     }
@@ -697,36 +709,38 @@ export default function useIndexHooks() {
 
   // Delete the stop sequence by Id
   const handleDeleteStopSequence = useCallback(
-    async (id: string) => {
-      if (isSending) return; // update state
+    async (_id: string) => {
+      if (isSending) return console.log("Please Wait");
       setIsSending(true);
-      // send the actual request
       try {
         // GraphQL
-        const result = await deleteStopSequenceRequest(id);
-        if (!Object.keys(result).length) {
-          console.error("Couldn't delete the Stop sequence");
-        }
-
-        const { RouteManagerDelete } = result.data.data;
-        if (RouteManagerDelete) {
+        const deleteResponse = await deleteStopSequenceMutation({
+          variables: { _id },
+        });
+        if (deleteResponse.data.RouteManagerDelete) {
           message.success(`Stop sequence successfully deleted`);
+
           // Set the state of stopSequence List
           setStopSequenceList((prev) => {
-            return prev.filter((el: any) => el._id !== id);
+            return prev.filter((el: any) => el._id !== _id);
           });
+
           handleClearAll();
           setCurrentStopSequence({});
         } else {
-          console.log("Could't find the RouteManagerDelete value");
+          message.error("Couldn't delete the stop sequence");
         }
-      } catch (error) {
-        console.error(error, "error from trycatch");
+
+      } catch (err) {
+        console.log("Error from deleteStopSequence tryCatch", err);
       }
-      // once the request is sent, update state again
       setIsSending(false);
     },
-    [handleClearAll, isSending]
+    [
+      isSending,
+      deleteStopSequenceMutation,
+      handleClearAll,
+    ]
   );
 
   return {

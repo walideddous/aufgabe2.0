@@ -20,6 +20,13 @@ export const GET_STOP_SEQUENCE_BY_MODES = gql`
     }
     }
     }`
+
+  
+  export const DELETE_STOP_SEQUENCE_BY_MODES = gql`
+    mutation RouteManagerDelete ($_id: String!){
+      RouteManagerDelete(_id:$_id)
+    }
+  `
   
   export const SAVE_STOP_SEQUENCE_BY_MODES = (input:any) => {
     return gql`mutation{RouteManagerAdd(data:{
@@ -59,10 +66,29 @@ export const GET_STOP_SEQUENCE_BY_MODES = gql`
       ))}]
     })}`
   }
-  
-  export const DELETE_STOP_SEQUENCE_BY_MODES = (id:string) => {
-    return gql`mutation{
-      RouteManagerDelete(_id:"${id}")
-    }`
-  }
-  
+  /*
+
+      try {
+
+
+        if (!Object.keys(result).length) {
+          console.error("Couldn't delete the Stop sequence");
+        }
+
+        const { RouteManagerDelete } = result.data.data;
+        if (RouteManagerDelete) {
+          message.success(`Stop sequence successfully deleted`);
+          // Set the state of stopSequence List
+          setStopSequenceList((prev) => {
+            return prev.filter((el: any) => el._id !== id);
+          });
+          handleClearAll();
+          setCurrentStopSequence({});
+        } else {
+          console.log("Could't find the RouteManagerDelete value");
+        }
+      } catch (error) {
+        console.error(error, "error from trycatch");
+      }
+
+  */

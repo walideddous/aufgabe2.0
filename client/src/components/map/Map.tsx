@@ -144,6 +144,8 @@ const Map = ({
         : [position.lat, position.lng],
       !selected ? position.zoom : responsiveZoom.zoom
     );
+    // set the min zoom
+    map.current.options.minZoom = 8;
   }, [
     selected,
     position.lat,
