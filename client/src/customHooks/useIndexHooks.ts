@@ -40,7 +40,6 @@ export default function useIndexHooks() {
   });
   const [isSending, setIsSending] = useState<boolean>(false);
   const [stopSequenceList, setStopSequenceList] = useState([]);
-  const [savedStopSequence, setSavedStopSequence] = useState([]);
   const [updateDate, setUpdateDate] = useState<string>("");
   const [currentMode, setCurrentMode] = useState<string[]>([]);
   const [currentStopSequence, setCurrentStopSequence] = useState({});
@@ -50,7 +49,9 @@ export default function useIndexHooks() {
   ] = useState<boolean>(true);
 
   const [queryStopSequenceRequest, stopSequenceResponse] = useLazyQuery(
-    GET_STOP_SEQUENCE_BY_MODES
+    GET_STOP_SEQUENCE_BY_MODES,{
+      fetchPolicy: "network-only"
+    }
   );
   const [getStopsByMode, stopsResponse] = useLazyQuery(GET_STOPS_BY_MODES);
   const [
@@ -674,7 +675,6 @@ export default function useIndexHooks() {
       // send the actual request
       try {
         // GraphQl
-      console.log("body", body)
         const saveResponse = await saveStopSequenceMutation({
           variables:{data: body}
         });
@@ -723,20 +723,6 @@ export default function useIndexHooks() {
     });
   }, []);
 
-  // Update button after stop sequence have been saved
-  const handleUpdateAfterSave = useCallback(() => {
-    // filter the saved stop sequence by mode and added to th stopSequenceList
-    if (savedStopSequence.length) {
-      const flteredStopSeqenceByMode = savedStopSequence.filter(
-        (el: any) => el.modes === currentMode
-      );
-      setStopSequenceList((prev) => {
-        return prev.concat(flteredStopSeqenceByMode);
-      });
-      setSavedStopSequence([]);
-    }
-  }, [savedStopSequence, currentMode]);
-
   // Delete the stop sequence by Id
   const handleDeleteStopSequence = useCallback(
     async (_id: string) => {
@@ -783,7 +769,6 @@ export default function useIndexHooks() {
     updateDate,
     currentMode,
     currentStopSequence,
-    savedStopSequence,
     loadStopSequenceSection,
     handleLoadMode,
     handleSendRequest,
@@ -800,7 +785,6 @@ export default function useIndexHooks() {
     handleResetStopSequence,
     handleSaveStopSequence,
     handledisplayStopSequence,
-    handleUpdateAfterSave,
     handleDeleteStopSequence,
   };
 }

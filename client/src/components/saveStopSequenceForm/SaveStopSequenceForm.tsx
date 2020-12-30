@@ -61,10 +61,13 @@ const SaveStopSequenceForm = ({
   useEffect(() => {
     if (Object.keys(currentStopSequence).length) {
       setSavedForm(currentStopSequence);
+      form.setFieldsValue({
+        name: currentStopSequence.name,
+      });
     } else {
       setSavedForm({ name: "", schedule: [] });
     }
-  }, [currentStopSequence]);
+  }, [currentStopSequence, form]);
 
   useEffect(() => {
     if (savedForm?.schedule.length) {
@@ -353,18 +356,7 @@ const SaveStopSequenceForm = ({
               </Fragment>
             )}
             <Collapse activeKey={tags.length ? "2" : ""}>
-              <Panel
-                header={
-                  name && currentStopSequence.name && tags.length
-                    ? `${name} schedule`
-                    : name && !currentStopSequence.name && tags.length
-                    ? `${name} schedule`
-                    : !name && currentStopSequence.name && tags.length
-                    ? `${currentStopSequence.name} schedule`
-                    : "Stop sequence schedule"
-                }
-                key="2"
-              >
+              <Panel header="Schedule" key="2">
                 <div
                   id="time_result"
                   style={{

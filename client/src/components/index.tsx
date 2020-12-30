@@ -45,7 +45,6 @@ const MainRoot: React.FC = () => {
     handleResetStopSequence,
     handleSaveStopSequence,
     handledisplayStopSequence,
-    handleUpdateAfterSave,
     handleDeleteStopSequence,
   } = useIndexHooks();
 
@@ -58,7 +57,6 @@ const MainRoot: React.FC = () => {
             currentStopSequence={currentStopSequence}
             onLoadMode={handleLoadMode}
             onSendRequest={handleSendRequest}
-            onUpdateAfterSave={handleUpdateAfterSave}
             onClearAll={handleClearAll}
             onDeleteStopSequence={handleDeleteStopSequence}
             ondisplayStopSequence={handledisplayStopSequence}

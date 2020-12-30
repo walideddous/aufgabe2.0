@@ -6,7 +6,6 @@ interface TLoadStopSequence {
   currentStopSequence: any;
   onLoadMode: (value: boolean) => void;
   onSendRequest: (modes: string[]) => void;
-  onUpdateAfterSave: () => void;
   onClearAll: () => void;
   onDeleteStopSequence: (id: string) => void;
   ondisplayStopSequence: (stopSequence: any) => void;
@@ -17,7 +16,6 @@ const LoadStopSequence = ({
   currentStopSequence,
   onLoadMode,
   onSendRequest,
-  onUpdateAfterSave,
   onClearAll,
   onDeleteStopSequence,
   ondisplayStopSequence,
@@ -49,6 +47,7 @@ const LoadStopSequence = ({
       )[0];
       if (response) {
         ondisplayStopSequence(response);
+        setSearch("");
       }
     },
     [stopSequenceList, ondisplayStopSequence]
@@ -59,7 +58,6 @@ const LoadStopSequence = ({
       const { value } = e.target;
       if (value === "load") {
         setShow(true);
-        onUpdateAfterSave();
         onLoadMode(true);
       }
       if (value === "new") {
@@ -70,7 +68,7 @@ const LoadStopSequence = ({
       }
       setRadioButton(value);
     },
-    [onClearAll, onUpdateAfterSave, onLoadMode]
+    [onClearAll, onLoadMode]
   );
 
   return (
