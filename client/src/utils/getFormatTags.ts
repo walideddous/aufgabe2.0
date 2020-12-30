@@ -1,17 +1,18 @@
 export  const getFormatTags = (values: any) => {
   return values.schedule.map((element: any) => {
-    const { dayTime, date } = element;
+    const { timeSlices, from, to } = element;
     return {
-      date,
-      displayedTags : dayTime.map((dayTime: any, index:number) => {
-        const { day, time } = dayTime;
-        if (day.length === 1) {
-          return  `${day[0]} ${time[0]} - ${time[1]}`
+      from,
+      to,
+      displayedTags : timeSlices.map((dayTime: any, index:number) => {
+        const { weekDays, startTime, endTime } = dayTime;
+        if (weekDays.length === 1) {
+          return  `${weekDays[0]} ${startTime} - ${endTime}`
 
-        } else if (day.length === 8) {
-          return `All days ${time[0]} - ${time[1]}`
+        } else if (weekDays.length === 8) {
+          return `All days ${startTime} - ${endTime}`
         } else {
-          return `${day} ${time[0]} - ${time[1]}`
+          return `${weekDays} ${startTime} - ${endTime}`
         }
       })
     }

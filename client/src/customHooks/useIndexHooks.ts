@@ -7,6 +7,7 @@ import { GET_STOPS_BY_MODES } from "../graphql/stopsQuery";
 import {
   GET_STOP_SEQUENCE_BY_MODES,
   DELETE_STOP_SEQUENCE_BY_MODES,
+  SAVE_STOP_SEQUENCE_BY_MODES
 } from "../graphql/stopSequencesQuery";
 
 // Typescript
@@ -23,10 +24,6 @@ import { formatStopSequenceItems } from "../utils/formatStopSequenceItems";
 // get the function to compare the distance between a point fix and a banch of punkt
 import { calculateDistanceAndSort } from "../utils/getDistanceFromLatLonInKm";
 
-import {
-  saveStopSequenceRequest,
-} from "../services/stopSequenceService";
-
 export default function useIndexHooks() {
   const [stations, setStations] = useState<Tstations[]>([]);
   const [selected, setSelected] = useState<Tstations>();
@@ -35,7 +32,7 @@ export default function useIndexHooks() {
     suggestions: {
       title: "Suggestion",
       items: [],
-    },
+    }, 
     trajekt: {
       title: "Stop sequence",
       items: [],
@@ -59,22 +56,26 @@ export default function useIndexHooks() {
   const [
     deleteStopSequenceMutation,
   ] = useMutation(DELETE_STOP_SEQUENCE_BY_MODES);
+  const [saveStopSequenceMutation] = useMutation(SAVE_STOP_SEQUENCE_BY_MODES)
 
+  // Update the state when the data is queried from graphql 
   useEffect(() => {
     if (stopsResponse.data && stopSequenceResponse.data) {
       const { PTStopItems } = stopsResponse.data;
       const { RouteManagerItems } = stopSequenceResponse.data;
 
+      //// -> Format stops and set the state
       const stopsFormatted = formatPTStopItems(PTStopItems);
       setStations(stopsFormatted);
       setUpdateDate(Date().toString().substr(4, 24));
 
-      /////// ----  To modifie the query  ----- ///////
+      //// -> Format stopSequence and set the state
       const routeManagerFormatted = formatStopSequenceItems(
         stopsFormatted,
         RouteManagerItems
       );
       setStopSequenceList(routeManagerFormatted);
+
       // End loading
       setIsSending(false);
     }
@@ -85,11 +86,6 @@ export default function useIndexHooks() {
       setIsSending(false);
     }
   }, [stopsResponse, stopSequenceResponse]);
-
-  // set the mode Load or New
-  const handleLoadMode = useCallback((value: boolean) => {
-    setLoadStopSequenceSection(value);
-  }, []);
 
   // Send the request when you click on get the Data button
   const handleSendRequest = useCallback(
@@ -120,6 +116,11 @@ export default function useIndexHooks() {
     },
     [isSending, getStopsByMode, queryStopSequenceRequest]
   );
+
+    // set the mode Load or New
+    const handleLoadMode = useCallback((value: boolean) => {
+      setLoadStopSequenceSection(value);
+    }, []);
 
   // Select the Station in drop part from the drapDrop component to show the suggestion
   const handleClickOnDrop = useCallback(
@@ -634,49 +635,78 @@ export default function useIndexHooks() {
     setCurrentStopSequence({});
   }, [handleResetStopSequence]);
 
+
   // Save the stop sequence
   const handleSaveStopSequence = useCallback(
     async (formInput: any) => {
       const { items } = stateDND.trajekt;
+      let body:any
 
-      if (isSending) return;
-      if (!items.length) return;
+      if (isSending) return console.log("Please wait") ;
+      if (!items.length) return console.log("Please create your stop sequence") ;
 
-      const body = {
-        _id: v4(),
+      if(Object.keys(currentStopSequence).length){
+        body={
+          ...currentStopSequence,
+          name: formInput.name,
+          schedule: formInput.schedule,
+          stopSequence: items.map((item:any)=> ({
+            key:  item.key,
+            name: item.name
+          })),
+        }
+      } else {    
+       body = {
         ...formInput,
+        _id: v4(),
+        key: v4(),
+        desc: formInput.desc ? formInput.desc  : "Exemple hard coded" ,
         modes: currentMode,
-        stopSequence: items,
+        stopSequence: items.map((item:any)=> ({
+          key:  item.key,
+          name: item.name
+        })),
       };
+      }
 
       // update state
       setIsSending(true);
       // send the actual request
       try {
         // GraphQl
-        const result = await saveStopSequenceRequest(body);
-        if (!Object.keys(result).length) {
-          console.error("Couldn't save the stop sequence");
-        }
-        const { RouteManagerAdd } = result.data.data;
-        if (RouteManagerAdd) {
+      console.log("body", body)
+        const saveResponse = await saveStopSequenceMutation({
+          variables:{data: body}
+        });
+
+        if (saveResponse.data.RouteManagerAdd) {
           console.log("Stop sequence successfully saved");
           message.success(`Stop sequence succesfully saved`);
           // Set the state of stopSequence List
-          setSavedStopSequence((prev) => {
-            return prev.concat({ ...body });
+          setStopSequenceList((prev:any) => {
+            const savedObject = {
+              ...body,
+              stopSequence: stateDND.trajekt.items
+            }
+            if(prev.filter((el:any)=> el._id === savedObject._id).length){
+            return  prev.map((el:any)=> el._id === savedObject._id ? el = savedObject : el)
+            } else {
+            return prev.concat({ ...savedObject });
+            }
+
+
           });
           handleClearAll();
         } else {
-          console.log("Could't find the RouteManagerAdd value");
+          console.log("Could't save the RouteManagerAdd value");
         }
       } catch (error) {
-        console.error(error, "error from trycatch");
+        console.error(error, "error from trycatch saveStopSequence");
       }
       // once the request is sent, update state again
       setIsSending(false);
     },
-    [stateDND.trajekt, isSending, currentMode, handleClearAll]
+    [stateDND.trajekt, isSending, currentMode, currentStopSequence,handleClearAll, saveStopSequenceMutation]
   );
 
   // Display the stop sequence on map

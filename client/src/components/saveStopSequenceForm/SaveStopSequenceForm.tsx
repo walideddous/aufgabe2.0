@@ -48,10 +48,12 @@ const SaveStopSequenceForm = ({
   const [savedForm, setSavedForm] = useState<{
     name: string;
     schedule: {
-      date: string;
-      dayTime: {
-        day: string[];
-        time: string[];
+      from: string;
+      to: string;
+      timeSlices: {
+        weekDays: string[];
+        startTime: string[];
+        endTime: string[];
       }[];
     }[];
   }>();
@@ -89,24 +91,28 @@ const SaveStopSequenceForm = ({
     }
 
     const data = {
-      date: `${date[0].format("YYYY.MM.DD")}-${date[1].format("YYYY.MM.DD")}`,
-      dayTime: timeList.map((element: any) => {
+      from: `${date[0].format("YYYY-MM-DD")}`,
+      to: `${date[1].format("YYYY-MM-DD")}`,
+      timeSlices: timeList.map((element: any) => {
         return {
-          day: day,
-          time: [
-            element.time[0].format("HH:mm"),
-            element.time[1].format("HH:mm"),
-          ],
+          weekDays: day,
+          startTime: element.time[0].format("HH:mm"),
+          endTime: element.time[1].format("HH:mm"),
         };
       }),
     };
 
     setSavedForm((prev: any) => {
       if (prev) {
-        if (prev.schedule.filter((el: any) => el.date === data.date).length) {
+        if (
+          prev.schedule.filter(
+            (el: any) => el.from === data.from && el.to === data.to
+          ).length
+        ) {
           const sameDateIndex = prev.schedule
-            .map((el: any) => el.date)
-            .indexOf(data.date);
+            .map((el: any) => `${el.from} ${el.to}`)
+            .indexOf(`${data.from} ${data.to}`);
+
           return {
             ...prev,
             name: name,
@@ -114,7 +120,7 @@ const SaveStopSequenceForm = ({
               if (sameDateIndex === index) {
                 return {
                   ...el,
-                  dayTime: el.dayTime.concat(data.dayTime),
+                  timeSlices: el.timeSlices.concat(data.timeSlices),
                 };
               } else {
                 return el;
@@ -135,6 +141,7 @@ const SaveStopSequenceForm = ({
         };
       }
     });
+
     // Force the timeList to reset
     form.setFieldsValue({
       timeList: [],
@@ -148,9 +155,9 @@ const SaveStopSequenceForm = ({
       setSavedForm((prevValues: any) => {
         if (
           prevValues.schedule[tagsIndex] &&
-          prevValues.schedule[tagsIndex].dayTime.length
+          prevValues.schedule[tagsIndex].timeSlices.length
         ) {
-          if (prevValues.schedule[tagsIndex].dayTime.length === 1) {
+          if (prevValues.schedule[tagsIndex].timeSlices.length === 1) {
             return {
               name: prevValues.name,
               schedule: prevValues.schedule.filter(
@@ -164,7 +171,7 @@ const SaveStopSequenceForm = ({
                 if (index === tagsIndex) {
                   return {
                     ...el,
-                    dayTime: el.dayTime.filter(
+                    timeSlices: el.timeSlices.filter(
                       (el: any, indexFilter: number) =>
                         indexFilter !== displayedTagsIndex
                     ),
@@ -370,7 +377,7 @@ const SaveStopSequenceForm = ({
                     tags.map((tag: any, tagsIndex: number) => {
                       return (
                         <Fragment key={tagsIndex}>
-                          <h3>{tag.date}</h3>
+                          <h3>{`${tag.from} ${tag.to}`}</h3>
                           <Fragment>
                             {tag.displayedTags.map(
                               (el: string, displayedTagsIndex: number) => (
@@ -413,7 +420,8 @@ const SaveStopSequenceForm = ({
                     if (
                       tags.length &&
                       stateDND.trajekt.items.length &&
-                      currentStopSequence.name
+                      currentStopSequence.name &&
+                      !name
                     ) {
                       onSaveStopSequence({
                         ...savedForm,

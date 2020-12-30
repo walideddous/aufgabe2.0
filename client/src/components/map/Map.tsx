@@ -253,14 +253,16 @@ const Map = ({
         stations={stations}
         handleSelectAutoSearch={onSelectAutoSearch}
       />
-      <div
-        className="trash_button"
-        onClick={() =>
-          stateDND.trajekt.items.length ? onResetStopSequence() : null
-        }
-      >
-        <DeleteOutlined style={{ paddingLeft: "8px" }} />
-      </div>
+      {stateDND.trajekt.items.length && (
+        <div
+          className="trash_button"
+          onClick={() =>
+            stateDND.trajekt.items.length ? onResetStopSequence() : null
+          }
+        >
+          <DeleteOutlined style={{ paddingLeft: "8px" }} />
+        </div>
+      )}
     </Fragment>
   );
 };

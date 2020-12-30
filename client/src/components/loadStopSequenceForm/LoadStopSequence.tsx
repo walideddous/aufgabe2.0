@@ -140,7 +140,7 @@ const LoadStopSequence = ({
                         .startsWith(search ? search.toLowerCase() : "")
                     )
                     .map((el: any) => (
-                      <Option value={el.name} key={el._id}>
+                      <Option value={el.name} key={el.key}>
                         <i
                           className="fas fa-subway"
                           style={{ color: "#1890ff", margin: "0 10px" }}
