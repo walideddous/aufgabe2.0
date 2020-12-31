@@ -4,16 +4,20 @@ import { AutoComplete, Radio, Card, Form, Select, Button } from "antd";
 interface TLoadStopSequence {
   stopSequenceList: any;
   currentStopSequence: any;
+  currentMode: string[];
+  onStopSequenceSearch: (name: string) => void;
   onLoadMode: (value: boolean) => void;
   onSendRequest: (modes: string[]) => void;
   onClearAll: () => void;
   onDeleteStopSequence: (id: string) => void;
-  ondisplayStopSequence: (stopSequence: any) => void;
+  ondisplayStopSequence: (modes: string[], key: string) => void;
 }
 
 const LoadStopSequence = ({
   stopSequenceList,
   currentStopSequence,
+  currentMode,
+  onStopSequenceSearch,
   onLoadMode,
   onSendRequest,
   onClearAll,
@@ -41,13 +45,12 @@ const LoadStopSequence = ({
   );
 
   const handleSelect = useCallback(
-    (input: string) => {
+    (input: string, options) => {
       const response = stopSequenceList.filter(
-        (el: any) => el.name === input
+        (el: any) => el.key === options.key
       )[0];
       if (response) {
-        ondisplayStopSequence(response);
-        setSearch("");
+        ondisplayStopSequence(response.modes, options.key);
       }
     },
     [stopSequenceList, ondisplayStopSequence]
@@ -88,35 +91,37 @@ const LoadStopSequence = ({
             </Radio.Button>
           </Radio.Group>
         </Form.Item>
-        <Form.Item label="Modes">
-          <Select
-            id="mode_selector"
-            value={selectValue}
-            onChange={handleModeChange}
-          >
-            <Option value="Choose mode" id="Choose mode">
-              Choose mode
-            </Option>
-            <Option value="13" id="13">
-              13
-            </Option>
-            <Option value="5" id="5">
-              5
-            </Option>
-            <Option value="8" id="8">
-              8
-            </Option>
-            <Option value="9" id="9">
-              9
-            </Option>
-            <Option value="2" id="2">
-              2
-            </Option>
-            <Option value="4" id="4">
-              4
-            </Option>
-          </Select>
-        </Form.Item>
+        {!show && (
+          <Form.Item label="Modes">
+            <Select
+              id="mode_selector"
+              value={selectValue}
+              onChange={handleModeChange}
+            >
+              <Option value="Choose mode" id="Choose mode">
+                Choose mode
+              </Option>
+              <Option value="13" id="13">
+                13
+              </Option>
+              <Option value="5" id="5">
+                5
+              </Option>
+              <Option value="8" id="8">
+                8
+              </Option>
+              <Option value="9" id="9">
+                9
+              </Option>
+              <Option value="2" id="2">
+                2
+              </Option>
+              <Option value="4" id="4">
+                4
+              </Option>
+            </Select>
+          </Form.Item>
+        )}
         {show && (
           <>
             <Form.Item label="Stop sequence name">
@@ -124,6 +129,7 @@ const LoadStopSequence = ({
                 id="stopSequence_autoComplete"
                 onChange={(input: string) => {
                   setSearch(input);
+                  onStopSequenceSearch(input);
                 }}
                 value={search}
                 onSelect={handleSelect}
@@ -131,21 +137,15 @@ const LoadStopSequence = ({
                 allowClear={true}
               >
                 {stopSequenceList &&
-                  stopSequenceList
-                    .filter((el: any) =>
-                      el.name
-                        .toLowerCase()
-                        .startsWith(search ? search.toLowerCase() : "")
-                    )
-                    .map((el: any) => (
-                      <Option value={el.name} key={el.key}>
-                        <i
-                          className="fas fa-subway"
-                          style={{ color: "#1890ff", margin: "0 10px" }}
-                        ></i>
-                        {el.name}
-                      </Option>
-                    ))}
+                  stopSequenceList.map((el: any) => (
+                    <Option value={el.name} key={el.key}>
+                      <i
+                        className="fas fa-subway"
+                        style={{ color: "#1890ff", margin: "0 10px" }}
+                      ></i>
+                      {el.name}
+                    </Option>
+                  ))}
               </AutoComplete>
             </Form.Item>
             <div style={{ display: "flex", justifyContent: "flex-end" }}>

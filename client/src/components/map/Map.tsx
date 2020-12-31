@@ -55,14 +55,14 @@ const Map = ({
   const layerRef: any = useRef(null);
   const polylineRef: any = useRef(null);
 
-  const stationsRef = useRef(
-    stations.map((el: any) => {
+  const stationsRef = useMemo(() => {
+    return stations.map((el: any) => {
       return {
         ...el,
         coord: { WGS84: [el.coord.WGS84.lat, el.coord.WGS84.lon] },
       };
-    })
-  );
+    });
+  }, [stations]);
 
   const stopSequenceMarkers = useMemo(() => {
     return stateDND.trajekt.items.map((el: any) => {
@@ -167,7 +167,7 @@ const Map = ({
     const markers = L.markerClusterGroup();
 
     //@ts-ignore
-    stationsRef.current.forEach((el: any, index: number) => {
+    stationsRef.forEach((el: any, index: number) => {
       const marker = L.circleMarker(el.coord.WGS84, {
         //@ts-ignore
         contextmenu: true,
@@ -211,6 +211,7 @@ const Map = ({
       marker.on("click", () => clickOnMarker(el, index));
     });
   }, [
+    stationsRef,
     stateDND,
     selected,
     currentStopSequence,

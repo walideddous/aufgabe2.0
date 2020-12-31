@@ -27,9 +27,11 @@ const MainRoot: React.FC = () => {
     distance,
     stateDND,
     isSending,
+    currentMode,
     stopSequenceList,
     currentStopSequence,
     loadStopSequenceSection,
+    handleStopSequenceSearch,
     handleLoadMode,
     handleSendRequest,
     handleClickOnDrop,
@@ -53,8 +55,10 @@ const MainRoot: React.FC = () => {
       <Row gutter={[8, 8]}>
         <Col xs={24}>
           <LoadStopSequence
+            currentMode={currentMode}
             stopSequenceList={stopSequenceList}
             currentStopSequence={currentStopSequence}
+            onStopSequenceSearch={handleStopSequenceSearch}
             onLoadMode={handleLoadMode}
             onSendRequest={handleSendRequest}
             onClearAll={handleClearAll}
