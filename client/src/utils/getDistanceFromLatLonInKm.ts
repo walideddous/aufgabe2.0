@@ -1,7 +1,6 @@
 // Typescript
 import { Tstations } from "../types/types"
 
-
 const getpreciseDistanceFromLatLonInKm = (
   lat1: number,
   lon1: number,
@@ -117,11 +116,9 @@ const getDistanceFromLatLonInKm = (
   lat2: number,
   lon2: number
 ) => {
-  var R = 6371; // Radius of the earth in km
   var lat = Math.pow(lat2 - lat1, 2);
   var lon = Math.pow(lon2 - lon1, 2);
   var d = lat + lon;
-  var c = Math.sqrt(d)
-  return c * 100 ;
+  return d
 }
 */

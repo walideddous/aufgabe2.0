@@ -7,8 +7,8 @@ import { GET_STOPS_BY_MODES } from "../graphql/stopsQuery";
 import {
   GET_STOP_SEQUENCE_BY_KEY,
   GET_STOP_SEQUENCE_BY_NAME,
-  DELETE_STOP_SEQUENCE_BY_MODES,
-  SAVE_STOP_SEQUENCE_BY_MODES
+  DELETE_STOP_SEQUENCE,
+  SAVE_STOP_SEQUENCE,
 } from "../graphql/stopSequencesQuery";
 
 // Typescript
@@ -33,7 +33,7 @@ export default function useIndexHooks() {
     suggestions: {
       title: "Suggestion",
       items: [],
-    }, 
+    },
     trajekt: {
       title: "Stop sequence",
       items: [],
@@ -50,42 +50,50 @@ export default function useIndexHooks() {
   ] = useState<boolean>(true);
 
   const [queryStopSequenceByKey, stopSequenceByKeyResponse] = useLazyQuery(
-    GET_STOP_SEQUENCE_BY_KEY,{
-      fetchPolicy: "network-only"
+    GET_STOP_SEQUENCE_BY_KEY,
+    {
+      fetchPolicy: "network-only",
     }
   );
   const [getStopsByMode, stopsResponse] = useLazyQuery(GET_STOPS_BY_MODES);
-  const [
-    deleteStopSequenceMutation,
-  ] = useMutation(DELETE_STOP_SEQUENCE_BY_MODES);
-  const [saveStopSequenceMutation] = useMutation(SAVE_STOP_SEQUENCE_BY_MODES)
-
   const [queryStopSequenceByName, stopSequenceByNameResponse] = useLazyQuery(
-    GET_STOP_SEQUENCE_BY_NAME,{
-      fetchPolicy: "network-only"
+    GET_STOP_SEQUENCE_BY_NAME,
+    {
+      fetchPolicy: "network-only",
     }
   );
+  
+  const [deleteStopSequenceMutation] = useMutation(
+    DELETE_STOP_SEQUENCE
+  );
+  const [saveStopSequenceMutation] = useMutation(SAVE_STOP_SEQUENCE);
 
-  // Update the state when the stopsSequence is queried by name 
-  useEffect(()=>{
-    if(stopSequenceByNameResponse.data){
-      const {RouteManagerItemsByName  } = stopSequenceByNameResponse.data
+  // Update the state when the stopsSequence is queried by name
+  useEffect(() => {
+    if (stopSequenceByNameResponse.data) {
+      const { RouteManagerItemsByName } = stopSequenceByNameResponse.data;
 
-      setStopSequenceList(RouteManagerItemsByName)
+      setStopSequenceList(RouteManagerItemsByName);
     }
-    if(stopSequenceByNameResponse.error){
-      console.error("Error from stopSequenceByNameResponse"+ stopSequenceByNameResponse.error.message )
+    if (stopSequenceByNameResponse.error) {
+      console.error(
+        "Error from stopSequenceByNameResponse " +
+          stopSequenceByNameResponse.error.message
+      );
     }
-  },[stopSequenceByNameResponse])
+  }, [stopSequenceByNameResponse]);
 
   // Search the stop sequence by name function
-  const handleStopSequenceSearch = useCallback((name: string) => {
-    queryStopSequenceByName({
-      variables: {name}
-    })
-  },[queryStopSequenceByName]);
+  const handleStopSequenceSearch = useCallback(
+    (name: string) => {
+      queryStopSequenceByName({
+          variables: { name },
+        }); 
+    },
+    [queryStopSequenceByName]
+  );
 
-  // Update the state when the stops is queried 
+  // Update the state when the stops is queried
   useEffect(() => {
     if (stopsResponse.data) {
       const { PTStopItems } = stopsResponse.data;
@@ -97,16 +105,14 @@ export default function useIndexHooks() {
 
       // End loading
       setIsSending(false);
-    } 
+    }
 
-    if (stopsResponse.error ) {
-      console.error("Error to fetch the stops"+ stopsResponse.error.message );
+    if (stopsResponse.error) {
+      console.error("Error to fetch the stops " + stopsResponse.error.message);
       // End loading
       setIsSending(false);
     }
-
   }, [stopsResponse]);
-
 
   // Send the request when you click on get the Data button
   const handleSendRequest = useCallback(
@@ -115,17 +121,7 @@ export default function useIndexHooks() {
       // Start loading
       setIsSending(true);
       setCurrentMode(modes);
-      setSelected(undefined);
-      setStateDND({
-        suggestions: {
-          title: "Suggestion",
-          items: [],
-        },
-        trajekt: {
-          title: "Stop sequence",
-          items: [],
-        },
-      });
+
       console.log("start fetching");
 
       // Dispatch the stops GraphQl query
@@ -136,22 +132,11 @@ export default function useIndexHooks() {
     [isSending, getStopsByMode]
   );
 
-    // set the mode Load or New
-    const handleLoadMode = useCallback((value: boolean) => {
-      if(!value) {
-        setCurrentStopSequence({})
-      } else {
-        setLoadStopSequenceSection(value);
-      }
-    }, []);
-
   // Select the Station in drop part from the drapDrop component to show the suggestion
   const handleClickOnDrop = useCallback(
-    (e: any, index: number) => {
-      const { _id, name, coord, modes } = e;
-      const response = { _id, name, coord, modes };
-      setSelected({ ...response, index });
-      var vorschläge = calculateDistanceAndSort(response, stations);
+    (stop: any, index: number) => {
+      setSelected({ ...stop, index });
+      var vorschläge = calculateDistanceAndSort(stop, stations);
       // Delete the repetition from the Suggestion Field
       vorschläge = vorschläge.filter(
         (el: any) =>
@@ -181,10 +166,8 @@ export default function useIndexHooks() {
 
   // add the stations to the Stop sequence field when we click on button suggestion
   const handleAddStopsOnCLick = useCallback(
-    (input: any) => {
-      const { _id, name, modes, coord } = input;
-      const response = { _id, name, modes, coord };
-      var vorschläge = calculateDistanceAndSort(response, stations);
+    (stop: any) => {
+      var vorschläge = calculateDistanceAndSort(stop, stations);
       // Delete the repetition from the Suggestion Field
       vorschläge = vorschläge.filter(
         (el: any) =>
@@ -195,7 +178,7 @@ export default function useIndexHooks() {
       const index = stateDND.trajekt.items
         .map((el: any) => el._id)
         .indexOf(selected?._id);
-      setSelected({ ...response, index: index + 1 });
+      setSelected({ ...stop, index: index + 1 });
 
       setStateDND((prev: any) => {
         return {
@@ -204,7 +187,7 @@ export default function useIndexHooks() {
             title: "Stop sequence",
             items: prev.trajekt.items
               .slice(0, index + 1)
-              .concat({ ...response })
+              .concat({ ...stop })
               .concat(prev.trajekt.items.slice(index + 1)),
           },
           suggestions: {
@@ -227,12 +210,12 @@ export default function useIndexHooks() {
 
   // Delete stops from Drop Component
   const handleDeleteOnDND = useCallback(
-    (input: any, index: number) => {
+    (stop: any, index: number) => {
       let vorschläge: any;
       if (
         selected &&
         stateDND.trajekt.items.length > 1 &&
-        input._id + index === selected?._id + selected?.index
+        stop._id + index === selected?._id + selected?.index
       ) {
         let newValue: any;
         let newIndex: any;
@@ -249,7 +232,7 @@ export default function useIndexHooks() {
         vorschläge = vorschläge.filter(
           (el: any) =>
             !stateDND.trajekt.items
-              .filter((el) => input._id !== el._id)
+              .filter((el) => stop._id !== el._id)
               .map((el: any) => el._id)
               .includes(el.to._id)
         );
@@ -260,7 +243,7 @@ export default function useIndexHooks() {
             trajekt: {
               title: "Stop sequence",
               items: stateDND.trajekt.items.filter(
-                (item: any, i: number) => item._id + i !== input._id + index
+                (item: any, i: number) => item._id + i !== stop._id + index
               ),
             },
             suggestions: {
@@ -282,7 +265,7 @@ export default function useIndexHooks() {
       if (
         stateDND.trajekt.items.length > 1 &&
         //@ts-ignore
-        input._id + index !== selected?._id + selected?.index
+        stop._id + index !== selected?._id + selected?.index
       ) {
         //@ts-ignore
         if (index < selected?.index) {
@@ -299,7 +282,7 @@ export default function useIndexHooks() {
         vorschläge = vorschläge.filter(
           (el: any) =>
             !stateDND.trajekt.items
-              .filter((el) => input._id !== el._id)
+              .filter((el) => stop._id !== el._id)
               .map((el: any) => el._id)
               .includes(el.to._id)
         );
@@ -310,7 +293,7 @@ export default function useIndexHooks() {
             trajekt: {
               title: "Stop sequence",
               items: stateDND.trajekt.items.filter(
-                (item: any, i: number) => item._id + i !== input._id + index
+                (item: any, i: number) => item._id + i !== stop._id + index
               ),
             },
             suggestions: {
@@ -336,7 +319,7 @@ export default function useIndexHooks() {
             trajekt: {
               title: "Stop sequence",
               items: stateDND.trajekt.items.filter(
-                (item: any, i: number) => item._id + i !== input._id + index
+                (item: any, i: number) => item._id + i !== stop._id + index
               ),
             },
             suggestions: {
@@ -352,11 +335,8 @@ export default function useIndexHooks() {
 
   // to select stops from the Stop search input field
   const handleSelectAutoSearch = useCallback(
-    (selectedStop: string) => {
-      const elementSelected = stations.filter(
-        (el) => el.name === selectedStop
-      )[0];
-      var vorschläge = calculateDistanceAndSort(elementSelected, stations);
+    (stop:Tstations) => {
+      var vorschläge = calculateDistanceAndSort(stop, stations);
       // Delete the repetition from the Suggestion Field
       vorschläge = vorschläge.filter(
         (el: any) =>
@@ -374,7 +354,7 @@ export default function useIndexHooks() {
               title: "Stop sequence",
               items: prev.trajekt.items
                 .slice(0, index + 1)
-                .concat({ ...elementSelected })
+                .concat({ ...stop })
                 .concat(prev.trajekt.items.slice(index + 1)),
             },
             suggestions: {
@@ -391,10 +371,10 @@ export default function useIndexHooks() {
             },
           };
         });
-        setSelected({ ...elementSelected, index: index + 1 });
+        setSelected({ ...stop, index: index + 1 });
       } else {
         setSelected({
-          ...elementSelected,
+          ...stop,
           index: stateDND.trajekt.items.length,
         });
         setStateDND((prev: any) => {
@@ -405,7 +385,7 @@ export default function useIndexHooks() {
               items: [
                 ...prev.trajekt.items,
                 {
-                  ...elementSelected,
+                  ...stop,
                 },
               ],
             },
@@ -469,8 +449,10 @@ export default function useIndexHooks() {
 
   // Context menu to add the stop After the selected stops in the drop Menu
   const handleAddAfterSelected = useCallback(
-    (e: string) => {
-      const response = stations.filter((el) => el.name === e)[0];
+    (stopMarker: any) => {
+      console.log("stopMarker",stopMarker)
+      const response = stations.filter((el) => el.name === stopMarker.name)[0];
+      console.log("response",response)
       if (
         selected &&
         stateDND.trajekt.items.filter((item: any) => item._id === selected._id)
@@ -522,8 +504,8 @@ export default function useIndexHooks() {
 
   // Context menu to add the stop before the selected stops in the drop Menu
   const handleAddBeforSelected = useCallback(
-    (e: string) => {
-      const response = stations.filter((el: any) => el.name === e)[0];
+    (stopName: string) => {
+      const response = stations.filter((el: any) => el.name === stopName)[0];
       if (
         selected &&
         stateDND.trajekt.items.filter((item: any) => item._id === selected._id)
@@ -658,38 +640,37 @@ export default function useIndexHooks() {
     setCurrentStopSequence({});
   }, [handleResetStopSequence]);
 
-
   // Save the stop sequence
   const handleSaveStopSequence = useCallback(
     async (formInput: any) => {
       const { items } = stateDND.trajekt;
-      let body:any
+      let body: any;
 
-      if (isSending) return console.log("Please wait") ;
-      if (!items.length) return console.log("Please create your stop sequence") ;
+      if (isSending) return console.log("Please wait");
+      if (!items.length) return console.log("Please create your stop sequence");
 
-      if(Object.keys(currentStopSequence).length){
-        body={
+      if (Object.keys(currentStopSequence).length) {
+        body = {
           ...currentStopSequence,
           name: formInput.name,
           schedule: formInput.schedule,
-          stopSequence: items.map((item:any)=> ({
-            key:  item.key,
-            name: item.name
+          stopSequence: items.map((item: any) => ({
+            key: item.key,
+            name: item.name,
           })),
-        }
-      } else {    
-       body = {
-        ...formInput,
-        _id: v4(),
-        key: v4(),
-        desc: formInput.desc ? formInput.desc  : "Exemple hard coded" ,
-        modes: currentMode,
-        stopSequence: items.map((item:any)=> ({
-          key:  item.key,
-          name: item.name
-        })),
-      };
+        };
+      } else {
+        body = {
+          ...formInput,
+          _id: v4(),
+          key: v4(),
+          desc: formInput.desc ? formInput.desc : "Exemple hard coded",
+          modes: currentMode,
+          stopSequence: items.map((item: any) => ({
+            key: item.key,
+            name: item.name,
+          })),
+        };
       }
 
       // update state
@@ -698,7 +679,7 @@ export default function useIndexHooks() {
       try {
         // GraphQl
         const saveResponse = await saveStopSequenceMutation({
-          variables:{data: body}
+          variables: { data: body },
         });
 
         if (saveResponse.data.RouteManagerAdd) {
@@ -715,27 +696,37 @@ export default function useIndexHooks() {
       // once the request is sent, update state again
       setIsSending(false);
     },
-    [stateDND.trajekt, isSending, currentMode, currentStopSequence,handleClearAll, saveStopSequenceMutation]
+    [
+      stateDND,
+      isSending,
+      currentMode,
+      currentStopSequence,
+      handleClearAll,
+      saveStopSequenceMutation,
+    ]
   );
 
   // Load the stop sequence and the stop when we dispatch handledisplayStopSequence function
-  useEffect(()=>{
-    if(stopsResponse.data && stopSequenceByKeyResponse.data){
+  useEffect(() => {
+    if (stopsResponse.data && stopSequenceByKeyResponse.data) {
       const { PTStopItems } = stopsResponse.data;
-      const {RouteManagerItemByKey } = stopSequenceByKeyResponse.data
+      const { RouteManagerItemByKey } = stopSequenceByKeyResponse.data;
 
       //// -> Format stops and set the state
       const stopsFormatted = formatPTStopItems(PTStopItems);
       setStations(stopsFormatted);
       setUpdateDate(Date().toString().substr(4, 24));
 
+      // Check if the stops mode is equal to the stopSequence mode 
+      if(!PTStopItems[0].data.modes.filter((mode:string) => mode === RouteManagerItemByKey[0].modes[0]).length) return setIsSending(false);
+
       //// -> Format stopSequence and set the state
       const routeManagerFormatted = formatStopSequenceItems(
-        stopsFormatted,
-        RouteManagerItemByKey
-      );
+          stopsFormatted,
+          RouteManagerItemByKey
+        );
 
-      setCurrentMode([...routeManagerFormatted[0].modes])
+      setCurrentMode([...routeManagerFormatted[0].modes]);
       setCurrentStopSequence({ ...routeManagerFormatted[0] });
       setStateDND((prev) => {
         return {
@@ -748,31 +739,37 @@ export default function useIndexHooks() {
       });
 
       // End loading
-      setIsSending(false); 
+      setIsSending(false);
     }
 
-    if (stopsResponse.error ) {
-      console.error("Error to fetch the stops"+ stopsResponse.error.message );
+    if (stopsResponse.error) {
+      console.error("Error to fetch the stops" + stopsResponse.error.message);
       // End loading
       setIsSending(false);
     }
 
     if (stopSequenceByKeyResponse.error) {
-      console.error("Error to fetch the stopSequenceByKeyResponse"+ stopSequenceByKeyResponse.error.message );
+      console.error(
+        "Error to fetch the stopSequenceByKeyResponse" +
+          stopSequenceByKeyResponse.error.message
+      );
       // End loading
       setIsSending(false);
     }
-
-  },[stopsResponse,stopSequenceByKeyResponse])
+  }, [stopsResponse, stopSequenceByKeyResponse]);
 
   // Display the stop sequence on map
-  const handledisplayStopSequence = useCallback((modes: string[], key:string) => {
-    // Dispatch the stops GraphQl query
-    getStopsByMode({ variables: { modes } });
-    // Dispatch the stop sequence GraphQl query
-    queryStopSequenceByKey({ variables: { key}})
+  const handledisplayStopSequence = useCallback(
+    (modes: string[], key: string) => {
+      // Dispatch the stops GraphQl query
+      getStopsByMode({ variables: { modes } });
 
-  }, [getStopsByMode, queryStopSequenceByKey]);
+      // Dispatch the stop sequence GraphQl query
+      queryStopSequenceByKey({ variables: { key } });
+      setCurrentMode(modes)
+    },
+    [getStopsByMode, queryStopSequenceByKey]
+  );
 
   // Delete the stop sequence by Id
   const handleDeleteStopSequence = useCallback(
@@ -797,17 +794,24 @@ export default function useIndexHooks() {
         } else {
           message.error("Couldn't delete the stop sequence");
         }
-
       } catch (err) {
         console.log("Error from deleteStopSequence tryCatch", err);
       }
       setIsSending(false);
     },
-    [
-      isSending,
-      deleteStopSequenceMutation,
-      handleClearAll,
-    ]
+    [isSending, deleteStopSequenceMutation, handleClearAll]
+  );
+
+  // set the mode Load or New
+  const handleLoadMode = useCallback(
+    (value: boolean) => {
+      setLoadStopSequenceSection(value);
+      if (!value) {
+        handleClearAll();
+        setSelected(undefined);
+      }
+    },
+    [handleClearAll]
   );
 
   return {

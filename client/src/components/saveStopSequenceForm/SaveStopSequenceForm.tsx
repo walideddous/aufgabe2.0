@@ -36,8 +36,9 @@ const SaveStopSequenceForm = ({
   onSaveStopSequence,
 }: Tprops) => {
   const [form] = Form.useForm();
-  const [name, setName] = useState("");
-  const [addSchedule, setAddSchedule] = useState(false);
+  const initializeRef = React.useRef<boolean>(false);
+  const [name, setName] = useState<string>("");
+  const [addSchedule, setAddSchedule] = useState<boolean>(false);
   const [tags, setTags] = useState<
     {
       date: string;
@@ -59,13 +60,20 @@ const SaveStopSequenceForm = ({
   }>();
 
   useEffect(() => {
-    if (Object.keys(currentStopSequence).length) {
-      setSavedForm(currentStopSequence);
-      form.setFieldsValue({
-        name: currentStopSequence.name,
-      });
+    if (initializeRef.current) {
+      if (Object.keys(currentStopSequence).length) {
+        setSavedForm(currentStopSequence);
+        form.setFieldsValue({
+          name: currentStopSequence.name,
+        });
+      } else {
+        setSavedForm({ name: "", schedule: [] });
+        form.setFieldsValue({
+          name: "",
+        });
+      }
     } else {
-      setSavedForm({ name: "", schedule: [] });
+      initializeRef.current = true;
     }
   }, [currentStopSequence, form]);
 

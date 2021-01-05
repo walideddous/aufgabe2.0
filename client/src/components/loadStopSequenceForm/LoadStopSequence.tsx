@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { AutoComplete, Radio, Card, Form, Select, Button } from "antd";
 
 interface TLoadStopSequence {
@@ -32,6 +32,23 @@ const LoadStopSequence = ({
 
   // Auto complete component
   const { Option } = AutoComplete;
+
+  useEffect(() => {
+    if (currentMode[0]) {
+      setSelectValue(currentMode[0] + "");
+    }
+  }, [currentMode]);
+
+  // implementing the debouncing
+  useEffect(() => {
+    if (search) {
+      const dispatchRequest = setTimeout(() => {
+        onStopSequenceSearch(search);
+      }, 200);
+
+      return () => clearTimeout(dispatchRequest);
+    }
+  }, [search, onStopSequenceSearch]);
 
   // handle the drop menu to display the choosed Modes on Map
   const handleModeChange = useCallback(
@@ -129,7 +146,6 @@ const LoadStopSequence = ({
                 id="stopSequence_autoComplete"
                 onChange={(input: string) => {
                   setSearch(input);
-                  onStopSequenceSearch(input);
                 }}
                 value={search}
                 onSelect={handleSelect}

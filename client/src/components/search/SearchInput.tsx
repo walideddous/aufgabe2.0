@@ -6,7 +6,7 @@ import { Tstations } from "../../types/types";
 
 interface TporpsSearchInput {
   stations: Tstations[];
-  handleSelectAutoSearch: (selectedStop: string) => void;
+  handleSelectAutoSearch: (selectedStop: Tstations) => void;
 }
 
 // Auto complete component
@@ -35,9 +35,11 @@ const SearchInput = ({
         value={search}
         placeholder="Enter stops name"
         open={search ? true : false}
-        onSelect={(selectedStop: string) => {
+        onSelect={(selectedStop: string, option: any) => {
+          const { _id, name, modes, coord } = option;
+          const stop = { _id, name, modes, coord };
           setSearch("");
-          handleSelectAutoSearch(selectedStop);
+          handleSelectAutoSearch(stop);
         }}
         onSearch={(input: string) => {
           setSearch(input);
@@ -52,7 +54,7 @@ const SearchInput = ({
               el.name.toLowerCase().startsWith(search.toLowerCase())
             )
             .map((el: Tstations) => (
-              <Option value={el.name} key={el._id}>
+              <Option value={el.name} key={el._id} {...el}>
                 <i
                   className="fas fa-subway"
                   style={{ color: "#1890ff", margin: "0 10px" }}

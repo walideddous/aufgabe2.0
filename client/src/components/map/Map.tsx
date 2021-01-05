@@ -30,10 +30,10 @@ interface TpropsOnMap {
   distance: Tdistance[];
   currentStopSequence: any;
   onResetStopSequence: () => void;
-  onSelectAutoSearch: (selectedStop: string) => void;
-  onAddBeforSelected: (e: string) => void;
-  onAddAfterSelected: (e: string) => void;
-  onDeleteMarkerFromMap: (e: string) => void;
+  onSelectAutoSearch: (stop: Tstations) => void;
+  onAddBeforSelected: (stopMarker: any) => void;
+  onAddAfterSelected: (stopMarker: any) => void;
+  onDeleteMarkerFromMap: (stopMarker: any) => void;
   onClickOnMapMarker: (el: Tstations, index: number) => void;
 }
 
@@ -65,12 +65,14 @@ const Map = ({
   }, [stations]);
 
   const stopSequenceMarkers = useMemo(() => {
-    return stateDND.trajekt.items.map((el: any) => {
-      return {
-        ...el,
-        coord: { WGS84: [el.coord.WGS84.lat, el.coord.WGS84.lon] },
-      };
-    });
+    if (stateDND.trajekt.items.length) {
+      return stateDND.trajekt.items.map((el: any) => {
+        return {
+          ...el,
+          coord: { WGS84: [el.coord.WGS84.lat, el.coord.WGS84.lon] },
+        };
+      });
+    }
   }, [stateDND]);
 
   // Center the Map
@@ -96,29 +98,33 @@ const Map = ({
   }, [distance]);
 
   const clickOnMarker = useCallback(
-    (el: any, index: number) => {
-      onClickOnMapMarker(el, index);
+    (stationMarker: any, index: number) => {
+      onClickOnMapMarker(stationMarker, index);
     },
     [onClickOnMapMarker]
   );
 
   const addBeforSelected = useCallback(
-    (e: any) => {
-      onAddBeforSelected(e.relatedTarget._tooltip._content);
+    (value: any) => {
+      const { marker } = value.relatedTarget.options;
+      onAddBeforSelected(marker);
     },
     [onAddBeforSelected]
   );
 
   const addAfterSelected = useCallback(
-    (e: any) => {
-      onAddAfterSelected(e.relatedTarget._tooltip._content);
+    (value: any) => {
+      const { marker } = value.relatedTarget.options;
+      console.log("map marker", marker);
+      onAddAfterSelected(marker);
     },
     [onAddAfterSelected]
   );
 
   const deleteMarkerFromMap = useCallback(
-    (e: any) => {
-      onDeleteMarkerFromMap(e.relatedTarget._tooltip._content);
+    (value: any) => {
+      const { marker } = value.relatedTarget.options;
+      onDeleteMarkerFromMap(marker);
     },
     [onDeleteMarkerFromMap]
   );
@@ -164,11 +170,14 @@ const Map = ({
   useEffect(() => {
     layerRef.current.clearLayers();
 
-    const markers = L.markerClusterGroup();
+    const markers = L.markerClusterGroup({
+      disableClusteringAtZoom: 14,
+      chunkedLoading: true,
+    });
 
     //@ts-ignore
-    stationsRef.forEach((el: any, index: number) => {
-      const marker = L.circleMarker(el.coord.WGS84, {
+    stationsRef.forEach((stationMarker: any, index: number) => {
+      const marker = L.circleMarker(stationMarker.coord.WGS84, {
         //@ts-ignore
         contextmenu: true,
         contextmenuWidth: "200",
@@ -196,19 +205,22 @@ const Map = ({
           },
         ],
         id: "Marker",
+        marker: stationMarker,
         color:
-          selected && selected._id === el._id
+          selected && selected._id === stationMarker._id
             ? "red"
             : stateDND.suggestions.items.length &&
-              stateDND.suggestions.items.map((el) => el._id).includes(el._id)
+              stateDND.suggestions.items
+                .map((el) => el._id)
+                .includes(stationMarker._id)
             ? "green"
             : "blue",
       }).addTo(markers);
 
       markers.addTo(layerRef.current);
 
-      marker.bindTooltip(el.name);
-      marker.on("click", () => clickOnMarker(el, index));
+      marker.bindTooltip(stationMarker.name);
+      marker.on("click", () => clickOnMarker(stationMarker, index));
     });
   }, [
     stationsRef,
@@ -225,9 +237,11 @@ const Map = ({
   // Update polyline
   useEffect(() => {
     polylineRef.current.clearLayers();
-    L.polyline(getPathFromTrajekt(stopSequenceMarkers), {
-      color: "red",
-    }).addTo(polylineRef.current);
+    if (stopSequenceMarkers) {
+      L.polyline(getPathFromTrajekt(stopSequenceMarkers), {
+        color: "red",
+      }).addTo(polylineRef.current);
+    }
   }, [stopSequenceMarkers]);
 
   // Center the map when we load the stopSequence
