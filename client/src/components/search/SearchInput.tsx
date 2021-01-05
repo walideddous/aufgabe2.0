@@ -36,8 +36,7 @@ const SearchInput = ({
         placeholder="Enter stops name"
         open={search ? true : false}
         onSelect={(selectedStop: string, option: any) => {
-          const { _id, name, modes, coord } = option;
-          const stop = { _id, name, modes, coord };
+          const { stop } = option;
           setSearch("");
           handleSelectAutoSearch(stop);
         }}
@@ -54,7 +53,7 @@ const SearchInput = ({
               el.name.toLowerCase().startsWith(search.toLowerCase())
             )
             .map((el: Tstations) => (
-              <Option value={el.name} key={el._id} {...el}>
+              <Option value={el.name} key={el._id} stop={{ ...el }}>
                 <i
                   className="fas fa-subway"
                   style={{ color: "#1890ff", margin: "0 10px" }}

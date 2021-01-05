@@ -167,29 +167,31 @@ const LoadStopSequence = ({
                   ))}
               </AutoComplete>
             </Form.Item>
-            <div style={{ display: "flex", justifyContent: "flex-end" }}>
-              <Button
-                type="primary"
-                id="delete_stopSequence"
-                danger
-                disabled={
-                  search &&
-                  currentStopSequence &&
-                  search === currentStopSequence.name
-                    ? false
-                    : true
-                }
-                onClick={() => {
-                  if (currentStopSequence) {
-                    const { _id } = currentStopSequence;
-                    onDeleteStopSequence(_id);
-                    setSearch("");
+            {currentStopSequence && (
+              <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                <Button
+                  type="primary"
+                  id="delete_stopSequence"
+                  danger
+                  disabled={
+                    search &&
+                    currentStopSequence &&
+                    search === currentStopSequence.name
+                      ? false
+                      : true
                   }
-                }}
-              >
-                Delete stop sequence
-              </Button>
-            </div>
+                  onClick={() => {
+                    if (currentStopSequence) {
+                      const { _id } = currentStopSequence;
+                      onDeleteStopSequence(_id);
+                      setSearch("");
+                    }
+                  }}
+                >
+                  Delete stop sequence
+                </Button>
+              </div>
+            )}
           </>
         )}
       </Form>

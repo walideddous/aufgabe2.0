@@ -203,7 +203,12 @@ const SaveStopSequenceForm = ({
   return (
     <Card bordered={true}>
       <Collapse
-        activeKey={currentStopSequence && loadStopSequenceSection ? "2" : "1"}
+        activeKey={
+          (loadStopSequenceSection && currentStopSequence) ||
+          !loadStopSequenceSection
+            ? "1"
+            : "2"
+        }
       >
         <Panel header="Stop sequence save form" key="1">
           <Form
@@ -409,7 +414,12 @@ const SaveStopSequenceForm = ({
                       ...savedForm,
                       name: name !== "" ? name : savedForm?.name,
                       stopSequence: stateDND.trajekt.items,
-                    }) !== JSON.stringify(currentStopSequence)
+                    }) !==
+                      JSON.stringify({
+                        name: currentStopSequence?.name,
+                        schedule: currentStopSequence?.schedule,
+                        stopSequence: currentStopSequence?.stopSequence,
+                      })
                       ? false
                       : true
                   }

@@ -106,7 +106,7 @@ export const calculateDistanceAndSort = (
     }
   );
 
-  return sortedTable.slice(0, 100);
+  return sortedTable.slice(0, 16);
 }
 
 /*

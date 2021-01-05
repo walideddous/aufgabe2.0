@@ -43,7 +43,10 @@ export default function useIndexHooks() {
   const [stopSequenceList, setStopSequenceList] = useState<TStopSequence[]>([]);
   const [updateDate, setUpdateDate] = useState<string>("");
   const [currentMode, setCurrentMode] = useState<string[]>([]);
-  const [currentStopSequence, setCurrentStopSequence] = useState<TStopSequence>();
+  const [
+    currentStopSequence,
+    setCurrentStopSequence,
+  ] = useState<TStopSequence>();
   const [
     loadStopSequenceSection,
     setLoadStopSequenceSection,
@@ -62,10 +65,8 @@ export default function useIndexHooks() {
       fetchPolicy: "network-only",
     }
   );
-  
-  const [deleteStopSequenceMutation] = useMutation(
-    DELETE_STOP_SEQUENCE
-  );
+
+  const [deleteStopSequenceMutation] = useMutation(DELETE_STOP_SEQUENCE);
   const [saveStopSequenceMutation] = useMutation(SAVE_STOP_SEQUENCE);
 
   // Update the state when the stopsSequence is queried by name
@@ -87,8 +88,8 @@ export default function useIndexHooks() {
   const handleStopSequenceSearch = useCallback(
     (name: string) => {
       queryStopSequenceByName({
-          variables: { name },
-        }); 
+        variables: { name },
+      });
     },
     [queryStopSequenceByName]
   );
@@ -148,15 +149,13 @@ export default function useIndexHooks() {
           ...prev,
           suggestions: {
             title: "Suggestion",
-            items: vorschläge
-              .map((el: any) => {
-                return {
-                  ...el.to,
-                  angle: el.angle,
-                  distance: el.distance,
-                };
-              })
-              .slice(0, 16),
+            items: vorschläge.map((el: any) => {
+              return {
+                ...el.to,
+                angle: el.angle,
+                distance: el.distance,
+              };
+            }),
           },
         };
       });
@@ -192,15 +191,13 @@ export default function useIndexHooks() {
           },
           suggestions: {
             title: "Suggestion",
-            items: vorschläge
-              .map((el: any) => {
-                return {
-                  ...el.to,
-                  angle: el.angle,
-                  distance: el.distance,
-                };
-              })
-              .slice(0, 16),
+            items: vorschläge.map((el: any) => {
+              return {
+                ...el.to,
+                angle: el.angle,
+                distance: el.distance,
+              };
+            }),
           },
         };
       });
@@ -248,15 +245,13 @@ export default function useIndexHooks() {
             },
             suggestions: {
               title: "Suggestion",
-              items: vorschläge
-                .map((el: any) => {
-                  return {
-                    ...el.to,
-                    angle: el.angle,
-                    distance: el.distance,
-                  };
-                })
-                .slice(0, 16),
+              items: vorschläge.map((el: any) => {
+                return {
+                  ...el.to,
+                  angle: el.angle,
+                  distance: el.distance,
+                };
+              }),
             },
           };
         });
@@ -298,15 +293,13 @@ export default function useIndexHooks() {
             },
             suggestions: {
               title: "Suggestion",
-              items: vorschläge
-                .map((el: any) => {
-                  return {
-                    ...el.to,
-                    angle: el.angle,
-                    distance: el.distance,
-                  };
-                })
-                .slice(0, 16),
+              items: vorschläge.map((el: any) => {
+                return {
+                  ...el.to,
+                  angle: el.angle,
+                  distance: el.distance,
+                };
+              }),
             },
           };
         });
@@ -335,7 +328,7 @@ export default function useIndexHooks() {
 
   // to select stops from the Stop search input field
   const handleSelectAutoSearch = useCallback(
-    (stop:Tstations) => {
+    (stop: Tstations) => {
       var vorschläge = calculateDistanceAndSort(stop, stations);
       // Delete the repetition from the Suggestion Field
       vorschläge = vorschläge.filter(
@@ -359,15 +352,13 @@ export default function useIndexHooks() {
             },
             suggestions: {
               title: "Suggestion",
-              items: vorschläge
-                .map((el: any) => {
-                  return {
-                    ...el.to,
-                    angle: el.angle,
-                    distance: el.distance,
-                  };
-                })
-                .slice(0, 16),
+              items: vorschläge.map((el: any) => {
+                return {
+                  ...el.to,
+                  angle: el.angle,
+                  distance: el.distance,
+                };
+              }),
             },
           };
         });
@@ -391,15 +382,13 @@ export default function useIndexHooks() {
             },
             suggestions: {
               title: "Suggestion",
-              items: vorschläge
-                .map((el: any) => {
-                  return {
-                    ...el.to,
-                    angle: el.angle,
-                    distance: el.distance,
-                  };
-                })
-                .slice(0, 16),
+              items: vorschläge.map((el: any) => {
+                return {
+                  ...el.to,
+                  angle: el.angle,
+                  distance: el.distance,
+                };
+              }),
             },
           };
         });
@@ -420,8 +409,11 @@ export default function useIndexHooks() {
       ) {
         return;
       }
-      if(destination.droppableId === "suggestions" && source.droppableId==="suggestions" ) {
-         return 
+      if (
+        destination.droppableId === "suggestions" &&
+        source.droppableId === "suggestions"
+      ) {
+        return;
       }
       const itemCopy = {
         ...getProperty(stateDND, source.droppableId).items[source.index],
@@ -457,8 +449,9 @@ export default function useIndexHooks() {
         selected &&
         stateDND.trajekt.items.filter((item: any) => item._id === selected._id)
           .length &&
-        stateDND.trajekt.items.filter((item: any) => item._id === stopMarker._id)
-          .length === 0
+        stateDND.trajekt.items.filter(
+          (item: any) => item._id === stopMarker._id
+        ).length === 0
       ) {
         var vorschläge = calculateDistanceAndSort(stopMarker, stations);
         // Delete the repetition from the Suggestion Field
@@ -485,15 +478,13 @@ export default function useIndexHooks() {
             },
             suggestions: {
               title: "Suggestion",
-              items: vorschläge
-                .map((el: any) => {
-                  return {
-                    ...el.to,
-                    angle: el.angle,
-                    distance: el.distance,
-                  };
-                })
-                .slice(0, 16),
+              items: vorschläge.map((el: any) => {
+                return {
+                  ...el.to,
+                  angle: el.angle,
+                  distance: el.distance,
+                };
+              }),
             },
           };
         });
@@ -509,8 +500,9 @@ export default function useIndexHooks() {
         selected &&
         stateDND.trajekt.items.filter((item: any) => item._id === selected._id)
           .length &&
-        stateDND.trajekt.items.filter((item: any) => item._id === stopMarker._id)
-          .length === 0
+        stateDND.trajekt.items.filter(
+          (item: any) => item._id === stopMarker._id
+        ).length === 0
       ) {
         const index = stateDND.trajekt.items
           .map((el: any, i: number) => el._id + i)
@@ -535,15 +527,13 @@ export default function useIndexHooks() {
             },
             suggestions: {
               title: "Suggestion",
-              items: vorschläge
-                .map((el: any) => {
-                  return {
-                    ...el.to,
-                    angle: el.angle,
-                    distance: el.distance,
-                  };
-                })
-                .slice(0, 16),
+              items: vorschläge.map((el: any) => {
+                return {
+                  ...el.to,
+                  angle: el.angle,
+                  distance: el.distance,
+                };
+              }),
             },
           };
         });
@@ -555,7 +545,6 @@ export default function useIndexHooks() {
   // Click on Marker on Map
   const handleClickOnMapMarker = useCallback(
     (station: Tstations, index: number) => {
-
       if (selected?._id === station._id) return;
 
       if (
@@ -577,15 +566,13 @@ export default function useIndexHooks() {
             ...prev,
             suggestions: {
               title: "Suggestion",
-              items: vorschläge
-                .map((el: any) => {
-                  return {
-                    ...el.to,
-                    angle: el.angle,
-                    distance: el.distance,
-                  };
-                })
-                .slice(0, 16),
+              items: vorschläge.map((el: any) => {
+                return {
+                  ...el.to,
+                  angle: el.angle,
+                  distance: el.distance,
+                };
+              }),
             },
           };
         });
@@ -598,8 +585,9 @@ export default function useIndexHooks() {
   const handleDeleteMarkerFromMap = useCallback(
     (stopMarker: Tstations) => {
       if (
-        stateDND.trajekt.items.filter((item: any) => item._id === stopMarker._id)
-          .length
+        stateDND.trajekt.items.filter(
+          (item: any) => item._id === stopMarker._id
+        ).length
       ) {
         const index = stateDND.trajekt.items
           .map((el: any) => el._id)
@@ -607,7 +595,7 @@ export default function useIndexHooks() {
         handleDeleteOnDND(stopMarker, index);
       }
     },
-    [ stateDND.trajekt.items, handleDeleteOnDND]
+    [stateDND.trajekt.items, handleDeleteOnDND]
   );
 
   // Reset and delete all
@@ -708,14 +696,19 @@ export default function useIndexHooks() {
       setStations(stopsFormatted);
       setUpdateDate(Date().toString().substr(4, 24));
 
-      // Check if the stops mode is equal to the stopSequence mode 
-      if(!PTStopItems[0].data.modes.filter((mode:string) => mode === RouteManagerItemByKey[0].modes[0]).length) return setIsSending(false);
+      // Check if the stops mode is equal to the stopSequence mode
+      if (
+        !PTStopItems[0].data.modes.filter(
+          (mode: string) => mode === RouteManagerItemByKey[0].modes[0]
+        ).length
+      )
+        return setIsSending(false);
 
       //// -> Format stopSequence and set the state
       const routeManagerFormatted = formatStopSequenceItems(
-          stopsFormatted,
-          RouteManagerItemByKey
-        );
+        stopsFormatted,
+        RouteManagerItemByKey
+      );
 
       setCurrentMode([...routeManagerFormatted[0].modes]);
       setCurrentStopSequence({ ...routeManagerFormatted[0] });
@@ -757,7 +750,7 @@ export default function useIndexHooks() {
 
       // Dispatch the stop sequence GraphQl query
       queryStopSequenceByKey({ variables: { key } });
-      setCurrentMode(modes)
+      setCurrentMode(modes);
     },
     [getStopsByMode, queryStopSequenceByKey]
   );
