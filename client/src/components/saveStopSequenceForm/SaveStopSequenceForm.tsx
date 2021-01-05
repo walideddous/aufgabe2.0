@@ -16,7 +16,7 @@ import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 // import utils function
 import { getFormatTags } from "../../utils/getFormatTags";
 // import types
-import { TstateDND } from "../../types/types";
+import { TstateDND, TStopSequence } from "../../types/types";
 
 const { RangePicker } = TimePicker;
 const { Panel } = Collapse;
@@ -24,7 +24,7 @@ const { Option } = Select;
 
 interface Tprops {
   stateDND: TstateDND;
-  currentStopSequence: any;
+  currentStopSequence: TStopSequence | undefined;
   loadStopSequenceSection: boolean;
   onSaveStopSequence: (formData: any) => void;
 }
@@ -53,16 +53,17 @@ const SaveStopSequenceForm = ({
       to: string;
       timeSlices: {
         weekDays: string[];
-        startTime: string[];
-        endTime: string[];
+        startTime: string;
+        endTime: string;
       }[];
     }[];
   }>();
 
   useEffect(() => {
     if (initializeRef.current) {
-      if (Object.keys(currentStopSequence).length) {
-        setSavedForm(currentStopSequence);
+      if (currentStopSequence) {
+        const { name, schedule } = currentStopSequence;
+        setSavedForm({ name, schedule });
         form.setFieldsValue({
           name: currentStopSequence.name,
         });
@@ -202,11 +203,7 @@ const SaveStopSequenceForm = ({
   return (
     <Card bordered={true}>
       <Collapse
-        activeKey={
-          !Object.keys(currentStopSequence).length && loadStopSequenceSection
-            ? "2"
-            : "1"
-        }
+        activeKey={currentStopSequence && loadStopSequenceSection ? "2" : "1"}
       >
         <Panel header="Stop sequence save form" key="1">
           <Form
@@ -420,6 +417,7 @@ const SaveStopSequenceForm = ({
                     if (
                       tags.length &&
                       stateDND.trajekt.items.length &&
+                      currentStopSequence &&
                       currentStopSequence.name &&
                       !name
                     ) {

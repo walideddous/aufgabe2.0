@@ -1,9 +1,12 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { AutoComplete, Radio, Card, Form, Select, Button } from "antd";
 
+// Import types
+import { TStopSequence } from "../../types/types";
+
 interface TLoadStopSequence {
-  stopSequenceList: any;
-  currentStopSequence: any;
+  stopSequenceList: TStopSequence[];
+  currentStopSequence: TStopSequence | undefined;
   currentMode: string[];
   onStopSequenceSearch: (name: string) => void;
   onLoadMode: (value: boolean) => void;
@@ -25,10 +28,10 @@ const LoadStopSequence = ({
   ondisplayStopSequence,
 }: TLoadStopSequence) => {
   const [form] = Form.useForm();
-  const [search, setSearch] = useState("");
-  const [selectValue, setSelectValue] = useState("Choose mode");
-  const [radioButton, setRadioButton] = useState("load");
-  const [show, setShow] = useState(true);
+  const [search, setSearch] = useState<string>("");
+  const [selectValue, setSelectValue] = useState<string>("Choose mode");
+  const [radioButton, setRadioButton] = useState<string>("load");
+  const [show, setShow] = useState<boolean>(true);
 
   // Auto complete component
   const { Option } = AutoComplete;
@@ -52,7 +55,7 @@ const LoadStopSequence = ({
 
   // handle the drop menu to display the choosed Modes on Map
   const handleModeChange = useCallback(
-    (value: any) => {
+    (value: string) => {
       if (value !== "Choose mode ") {
         onSendRequest([value + ""]);
         setSelectValue(value + "");

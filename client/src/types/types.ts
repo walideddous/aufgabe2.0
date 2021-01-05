@@ -30,14 +30,21 @@ export interface Tstations {
     };
   }
 
-  export interface TcurrentStopSequence{
-    modes : string,
+  export interface TStopSequence{
+    _id: string,
+    key:string,
     name: string,
+    modes : [string],
+    desc?:string,
+    created?:string,
+    modified?:string
     schedule :{
-      date : string,
-      dayTime:{
-        day: string[],
-        time:string[]
+      from : string,
+      to : string,
+      timeSlices:{
+        startTime: string,
+        endTime: string,
+        weekDays:string[]
       }[]
     }[],
     stopSequence: Tstations[]

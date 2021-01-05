@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, Fragment, useCallback } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { Card, Col, Button } from "antd";
 import { DeleteOutlined, ArrowUpOutlined } from "@ant-design/icons";
@@ -6,15 +6,15 @@ import { DeleteOutlined, ArrowUpOutlined } from "@ant-design/icons";
 // Typescript
 import { Tstations, TstateDND } from "../../types/types";
 
-// Declare Types
+// Declare prop Types
 interface TporpsDND {
   stateDND: TstateDND;
   selected: Tstations | undefined;
   onResetStopSequence: () => void;
-  onAddStopsOnCLick: (e: any) => void;
-  onDragEnd: (e: any) => void;
-  onClickOnDrop: (e: any, index: number) => void;
-  onDeleteDND: (e: any, index: number) => void;
+  onAddStopsOnCLick: (stop: Tstations) => void;
+  onDragEnd: ({ destination, source }: any) => void;
+  onClickOnDrop: (stop: Tstations, index: number) => void;
+  onDeleteDND: (stop: Tstations, index: number) => void;
 }
 
 const DragDrop = ({
@@ -29,14 +29,14 @@ const DragDrop = ({
   const [clicked, setClicked] = useState<boolean>(false);
   const [hide, setHide] = useState<boolean>(false);
 
-  const resize = () => {
+  const resize = useCallback(() => {
     //@ts-ignore
     if (window.innerWidth < 992) {
       setHide(true);
     } else {
       setHide(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     window.addEventListener("resize", resize);

@@ -12,7 +12,7 @@ import {
 } from "../graphql/stopSequencesQuery";
 
 // Typescript
-import { TstateDND, Tstations, Tdistance } from "../types/types";
+import { TstateDND, Tstations, Tdistance, TStopSequence } from "../types/types";
 
 // Get the property from Utils
 import { getProperty } from "../utils/getPropertyKey";
@@ -39,19 +39,11 @@ export default function useIndexHooks() {
       items: [],
     },
   });
-  const [stopsSuggestions, setStopsSuggestions] = useState({
-      title: "Suggestion",
-      items: [],
-  });
-  const [stopsTrajekt, setStopsTrajekt] = useState({
-      title: "Stop sequence",
-      items: [],
-  });
   const [isSending, setIsSending] = useState<boolean>(false);
-  const [stopSequenceList, setStopSequenceList] = useState([]);
+  const [stopSequenceList, setStopSequenceList] = useState<TStopSequence[]>([]);
   const [updateDate, setUpdateDate] = useState<string>("");
   const [currentMode, setCurrentMode] = useState<string[]>([]);
-  const [currentStopSequence, setCurrentStopSequence] = useState({});
+  const [currentStopSequence, setCurrentStopSequence] = useState<TStopSequence>();
   const [
     loadStopSequenceSection,
     setLoadStopSequenceSection,
@@ -174,7 +166,7 @@ export default function useIndexHooks() {
 
   // add the stations to the Stop sequence field when we click on button suggestion
   const handleAddStopsOnCLick = useCallback(
-    (stop: any) => {
+    (stop: Tstations) => {
       var vorschläge = calculateDistanceAndSort(stop, stations);
       // Delete the repetition from the Suggestion Field
       vorschläge = vorschläge.filter(
@@ -218,7 +210,7 @@ export default function useIndexHooks() {
 
   // Delete stops from Drop Component
   const handleDeleteOnDND = useCallback(
-    (stop: any, index: number) => {
+    (stop: Tstations, index: number) => {
       let vorschläge: any;
       if (
         selected &&
@@ -428,6 +420,9 @@ export default function useIndexHooks() {
       ) {
         return;
       }
+      if(destination.droppableId === "suggestions" && source.droppableId==="suggestions" ) {
+         return 
+      }
       const itemCopy = {
         ...getProperty(stateDND, source.droppableId).items[source.index],
       };
@@ -457,7 +452,7 @@ export default function useIndexHooks() {
 
   // Context menu to add the stop After the selected stops in the drop Menu
   const handleAddAfterSelected = useCallback(
-    (stopMarker: any) => {
+    (stopMarker: Tstations) => {
       if (
         selected &&
         stateDND.trajekt.items.filter((item: any) => item._id === selected._id)
@@ -509,7 +504,7 @@ export default function useIndexHooks() {
 
   // Context menu to add the stop before the selected stops in the drop Menu
   const handleAddBeforSelected = useCallback(
-    (stopMarker: any) => {
+    (stopMarker: Tstations) => {
       if (
         selected &&
         stateDND.trajekt.items.filter((item: any) => item._id === selected._id)
@@ -601,13 +596,13 @@ export default function useIndexHooks() {
 
   // Delete marker from map
   const handleDeleteMarkerFromMap = useCallback(
-    (stopMarker: any) => {
+    (stopMarker: Tstations) => {
       if (
         stateDND.trajekt.items.filter((item: any) => item._id === stopMarker._id)
           .length
       ) {
         const index = stateDND.trajekt.items
-          .map((el: any, i: number) => el._id)
+          .map((el: any) => el._id)
           .indexOf(stopMarker._id);
         handleDeleteOnDND(stopMarker, index);
       }
@@ -633,7 +628,7 @@ export default function useIndexHooks() {
   // Clear all and delete all
   const handleClearAll = useCallback(() => {
     handleResetStopSequence();
-    setCurrentStopSequence({});
+    setCurrentStopSequence(undefined);
   }, [handleResetStopSequence]);
 
   // Save the stop sequence
@@ -645,7 +640,7 @@ export default function useIndexHooks() {
       if (isSending) return console.log("Please wait");
       if (!items.length) return console.log("Please create your stop sequence");
 
-      if (Object.keys(currentStopSequence).length) {
+      if (currentStopSequence) {
         body = {
           ...currentStopSequence,
           name: formInput.name,
@@ -786,7 +781,7 @@ export default function useIndexHooks() {
           });
 
           handleClearAll();
-          setCurrentStopSequence({});
+          setCurrentStopSequence(undefined);
         } else {
           message.error("Couldn't delete the stop sequence");
         }

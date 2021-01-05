@@ -21,14 +21,19 @@ import "leaflet-contextmenu/dist/leaflet.contextmenu.css";
 import { getPathFromTrajekt } from "../../utils/getPathFromTrajekt";
 
 // Typescript
-import { Tstations, Tdistance, TstateDND } from "../../types/types";
+import {
+  Tstations,
+  Tdistance,
+  TstateDND,
+  TStopSequence,
+} from "../../types/types";
 
 interface TpropsOnMap {
   stations: Tstations[];
   stateDND: TstateDND;
   selected: Tstations | undefined;
   distance: Tdistance[];
-  currentStopSequence: any;
+  currentStopSequence: TStopSequence | undefined;
   onResetStopSequence: () => void;
   onSelectAutoSearch: (stop: Tstations) => void;
   onAddBeforSelected: (stopMarker: any) => void;
@@ -78,7 +83,7 @@ const Map = ({
   }, [distance]);
 
   const clickOnMarker = useCallback(
-    (stationMarker: any, index: number) => {
+    (stationMarker: Tstations, index: number) => {
       onClickOnMapMarker(stationMarker, index);
     },
     [onClickOnMapMarker]
@@ -225,7 +230,7 @@ const Map = ({
 
   // Center the map when we load the stopSequence
   useEffect(() => {
-    if (Object.keys(currentStopSequence).length && !selected) {
+    if (currentStopSequence && !selected) {
       const { stopSequence } = currentStopSequence;
       var corner1 = L.latLng(
           stopSequence[0].coord[0],
@@ -262,17 +267,3 @@ const Map = ({
 };
 
 export default React.memo(Map);
-
-/*
-
-  const [stopsSuggestions, setStopsSuggestions] = useState({
-      title: "Suggestion",
-      items: [],
-  });
-  const [stopsTrajekt, setStopsTrajekt] = useState({
-      title: "Stop sequence",
-      items: [],
-  });
-
-
-*/
