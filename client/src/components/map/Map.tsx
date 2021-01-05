@@ -63,8 +63,8 @@ const Map = ({
   // Center the Map
   const position = useMemo(() => {
     return {
-      lat: 46.8155135,
-      lng: 8.224471999999992,
+      lat: 46.8007,
+      lng: 8.2227,
       zoom: 9,
     };
   }, []);
@@ -148,6 +148,18 @@ const Map = ({
   useEffect(() => {
     layerRef.current = L.layerGroup().addTo(map.current);
     polylineRef.current = L.layerGroup().addTo(map.current);
+
+    map.current.on("zoomend", function () {
+      if (map.current.getZoom() < 9 && map.current.hasLayer(layerRef.current)) {
+        map.current.removeLayer(layerRef.current);
+      }
+      if (
+        map.current.getZoom() >= 9 &&
+        map.current.hasLayer(layerRef.current) === false
+      ) {
+        map.current.addLayer(layerRef.current);
+      }
+    });
   }, []);
 
   // Update markers
@@ -247,12 +259,12 @@ const Map = ({
 
   return (
     <Fragment>
-      <div id="mapId" style={{ height: "60vh", zIndex: 0 }} />
+      <div id="mapId" style={{ height: "60vh", zIndex: 2 }} />
       <SearchInput
         stations={stations}
         handleSelectAutoSearch={onSelectAutoSearch}
       />
-      {stateDND.trajekt.items.length && (
+      {stateDND.trajekt.items.length ? (
         <div
           className="trash_button"
           onClick={() =>
@@ -261,7 +273,7 @@ const Map = ({
         >
           <DeleteOutlined style={{ paddingLeft: "8px" }} />
         </div>
-      )}
+      ) : null}
     </Fragment>
   );
 };
