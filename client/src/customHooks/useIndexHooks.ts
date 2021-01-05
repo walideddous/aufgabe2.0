@@ -39,6 +39,14 @@ export default function useIndexHooks() {
       items: [],
     },
   });
+  const [stopsSuggestions, setStopsSuggestions] = useState({
+      title: "Suggestion",
+      items: [],
+  });
+  const [stopsTrajekt, setStopsTrajekt] = useState({
+      title: "Stop sequence",
+      items: [],
+  });
   const [isSending, setIsSending] = useState<boolean>(false);
   const [stopSequenceList, setStopSequenceList] = useState([]);
   const [updateDate, setUpdateDate] = useState<string>("");
@@ -134,7 +142,7 @@ export default function useIndexHooks() {
 
   // Select the Station in drop part from the drapDrop component to show the suggestion
   const handleClickOnDrop = useCallback(
-    (stop: any, index: number) => {
+    (stop: Tstations, index: number) => {
       setSelected({ ...stop, index });
       var vorschläge = calculateDistanceAndSort(stop, stations);
       // Delete the repetition from the Suggestion Field
@@ -450,17 +458,14 @@ export default function useIndexHooks() {
   // Context menu to add the stop After the selected stops in the drop Menu
   const handleAddAfterSelected = useCallback(
     (stopMarker: any) => {
-      console.log("stopMarker",stopMarker)
-      const response = stations.filter((el) => el.name === stopMarker.name)[0];
-      console.log("response",response)
       if (
         selected &&
         stateDND.trajekt.items.filter((item: any) => item._id === selected._id)
           .length &&
-        stateDND.trajekt.items.filter((item: any) => item._id === response._id)
+        stateDND.trajekt.items.filter((item: any) => item._id === stopMarker._id)
           .length === 0
       ) {
-        var vorschläge = calculateDistanceAndSort(response, stations);
+        var vorschläge = calculateDistanceAndSort(stopMarker, stations);
         // Delete the repetition from the Suggestion Field
         vorschläge = vorschläge.filter(
           (el: any) =>
@@ -471,7 +476,7 @@ export default function useIndexHooks() {
         const index = stateDND.trajekt.items
           .map((el: any, i: number) => el._id + i)
           .indexOf(selected._id + selected.index);
-        setSelected({ ...response, index: index + 1 });
+        setSelected({ ...stopMarker, index: index + 1 });
 
         setStateDND((prev: any) => {
           return {
@@ -480,7 +485,7 @@ export default function useIndexHooks() {
               title: "Stop sequence",
               items: prev.trajekt.items
                 .slice(0, index + 1)
-                .concat({ ...response })
+                .concat({ ...stopMarker })
                 .concat(prev.trajekt.items.slice(index + 1)),
             },
             suggestions: {
@@ -504,20 +509,19 @@ export default function useIndexHooks() {
 
   // Context menu to add the stop before the selected stops in the drop Menu
   const handleAddBeforSelected = useCallback(
-    (stopName: string) => {
-      const response = stations.filter((el: any) => el.name === stopName)[0];
+    (stopMarker: any) => {
       if (
         selected &&
         stateDND.trajekt.items.filter((item: any) => item._id === selected._id)
           .length &&
-        stateDND.trajekt.items.filter((item: any) => item._id === response._id)
+        stateDND.trajekt.items.filter((item: any) => item._id === stopMarker._id)
           .length === 0
       ) {
         const index = stateDND.trajekt.items
           .map((el: any, i: number) => el._id + i)
           .indexOf(selected._id + selected.index);
-        setSelected({ ...response, index });
-        var vorschläge = calculateDistanceAndSort(response, stations);
+        setSelected({ ...stopMarker, index });
+        var vorschläge = calculateDistanceAndSort(stopMarker, stations);
         // Delete the repetition from the Suggestion Field
         vorschläge = vorschläge.filter(
           (el: any) =>
@@ -531,7 +535,7 @@ export default function useIndexHooks() {
               title: "Stop sequence",
               items: prev.trajekt.items
                 .slice(0, index)
-                .concat({ ...response })
+                .concat({ ...stopMarker })
                 .concat(prev.trajekt.items.slice(index)),
             },
             suggestions: {
@@ -555,25 +559,18 @@ export default function useIndexHooks() {
 
   // Click on Marker on Map
   const handleClickOnMapMarker = useCallback(
-    (el: Tstations, index: number) => {
-      const newValue = {
-        ...el,
-        coord: {
-          //@ts-ignore
-          WGS84: { lat: el.coord.WGS84[0], lon: el.coord.WGS84[1] },
-        },
-      };
+    (station: Tstations, index: number) => {
 
-      if (selected?._id === el._id) return;
+      if (selected?._id === station._id) return;
 
       if (
-        stateDND.trajekt.items.filter((item: any) => item._id === el._id)
+        stateDND.trajekt.items.filter((item: any) => item._id === station._id)
           .length === 0
       ) {
-        handleAddStopsOnCLick(newValue);
+        handleAddStopsOnCLick(station);
       } else {
-        setSelected({ ...newValue, index });
-        var vorschläge = calculateDistanceAndSort(newValue, stations);
+        setSelected({ ...station, index });
+        var vorschläge = calculateDistanceAndSort(station, stations);
         // Delete the repetition from the Suggestion Field
         vorschläge = vorschläge.filter(
           (el: any) =>
@@ -604,19 +601,18 @@ export default function useIndexHooks() {
 
   // Delete marker from map
   const handleDeleteMarkerFromMap = useCallback(
-    (e: string) => {
-      const response = stations.filter((el) => el.name === e)[0];
+    (stopMarker: any) => {
       if (
-        stateDND.trajekt.items.filter((item: any) => item._id === response._id)
+        stateDND.trajekt.items.filter((item: any) => item._id === stopMarker._id)
           .length
       ) {
         const index = stateDND.trajekt.items
           .map((el: any, i: number) => el._id)
-          .indexOf(response._id);
-        handleDeleteOnDND(response, index);
+          .indexOf(stopMarker._id);
+        handleDeleteOnDND(stopMarker, index);
       }
     },
-    [stations, stateDND.trajekt.items, handleDeleteOnDND]
+    [ stateDND.trajekt.items, handleDeleteOnDND]
   );
 
   // Reset and delete all

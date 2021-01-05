@@ -77,18 +77,18 @@ export const calculateDistanceAndSort = (
 
   for (let i = 0; i < filteredTable.length; i++) {
     // get the lat and lng from the table
-    const lat1 = filteredTable[i].coord.WGS84.lat;
-    const lng1 = filteredTable[i].coord.WGS84.lon;
+    const lat1 = filteredTable[i].coord[0];
+    const lng1 = filteredTable[i].coord[1];
 
     // calculate the distance between a fix point and others points
     let distance = getpreciseDistanceFromLatLonInKm(
-      coord.WGS84.lat,
-      coord.WGS84.lon,
+      coord[0],
+      coord[1],
       lat1,
       lng1
     );
     let angle = calculateAngle(
-      { lat: coord.WGS84.lat, lon: coord.WGS84.lon },
+      { lat: coord[0], lon: coord[1] },
       { lat: lat1, lon: lng1 }
     );
     result.push({

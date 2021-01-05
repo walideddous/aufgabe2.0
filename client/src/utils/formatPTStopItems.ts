@@ -4,16 +4,11 @@ export const formatPTStopItems = (PTStopItems: any) => {
       _id: PTStopItem.data._id,
       name: PTStopItem.data.name,
       modes: PTStopItem.data.modes,
-      key:PTStopItem.data.key,
-      coord: {
-        WGS84: {
-          lat: PTStopItem.geojson.geometry.coordinates[1],
-          lon: PTStopItem.geojson.geometry.coordinates[0],
-        },
-      },
+      key: PTStopItem.data.key,
+      coord: [
+        PTStopItem.geojson.geometry.coordinates[1],
+        PTStopItem.geojson.geometry.coordinates[0],
+      ],
     };
   });
 };
-
-
-

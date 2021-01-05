@@ -3,12 +3,7 @@ export interface Tstations {
     index?: number;
     _id: string;
     name: string;
-    coord: {
-      WGS84: {
-        lat: number;
-        lon: number;
-      };
-    };
+    coord: [number, number];
     modes: [string];
   }
   
