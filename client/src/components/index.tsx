@@ -38,7 +38,6 @@ const MainRoot: React.FC = () => {
     handleClickOnDrop,
     handleAddStopsOnCLick,
     handleSelectAutoSearch,
-    handleAddAfterSelected,
     handleAddBeforSelected,
     handleClickOnMapMarker,
     handleResetStopSequence,
@@ -101,7 +100,7 @@ const MainRoot: React.FC = () => {
                 onResetStopSequence={handleResetStopSequence}
                 onSelectAutoSearch={handleSelectAutoSearch}
                 onAddBeforSelected={handleAddBeforSelected}
-                onAddAfterSelected={handleAddAfterSelected}
+                onAddAfterSelected={handleAddStopsOnCLick}
                 onDeleteStop={handleDeleteStop}
                 onClickOnMapMarker={handleClickOnMapMarker}
               />

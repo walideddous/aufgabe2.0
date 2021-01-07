@@ -100,9 +100,17 @@ const Map = ({
   const addAfterSelected = useCallback(
     (value: any) => {
       const { marker } = value.relatedTarget.options;
-      onAddAfterSelected(marker);
+      if (
+        selected &&
+        stateDND.trajekt.items.filter((item: any) => item._id === selected._id)
+          .length &&
+        stateDND.trajekt.items.filter((item: any) => item._id === marker._id)
+          .length === 0
+      ) {
+        onAddAfterSelected(marker);
+      }
     },
-    [onAddAfterSelected]
+    [selected, stateDND.trajekt.items, onAddAfterSelected]
   );
 
   const deleteMarkerFromMap = useCallback(
