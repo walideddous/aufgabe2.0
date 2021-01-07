@@ -13,12 +13,10 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
           Object {
             "_id": "5f6206390d5658001cd959b40",
             "angle": -83.19868517601843,
-            "coord": Object {
-              "WGS84": Object {
-                "lat": 46.17857,
-                "lon": 6.08606,
-              },
-            },
+            "coord": Array [
+              46.17857,
+              6.08606,
+            ],
             "distance": 0.17031643195093935,
             "modes": Array [
               "4",
@@ -29,12 +27,10 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
           Object {
             "_id": "5f6206390d5658001cd959b41",
             "angle": -83.19868517601843,
-            "coord": Object {
-              "WGS84": Object {
-                "lat": 46.17857,
-                "lon": 6.08606,
-              },
-            },
+            "coord": Array [
+              46.17857,
+              6.08606,
+            ],
             "distance": 0.17031643195093935,
             "modes": Array [
               "4",
@@ -45,12 +41,10 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
           Object {
             "_id": "5f6206390d5658001cd959b42",
             "angle": -83.19868517601843,
-            "coord": Object {
-              "WGS84": Object {
-                "lat": 46.17857,
-                "lon": 6.08606,
-              },
-            },
+            "coord": Array [
+              46.17857,
+              6.08606,
+            ],
             "distance": 0.17031643195093935,
             "modes": Array [
               "4",
@@ -61,12 +55,10 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
           Object {
             "_id": "5f6206390d5658001cd959b43",
             "angle": -83.19868517601843,
-            "coord": Object {
-              "WGS84": Object {
-                "lat": 46.17857,
-                "lon": 6.08606,
-              },
-            },
+            "coord": Array [
+              46.17857,
+              6.08606,
+            ],
             "distance": 0.17031643195093935,
             "modes": Array [
               "4",
@@ -77,12 +69,10 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
           Object {
             "_id": "5f6206390d5658001cd959b44",
             "angle": -83.19868517601843,
-            "coord": Object {
-              "WGS84": Object {
-                "lat": 46.17857,
-                "lon": 6.08606,
-              },
-            },
+            "coord": Array [
+              46.17857,
+              6.08606,
+            ],
             "distance": 0.17031643195093935,
             "modes": Array [
               "4",
@@ -93,12 +83,10 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
           Object {
             "_id": "5f6206390d5658001cd959b45",
             "angle": -83.19868517601843,
-            "coord": Object {
-              "WGS84": Object {
-                "lat": 46.17857,
-                "lon": 6.08606,
-              },
-            },
+            "coord": Array [
+              46.17857,
+              6.08606,
+            ],
             "distance": 0.17031643195093935,
             "modes": Array [
               "4",
@@ -109,12 +97,10 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
           Object {
             "_id": "5f6206390d5658001cd959b46",
             "angle": -83.19868517601843,
-            "coord": Object {
-              "WGS84": Object {
-                "lat": 46.17857,
-                "lon": 6.08606,
-              },
-            },
+            "coord": Array [
+              46.17857,
+              6.08606,
+            ],
             "distance": 0.17031643195093935,
             "modes": Array [
               "4",
@@ -125,12 +111,10 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
           Object {
             "_id": "5f6206390d5658001cd959b47",
             "angle": -83.19868517601843,
-            "coord": Object {
-              "WGS84": Object {
-                "lat": 46.17857,
-                "lon": 6.08606,
-              },
-            },
+            "coord": Array [
+              46.17857,
+              6.08606,
+            ],
             "distance": 0.17031643195093935,
             "modes": Array [
               "4",
@@ -141,12 +125,10 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
           Object {
             "_id": "5f6206390d5658001cd959b48",
             "angle": -83.19868517601843,
-            "coord": Object {
-              "WGS84": Object {
-                "lat": 46.17857,
-                "lon": 6.08606,
-              },
-            },
+            "coord": Array [
+              46.17857,
+              6.08606,
+            ],
             "distance": 0.17031643195093935,
             "modes": Array [
               "4",
@@ -157,12 +139,10 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
           Object {
             "_id": "5f6206390d5658001cd959b49",
             "angle": -83.19868517601843,
-            "coord": Object {
-              "WGS84": Object {
-                "lat": 46.17857,
-                "lon": 6.08606,
-              },
-            },
+            "coord": Array [
+              46.17857,
+              6.08606,
+            ],
             "distance": 0.17031643195093935,
             "modes": Array [
               "4",
@@ -173,12 +153,10 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
           Object {
             "_id": "5f6206390d5658001cd959b410",
             "angle": -83.19868517601843,
-            "coord": Object {
-              "WGS84": Object {
-                "lat": 46.17857,
-                "lon": 6.08606,
-              },
-            },
+            "coord": Array [
+              46.17857,
+              6.08606,
+            ],
             "distance": 0.17031643195093935,
             "modes": Array [
               "4",
@@ -189,12 +167,10 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
           Object {
             "_id": "5f6206390d5658001cd959b411",
             "angle": -83.19868517601843,
-            "coord": Object {
-              "WGS84": Object {
-                "lat": 46.17857,
-                "lon": 6.08606,
-              },
-            },
+            "coord": Array [
+              46.17857,
+              6.08606,
+            ],
             "distance": 0.17031643195093935,
             "modes": Array [
               "4",
@@ -205,12 +181,10 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
           Object {
             "_id": "5f6206390d5658001cd959b412",
             "angle": -83.19868517601843,
-            "coord": Object {
-              "WGS84": Object {
-                "lat": 46.17857,
-                "lon": 6.08606,
-              },
-            },
+            "coord": Array [
+              46.17857,
+              6.08606,
+            ],
             "distance": 0.17031643195093935,
             "modes": Array [
               "4",
@@ -221,12 +195,10 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
           Object {
             "_id": "5f6206390d5658001cd959b413",
             "angle": -83.19868517601843,
-            "coord": Object {
-              "WGS84": Object {
-                "lat": 46.17857,
-                "lon": 6.08606,
-              },
-            },
+            "coord": Array [
+              46.17857,
+              6.08606,
+            ],
             "distance": 0.17031643195093935,
             "modes": Array [
               "4",
@@ -237,12 +209,10 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
           Object {
             "_id": "5f6206390d5658001cd959b414",
             "angle": -83.19868517601843,
-            "coord": Object {
-              "WGS84": Object {
-                "lat": 46.17857,
-                "lon": 6.08606,
-              },
-            },
+            "coord": Array [
+              46.17857,
+              6.08606,
+            ],
             "distance": 0.17031643195093935,
             "modes": Array [
               "4",
@@ -253,12 +223,10 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
           Object {
             "_id": "5f6206390d5658001cd959b415",
             "angle": -83.19868517601843,
-            "coord": Object {
-              "WGS84": Object {
-                "lat": 46.17857,
-                "lon": 6.08606,
-              },
-            },
+            "coord": Array [
+              46.17857,
+              6.08606,
+            ],
             "distance": 0.17031643195093935,
             "modes": Array [
               "4",
@@ -269,12 +237,10 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
           Object {
             "_id": "5f6206390d5658001cd959b416",
             "angle": -83.19868517601843,
-            "coord": Object {
-              "WGS84": Object {
-                "lat": 46.17857,
-                "lon": 6.08606,
-              },
-            },
+            "coord": Array [
+              46.17857,
+              6.08606,
+            ],
             "distance": 0.17031643195093935,
             "modes": Array [
               "4",
@@ -289,12 +255,10 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
         "items": Array [
           Object {
             "_id": "5f6205c60d5658001cd9480b",
-            "coord": Object {
-              "WGS84": Object {
-                "lat": 46.17831,
-                "lon": 6.08824,
-              },
-            },
+            "coord": Array [
+              46.17857,
+              6.08606,
+            ],
             "index": 0,
             "modes": Array [
               "4",
@@ -774,7 +738,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                           className="ant-form-item-control-input-content"
                                                         >
                                                           <Component
-                                                            update={3}
+                                                            update={2}
                                                           >
                                                             <Input
                                                               allowClear={true}
@@ -938,6 +902,302 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                           </Field>
                                         </WrapperField>
                                       </FormItem>
+                                      <FormItem
+                                        label="Description"
+                                        name="desc"
+                                      >
+                                        <WrapperField
+                                          label="Description"
+                                          messageVariables={
+                                            Object {
+                                              "label": "Description",
+                                            }
+                                          }
+                                          name="desc"
+                                          onReset={[Function]}
+                                          trigger="onChange"
+                                          validateTrigger="onChange"
+                                        >
+                                          <Field
+                                            fieldContext={
+                                              Object {
+                                                "__INTERNAL__": Object {
+                                                  "itemRef": [Function],
+                                                  "name": undefined,
+                                                },
+                                                "getFieldError": [Function],
+                                                "getFieldInstance": [Function],
+                                                "getFieldValue": [Function],
+                                                "getFieldsError": [Function],
+                                                "getFieldsValue": [Function],
+                                                "getInternalHooks": [Function],
+                                                "isFieldTouched": [Function],
+                                                "isFieldValidating": [Function],
+                                                "isFieldsTouched": [Function],
+                                                "isFieldsValidating": [Function],
+                                                "resetFields": [Function],
+                                                "scrollToField": [Function],
+                                                "setFields": [Function],
+                                                "setFieldsValue": [Function],
+                                                "submit": [Function],
+                                                "validateFields": [Function],
+                                                "validateTrigger": "onChange",
+                                              }
+                                            }
+                                            key="_desc"
+                                            label="Description"
+                                            messageVariables={
+                                              Object {
+                                                "label": "Description",
+                                              }
+                                            }
+                                            name={
+                                              Array [
+                                                "desc",
+                                              ]
+                                            }
+                                            onReset={[Function]}
+                                            trigger="onChange"
+                                            validateTrigger="onChange"
+                                            valuePropName="value"
+                                          >
+                                            <Row
+                                              className="ant-form-item"
+                                              key="row"
+                                            >
+                                              <div
+                                                className="ant-row ant-form-item"
+                                                style={Object {}}
+                                              >
+                                                <FormItemLabel
+                                                  htmlFor="desc"
+                                                  label="Description"
+                                                  name="desc"
+                                                  prefixCls="ant-form"
+                                                  required={false}
+                                                  requiredMark={false}
+                                                >
+                                                  <Col
+                                                    className="ant-form-item-label"
+                                                  >
+                                                    <div
+                                                      className="ant-col ant-form-item-label"
+                                                      style={Object {}}
+                                                    >
+                                                      <label
+                                                        className=""
+                                                        htmlFor="desc"
+                                                        title="Description"
+                                                      >
+                                                        Description
+                                                      </label>
+                                                    </div>
+                                                  </Col>
+                                                </FormItemLabel>
+                                                <FormItemInput
+                                                  errors={Array []}
+                                                  label="Description"
+                                                  name={
+                                                    Array [
+                                                      "desc",
+                                                    ]
+                                                  }
+                                                  onDomErrorVisibleChange={[Function]}
+                                                  prefixCls="ant-form"
+                                                  status=""
+                                                  touched={false}
+                                                  validateStatus=""
+                                                  validating={false}
+                                                >
+                                                  <Col
+                                                    className="ant-form-item-control"
+                                                  >
+                                                    <div
+                                                      className="ant-col ant-form-item-control"
+                                                      style={Object {}}
+                                                    >
+                                                      <div
+                                                        className="ant-form-item-control-input"
+                                                      >
+                                                        <div
+                                                          className="ant-form-item-control-input-content"
+                                                        >
+                                                          <Component
+                                                            update={2}
+                                                          >
+                                                            <ForwardRef
+                                                              allowClear={true}
+                                                              id="desc_input"
+                                                              onChange={[Function]}
+                                                              placeholder="Description"
+                                                            >
+                                                              <ClearableLabeledInput
+                                                                allowClear={true}
+                                                                bordered={true}
+                                                                element={
+                                                                  <TextArea
+                                                                    className=""
+                                                                    id="desc_input"
+                                                                    onChange={[Function]}
+                                                                    placeholder="Description"
+                                                                    prefixCls="ant-input"
+                                                                  />
+                                                                }
+                                                                handleReset={[Function]}
+                                                                id="desc_input"
+                                                                inputType="text"
+                                                                onChange={[Function]}
+                                                                placeholder="Description"
+                                                                prefixCls="ant-input"
+                                                                value=""
+                                                              >
+                                                                <span
+                                                                  className="ant-input-affix-wrapper ant-input-affix-wrapper-textarea-with-clear-btn"
+                                                                >
+                                                                  <TextArea
+                                                                    className=""
+                                                                    id="desc_input"
+                                                                    onChange={[Function]}
+                                                                    placeholder="Description"
+                                                                    prefixCls="ant-input"
+                                                                    style={null}
+                                                                    value=""
+                                                                  >
+                                                                    <ResizableTextArea
+                                                                      className=""
+                                                                      id="desc_input"
+                                                                      onChange={[Function]}
+                                                                      onKeyDown={[Function]}
+                                                                      placeholder="Description"
+                                                                      prefixCls="ant-input"
+                                                                      style={null}
+                                                                      value=""
+                                                                    >
+                                                                      <ResizeObserver
+                                                                        disabled={true}
+                                                                        onResize={[Function]}
+                                                                      >
+                                                                        <textarea
+                                                                          className="ant-input"
+                                                                          id="desc_input"
+                                                                          onChange={[Function]}
+                                                                          onKeyDown={[Function]}
+                                                                          placeholder="Description"
+                                                                          style={Object {}}
+                                                                          value=""
+                                                                        />
+                                                                      </ResizeObserver>
+                                                                    </ResizableTextArea>
+                                                                  </TextArea>
+                                                                  <ForwardRef(CloseCircleFilled)
+                                                                    className="ant-input-clear-icon-hidden ant-input-clear-icon"
+                                                                    onClick={[Function]}
+                                                                    role="button"
+                                                                  >
+                                                                    <AntdIcon
+                                                                      className="ant-input-clear-icon-hidden ant-input-clear-icon"
+                                                                      icon={
+                                                                        Object {
+                                                                          "icon": Object {
+                                                                            "attrs": Object {
+                                                                              "focusable": "false",
+                                                                              "viewBox": "64 64 896 896",
+                                                                            },
+                                                                            "children": Array [
+                                                                              Object {
+                                                                                "attrs": Object {
+                                                                                  "d": "M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm165.4 618.2l-66-.3L512 563.4l-99.3 118.4-66.1.3c-4.4 0-8-3.5-8-8 0-1.9.7-3.7 1.9-5.2l130.1-155L340.5 359a8.32 8.32 0 01-1.9-5.2c0-4.4 3.6-8 8-8l66.1.3L512 464.6l99.3-118.4 66-.3c4.4 0 8 3.5 8 8 0 1.9-.7 3.7-1.9 5.2L553.5 514l130 155c1.2 1.5 1.9 3.3 1.9 5.2 0 4.4-3.6 8-8 8z",
+                                                                                },
+                                                                                "tag": "path",
+                                                                              },
+                                                                            ],
+                                                                            "tag": "svg",
+                                                                          },
+                                                                          "name": "close-circle",
+                                                                          "theme": "filled",
+                                                                        }
+                                                                      }
+                                                                      onClick={[Function]}
+                                                                      role="button"
+                                                                    >
+                                                                      <span
+                                                                        aria-label="close-circle"
+                                                                        className="anticon anticon-close-circle ant-input-clear-icon-hidden ant-input-clear-icon"
+                                                                        onClick={[Function]}
+                                                                        role="button"
+                                                                        tabIndex={-1}
+                                                                      >
+                                                                        <IconReact
+                                                                          icon={
+                                                                            Object {
+                                                                              "icon": Object {
+                                                                                "attrs": Object {
+                                                                                  "focusable": "false",
+                                                                                  "viewBox": "64 64 896 896",
+                                                                                },
+                                                                                "children": Array [
+                                                                                  Object {
+                                                                                    "attrs": Object {
+                                                                                      "d": "M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm165.4 618.2l-66-.3L512 563.4l-99.3 118.4-66.1.3c-4.4 0-8-3.5-8-8 0-1.9.7-3.7 1.9-5.2l130.1-155L340.5 359a8.32 8.32 0 01-1.9-5.2c0-4.4 3.6-8 8-8l66.1.3L512 464.6l99.3-118.4 66-.3c4.4 0 8 3.5 8 8 0 1.9-.7 3.7-1.9 5.2L553.5 514l130 155c1.2 1.5 1.9 3.3 1.9 5.2 0 4.4-3.6 8-8 8z",
+                                                                                    },
+                                                                                    "tag": "path",
+                                                                                  },
+                                                                                ],
+                                                                                "tag": "svg",
+                                                                              },
+                                                                              "name": "close-circle",
+                                                                              "theme": "filled",
+                                                                            }
+                                                                          }
+                                                                        >
+                                                                          <svg
+                                                                            aria-hidden="true"
+                                                                            data-icon="close-circle"
+                                                                            fill="currentColor"
+                                                                            focusable="false"
+                                                                            height="1em"
+                                                                            key="svg-close-circle"
+                                                                            viewBox="64 64 896 896"
+                                                                            width="1em"
+                                                                          >
+                                                                            <path
+                                                                              d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm165.4 618.2l-66-.3L512 563.4l-99.3 118.4-66.1.3c-4.4 0-8-3.5-8-8 0-1.9.7-3.7 1.9-5.2l130.1-155L340.5 359a8.32 8.32 0 01-1.9-5.2c0-4.4 3.6-8 8-8l66.1.3L512 464.6l99.3-118.4 66-.3c4.4 0 8 3.5 8 8 0 1.9-.7 3.7-1.9 5.2L553.5 514l130 155c1.2 1.5 1.9 3.3 1.9 5.2 0 4.4-3.6 8-8 8z"
+                                                                              key="svg-close-circle-svg-0"
+                                                                            />
+                                                                          </svg>
+                                                                        </IconReact>
+                                                                      </span>
+                                                                    </AntdIcon>
+                                                                  </ForwardRef(CloseCircleFilled)>
+                                                                </span>
+                                                              </ClearableLabeledInput>
+                                                            </ForwardRef>
+                                                          </Component>
+                                                        </div>
+                                                      </div>
+                                                      <ErrorList
+                                                        errors={Array []}
+                                                        onDomErrorVisibleChange={[Function]}
+                                                      >
+                                                        <CSSMotion
+                                                          motionAppear={true}
+                                                          motionDeadline={500}
+                                                          motionName="show-help"
+                                                          onLeaveEnd={[Function]}
+                                                          removeOnLeave={true}
+                                                          visible={false}
+                                                        >
+                                                          <DomWrapper />
+                                                        </CSSMotion>
+                                                      </ErrorList>
+                                                    </div>
+                                                  </Col>
+                                                </FormItemInput>
+                                              </div>
+                                            </Row>
+                                          </Field>
+                                        </WrapperField>
+                                      </FormItem>
                                       <div
                                         style={
                                           Object {
@@ -1023,7 +1283,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                               accordion={false}
                                               destroyInactivePanel={false}
                                               expandIcon={[Function]}
-                                              header="Stop sequence schedule"
+                                              header="Schedule"
                                               isActive={false}
                                               key="2"
                                               onItemClick={[Function]}
@@ -1053,7 +1313,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                 destroyInactivePanel={false}
                                                 expandIcon={[Function]}
                                                 forceRender={false}
-                                                header="Stop sequence schedule"
+                                                header="Schedule"
                                                 headerClass=""
                                                 isActive={false}
                                                 onItemClick={[Function]}
@@ -1163,7 +1423,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                         </span>
                                                       </AntdIcon>
                                                     </ForwardRef(RightOutlined)>
-                                                    Stop sequence schedule
+                                                    Schedule
                                                   </div>
                                                   <CSSMotion
                                                     forceRender={false}

@@ -1,9 +1,8 @@
 import {calculateDistanceAndSort} from "./getDistanceFromLatLonInKm"
 
-
 describe("calculateDistanceAndSort function", ()=>{
     const response = {
-    coord: {WGS84: { lat: 46.17857 , lon :6.08606 }},
+    coord: [46.17857, 6.08606],
     modes: ["4", "5"],
     name: "Bernex (CH), P+R Bernex",
     _id: "5f6206390d5658001cd959b4",
@@ -11,13 +10,13 @@ describe("calculateDistanceAndSort function", ()=>{
 
     const stations = [
         {
-          coord: { WGS84: { lat: 46.19161, lon: 6.21145 } },
+          coord:  [46.19161,6.21145],
           modes: ["4"],
           name: "Gaillard, Libération",
           _id: "5f6203cc0d5658001cd8fae8",
         },
         {
-          coord: { WGS84: { lat: 46.19138, lon: 6.21661 } },
+          coord:  [46.19138,6.21661],
           modes: ["4"],
           name: "Gaillard, Millet",
           _id: "5f6203cc0d5658001cd8fae9",
@@ -28,7 +27,7 @@ describe("calculateDistanceAndSort function", ()=>{
         {
             from: "Bernex (CH), P+R Bernex",
             to:    {
-                coord: { WGS84: { lat: 46.19161, lon: 6.21145 } },
+                coord:  [46.19161, 6.21145],
                 modes: ["4"],
                 name: "Gaillard, Libération",
                 _id: "5f6203cc0d5658001cd8fae8",
@@ -38,7 +37,7 @@ describe("calculateDistanceAndSort function", ()=>{
         },{
             from: "Bernex (CH), P+R Bernex",  
             to:     {
-                coord: { WGS84: { lat: 46.19138, lon: 6.21661 } },
+                coord:  [46.19138,6.21661],
                 modes: ["4"],
                 name: "Gaillard, Millet",
                 _id: "5f6203cc0d5658001cd8fae9",
@@ -48,12 +47,12 @@ describe("calculateDistanceAndSort function", ()=>{
         }
         ]
 
-
-
+    it("Should test the jest framework", ()=>{
+      expect(true).toBe(true)
+    })
 
     it("Should run the funcion calculateDistanceAndSort without crashing", ()=>{
-        //@ts-ignore
-        const testResult = calculateDistanceAndSort(response , stations)
-        expect(testResult).toEqual(result)
+      //@ts-ignore  
+        expect(calculateDistanceAndSort(response , stations)).toEqual(result)
     })
 })

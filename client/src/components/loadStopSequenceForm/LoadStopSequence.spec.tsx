@@ -1,5 +1,5 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { mount } from "enzyme";
 import toJSON from "enzyme-to-json";
 import LoadStopSequence from "./LoadStopSequence";
 
@@ -14,7 +14,7 @@ const makeProps = (props: any) => ({
   currentStopSequence: {},
   loadMode() {},
   handleUpdateAfterSave() {},
-  onSendRequest() {},
+  onStopsQuery() {},
   ondisplayStopSequence() {},
   handleDeleteStopSequenceMutation() {},
   onClearAll() {},
@@ -22,28 +22,32 @@ const makeProps = (props: any) => ({
 });
 
 const setUp = (props: any) => {
-  const component = shallow(<LoadStopSequence {...props} />);
+  const component = mount(<LoadStopSequence {...props} />);
   return component;
 };
 
 describe("LoadStopSequence component", () => {
-  let shallowWrapper: any;
+  let mountWrapper: any;
+
+  const currentMode = ["4"];
 
   const onLoadMode = jest.fn();
-  const onSendRequest = jest.fn();
+  const onStopsQuery = jest.fn();
   const onUpdateAfterSave = jest.fn();
   const onClearAll = jest.fn();
   const onDeleteStopSequence = jest.fn();
   const ondisplayStopSequence = jest.fn();
+  const onStopSequenceSearch = jest.fn();
 
   beforeEach(() => {
-    shallowWrapper = setUp(
+    mountWrapper = setUp(
       makeProps({
         stopSequenceList,
         currentStopSequence,
+        currentMode,
+        onStopSequenceSearch,
         onLoadMode,
-        onSendRequest,
-        onUpdateAfterSave,
+        onStopsQuery,
         onClearAll,
         onDeleteStopSequence,
         ondisplayStopSequence,
@@ -55,22 +59,34 @@ describe("LoadStopSequence component", () => {
     jest.resetAllMocks();
   });
 
-  it("Should match the LoadStopSequence component snapshot", () => {
-    expect(toJSON(shallowWrapper)).toMatchSnapshot();
+  it("Should test the jest framework", () => {
+    expect(true).toBe(true);
   });
 
-  it("Should disptach the onSendRequest props function when we choose the mode", () => {
-    const modeSelector = shallowWrapper.find("#mode_selector");
+  it("Should match the LoadStopSequence component snapshot", () => {
+    expect(toJSON(mountWrapper)).toMatchSnapshot();
+  });
+
+  it("Should disptach the onStopsQuery props function when we choose the mode", () => {
+    console.log(mountWrapper);
+
+    const radioButton = mountWrapper.find("#radioButton");
+
+    radioButton.props().value = "new";
+
+    const modeSelector = mountWrapper.find("#mode_selector");
 
     expect(modeSelector.props().value).toEqual("Choose mode");
 
     modeSelector.simulate("change", "4");
 
-    expect(onSendRequest).toHaveBeenCalledWith(["4"]);
+    expect(onStopsQuery).toHaveBeenCalledWith(["4"]);
   });
 
   it("Should dispatch the onClearAll props function when we choose the new button", () => {
-    const radioButton = shallowWrapper.find("#radioButton");
+    const radioButton = mountWrapper.find("#radioButton");
+
+    console.log(radioButton);
 
     radioButton.simulate("change", {
       target: {
@@ -83,7 +99,7 @@ describe("LoadStopSequence component", () => {
   });
 
   it("Should dispatch the handleUpdateAfterSave props function when we choose load button", () => {
-    const radioButton = shallowWrapper.find("#radioButton");
+    const radioButton = mountWrapper.find("#radioButton");
 
     radioButton.simulate("change", {
       target: {
@@ -96,7 +112,7 @@ describe("LoadStopSequence component", () => {
   });
 
   it("Should dispatch ondisplayStopSequence props function on select value in Auto-complete field ", () => {
-    const radioButton = shallowWrapper.find("#radioButton");
+    const radioButton = mountWrapper.find("#radioButton");
 
     radioButton.simulate("change", {
       target: {
@@ -104,7 +120,7 @@ describe("LoadStopSequence component", () => {
       },
     });
 
-    const AutoCompleteInput = shallowWrapper.find("#stopSequence_autoComplete");
+    const AutoCompleteInput = mountWrapper.find("#stopSequence_autoComplete");
 
     AutoCompleteInput.props().onChange("Test");
     AutoCompleteInput.props().onSelect("Test");
@@ -113,7 +129,7 @@ describe("LoadStopSequence component", () => {
   });
 
   it("Schould delete the stop sequence when we click on the delete stop sequence button", () => {
-    const radioButton = shallowWrapper.find("#radioButton");
+    const radioButton = mountWrapper.find("#radioButton");
 
     radioButton.simulate("change", {
       target: {
@@ -121,12 +137,12 @@ describe("LoadStopSequence component", () => {
       },
     });
 
-    const AutoCompleteInput = shallowWrapper.find("#stopSequence_autoComplete");
+    const AutoCompleteInput = mountWrapper.find("#stopSequence_autoComplete");
 
     AutoCompleteInput.props().onChange("Test");
     AutoCompleteInput.props().onSelect("Test");
 
-    shallowWrapper.find("#delete_stopSequence").at(0).simulate("click");
+    mountWrapper.find("#delete_stopSequence").at(0).simulate("click");
 
     expect(onDeleteStopSequence).toBeCalledWith(currentStopSequence._id);
   });

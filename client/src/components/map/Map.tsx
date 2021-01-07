@@ -184,6 +184,7 @@ const Map = ({
 
     //@ts-ignore
     stations.forEach((stationMarker: Tstations, index: number) => {
+      //@ts-ignore
       const marker = L.circleMarker(stationMarker.coord, {
         //@ts-ignore
         contextmenu: true,

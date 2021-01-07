@@ -10,7 +10,7 @@ interface TLoadStopSequence {
   currentMode: string[];
   onStopSequenceSearch: (name: string) => void;
   onLoadMode: (value: boolean) => void;
-  onSendRequest: (modes: string[]) => void;
+  onStopsQuery: (modes: string[]) => void;
   onClearAll: () => void;
   onDeleteStopSequence: (id: string) => void;
   ondisplayStopSequence: (modes: string[], key: string) => void;
@@ -22,7 +22,7 @@ const LoadStopSequence = ({
   currentMode,
   onStopSequenceSearch,
   onLoadMode,
-  onSendRequest,
+  onStopsQuery,
   onClearAll,
   onDeleteStopSequence,
   ondisplayStopSequence,
@@ -57,11 +57,11 @@ const LoadStopSequence = ({
   const handleModeChange = useCallback(
     (value: string) => {
       if (value !== "Choose mode ") {
-        onSendRequest([value + ""]);
+        onStopsQuery([value + ""]);
         setSelectValue(value + "");
       }
     },
-    [onSendRequest]
+    [onStopsQuery]
   );
 
   const handleSelect = useCallback(

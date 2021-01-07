@@ -77,6 +77,10 @@ describe("DragDrop component", () => {
     jest.clearAllMocks();
   });
 
+  it("Should test the jest framework", () => {
+    expect(true).toBe(true);
+  });
+
   it("Should match snapshot of the DrapDrop component", () => {
     expect(toJSON(mountWrapper)).toMatchSnapshot();
   });

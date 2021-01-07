@@ -58,7 +58,7 @@ const MainRoot: React.FC = () => {
             currentStopSequence={currentStopSequence}
             onStopSequenceSearch={handleStopSequenceSearchQuery}
             onLoadMode={handleLoadMode}
-            onSendRequest={handleStopsQuery}
+            onStopsQuery={handleStopsQuery}
             onClearAll={handleClearAll}
             onDeleteStopSequence={handleDeleteStopSequenceMutation}
             ondisplayStopSequence={handledisplayStopSequenceQuery}

@@ -1,151 +1,972 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`LoadStopSequence component Should match the LoadStopSequence component snapshot 1`] = `
-<Card>
-  <ForwardRef(InternalForm)
-    form={
-      Object {
-        "__INTERNAL__": Object {
-          "itemRef": [Function],
-        },
-        "getFieldError": [Function],
-        "getFieldInstance": [Function],
-        "getFieldValue": [Function],
-        "getFieldsError": [Function],
-        "getFieldsValue": [Function],
-        "getInternalHooks": [Function],
-        "isFieldTouched": [Function],
-        "isFieldValidating": [Function],
-        "isFieldsTouched": [Function],
-        "isFieldsValidating": [Function],
-        "resetFields": [Function],
-        "scrollToField": [Function],
-        "setFields": [Function],
-        "setFieldsValue": [Function],
-        "submit": [Function],
-        "validateFields": [Function],
-      }
-    }
-    layout="vertical"
-  >
-    <FormItem>
-      <Memo([object Object])
-        id="radioButton"
-        onChange={[Function]}
-        value="load"
-      >
-        <ForwardRef(RadioButton)
-          id="load_button"
-          value="load"
-        >
-          Load
-        </ForwardRef(RadioButton)>
-        <ForwardRef(RadioButton)
-          id="new_button"
-          value="new"
-        >
-          New
-        </ForwardRef(RadioButton)>
-      </Memo([object Object])>
-    </FormItem>
-    <FormItem
-      label="Modes"
-    >
-      <ForwardRef(InternalSelect)
-        id="mode_selector"
-        onChange={[Function]}
-        value="Choose mode"
-      >
-        <Option
-          id="Choose mode"
-          value="Choose mode"
-        >
-          Choose mode
-        </Option>
-        <Option
-          id="13"
-          value="13"
-        >
-          13
-        </Option>
-        <Option
-          id="5"
-          value="5"
-        >
-          5
-        </Option>
-        <Option
-          id="8"
-          value="8"
-        >
-          8
-        </Option>
-        <Option
-          id="9"
-          value="9"
-        >
-          9
-        </Option>
-        <Option
-          id="2"
-          value="2"
-        >
-          2
-        </Option>
-        <Option
-          id="4"
-          value="4"
-        >
-          4
-        </Option>
-      </ForwardRef(InternalSelect)>
-    </FormItem>
-    <FormItem
-      label="Stop sequence name"
-    >
-      <ForwardRef(AutoComplete)
-        allowClear={true}
-        id="stopSequence_autoComplete"
-        onChange={[Function]}
-        onSelect={[Function]}
-        placeholder="Seach stop sequence by name"
-        value=""
-      >
-        <Option
-          key="638b7703-d171-4e5f-8e78-21258f75cee4"
-          value="Test"
-        >
-          <i
-            className="fas fa-subway"
-            style={
-              Object {
-                "color": "#1890ff",
-                "margin": "0 10px",
-              }
-            }
-          />
-          Test
-        </Option>
-      </ForwardRef(AutoComplete)>
-    </FormItem>
-    <div
-      style={
+<Memo(LoadStopSequence)
+  currentMode={
+    Array [
+      "4",
+    ]
+  }
+  currentStopSequence={
+    Object {
+      "_id": "638b7703-d171-4e5f-8e78-21258f75cee4",
+      "modes": "4",
+      "name": "Test",
+      "schedule": Array [
         Object {
-          "display": "flex",
-          "justifyContent": "flex-end",
-        }
-      }
+          "from": "2020.11.24",
+          "timeSlices": Array [
+            Object {
+              "endTime": "11:00",
+              "startTime": "05:00",
+              "weekDays": Array [
+                "Mon",
+              ],
+            },
+          ],
+          "to": "2020.12.16",
+        },
+      ],
+      "stopSequence": Array [
+        Object {
+          "key": "123478",
+          "name": "Schlieren, Gasometerbrücke",
+        },
+      ],
+    }
+  }
+  handleDeleteStopSequenceMutation={[Function]}
+  handleUpdateAfterSave={[Function]}
+  loadMode={[Function]}
+  onClearAll={[MockFunction]}
+  onDeleteStopSequence={[MockFunction]}
+  onLoadMode={[MockFunction]}
+  onStopSequenceSearch={[MockFunction]}
+  onStopsQuery={[MockFunction]}
+  ondisplayStopSequence={[MockFunction]}
+  stopSequenceList={
+    Array [
+      Object {
+        "_id": "638b7703-d171-4e5f-8e78-21258f75cee4",
+        "modes": "4",
+        "name": "Test",
+        "schedule": Array [
+          Object {
+            "from": "2020.11.24",
+            "timeSlices": Array [
+              Object {
+                "endTime": "11:00",
+                "startTime": "05:00",
+                "weekDays": Array [
+                  "Mon",
+                ],
+              },
+            ],
+            "to": "2020.12.16",
+          },
+        ],
+        "stopSequence": Array [
+          Object {
+            "key": "123478",
+            "name": "Schlieren, Gasometerbrücke",
+          },
+        ],
+      },
+    ]
+  }
+>
+  <Card>
+    <div
+      className="ant-card ant-card-bordered"
     >
-      <Button
-        danger={true}
-        disabled={true}
-        id="delete_stopSequence"
-        onClick={[Function]}
-        type="primary"
+      <div
+        className="ant-card-body"
+        style={Object {}}
       >
-        Delete stop sequence
-      </Button>
+        <ForwardRef(InternalForm)
+          form={
+            Object {
+              "__INTERNAL__": Object {
+                "itemRef": [Function],
+                "name": undefined,
+              },
+              "getFieldError": [Function],
+              "getFieldInstance": [Function],
+              "getFieldValue": [Function],
+              "getFieldsError": [Function],
+              "getFieldsValue": [Function],
+              "getInternalHooks": [Function],
+              "isFieldTouched": [Function],
+              "isFieldValidating": [Function],
+              "isFieldsTouched": [Function],
+              "isFieldsValidating": [Function],
+              "resetFields": [Function],
+              "scrollToField": [Function],
+              "setFields": [Function],
+              "setFieldsValue": [Function],
+              "submit": [Function],
+              "validateFields": [Function],
+            }
+          }
+          layout="vertical"
+        >
+          <SizeContextProvider>
+            <ForwardRef(Form)
+              className="ant-form ant-form-vertical"
+              form={
+                Object {
+                  "__INTERNAL__": Object {
+                    "itemRef": [Function],
+                    "name": undefined,
+                  },
+                  "getFieldError": [Function],
+                  "getFieldInstance": [Function],
+                  "getFieldValue": [Function],
+                  "getFieldsError": [Function],
+                  "getFieldsValue": [Function],
+                  "getInternalHooks": [Function],
+                  "isFieldTouched": [Function],
+                  "isFieldValidating": [Function],
+                  "isFieldsTouched": [Function],
+                  "isFieldsValidating": [Function],
+                  "resetFields": [Function],
+                  "scrollToField": [Function],
+                  "setFields": [Function],
+                  "setFieldsValue": [Function],
+                  "submit": [Function],
+                  "validateFields": [Function],
+                }
+              }
+              onFinishFailed={[Function]}
+            >
+              <form
+                className="ant-form ant-form-vertical"
+                onSubmit={[Function]}
+              >
+                <FormItem>
+                  <Row
+                    className="ant-form-item"
+                    key="row"
+                  >
+                    <div
+                      className="ant-row ant-form-item"
+                      style={Object {}}
+                    >
+                      <FormItemLabel
+                        prefixCls="ant-form"
+                        requiredMark={true}
+                      />
+                      <FormItemInput
+                        errors={Array []}
+                        onDomErrorVisibleChange={[Function]}
+                        prefixCls="ant-form"
+                        status=""
+                        validateStatus=""
+                      >
+                        <Col
+                          className="ant-form-item-control"
+                        >
+                          <div
+                            className="ant-col ant-form-item-control"
+                            style={Object {}}
+                          >
+                            <div
+                              className="ant-form-item-control-input"
+                            >
+                              <div
+                                className="ant-form-item-control-input-content"
+                              >
+                                <ForwardRef
+                                  id="radioButton"
+                                  onChange={[Function]}
+                                  value="load"
+                                >
+                                  <div
+                                    className="ant-radio-group ant-radio-group-outline"
+                                    id="radioButton"
+                                  >
+                                    <ForwardRef(RadioButton)
+                                      id="load_button"
+                                      value="load"
+                                    >
+                                      <Radio
+                                        checked={true}
+                                        id="load_button"
+                                        prefixCls="ant-radio-button"
+                                        type="radio"
+                                        value="load"
+                                      >
+                                        <label
+                                          className="ant-radio-button-wrapper ant-radio-button-wrapper-checked"
+                                        >
+                                          <Checkbox
+                                            checked={true}
+                                            className=""
+                                            defaultChecked={false}
+                                            id="load_button"
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            onKeyDown={[Function]}
+                                            onKeyPress={[Function]}
+                                            onKeyUp={[Function]}
+                                            prefixCls="ant-radio-button"
+                                            style={Object {}}
+                                            type="radio"
+                                            value="load"
+                                          >
+                                            <span
+                                              className="ant-radio-button ant-radio-button-checked"
+                                              style={Object {}}
+                                            >
+                                              <input
+                                                checked={true}
+                                                className="ant-radio-button-input"
+                                                id="load_button"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                onKeyDown={[Function]}
+                                                onKeyPress={[Function]}
+                                                onKeyUp={[Function]}
+                                                type="radio"
+                                                value="load"
+                                              />
+                                              <span
+                                                className="ant-radio-button-inner"
+                                              />
+                                            </span>
+                                          </Checkbox>
+                                          <span>
+                                            Load
+                                          </span>
+                                        </label>
+                                      </Radio>
+                                    </ForwardRef(RadioButton)>
+                                    <ForwardRef(RadioButton)
+                                      id="new_button"
+                                      value="new"
+                                    >
+                                      <Radio
+                                        checked={false}
+                                        id="new_button"
+                                        prefixCls="ant-radio-button"
+                                        type="radio"
+                                        value="new"
+                                      >
+                                        <label
+                                          className="ant-radio-button-wrapper"
+                                        >
+                                          <Checkbox
+                                            checked={false}
+                                            className=""
+                                            defaultChecked={false}
+                                            id="new_button"
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            onKeyDown={[Function]}
+                                            onKeyPress={[Function]}
+                                            onKeyUp={[Function]}
+                                            prefixCls="ant-radio-button"
+                                            style={Object {}}
+                                            type="radio"
+                                            value="new"
+                                          >
+                                            <span
+                                              className="ant-radio-button"
+                                              style={Object {}}
+                                            >
+                                              <input
+                                                checked={false}
+                                                className="ant-radio-button-input"
+                                                id="new_button"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                onKeyDown={[Function]}
+                                                onKeyPress={[Function]}
+                                                onKeyUp={[Function]}
+                                                type="radio"
+                                                value="new"
+                                              />
+                                              <span
+                                                className="ant-radio-button-inner"
+                                              />
+                                            </span>
+                                          </Checkbox>
+                                          <span>
+                                            New
+                                          </span>
+                                        </label>
+                                      </Radio>
+                                    </ForwardRef(RadioButton)>
+                                  </div>
+                                </ForwardRef>
+                              </div>
+                            </div>
+                            <ErrorList
+                              errors={Array []}
+                              onDomErrorVisibleChange={[Function]}
+                            >
+                              <CSSMotion
+                                motionAppear={true}
+                                motionDeadline={500}
+                                motionName="show-help"
+                                onLeaveEnd={[Function]}
+                                removeOnLeave={true}
+                                visible={false}
+                              >
+                                <DomWrapper />
+                              </CSSMotion>
+                            </ErrorList>
+                          </div>
+                        </Col>
+                      </FormItemInput>
+                    </div>
+                  </Row>
+                </FormItem>
+                <FormItem
+                  label="Stop sequence name"
+                >
+                  <Row
+                    className="ant-form-item"
+                    key="row"
+                  >
+                    <div
+                      className="ant-row ant-form-item"
+                      style={Object {}}
+                    >
+                      <FormItemLabel
+                        label="Stop sequence name"
+                        prefixCls="ant-form"
+                        requiredMark={true}
+                      >
+                        <Col
+                          className="ant-form-item-label"
+                        >
+                          <div
+                            className="ant-col ant-form-item-label"
+                            style={Object {}}
+                          >
+                            <label
+                              className=""
+                              title="Stop sequence name"
+                            >
+                              Stop sequence name
+                            </label>
+                          </div>
+                        </Col>
+                      </FormItemLabel>
+                      <FormItemInput
+                        errors={Array []}
+                        label="Stop sequence name"
+                        onDomErrorVisibleChange={[Function]}
+                        prefixCls="ant-form"
+                        status=""
+                        validateStatus=""
+                      >
+                        <Col
+                          className="ant-form-item-control"
+                        >
+                          <div
+                            className="ant-col ant-form-item-control"
+                            style={Object {}}
+                          >
+                            <div
+                              className="ant-form-item-control-input"
+                            >
+                              <div
+                                className="ant-form-item-control-input-content"
+                              >
+                                <ForwardRef(AutoComplete)
+                                  allowClear={true}
+                                  id="stopSequence_autoComplete"
+                                  onChange={[Function]}
+                                  onSelect={[Function]}
+                                  placeholder="Seach stop sequence by name"
+                                  value=""
+                                >
+                                  <ForwardRef(InternalSelect)
+                                    allowClear={true}
+                                    className="ant-select-auto-complete"
+                                    id="stopSequence_autoComplete"
+                                    mode="SECRET_COMBOBOX_MODE_DO_NOT_USE"
+                                    onChange={[Function]}
+                                    onSelect={[Function]}
+                                    placeholder="Seach stop sequence by name"
+                                    prefixCls="ant-select"
+                                    value=""
+                                  >
+                                    <Select
+                                      allowClear={true}
+                                      className="ant-select-auto-complete"
+                                      clearIcon={<ForwardRef(CloseCircleFilled) />}
+                                      dropdownClassName=""
+                                      id="stopSequence_autoComplete"
+                                      inputIcon={[Function]}
+                                      listHeight={256}
+                                      listItemHeight={24}
+                                      menuItemSelectedIcon={null}
+                                      mode="combobox"
+                                      notFoundContent={null}
+                                      onChange={[Function]}
+                                      onSelect={[Function]}
+                                      placeholder="Seach stop sequence by name"
+                                      prefixCls="ant-select"
+                                      removeIcon={<ForwardRef(CloseOutlined) />}
+                                      transitionName="slide-up"
+                                      value=""
+                                    >
+                                      <ForwardRef(Select)
+                                        allowClear={true}
+                                        className="ant-select-auto-complete"
+                                        clearIcon={<ForwardRef(CloseCircleFilled) />}
+                                        dropdownClassName=""
+                                        id="stopSequence_autoComplete"
+                                        inputIcon={[Function]}
+                                        listHeight={256}
+                                        listItemHeight={24}
+                                        menuItemSelectedIcon={null}
+                                        mode="combobox"
+                                        notFoundContent={null}
+                                        onChange={[Function]}
+                                        onSelect={[Function]}
+                                        placeholder="Seach stop sequence by name"
+                                        prefixCls="ant-select"
+                                        removeIcon={<ForwardRef(CloseOutlined) />}
+                                        transitionName="slide-up"
+                                        value=""
+                                      >
+                                        <div
+                                          className="ant-select ant-select-auto-complete ant-select-single ant-select-allow-clear ant-select-show-search"
+                                          onBlur={[Function]}
+                                          onFocus={[Function]}
+                                          onKeyDown={[Function]}
+                                          onKeyUp={[Function]}
+                                          onMouseDown={[Function]}
+                                        >
+                                          <SelectTrigger
+                                            containerWidth={null}
+                                            dropdownClassName=""
+                                            empty={false}
+                                            getTriggerDOMNode={[Function]}
+                                            popupElement={
+                                              <ForwardRef(OptionList)
+                                                childrenAsData={true}
+                                                defaultActiveFirstOption={false}
+                                                flattenOptions={
+                                                  Array [
+                                                    Object {
+                                                      "data": Object {
+                                                        "children": Array [
+                                                          <i
+                                                            className="fas fa-subway"
+                                                            style={
+                                                              Object {
+                                                                "color": "#1890ff",
+                                                                "margin": "0 10px",
+                                                              }
+                                                            }
+                                                          />,
+                                                          "Test",
+                                                        ],
+                                                        "key": null,
+                                                        "value": "Test",
+                                                      },
+                                                      "groupOption": false,
+                                                      "key": "Test",
+                                                    },
+                                                  ]
+                                                }
+                                                height={256}
+                                                id="stopSequence_autoComplete"
+                                                itemHeight={24}
+                                                menuItemSelectedIcon={null}
+                                                multiple={false}
+                                                notFoundContent={null}
+                                                onActiveValue={[Function]}
+                                                onMouseEnter={[Function]}
+                                                onSelect={[Function]}
+                                                onToggleOpen={[Function]}
+                                                options={
+                                                  Array [
+                                                    Object {
+                                                      "children": Array [
+                                                        <i
+                                                          className="fas fa-subway"
+                                                          style={
+                                                            Object {
+                                                              "color": "#1890ff",
+                                                              "margin": "0 10px",
+                                                            }
+                                                          }
+                                                        />,
+                                                        "Test",
+                                                      ],
+                                                      "key": null,
+                                                      "value": "Test",
+                                                    },
+                                                  ]
+                                                }
+                                                prefixCls="ant-select"
+                                                searchValue=""
+                                                values={Set {}}
+                                                virtual={true}
+                                              />
+                                            }
+                                            prefixCls="ant-select"
+                                            transitionName="slide-up"
+                                          >
+                                            <Trigger
+                                              action={Array []}
+                                              afterPopupVisibleChange={[Function]}
+                                              autoDestroy={false}
+                                              blurDelay={0.15}
+                                              builtinPlacements={
+                                                Object {
+                                                  "bottomLeft": Object {
+                                                    "offset": Array [
+                                                      0,
+                                                      4,
+                                                    ],
+                                                    "overflow": Object {
+                                                      "adjustX": 0,
+                                                      "adjustY": 1,
+                                                    },
+                                                    "points": Array [
+                                                      "tl",
+                                                      "bl",
+                                                    ],
+                                                  },
+                                                  "bottomRight": Object {
+                                                    "offset": Array [
+                                                      0,
+                                                      4,
+                                                    ],
+                                                    "overflow": Object {
+                                                      "adjustX": 0,
+                                                      "adjustY": 1,
+                                                    },
+                                                    "points": Array [
+                                                      "tr",
+                                                      "br",
+                                                    ],
+                                                  },
+                                                  "topLeft": Object {
+                                                    "offset": Array [
+                                                      0,
+                                                      -4,
+                                                    ],
+                                                    "overflow": Object {
+                                                      "adjustX": 0,
+                                                      "adjustY": 1,
+                                                    },
+                                                    "points": Array [
+                                                      "bl",
+                                                      "tl",
+                                                    ],
+                                                  },
+                                                  "topRight": Object {
+                                                    "offset": Array [
+                                                      0,
+                                                      -4,
+                                                    ],
+                                                    "overflow": Object {
+                                                      "adjustX": 0,
+                                                      "adjustY": 1,
+                                                    },
+                                                    "points": Array [
+                                                      "br",
+                                                      "tr",
+                                                    ],
+                                                  },
+                                                }
+                                              }
+                                              defaultPopupVisible={false}
+                                              destroyPopupOnHide={false}
+                                              focusDelay={0}
+                                              getDocument={[Function]}
+                                              getPopupClassNameFromAlign={[Function]}
+                                              getTriggerDOMNode={[Function]}
+                                              hideAction={Array []}
+                                              mask={false}
+                                              maskClosable={true}
+                                              mouseEnterDelay={0}
+                                              mouseLeaveDelay={0.1}
+                                              onPopupAlign={[Function]}
+                                              onPopupVisibleChange={[Function]}
+                                              popup={
+                                                <div>
+                                                  <ForwardRef(OptionList)
+                                                    childrenAsData={true}
+                                                    defaultActiveFirstOption={false}
+                                                    flattenOptions={
+                                                      Array [
+                                                        Object {
+                                                          "data": Object {
+                                                            "children": Array [
+                                                              <i
+                                                                className="fas fa-subway"
+                                                                style={
+                                                                  Object {
+                                                                    "color": "#1890ff",
+                                                                    "margin": "0 10px",
+                                                                  }
+                                                                }
+                                                              />,
+                                                              "Test",
+                                                            ],
+                                                            "key": null,
+                                                            "value": "Test",
+                                                          },
+                                                          "groupOption": false,
+                                                          "key": "Test",
+                                                        },
+                                                      ]
+                                                    }
+                                                    height={256}
+                                                    id="stopSequence_autoComplete"
+                                                    itemHeight={24}
+                                                    menuItemSelectedIcon={null}
+                                                    multiple={false}
+                                                    notFoundContent={null}
+                                                    onActiveValue={[Function]}
+                                                    onMouseEnter={[Function]}
+                                                    onSelect={[Function]}
+                                                    onToggleOpen={[Function]}
+                                                    options={
+                                                      Array [
+                                                        Object {
+                                                          "children": Array [
+                                                            <i
+                                                              className="fas fa-subway"
+                                                              style={
+                                                                Object {
+                                                                  "color": "#1890ff",
+                                                                  "margin": "0 10px",
+                                                                }
+                                                              }
+                                                            />,
+                                                            "Test",
+                                                          ],
+                                                          "key": null,
+                                                          "value": "Test",
+                                                        },
+                                                      ]
+                                                    }
+                                                    prefixCls="ant-select"
+                                                    searchValue=""
+                                                    values={Set {}}
+                                                    virtual={true}
+                                                  />
+                                                </div>
+                                              }
+                                              popupAlign={Object {}}
+                                              popupClassName=""
+                                              popupPlacement="bottomLeft"
+                                              popupStyle={
+                                                Object {
+                                                  "minWidth": null,
+                                                  "width": null,
+                                                }
+                                              }
+                                              popupTransitionName="slide-up"
+                                              prefixCls="ant-select-dropdown"
+                                              showAction={Array []}
+                                            >
+                                              <Selector
+                                                accessibilityIndex={0}
+                                                activeValue={null}
+                                                allowClear={true}
+                                                className="ant-select-auto-complete"
+                                                clearIcon={<ForwardRef(CloseCircleFilled) />}
+                                                domRef={
+                                                  Object {
+                                                    "current": <div
+                                                      class="ant-select-selector"
+                                                    >
+                                                      <span
+                                                        class="ant-select-selection-search"
+                                                      >
+                                                        <input
+                                                          aria-activedescendant="stopSequence_autoComplete_list_0"
+                                                          aria-autocomplete="list"
+                                                          aria-controls="stopSequence_autoComplete_list"
+                                                          aria-haspopup="listbox"
+                                                          aria-owns="stopSequence_autoComplete_list"
+                                                          autocomplete="off"
+                                                          class="ant-select-selection-search-input"
+                                                          id="stopSequence_autoComplete"
+                                                          role="combobox"
+                                                          type="search"
+                                                          value=""
+                                                        />
+                                                      </span>
+                                                      <span
+                                                        class="ant-select-selection-placeholder"
+                                                      >
+                                                        Seach stop sequence by name
+                                                      </span>
+                                                    </div>,
+                                                  }
+                                                }
+                                                dropdownClassName=""
+                                                id="stopSequence_autoComplete"
+                                                inputElement={null}
+                                                inputIcon={[Function]}
+                                                key="trigger"
+                                                listHeight={256}
+                                                listItemHeight={24}
+                                                menuItemSelectedIcon={null}
+                                                mode="combobox"
+                                                multiple={false}
+                                                notFoundContent={null}
+                                                onChange={[Function]}
+                                                onSearch={[Function]}
+                                                onSearchSubmit={[Function]}
+                                                onSelect={[Function]}
+                                                onToggleOpen={[Function]}
+                                                placeholder="Seach stop sequence by name"
+                                                prefixCls="ant-select"
+                                                removeIcon={<ForwardRef(CloseOutlined) />}
+                                                searchValue=""
+                                                showSearch={true}
+                                                tokenWithEnter={false}
+                                                transitionName="slide-up"
+                                                value=""
+                                                values={Array []}
+                                              >
+                                                <div
+                                                  className="ant-select-selector"
+                                                  onClick={[Function]}
+                                                  onMouseDown={[Function]}
+                                                >
+                                                  <SingleSelector
+                                                    accessibilityIndex={0}
+                                                    activeValue={null}
+                                                    allowClear={true}
+                                                    className="ant-select-auto-complete"
+                                                    clearIcon={<ForwardRef(CloseCircleFilled) />}
+                                                    domRef={
+                                                      Object {
+                                                        "current": <div
+                                                          class="ant-select-selector"
+                                                        >
+                                                          <span
+                                                            class="ant-select-selection-search"
+                                                          >
+                                                            <input
+                                                              aria-activedescendant="stopSequence_autoComplete_list_0"
+                                                              aria-autocomplete="list"
+                                                              aria-controls="stopSequence_autoComplete_list"
+                                                              aria-haspopup="listbox"
+                                                              aria-owns="stopSequence_autoComplete_list"
+                                                              autocomplete="off"
+                                                              class="ant-select-selection-search-input"
+                                                              id="stopSequence_autoComplete"
+                                                              role="combobox"
+                                                              type="search"
+                                                              value=""
+                                                            />
+                                                          </span>
+                                                          <span
+                                                            class="ant-select-selection-placeholder"
+                                                          >
+                                                            Seach stop sequence by name
+                                                          </span>
+                                                        </div>,
+                                                      }
+                                                    }
+                                                    dropdownClassName=""
+                                                    id="stopSequence_autoComplete"
+                                                    inputElement={null}
+                                                    inputIcon={[Function]}
+                                                    inputRef={
+                                                      Object {
+                                                        "current": <input
+                                                          aria-activedescendant="stopSequence_autoComplete_list_0"
+                                                          aria-autocomplete="list"
+                                                          aria-controls="stopSequence_autoComplete_list"
+                                                          aria-haspopup="listbox"
+                                                          aria-owns="stopSequence_autoComplete_list"
+                                                          autocomplete="off"
+                                                          class="ant-select-selection-search-input"
+                                                          id="stopSequence_autoComplete"
+                                                          role="combobox"
+                                                          type="search"
+                                                          value=""
+                                                        />,
+                                                      }
+                                                    }
+                                                    listHeight={256}
+                                                    listItemHeight={24}
+                                                    menuItemSelectedIcon={null}
+                                                    mode="combobox"
+                                                    multiple={false}
+                                                    notFoundContent={null}
+                                                    onChange={[Function]}
+                                                    onInputChange={[Function]}
+                                                    onInputCompositionEnd={[Function]}
+                                                    onInputCompositionStart={[Function]}
+                                                    onInputKeyDown={[Function]}
+                                                    onInputMouseDown={[Function]}
+                                                    onInputPaste={[Function]}
+                                                    onSearch={[Function]}
+                                                    onSearchSubmit={[Function]}
+                                                    onSelect={[Function]}
+                                                    onToggleOpen={[Function]}
+                                                    placeholder="Seach stop sequence by name"
+                                                    prefixCls="ant-select"
+                                                    removeIcon={<ForwardRef(CloseOutlined) />}
+                                                    searchValue=""
+                                                    showSearch={true}
+                                                    tokenWithEnter={false}
+                                                    transitionName="slide-up"
+                                                    value=""
+                                                    values={Array []}
+                                                  >
+                                                    <span
+                                                      className="ant-select-selection-search"
+                                                    >
+                                                      <Input
+                                                        accessibilityIndex={0}
+                                                        attrs={Object {}}
+                                                        editable={true}
+                                                        id="stopSequence_autoComplete"
+                                                        inputElement={null}
+                                                        onChange={[Function]}
+                                                        onCompositionEnd={[Function]}
+                                                        onCompositionStart={[Function]}
+                                                        onKeyDown={[Function]}
+                                                        onMouseDown={[Function]}
+                                                        onPaste={[Function]}
+                                                        prefixCls="ant-select"
+                                                        value=""
+                                                      >
+                                                        <input
+                                                          aria-activedescendant="stopSequence_autoComplete_list_0"
+                                                          aria-autocomplete="list"
+                                                          aria-controls="stopSequence_autoComplete_list"
+                                                          aria-haspopup="listbox"
+                                                          aria-owns="stopSequence_autoComplete_list"
+                                                          autoComplete="off"
+                                                          className="ant-select-selection-search-input"
+                                                          id="stopSequence_autoComplete"
+                                                          onChange={[Function]}
+                                                          onCompositionEnd={[Function]}
+                                                          onCompositionStart={[Function]}
+                                                          onKeyDown={[Function]}
+                                                          onMouseDown={[Function]}
+                                                          onPaste={[Function]}
+                                                          readOnly={false}
+                                                          role="combobox"
+                                                          style={
+                                                            Object {
+                                                              "opacity": null,
+                                                            }
+                                                          }
+                                                          type="search"
+                                                          unselectable={null}
+                                                          value=""
+                                                        />
+                                                      </Input>
+                                                    </span>
+                                                    <span
+                                                      className="ant-select-selection-placeholder"
+                                                    >
+                                                      Seach stop sequence by name
+                                                    </span>
+                                                  </SingleSelector>
+                                                </div>
+                                              </Selector>
+                                            </Trigger>
+                                          </SelectTrigger>
+                                        </div>
+                                      </ForwardRef(Select)>
+                                    </Select>
+                                  </ForwardRef(InternalSelect)>
+                                </ForwardRef(AutoComplete)>
+                              </div>
+                            </div>
+                            <ErrorList
+                              errors={Array []}
+                              onDomErrorVisibleChange={[Function]}
+                            >
+                              <CSSMotion
+                                motionAppear={true}
+                                motionDeadline={500}
+                                motionName="show-help"
+                                onLeaveEnd={[Function]}
+                                removeOnLeave={true}
+                                visible={false}
+                              >
+                                <DomWrapper />
+                              </CSSMotion>
+                            </ErrorList>
+                          </div>
+                        </Col>
+                      </FormItemInput>
+                    </div>
+                  </Row>
+                </FormItem>
+                <div
+                  style={
+                    Object {
+                      "display": "flex",
+                      "justifyContent": "flex-end",
+                    }
+                  }
+                >
+                  <Button
+                    danger={true}
+                    disabled={true}
+                    id="delete_stopSequence"
+                    onClick={[Function]}
+                    type="primary"
+                  >
+                    <Wave>
+                      <button
+                        className="ant-btn ant-btn-primary ant-btn-dangerous"
+                        disabled={true}
+                        id="delete_stopSequence"
+                        onClick={[Function]}
+                        type="button"
+                      >
+                        <LoadingIcon
+                          existIcon={false}
+                          loading={false}
+                          prefixCls="ant-btn"
+                        >
+                          <CSSMotion
+                            motionName="ant-btn-loading-icon-motion"
+                            onAppearActive={[Function]}
+                            onAppearStart={[Function]}
+                            onEnterActive={[Function]}
+                            onEnterStart={[Function]}
+                            onLeaveActive={[Function]}
+                            onLeaveStart={[Function]}
+                            removeOnLeave={true}
+                            visible={false}
+                          >
+                            <DomWrapper />
+                          </CSSMotion>
+                        </LoadingIcon>
+                        <span
+                          key=".0"
+                        >
+                          Delete stop sequence
+                        </span>
+                      </button>
+                    </Wave>
+                  </Button>
+                </div>
+              </form>
+            </ForwardRef(Form)>
+          </SizeContextProvider>
+        </ForwardRef(InternalForm)>
+      </div>
     </div>
-  </ForwardRef(InternalForm)>
-</Card>
+  </Card>
+</Memo(LoadStopSequence)>
 `;

@@ -3,34 +3,43 @@ import {getFormatTags} from "./getFormatTags";
 const TestData0 = {
   name : "test0",
   schedule : [{
-    date: "",
-    dayTime: [{
-      day: ["Mon","Tue"],
-      time: ["2020.11.02","2020.11.04"]
+    from: "",
+    to: "",
+    timeSlices: [{
+      weekDays: ["Mon","Tue"],
+      startTime: "2020.11.02",
+      endTime: "2020.11.04",
     }]
   }]
 };
 const TestData1 = {
   name : "test1",
   schedule : [{
-    date: "",
-    dayTime: [{
-      day: ["Mon"],
-      time: ["2020.11.02","2020.11.04"]
+    from: "",
+    to: "",
+    timeSlices: [{
+      weekDays: ["Mon"],
+      startTime: "2020.11.02",
+      endTime: "2020.11.04",
     }]
   }]
 };
 const TestData2 = {
   name : "test2",
   schedule : [{
-    date: "",
-    dayTime: [{
-      day: ["Mon", "Tue", "Wed","Thu","Fri", "Sat", "Sun", "Holiday"],
-      time: ["2020.11.02","2020.11.04"]
+    from: "",
+    to: "",
+    timeSlices: [{
+      weekDays: ["Mon", "Tue", "Wed","Thu","Fri", "Sat", "Sun", "Holiday"],
+      startTime: "2020.11.02",
+      endTime: "2020.11.04",
     }]
   }]
 };
 
+it("Should test the jest framework", ()=>{
+  expect(true).toBe(true)
+})
 
 it("Test getFormatTags util function with the first testData0", () => {
   const resultat = getFormatTags(TestData0);

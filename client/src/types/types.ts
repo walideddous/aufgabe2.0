@@ -3,8 +3,8 @@ export interface Tstations {
     index?: number;
     _id: string;
     name: string;
-    coord: [number, number];
-    modes: [string];
+    coord: number[];
+    modes: string[];
   }
   
   export interface Tdistance {

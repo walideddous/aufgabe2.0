@@ -29,6 +29,17 @@ exports[`Searchinput component Should match snapShot with the Seachinput compone
   >
     <Option
       key="5f6203bb0d5658001cd8f85a"
+      stop={
+        Object {
+          "_id": "5f6203bb0d5658001cd8f85a",
+          "coord": Array [
+            47.54741,
+            7.58956,
+          ],
+          "modes": Array [],
+          "name": "Basel",
+        }
+      }
       value="Basel"
     >
       <i
@@ -44,6 +55,17 @@ exports[`Searchinput component Should match snapShot with the Seachinput compone
     </Option>
     <Option
       key="5f6203bb0d5658001cd8f85b"
+      stop={
+        Object {
+          "_id": "5f6203bb0d5658001cd8f85b",
+          "coord": Array [
+            45.74506,
+            4.84184,
+          ],
+          "modes": Array [],
+          "name": "Lyon",
+        }
+      }
       value="Lyon"
     >
       <i

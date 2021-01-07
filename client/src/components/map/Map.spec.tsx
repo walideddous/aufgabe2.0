@@ -29,7 +29,7 @@ const makeProps = (props: any) => ({
 
 jest.mock("leaflet", () => ({
   ...jest.requireActual("leaflet"),
-  markerClusterGroup: jest.fn(),
+  markerClusterGroup: jest.fn(() => {}),
 }));
 
 const setUp = (props: any) => {
