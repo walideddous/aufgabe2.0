@@ -62,7 +62,7 @@ export default function useIndexHooks() {
   const [queryStopSequenceByName, stopSequenceByNameResponse] = useLazyQuery(
     GET_STOP_SEQUENCE_BY_NAME,
     {
-      fetchPolicy: "network-only",
+      fetchPolicy: "no-cache",
     }
   );
 
@@ -661,6 +661,7 @@ export default function useIndexHooks() {
         });
         if (deleteResponse.data.RouteManagerDelete) {
           message.success(`Stop sequence successfully deleted`);
+          console.log(`Stop sequence successfully deleted`);
 
           // Set the state of stopSequence List
           setStopSequenceList((prev) => {
