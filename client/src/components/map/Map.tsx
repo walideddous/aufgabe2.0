@@ -36,9 +36,9 @@ interface TpropsOnMap {
   currentStopSequence: TStopSequence | undefined;
   onResetStopSequence: () => void;
   onSelectAutoSearch: (stop: Tstations) => void;
-  onAddBeforSelected: (stopMarker: any) => void;
-  onAddAfterSelected: (stopMarker: any) => void;
-  onDeleteMarkerFromMap: (stopMarker: any) => void;
+  onAddBeforSelected: (stopMarker: Tstations) => void;
+  onAddAfterSelected: (stopMarker: Tstations) => void;
+  onDeleteStop: (stopMarker: Tstations, index: number) => void;
   onClickOnMapMarker: (el: Tstations, index: number) => void;
 }
 
@@ -53,7 +53,7 @@ const Map = ({
   onSelectAutoSearch,
   onAddBeforSelected,
   onAddAfterSelected,
-  onDeleteMarkerFromMap,
+  onDeleteStop,
   onClickOnMapMarker,
 }: TpropsOnMap) => {
   const map: any = useRef(null);
@@ -108,9 +108,12 @@ const Map = ({
   const deleteMarkerFromMap = useCallback(
     (value: any) => {
       const { marker } = value.relatedTarget.options;
-      onDeleteMarkerFromMap(marker);
+      const index = stateDND.trajekt.items
+        .map((item) => item._id)
+        .indexOf(marker._id);
+      onDeleteStop(marker, index);
     },
-    [onDeleteMarkerFromMap]
+    [onDeleteStop, stateDND.trajekt.items]
   );
 
   // Displaying the map
@@ -172,7 +175,7 @@ const Map = ({
     });
 
     //@ts-ignore
-    stations.forEach((stationMarker: any, index: number) => {
+    stations.forEach((stationMarker: Tstations, index: number) => {
       const marker = L.circleMarker(stationMarker.coord, {
         //@ts-ignore
         contextmenu: true,
@@ -202,6 +205,7 @@ const Map = ({
         ],
         id: "Marker",
         marker: stationMarker,
+        index: index,
         color:
           selected && selected._id === stationMarker._id
             ? "red"

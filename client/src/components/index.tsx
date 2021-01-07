@@ -31,23 +31,22 @@ const MainRoot: React.FC = () => {
     stopSequenceList,
     currentStopSequence,
     loadStopSequenceSection,
-    handleStopSequenceSearch,
+    handleDragEnd,
     handleLoadMode,
-    handleSendRequest,
+    handleClearAll,
+    handleDeleteStop,
     handleClickOnDrop,
     handleAddStopsOnCLick,
-    handleDeleteOnDND,
     handleSelectAutoSearch,
-    handleDragEnd,
     handleAddAfterSelected,
     handleAddBeforSelected,
     handleClickOnMapMarker,
-    handleDeleteMarkerFromMap,
-    handleClearAll,
     handleResetStopSequence,
-    handleSaveStopSequence,
-    handledisplayStopSequence,
-    handleDeleteStopSequence,
+    handleStopsQuery,
+    handleStopSequenceSearchQuery,
+    handleSaveStopSequenceMutation,
+    handledisplayStopSequenceQuery,
+    handleDeleteStopSequenceMutation,
   } = useIndexHooks();
 
   return (
@@ -58,12 +57,12 @@ const MainRoot: React.FC = () => {
             currentMode={currentMode}
             stopSequenceList={stopSequenceList}
             currentStopSequence={currentStopSequence}
-            onStopSequenceSearch={handleStopSequenceSearch}
+            onStopSequenceSearch={handleStopSequenceSearchQuery}
             onLoadMode={handleLoadMode}
-            onSendRequest={handleSendRequest}
+            onSendRequest={handleStopsQuery}
             onClearAll={handleClearAll}
-            onDeleteStopSequence={handleDeleteStopSequence}
-            ondisplayStopSequence={handledisplayStopSequence}
+            onDeleteStopSequence={handleDeleteStopSequenceMutation}
+            ondisplayStopSequence={handledisplayStopSequenceQuery}
           />
         </Col>
         {isSending ? (
@@ -89,7 +88,7 @@ const MainRoot: React.FC = () => {
                 stateDND={stateDND}
                 currentStopSequence={currentStopSequence}
                 loadStopSequenceSection={loadStopSequenceSection}
-                onSaveStopSequence={handleSaveStopSequence}
+                onSaveStopSequence={handleSaveStopSequenceMutation}
               />
             </Col>
             <Col xxl={12} xs={24} style={{ height: "60vh" }}>
@@ -103,7 +102,7 @@ const MainRoot: React.FC = () => {
                 onSelectAutoSearch={handleSelectAutoSearch}
                 onAddBeforSelected={handleAddBeforSelected}
                 onAddAfterSelected={handleAddAfterSelected}
-                onDeleteMarkerFromMap={handleDeleteMarkerFromMap}
+                onDeleteStop={handleDeleteStop}
                 onClickOnMapMarker={handleClickOnMapMarker}
               />
             </Col>
@@ -115,7 +114,7 @@ const MainRoot: React.FC = () => {
                 onAddStopsOnCLick={handleAddStopsOnCLick}
                 onDragEnd={handleDragEnd}
                 onClickOnDrop={handleClickOnDrop}
-                onDeleteDND={handleDeleteOnDND}
+                onDeleteStop={handleDeleteStop}
               />
             </Col>
           </Fragment>

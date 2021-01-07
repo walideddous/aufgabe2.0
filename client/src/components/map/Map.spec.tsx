@@ -22,7 +22,7 @@ const makeProps = (props: any) => ({
   handleSelectAutoSearch() {},
   onAddAfterSelected() {},
   onAddBeforSelected() {},
-  onDeleteMarkerFromMap() {},
+  onDeleteStop() {},
   selectMarkerOnMap() {},
   ...props,
 });
@@ -43,7 +43,7 @@ const onResetStopSequence = jest.fn();
 const onSelectAutoSearch = jest.fn();
 const onAddBeforSelected = jest.fn();
 const onAddAfterSelected = jest.fn();
-const onDeleteMarkerFromMap = jest.fn();
+const onDeleteStop = jest.fn();
 const onClickOnMapMarker = jest.fn();
 
 describe("Map component", () => {
@@ -64,7 +64,7 @@ describe("Map component", () => {
         onSelectAutoSearch,
         onAddBeforSelected,
         onAddAfterSelected,
-        onDeleteMarkerFromMap,
+        onDeleteStop,
         onClickOnMapMarker,
       })
     );
@@ -93,7 +93,7 @@ it("Should clear the map when we click on the trash button", () => {
         onSelectAutoSearch,
         onAddBeforSelected,
         onAddAfterSelected,
-        onDeleteMarkerFromMap,
+        onDeleteStop,
         onClickOnMapMarker,
       })}
     />

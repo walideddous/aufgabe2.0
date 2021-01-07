@@ -151,7 +151,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.handleSendRequest(["4"]);
+      result.current.handleStopsQuery(["4"]);
     });
 
     await waitForNextUpdate();
@@ -171,7 +171,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.handleSendRequest(["4"]);
+      result.current.handleStopsQuery(["4"]);
     });
 
     await waitForNextUpdate();
@@ -189,7 +189,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.handleSendRequest(["4"]);
+      result.current.handleStopsQuery(["4"]);
     });
 
     await waitForNextUpdate();
@@ -200,7 +200,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.handleSendRequest(["4"]);
+      result.current.handleStopsQuery(["4"]);
     });
     await waitForNextUpdate();
 
@@ -212,11 +212,11 @@ describe("Test the customHooks of the /components/index.tsx", () => {
 
     expect(result.current.stateDND.trajekt.items.length).toBe(1);
   });
-  it("Should display stopSequence when we trigger the handledisplayStopSequence  function", async () => {
+  it("Should display stopSequence when we trigger the handledisplayStopSequenceQuery  function", async () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.handleSendRequest(["4"]);
+      result.current.handleStopsQuery(["4"]);
     });
 
     await waitForNextUpdate();
@@ -224,7 +224,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     expect(result.current.stations.length).toBe(2);
     expect(result.current.stopSequenceList.length).toBe(1);
     act(() => {
-      result.current.handledisplayStopSequence("St. Gallen to Zürich HB");
+      result.current.handledisplayStopSequenceQuery("St. Gallen to Zürich HB");
     });
 
     expect(result.current.currentStopSequence).not.toBeNull();
@@ -233,7 +233,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.handleSendRequest(["4"]);
+      result.current.handleStopsQuery(["4"]);
     });
 
     await waitForNextUpdate();
@@ -263,7 +263,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.handleSendRequest(["4"]);
+      result.current.handleStopsQuery(["4"]);
     });
 
     await waitForNextUpdate();
@@ -293,7 +293,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.handleSendRequest(["4"]);
+      result.current.handleStopsQuery(["4"]);
     });
 
     await waitForNextUpdate();
@@ -324,7 +324,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.handleSendRequest(["4"]);
+      result.current.handleStopsQuery(["4"]);
     });
 
     await waitForNextUpdate();
@@ -354,13 +354,13 @@ describe("Test the customHooks of the /components/index.tsx", () => {
         .length
     ).toBeTruthy();
   });
-  it("Should check if the deleting was succesful when we trigger the handleDeleteStopSequence function", async () => {
+  it("Should check if the deleting was succesful when we trigger the handleDeleteStopSequenceMutation function", async () => {
     //@ts-ignore
     deleteStopSequenceRequest.mockImplementation(() => Promise.resolve({}));
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.handleDeleteStopSequence("1");
+      result.current.handleDeleteStopSequenceMutation("1");
     });
 
     await waitForNextUpdate();
@@ -369,20 +369,20 @@ describe("Test the customHooks of the /components/index.tsx", () => {
       "Couldn't delete the Stop sequence"
     );
   });
-  it("Should catch the error when the handleDeleteStopSequence function reject error", async () => {
+  it("Should catch the error when the handleDeleteStopSequenceMutation function reject error", async () => {
     //@ts-ignore
     deleteStopSequenceRequest.mockImplementation(() => Promise.reject("error"));
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.handleDeleteStopSequence("1");
+      result.current.handleDeleteStopSequenceMutation("1");
     });
 
     await waitForNextUpdate();
 
     expect(spyOnConsoleError).toBeCalledWith("error", "error from trycatch");
   });
-  it("Should delete the stop Sequence when we trigger the handleDeleteStopSequence function", async () => {
+  it("Should delete the stop Sequence when we trigger the handleDeleteStopSequenceMutation function", async () => {
     //@ts-ignore
     deleteStopSequenceRequest.mockImplementation(() =>
       Promise.resolve({
@@ -395,7 +395,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     );
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
     act(() => {
-      result.current.handleSendRequest(["4"]);
+      result.current.handleStopsQuery(["4"]);
     });
 
     await waitForNextUpdate();
@@ -404,7 +404,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
       result.current.stopSequenceList.length;
 
     act(() => {
-      result.current.handleDeleteStopSequence("1");
+      result.current.handleDeleteStopSequenceMutation("1");
     });
 
     await waitForNextUpdate();
@@ -417,7 +417,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.handleSaveStopSequence("1");
+      result.current.handleSaveStopSequenceMutation("1");
     });
 
     expect(spyOnConsoleError).not.toBeCalled();
@@ -437,7 +437,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.handleSendRequest(["4"]);
+      result.current.handleStopsQuery(["4"]);
     });
 
     await waitForNextUpdate();
@@ -447,7 +447,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     });
 
     act(() => {
-      result.current.handleSaveStopSequence("formInput");
+      result.current.handleSaveStopSequenceMutation("formInput");
     });
 
     await waitForNextUpdate();
@@ -461,7 +461,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.handleSendRequest(["4"]);
+      result.current.handleStopsQuery(["4"]);
     });
 
     await waitForNextUpdate();
@@ -471,7 +471,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     });
 
     act(() => {
-      result.current.handleSaveStopSequence("formInput");
+      result.current.handleSaveStopSequenceMutation("formInput");
     });
 
     await waitForNextUpdate();
@@ -485,7 +485,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.handleSendRequest(["4"]);
+      result.current.handleStopsQuery(["4"]);
     });
 
     await waitForNextUpdate();
@@ -495,7 +495,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     });
 
     act(() => {
-      result.current.handleSaveStopSequence("formInput");
+      result.current.handleSaveStopSequenceMutation("formInput");
     });
 
     await waitForNextUpdate();
@@ -506,7 +506,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.handleSendRequest(["4"]);
+      result.current.handleStopsQuery(["4"]);
     });
 
     await waitForNextUpdate();
@@ -525,7 +525,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.handleSendRequest(["4"]);
+      result.current.handleStopsQuery(["4"]);
     });
 
     await waitForNextUpdate();
@@ -555,7 +555,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.handleSendRequest(["4"]);
+      result.current.handleStopsQuery(["4"]);
     });
 
     await waitForNextUpdate();
@@ -565,7 +565,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     });
 
     act(() => {
-      result.current.handleSaveStopSequence("formInput");
+      result.current.handleSaveStopSequenceMutation("formInput");
     });
 
     await waitForNextUpdate();
@@ -581,7 +581,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.handleSendRequest(["4"]);
+      result.current.handleStopsQuery(["4"]);
     });
 
     await waitForNextUpdate();
@@ -604,7 +604,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.handleSendRequest(["4"]);
+      result.current.handleStopsQuery(["4"]);
     });
 
     await waitForNextUpdate();
@@ -639,11 +639,11 @@ describe("Test the customHooks of the /components/index.tsx", () => {
 
     expect(result.current.selected?.name).toBe("Basel");
   });
-  it("Should check the handleDeleteOnDND function", async () => {
+  it("Should check the handleDeleteStop function", async () => {
     const { result, waitForNextUpdate } = renderHook(() => useIndexHooks());
 
     act(() => {
-      result.current.handleSendRequest(["4"]);
+      result.current.handleStopsQuery(["4"]);
     });
 
     await waitForNextUpdate();
@@ -660,7 +660,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     expect(result.current.stateDND.trajekt.items.length).toBe(2);
 
     act(() => {
-      result.current.handleDeleteOnDND(
+      result.current.handleDeleteStop(
         {
           _id: "5f6203bb0d5658001cd8f85a",
           name: "Basel",
@@ -685,7 +685,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
     expect(result.current.stateDND.trajekt.items.length).toBe(2);
 
     act(() => {
-      result.current.handleDeleteOnDND(
+      result.current.handleDeleteStop(
         {
           _id: "5f6203bb0d5658001cd8f85a",
           name: "Basel",

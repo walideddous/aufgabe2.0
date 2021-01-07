@@ -38,6 +38,7 @@ const SaveStopSequenceForm = ({
   const [form] = Form.useForm();
   const initializeRef = React.useRef<boolean>(false);
   const [name, setName] = useState<string>("");
+  const [desc, setDesc] = useState<string>("");
   const [addSchedule, setAddSchedule] = useState<boolean>(false);
   const [tags, setTags] = useState<
     {
@@ -48,6 +49,7 @@ const SaveStopSequenceForm = ({
 
   const [savedForm, setSavedForm] = useState<{
     name: string;
+    desc: string;
     schedule: {
       from: string;
       to: string;
@@ -62,15 +64,17 @@ const SaveStopSequenceForm = ({
   useEffect(() => {
     if (initializeRef.current) {
       if (currentStopSequence) {
-        const { name, schedule } = currentStopSequence;
-        setSavedForm({ name, schedule });
+        const { name, desc, schedule } = currentStopSequence;
+        setSavedForm({ name, desc, schedule });
         form.setFieldsValue({
           name: currentStopSequence.name,
+          desc: currentStopSequence.desc,
         });
       } else {
-        setSavedForm({ name: "", schedule: [] });
+        setSavedForm({ name: "", desc: "", schedule: [] });
         form.setFieldsValue({
           name: "",
+          desc: "",
         });
       }
     } else {
@@ -88,7 +92,7 @@ const SaveStopSequenceForm = ({
   }, [savedForm]);
 
   const onFinish = (values: any) => {
-    let { name, date, day, time, timeList } = values;
+    let { name, date, day, time, timeList, desc } = values;
 
     // To refactor the data
     if (timeList) {
@@ -127,7 +131,8 @@ const SaveStopSequenceForm = ({
 
           return {
             ...prev,
-            name: name,
+            name,
+            desc,
             schedule: prev.schedule.map((el: any, index: number) => {
               if (sameDateIndex === index) {
                 return {
@@ -142,13 +147,15 @@ const SaveStopSequenceForm = ({
         } else {
           return {
             ...prev,
-            name: name,
+            name,
+            desc,
             schedule: prev.schedule.concat(data),
           };
         }
       } else {
         return {
-          name: name,
+          name,
+          desc,
           schedule: [{ ...data }],
         };
       }
@@ -172,6 +179,7 @@ const SaveStopSequenceForm = ({
           if (prevValues.schedule[tagsIndex].timeSlices.length === 1) {
             return {
               name: prevValues.name,
+              desc: prevValues.desc,
               schedule: prevValues.schedule.filter(
                 (el: any, index: number) => index !== tagsIndex
               ),
@@ -179,6 +187,7 @@ const SaveStopSequenceForm = ({
           } else {
             return {
               name: prevValues.name,
+              desc: prevValues.desc,
               schedule: prevValues.schedule.map((el: any, index: number) => {
                 if (index === tagsIndex) {
                   return {
@@ -229,6 +238,15 @@ const SaveStopSequenceForm = ({
                 placeholder="Enter stop sequence name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                allowClear
+              />
+            </Form.Item>
+            <Form.Item label="Description" name="desc">
+              <Input.TextArea
+                id="desc_input"
+                placeholder="Description"
+                value={desc}
+                onChange={(e) => setDesc(e.target.value)}
                 allowClear
               />
             </Form.Item>
@@ -414,10 +432,12 @@ const SaveStopSequenceForm = ({
                     JSON.stringify({
                       ...savedForm,
                       name: name !== "" ? name : savedForm?.name,
+                      desc: desc !== "" ? desc : savedForm?.desc,
                       stopSequence: stateDND.trajekt.items,
                     }) !==
                       JSON.stringify({
                         name: currentStopSequence?.name,
+                        desc: currentStopSequence?.desc,
                         schedule: currentStopSequence?.schedule,
                         stopSequence: currentStopSequence?.stopSequence,
                       })
@@ -428,18 +448,12 @@ const SaveStopSequenceForm = ({
                     if (
                       tags.length &&
                       stateDND.trajekt.items.length &&
-                      currentStopSequence &&
-                      currentStopSequence.name &&
-                      !name
+                      savedForm
                     ) {
                       onSaveStopSequence({
                         ...savedForm,
-                        name: currentStopSequence.name,
-                      });
-                    } else {
-                      onSaveStopSequence({
-                        ...savedForm,
-                        name,
+                        name: name !== "" ? name : savedForm?.name,
+                        desc: desc !== "" ? desc : savedForm?.desc,
                       });
                     }
                   }}

@@ -8,7 +8,7 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
   onClick={[Function]}
   onClickOnDrop={[MockFunction]}
   onDelete={[Function]}
-  onDeleteDND={[MockFunction]}
+  onDeleteStop={[MockFunction]}
   onDragEnd={[MockFunction]}
   onResetStopSequence={[MockFunction]}
   selected={

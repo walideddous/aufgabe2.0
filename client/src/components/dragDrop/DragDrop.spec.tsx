@@ -57,7 +57,7 @@ describe("DragDrop component", () => {
   const onAddStopsOnCLick = jest.fn();
   const onDragEnd = jest.fn();
   const onClickOnDrop = jest.fn();
-  const onDeleteDND = jest.fn();
+  const onDeleteStop = jest.fn();
 
   beforeEach(() => {
     mountWrapper = setUp(
@@ -68,7 +68,7 @@ describe("DragDrop component", () => {
         onAddStopsOnCLick,
         onDragEnd,
         onClickOnDrop,
-        onDeleteDND,
+        onDeleteStop,
       })
     );
   });
@@ -96,7 +96,7 @@ describe("DragDrop component", () => {
   it("Should dispatch onDelete function when we click on delete Icon", () => {
     const button = mountWrapper.find("#deleteStopButton");
     button.simulate("click");
-    expect(onDeleteDND).toHaveBeenCalled();
+    expect(onDeleteStop).toHaveBeenCalled();
   });
 
   it("Should test the window size to hide some button", () => {

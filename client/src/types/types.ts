@@ -35,7 +35,7 @@ export interface Tstations {
     key:string,
     name: string,
     modes : [string],
-    desc?:string,
+    desc:string,
     created?:string,
     modified?:string
     schedule :{

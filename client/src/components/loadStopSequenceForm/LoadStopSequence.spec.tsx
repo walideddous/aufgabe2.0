@@ -16,7 +16,7 @@ const makeProps = (props: any) => ({
   handleUpdateAfterSave() {},
   onSendRequest() {},
   ondisplayStopSequence() {},
-  handleDeleteStopSequence() {},
+  handleDeleteStopSequenceMutation() {},
   onClearAll() {},
   ...props,
 });

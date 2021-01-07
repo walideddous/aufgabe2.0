@@ -14,7 +14,7 @@ interface TporpsDND {
   onAddStopsOnCLick: (stop: Tstations) => void;
   onDragEnd: ({ destination, source }: any) => void;
   onClickOnDrop: (stop: Tstations, index: number) => void;
-  onDeleteDND: (stop: Tstations, index: number) => void;
+  onDeleteStop: (stop: Tstations, index: number) => void;
 }
 
 const DragDrop = ({
@@ -24,7 +24,7 @@ const DragDrop = ({
   onAddStopsOnCLick,
   onDragEnd,
   onClickOnDrop,
-  onDeleteDND,
+  onDeleteStop,
 }: TporpsDND) => {
   const [clicked, setClicked] = useState<boolean>(false);
   const [hide, setHide] = useState<boolean>(false);
@@ -281,7 +281,7 @@ const DragDrop = ({
                                         boxShadow: "0px 2px 2px lightgray",
                                       }}
                                       onClick={() => {
-                                        onDeleteDND(el, index);
+                                        onDeleteStop(el, index);
                                       }}
                                     >
                                       <DeleteOutlined />
