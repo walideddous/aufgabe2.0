@@ -535,6 +535,7 @@ export default function useIndexHooks() {
       } else {
         body = {
           ...formInput,
+          _id: v4(),
           key: v4(),
           desc: formInput.desc,
           modes: currentMode,

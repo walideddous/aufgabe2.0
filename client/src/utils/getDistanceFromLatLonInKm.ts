@@ -1,5 +1,5 @@
 // Typescript
-import { Tstations } from "../types/types"
+import { Tstations } from "../types/types";
 
 const getpreciseDistanceFromLatLonInKm = (
   lat1: number,
@@ -13,17 +13,17 @@ const getpreciseDistanceFromLatLonInKm = (
   var a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
     Math.cos(deg2rad(lat1)) *
-    Math.cos(deg2rad(lat2)) *
-    Math.sin(dLon / 2) *
-    Math.sin(dLon / 2);
+      Math.cos(deg2rad(lat2)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   var d = R * c; // Distance in km
   return d;
-}
+};
 
 const deg2rad = (deg: number) => {
   return deg * (Math.PI / 180);
-}
+};
 
 const calculateAngle = (
   A: { lat: number; lon: number },
@@ -64,10 +64,10 @@ export const calculateDistanceAndSort = (
   tabData: Tstations[]
 ) => {
   const result: {
-    from: string,
-    to: any,
-    distance: number,
-    angle: number
+    from: string;
+    to: any;
+    distance: number;
+    angle: number;
   }[] = [];
   const { coord } = objClicked;
 
@@ -106,8 +106,8 @@ export const calculateDistanceAndSort = (
     }
   );
 
-  return sortedTable.slice(0, 16);
-}
+  return sortedTable.slice(0, 100);
+};
 
 /*
 const getDistanceFromLatLonInKm = (
