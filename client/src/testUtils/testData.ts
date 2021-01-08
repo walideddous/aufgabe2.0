@@ -1,14 +1,21 @@
 const table = () => {
-  let tab =[];
-  for(let i=0; i<=16; i++){
+  let tab: {
+    angle: number;
+    coord: number[];
+    distance: number;
+    modes: string[];
+    name: string;
+    _id: string;
+  }[] = [];
+  for (let i = 0; i <= 16; i++) {
     tab.push({
       angle: -83.19868517601843,
-      coord: [46.17857,6.08606],
+      coord: [46.17857, 6.08606],
       distance: 0.17031643195093935,
       modes: ["4", "5"],
       name: "Bernex 1",
       _id: "5f6206390d5658001cd959b4" + i,
-    });  
+    });
   }
   return tab;
 };
@@ -22,7 +29,7 @@ export const stateDND = {
     title: "Stop sequence",
     items: [
       {
-        coord: [46.17857,6.08606],
+        coord: [46.17857, 6.08606],
         index: 0,
         modes: ["4", "5"],
         name: "Confignon, croisée",
@@ -33,7 +40,7 @@ export const stateDND = {
 };
 
 export const selected = {
-  coord: [46.17831,6.08824],
+  coord: [46.17831, 6.08824],
   index: 0,
   modes: ["4", "5"],
   name: "Confignon, croisée",
@@ -42,61 +49,55 @@ export const selected = {
 
 export const stopSequenceList = [
   {
-      _id: "638b7703-d171-4e5f-8e78-21258f75cee4",
-      name: "Test",
-      modes: "4",
-      schedule: [
+    _id: "638b7703-d171-4e5f-8e78-21258f75cee4",
+    name: "Test",
+    modes: "4",
+    schedule: [
+      {
+        from: "2020.11.24",
+        to: "2020.12.16",
+        timeSlices: [
           {
-              from: "2020.11.24",
-              to: "2020.12.16",
-              timeSlices: [
-                  {
-                      weekDays: [
-                          "Mon"
-                      ],
-                      startTime: "05:00",
-                      endTime: "11:00"
-                      
-                  }
-              ]
-          }
-      ],
-      stopSequence: [
-          {
-              key: "123478",
-              name: "Schlieren, Gasometerbrücke",
-          }
-      ]
-  }
-]
+            weekDays: ["Mon"],
+            startTime: "05:00",
+            endTime: "11:00",
+          },
+        ],
+      },
+    ],
+    stopSequence: [
+      {
+        key: "123478",
+        name: "Schlieren, Gasometerbrücke",
+      },
+    ],
+  },
+];
 
-export const currentStopSequence =     {
+export const currentStopSequence = {
   _id: "638b7703-d171-4e5f-8e78-21258f75cee4",
   name: "Test",
   modes: "4",
   schedule: [
-      {
-          from: "2020.11.24",
-          to: "2020.12.16",
-          timeSlices: [
-              {
-                  weekDays: [
-                      "Mon"
-                  ],
-                  startTime: "05:00",
-                  endTime: "11:00"
-                  
-              }
-          ]
-      }
+    {
+      from: "2020.11.24",
+      to: "2020.12.16",
+      timeSlices: [
+        {
+          weekDays: ["Mon"],
+          startTime: "05:00",
+          endTime: "11:00",
+        },
+      ],
+    },
   ],
   stopSequence: [
-      {
-          key: "123478",
-          name: "Schlieren, Gasometerbrücke",
-      }
-  ]
-}
+    {
+      key: "123478",
+      name: "Schlieren, Gasometerbrücke",
+    },
+  ],
+};
 
 export const distance = [
   {
@@ -116,7 +117,7 @@ export const stations = [
   {
     _id: "5f6203bb0d5658001cd8f85a",
     name: "Basel",
-    coord: [47.54741, 7.58956],     
+    coord: [47.54741, 7.58956],
     modes: [],
   },
   {
@@ -126,7 +127,6 @@ export const stations = [
     modes: [],
   },
 ];
-
 
 export const graphQlStopsQuery = [
   {
