@@ -90,7 +90,7 @@ const MainRoot: React.FC = () => {
                 onSaveStopSequence={handleSaveStopSequenceMutation}
               />
             </Col>
-            <Col xxl={12} xs={24} style={{ height: "60vh" }}>
+            <Col xxl={24} xs={24} style={{ height: "60vh" }}>
               <Map
                 stations={stations}
                 stateDND={stateDND}
@@ -105,7 +105,7 @@ const MainRoot: React.FC = () => {
                 onClickOnMapMarker={handleClickOnMapMarker}
               />
             </Col>
-            <Col xxl={12} xs={24}>
+            <Col xxl={24} xs={24}>
               <DragDrop
                 stateDND={stateDND}
                 selected={selected}

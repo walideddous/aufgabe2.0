@@ -2522,10 +2522,10 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                 }
               }
               xs={24}
-              xxl={12}
+              xxl={24}
             >
               <div
-                className="ant-col ant-col-xs-24 ant-col-xxl-12"
+                className="ant-col ant-col-xs-24 ant-col-xxl-24"
                 style={
                   Object {
                     "height": "60vh",
@@ -2568,10 +2568,10 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
             </Col>
             <Col
               xs={24}
-              xxl={12}
+              xxl={24}
             >
               <div
-                className="ant-col ant-col-xs-24 ant-col-xxl-12"
+                className="ant-col ant-col-xs-24 ant-col-xxl-24"
                 style={
                   Object {
                     "paddingBottom": 4,

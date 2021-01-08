@@ -376,7 +376,7 @@ const SaveStopSequenceForm = ({
                     id="cancel_button"
                     onClick={() => {
                       setAddSchedule(false);
-                      form.resetFields(["name", "date", "day", "time"]);
+                      form.resetFields(["name", "desc", "date", "day", "time"]);
                     }}
                   >
                     Cancel
