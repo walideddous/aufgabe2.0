@@ -2661,9 +2661,10 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                             >
                               <Card
                                 title="Suggestion"
+                                type="inner"
                               >
                                 <div
-                                  className="ant-card ant-card-bordered"
+                                  className="ant-card ant-card-bordered ant-card-type-inner"
                                 >
                                   <div
                                     className="ant-card-head"
@@ -2802,9 +2803,10 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                               <Card
                                 extra={null}
                                 title="Stop sequence"
+                                type="inner"
                               >
                                 <div
-                                  className="ant-card ant-card-bordered"
+                                  className="ant-card ant-card-bordered ant-card-type-inner"
                                 >
                                   <div
                                     className="ant-card-head"

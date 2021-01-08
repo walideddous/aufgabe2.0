@@ -108,6 +108,8 @@ export default function useIndexHooks() {
 
       // End loading
       setIsSending(false);
+
+      console.log("end fetching");
     }
 
     if (stopsResponse.error) {
@@ -129,8 +131,6 @@ export default function useIndexHooks() {
 
       // Dispatch the stops GraphQl query
       getStopsByMode({ variables: { modes } });
-
-      console.log("end fetching");
     },
     [isSending, getStopsByMode]
   );

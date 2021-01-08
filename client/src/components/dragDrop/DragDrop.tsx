@@ -50,7 +50,7 @@ const DragDrop = ({
     <Fragment>
       <DragDropContext onDragEnd={onDragEnd}>
         <Col xs={24}>
-          <Card title={stateDND.suggestions.title}>
+          <Card title={stateDND.suggestions.title} type="inner">
             <Droppable droppableId={"suggestions"}>
               {(provided: any) => {
                 return (
@@ -193,6 +193,7 @@ const DragDrop = ({
         <Col xs={24}>
           <Card
             title={stateDND.trajekt.title}
+            type="inner"
             extra={
               stateDND.trajekt.items.length ? (
                 <Button
