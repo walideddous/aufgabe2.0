@@ -320,7 +320,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                 accordion={false}
                 destroyInactivePanel={false}
                 expandIcon={[Function]}
-                header="Stop sequence save form"
+                header="Haltestellensequenz speichern Form"
                 isActive={true}
                 key="1"
                 onItemClick={[Function]}
@@ -350,7 +350,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                   destroyInactivePanel={false}
                   expandIcon={[Function]}
                   forceRender={false}
-                  header="Stop sequence save form"
+                  header="Haltestellensequenz speichern Form"
                   headerClass=""
                   isActive={true}
                   onItemClick={[Function]}
@@ -474,7 +474,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                           </span>
                         </AntdIcon>
                       </ForwardRef(RightOutlined)>
-                      Stop sequence save form
+                      Haltestellensequenz speichern Form
                     </div>
                     <CSSMotion
                       forceRender={false}
@@ -583,7 +583,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                         rules={
                                           Array [
                                             Object {
-                                              "message": "Missing name",
+                                              "message": "Name fehlt",
                                               "required": true,
                                             },
                                           ]
@@ -601,7 +601,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                           rules={
                                             Array [
                                               Object {
-                                                "message": "Missing name",
+                                                "message": "Name fehlt",
                                                 "required": true,
                                               },
                                             ]
@@ -651,7 +651,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                             rules={
                                               Array [
                                                 Object {
-                                                  "message": "Missing name",
+                                                  "message": "Name fehlt",
                                                   "required": true,
                                                 },
                                               ]
@@ -678,7 +678,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                   rules={
                                                     Array [
                                                       Object {
-                                                        "message": "Missing name",
+                                                        "message": "Name fehlt",
                                                         "required": true,
                                                       },
                                                     ]
@@ -714,7 +714,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                   rules={
                                                     Array [
                                                       Object {
-                                                        "message": "Missing name",
+                                                        "message": "Name fehlt",
                                                         "required": true,
                                                       },
                                                     ]
@@ -744,7 +744,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                               allowClear={true}
                                                               id="name_input"
                                                               onChange={[Function]}
-                                                              placeholder="Enter stop sequence name"
+                                                              placeholder="Haltestellensequenzname eingeben"
                                                               type="text"
                                                             >
                                                               <ClearableLabeledInput
@@ -758,7 +758,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                                     onChange={[Function]}
                                                                     onFocus={[Function]}
                                                                     onKeyDown={[Function]}
-                                                                    placeholder="Enter stop sequence name"
+                                                                    placeholder="Haltestellensequenzname eingeben"
                                                                     type="text"
                                                                   />
                                                                 }
@@ -767,7 +767,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                                 id="name_input"
                                                                 inputType="input"
                                                                 onChange={[Function]}
-                                                                placeholder="Enter stop sequence name"
+                                                                placeholder="Haltestellensequenzname eingeben"
                                                                 prefixCls="ant-input"
                                                                 triggerFocus={[Function]}
                                                                 type="text"
@@ -784,7 +784,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                                     onChange={[Function]}
                                                                     onFocus={[Function]}
                                                                     onKeyDown={[Function]}
-                                                                    placeholder="Enter stop sequence name"
+                                                                    placeholder="Haltestellensequenzname eingeben"
                                                                     style={null}
                                                                     type="text"
                                                                     value=""
@@ -903,14 +903,14 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                         </WrapperField>
                                       </FormItem>
                                       <FormItem
-                                        label="Description"
+                                        label="Beschreibung"
                                         name="desc"
                                       >
                                         <WrapperField
-                                          label="Description"
+                                          label="Beschreibung"
                                           messageVariables={
                                             Object {
-                                              "label": "Description",
+                                              "label": "Beschreibung",
                                             }
                                           }
                                           name="desc"
@@ -945,10 +945,10 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                               }
                                             }
                                             key="_desc"
-                                            label="Description"
+                                            label="Beschreibung"
                                             messageVariables={
                                               Object {
-                                                "label": "Description",
+                                                "label": "Beschreibung",
                                               }
                                             }
                                             name={
@@ -971,7 +971,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                               >
                                                 <FormItemLabel
                                                   htmlFor="desc"
-                                                  label="Description"
+                                                  label="Beschreibung"
                                                   name="desc"
                                                   prefixCls="ant-form"
                                                   required={false}
@@ -987,16 +987,16 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                       <label
                                                         className=""
                                                         htmlFor="desc"
-                                                        title="Description"
+                                                        title="Beschreibung"
                                                       >
-                                                        Description
+                                                        Beschreibung
                                                       </label>
                                                     </div>
                                                   </Col>
                                                 </FormItemLabel>
                                                 <FormItemInput
                                                   errors={Array []}
-                                                  label="Description"
+                                                  label="Beschreibung"
                                                   name={
                                                     Array [
                                                       "desc",
@@ -1029,7 +1029,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                               allowClear={true}
                                                               id="desc_input"
                                                               onChange={[Function]}
-                                                              placeholder="Description"
+                                                              placeholder="Beschreibung"
                                                             >
                                                               <ClearableLabeledInput
                                                                 allowClear={true}
@@ -1039,7 +1039,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                                     className=""
                                                                     id="desc_input"
                                                                     onChange={[Function]}
-                                                                    placeholder="Description"
+                                                                    placeholder="Beschreibung"
                                                                     prefixCls="ant-input"
                                                                   />
                                                                 }
@@ -1047,7 +1047,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                                 id="desc_input"
                                                                 inputType="text"
                                                                 onChange={[Function]}
-                                                                placeholder="Description"
+                                                                placeholder="Beschreibung"
                                                                 prefixCls="ant-input"
                                                                 value=""
                                                               >
@@ -1058,7 +1058,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                                     className=""
                                                                     id="desc_input"
                                                                     onChange={[Function]}
-                                                                    placeholder="Description"
+                                                                    placeholder="Beschreibung"
                                                                     prefixCls="ant-input"
                                                                     style={null}
                                                                     value=""
@@ -1068,7 +1068,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                                       id="desc_input"
                                                                       onChange={[Function]}
                                                                       onKeyDown={[Function]}
-                                                                      placeholder="Description"
+                                                                      placeholder="Beschreibung"
                                                                       prefixCls="ant-input"
                                                                       style={null}
                                                                       value=""
@@ -1082,7 +1082,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                                           id="desc_input"
                                                                           onChange={[Function]}
                                                                           onKeyDown={[Function]}
-                                                                          placeholder="Description"
+                                                                          placeholder="Beschreibung"
                                                                           style={Object {}}
                                                                           value=""
                                                                         />
@@ -1239,7 +1239,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                               <span
                                                 key=".0"
                                               >
-                                                Add schedule
+                                                Zeitplan hinzufügen
                                               </span>
                                             </button>
                                           </Wave>
@@ -1283,7 +1283,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                               accordion={false}
                                               destroyInactivePanel={false}
                                               expandIcon={[Function]}
-                                              header="Schedule"
+                                              header="Zeitplan"
                                               isActive={false}
                                               key="2"
                                               onItemClick={[Function]}
@@ -1313,7 +1313,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                 destroyInactivePanel={false}
                                                 expandIcon={[Function]}
                                                 forceRender={false}
-                                                header="Schedule"
+                                                header="Zeitplan"
                                                 headerClass=""
                                                 isActive={false}
                                                 onItemClick={[Function]}
@@ -1423,7 +1423,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                         </span>
                                                       </AntdIcon>
                                                     </ForwardRef(RightOutlined)>
-                                                    Schedule
+                                                    Zeitplan
                                                   </div>
                                                   <CSSMotion
                                                     forceRender={false}

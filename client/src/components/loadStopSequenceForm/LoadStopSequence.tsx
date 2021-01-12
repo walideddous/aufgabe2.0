@@ -1,6 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { AutoComplete, Radio, Card, Form, Select, Button } from "antd";
-
 // Import types
 import { TStopSequence } from "../../types/types";
 
@@ -29,7 +28,7 @@ const LoadStopSequence = ({
 }: TLoadStopSequence) => {
   const [form] = Form.useForm();
   const [search, setSearch] = useState<string>("");
-  const [selectValue, setSelectValue] = useState<string>("Choose mode");
+  const [selectValue, setSelectValue] = useState<string>("Modus auswählen");
   const [radioButton, setRadioButton] = useState<string>("load");
   const [show, setShow] = useState<boolean>(true);
 
@@ -56,7 +55,7 @@ const LoadStopSequence = ({
   // handle the drop menu to display the choosed Modes on Map
   const handleModeChange = useCallback(
     (value: string) => {
-      if (value !== "Choose mode ") {
+      if (value !== "Modus auswählen") {
         onStopsQuery([value + ""]);
         setSelectValue(value + "");
       }
@@ -104,22 +103,22 @@ const LoadStopSequence = ({
             onChange={handleRadioGroupChange}
           >
             <Radio.Button id="load_button" value="load">
-              Load
+              Laden
             </Radio.Button>
             <Radio.Button id="new_button" value="new">
-              New
+              Neu
             </Radio.Button>
           </Radio.Group>
         </Form.Item>
         {!show && (
-          <Form.Item label="Modes">
+          <Form.Item label="Modus">
             <Select
               id="mode_selector"
               value={selectValue}
               onChange={handleModeChange}
             >
-              <Option value="Choose mode" id="Choose mode">
-                Choose mode
+              <Option value="Modus auswählen" id="Modus auswählen">
+                Modus auswählen
               </Option>
               <Option value="13" id="13">
                 13
@@ -144,7 +143,7 @@ const LoadStopSequence = ({
         )}
         {show && (
           <>
-            <Form.Item label="Stop sequence name">
+            <Form.Item label="Haltestellensequenz name">
               <AutoComplete
                 id="stopSequence_autoComplete"
                 onChange={(input: string) => {
@@ -152,16 +151,12 @@ const LoadStopSequence = ({
                 }}
                 value={search}
                 onSelect={handleSelect}
-                placeholder="Seach stop sequence by name"
+                placeholder="Haltestellensequenz nach Namen suchen"
                 allowClear={true}
               >
                 {stopSequenceList &&
                   stopSequenceList.map((el: any) => (
                     <Option value={el.name} key={el.key}>
-                      <i
-                        className="fas fa-subway"
-                        style={{ color: "#1890ff", margin: "0 10px" }}
-                      ></i>
                       {el.name}
                     </Option>
                   ))}
@@ -188,7 +183,7 @@ const LoadStopSequence = ({
                     }
                   }}
                 >
-                  Delete stop sequence
+                  Haltestellensequenz löschen
                 </Button>
               </div>
             )}

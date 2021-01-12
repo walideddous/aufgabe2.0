@@ -28,21 +28,20 @@ const queryStopsMocked = [
         modes: ["4"],
       },
     },
-    data: {
-      PTStopItems: graphQlStopsQuery,
+    result: {
+      data: {
+        PTStopItems: graphQlStopsQuery,
+      },
     },
+  },
+  {
+    request: {
+      query: GET_STOPS_BY_MODES,
+      variables: { modes: ["22"] },
+    },
+    error: new Error("Something went wrong"),
   },
 ];
-
-const queryStopsMockedErrorMock = {
-  request: {
-    query: GET_STOPS_BY_MODES,
-    variables: {
-      modes: ["4"],
-    },
-  },
-  error: new Error("Ohh Ohh!"),
-};
 
 describe("Test the customHooks of the /components/index.tsx", () => {
   const MainRoot = require("../components/index").default;
@@ -51,7 +50,7 @@ describe("Test the customHooks of the /components/index.tsx", () => {
 
   const setUp = () => {
     const component = mount(
-      <MockedProvider mocks={queryStopsMocked} addTypename={false}>
+      <MockedProvider mocks={queryStopsMocked} addTypename={true}>
         <MainRoot />
       </MockedProvider>
     );
@@ -77,25 +76,6 @@ describe("Test the customHooks of the /components/index.tsx", () => {
   it("Should return an array of stops when we choose the mode", async () => {
     const wrapper = ({ children }: any) => (
       <MockedProvider mocks={queryStopsMocked} addTypename={false}>
-        {children}
-      </MockedProvider>
-    );
-
-    const { result, waitForNextUpdate } = renderHook(() => useIndexHooks(), {
-      wrapper,
-    });
-
-    act(() => {
-      result.current.handleStopsQuery(["4"]);
-    });
-
-    await waitForNextUpdate();
-
-    expect(result.current.stations.length).toEqual(1);
-  });
-  it("Should return error when request fails", async () => {
-    const wrapper = ({ children }: any) => (
-      <MockedProvider mocks={[queryStopsMockedErrorMock]} addTypename={false}>
         {children}
       </MockedProvider>
     );

@@ -272,7 +272,7 @@ const Map = ({
 
   return (
     <Fragment>
-      <div id="mapId" style={{ height: "60vh", zIndex: 2 }} />
+      <div id="mapId" style={{ height: "450px", zIndex: 2 }} />
       <SearchInput
         stations={stations}
         handleSelectAutoSearch={onSelectAutoSearch}

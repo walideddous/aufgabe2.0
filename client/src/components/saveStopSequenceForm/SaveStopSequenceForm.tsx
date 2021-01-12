@@ -219,7 +219,7 @@ const SaveStopSequenceForm = ({
             : "2"
         }
       >
-        <Panel header="Stop sequence save form" key="1">
+        <Panel header="Haltestellensequenz speichern Form" key="1">
           <Form
             autoComplete="off"
             id="formWrapper"
@@ -231,20 +231,20 @@ const SaveStopSequenceForm = ({
             <Form.Item
               label="Name"
               name="name"
-              rules={[{ required: true, message: "Missing name" }]}
+              rules={[{ required: true, message: "Name fehlt" }]}
             >
               <Input
                 id="name_input"
-                placeholder="Enter stop sequence name"
+                placeholder="Haltestellensequenzname eingeben"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 allowClear
               />
             </Form.Item>
-            <Form.Item label="Description" name="desc">
+            <Form.Item label="Beschreibung" name="desc">
               <Input.TextArea
                 id="desc_input"
-                placeholder="Description"
+                placeholder="Beschreibung"
                 value={desc}
                 onChange={(e) => setDesc(e.target.value)}
                 allowClear
@@ -259,28 +259,31 @@ const SaveStopSequenceForm = ({
                   }}
                   id="addSchedule_button"
                 >
-                  Add schedule
+                  Zeitplan hinzufügen
                 </Button>
               </div>
             )}
             {addSchedule && (
               <Fragment>
                 <Form.Item
-                  label="Date"
+                  label="Datum"
                   name="date"
-                  rules={[{ required: true, message: "Missing date" }]}
+                  rules={[{ required: true, message: "Datum fehlt" }]}
                 >
-                  <DatePicker.RangePicker id="date_input" />
+                  <DatePicker.RangePicker
+                    id="date_input"
+                    placeholder={["Start Datum", "End Datum"]}
+                  />
                 </Form.Item>
                 <Form.Item
                   id="dayPicker_form"
-                  label="Day"
+                  label="Tag"
                   name="day"
-                  rules={[{ required: true, message: "Missing day" }]}
+                  rules={[{ required: true, message: "Tag fehlt" }]}
                 >
                   <Select
                     allowClear
-                    placeholder="Select day"
+                    placeholder="Tag auswählen"
                     id="dayPicker_input"
                     mode="tags"
                   >
@@ -313,15 +316,19 @@ const SaveStopSequenceForm = ({
                 <div style={{ display: "flex", flexWrap: "wrap" }}>
                   <Form.Item
                     name="time"
-                    label="Time"
+                    label="Zeit"
                     rules={[
                       {
                         required: true,
-                        message: "Missing time",
+                        message: "Zeit fehlt",
                       },
                     ]}
                   >
-                    <RangePicker format="HH:mm" id="timePicker_input" />
+                    <RangePicker
+                      placeholder={["Start Zeit", "End Zeit"]}
+                      format="HH:mm"
+                      id="timePicker_input"
+                    />
                   </Form.Item>
                   <Form.List name="timeList">
                     {(fields, { add, remove }) => {
@@ -339,7 +346,7 @@ const SaveStopSequenceForm = ({
                               onClick={() => add()}
                               icon={<PlusOutlined />}
                             >
-                              Add time
+                              Zeit hinzufügen
                             </Button>
                           </Form.Item>
                           <div>
@@ -351,6 +358,7 @@ const SaveStopSequenceForm = ({
                               >
                                 <Form.Item name={[field.name, "time"]}>
                                   <RangePicker
+                                    placeholder={["Start Zeit", "End Zeit"]}
                                     format="HH:mm"
                                     id={`timePicker_input${field.name}`}
                                   />
@@ -369,7 +377,7 @@ const SaveStopSequenceForm = ({
                 </div>
                 <Form.Item>
                   <Button id="save_schedule" type="primary" htmlType="submit">
-                    Save schedule
+                    Zeitplan speichern
                   </Button>
                   <Button
                     type="dashed"
@@ -379,13 +387,13 @@ const SaveStopSequenceForm = ({
                       form.resetFields(["name", "desc", "date", "day", "time"]);
                     }}
                   >
-                    Cancel
+                    Abbrechen
                   </Button>
                 </Form.Item>
               </Fragment>
             )}
             <Collapse activeKey={tags.length ? "2" : ""}>
-              <Panel header="Schedule" key="2">
+              <Panel header="Zeitplan" key="2">
                 <div
                   id="time_result"
                   style={{
@@ -398,7 +406,7 @@ const SaveStopSequenceForm = ({
                     tags.map((tag: any, tagsIndex: number) => {
                       return (
                         <Fragment key={tagsIndex}>
-                          <h3>{`${tag.from} ${tag.to}`}</h3>
+                          <p>{`${tag.from} ${tag.to}`}</p>
                           <Fragment>
                             {tag.displayedTags.map(
                               (el: string, displayedTagsIndex: number) => (
@@ -458,7 +466,7 @@ const SaveStopSequenceForm = ({
                     }
                   }}
                 >
-                  Save
+                  Speichern
                 </Button>
                 <Button
                   type="dashed"
@@ -468,7 +476,7 @@ const SaveStopSequenceForm = ({
                     setTags([]);
                   }}
                 >
-                  Clear all
+                  Alle löschen
                 </Button>
               </Panel>
             </Collapse>

@@ -303,10 +303,17 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
         style={Object {}}
       >
         <Card
-          title="Suggestion"
+          bodyStyle={
+            Object {
+              "paddingLeft": 0,
+              "paddingRight": 0,
+            }
+          }
+          title="Vorschläge"
+          type="inner"
         >
           <div
-            className="ant-card ant-card-bordered"
+            className="ant-card ant-card-bordered ant-card-type-inner"
           >
             <div
               className="ant-card-head"
@@ -318,13 +325,18 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                 <div
                   className="ant-card-head-title"
                 >
-                  Suggestion
+                  Vorschläge
                 </div>
               </div>
             </div>
             <div
               className="ant-card-body"
-              style={Object {}}
+              style={
+                Object {
+                  "paddingLeft": 0,
+                  "paddingRight": 0,
+                }
+              }
             >
               <Droppable
                 droppableId="suggestions"
@@ -2378,6 +2390,12 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
         style={Object {}}
       >
         <Card
+          bodyStyle={
+            Object {
+              "paddingLeft": 0,
+              "paddingRight": 0,
+            }
+          }
           extra={
             <ForwardRef(InternalButton)
               id="clearAll_button"
@@ -2386,10 +2404,11 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
               Reset
             </ForwardRef(InternalButton)>
           }
-          title="Stop sequence"
+          title="Haltestellensequenz"
+          type="inner"
         >
           <div
-            className="ant-card ant-card-bordered"
+            className="ant-card ant-card-bordered ant-card-type-inner"
           >
             <div
               className="ant-card-head"
@@ -2401,7 +2420,7 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                 <div
                   className="ant-card-head-title"
                 >
-                  Stop sequence
+                  Haltestellensequenz
                 </div>
                 <div
                   className="ant-card-extra"
@@ -2449,7 +2468,12 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
             </div>
             <div
               className="ant-card-body"
-              style={Object {}}
+              style={
+                Object {
+                  "paddingLeft": 0,
+                  "paddingRight": 0,
+                }
+              }
             >
               <div
                 style={

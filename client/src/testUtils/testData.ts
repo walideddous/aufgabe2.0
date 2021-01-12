@@ -50,7 +50,9 @@ export const selected = {
 export const stopSequenceList = [
   {
     _id: "638b7703-d171-4e5f-8e78-21258f75cee4",
+    key: "638b7703-d171-4e5f-8e78-21258f75cee4",
     name: "Test",
+    desc: "description of the tets",
     modes: "4",
     schedule: [
       {
@@ -76,7 +78,9 @@ export const stopSequenceList = [
 
 export const currentStopSequence = {
   _id: "638b7703-d171-4e5f-8e78-21258f75cee4",
+  key: "638b7703-d171-4e5f-8e78-21258f75cee4",
   name: "Test",
+  desc: "description of the tets",
   modes: "4",
   schedule: [
     {

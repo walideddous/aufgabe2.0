@@ -2,53 +2,10 @@
 
 exports[`Test the customHooks of the /components/index.tsx Should match snapShot with the main component => component/index 1`] = `
 <MockedProvider
-  addTypename={false}
+  addTypename={true}
   mocks={
     Array [
       Object {
-        "data": Object {
-          "PTStopItems": Array [
-            Object {
-              "data": Object {
-                "_id": "5f6203cc0d5658001cd8fae8",
-                "key": "100713",
-                "keyMapping": Object {
-                  "diva": Object {
-                    "ojp": "713",
-                  },
-                  "gi": "1400015",
-                },
-                "loc": Object {
-                  "coord": null,
-                  "name": "Gaillard",
-                  "omc": "24074133",
-                  "placeId": "1",
-                },
-                "modes": Array [
-                  "4",
-                ],
-                "name": "Gaillard, Libération",
-                "routes": Array [
-                  "ojp91017_Hj20",
-                  "ojp91017_Rj20",
-                ],
-              },
-              "geojson": Object {
-                "geometry": Object {
-                  "coordinates": Array [
-                    6.21145,
-                    46.19161,
-                  ],
-                  "type": "Point",
-                },
-                "type": "Feature",
-              },
-              "key": "100713",
-              "name": "Gaillard, Libération",
-              "type": "stop",
-            },
-          ],
-        },
         "request": Object {
           "query": Object {
             "definitions": Array [
@@ -243,6 +200,248 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
             ],
           },
         },
+        "result": Object {
+          "data": Object {
+            "PTStopItems": Array [
+              Object {
+                "data": Object {
+                  "_id": "5f6203cc0d5658001cd8fae8",
+                  "key": "100713",
+                  "keyMapping": Object {
+                    "diva": Object {
+                      "ojp": "713",
+                    },
+                    "gi": "1400015",
+                  },
+                  "loc": Object {
+                    "coord": null,
+                    "name": "Gaillard",
+                    "omc": "24074133",
+                    "placeId": "1",
+                  },
+                  "modes": Array [
+                    "4",
+                  ],
+                  "name": "Gaillard, Libération",
+                  "routes": Array [
+                    "ojp91017_Hj20",
+                    "ojp91017_Rj20",
+                  ],
+                },
+                "geojson": Object {
+                  "geometry": Object {
+                    "coordinates": Array [
+                      6.21145,
+                      46.19161,
+                    ],
+                    "type": "Point",
+                  },
+                  "type": "Feature",
+                },
+                "key": "100713",
+                "name": "Gaillard, Libération",
+                "type": "stop",
+              },
+            ],
+          },
+        },
+      },
+      Object {
+        "error": [Error: Something went wrong],
+        "request": Object {
+          "query": Object {
+            "definitions": Array [
+              Object {
+                "directives": Array [],
+                "kind": "OperationDefinition",
+                "name": Object {
+                  "kind": "Name",
+                  "value": "PTStopItems",
+                },
+                "operation": "query",
+                "selectionSet": Object {
+                  "kind": "SelectionSet",
+                  "selections": Array [
+                    Object {
+                      "alias": undefined,
+                      "arguments": Array [
+                        Object {
+                          "kind": "Argument",
+                          "name": Object {
+                            "kind": "Name",
+                            "value": "modes",
+                          },
+                          "value": Object {
+                            "kind": "Variable",
+                            "name": Object {
+                              "kind": "Name",
+                              "value": "modes",
+                            },
+                          },
+                        },
+                      ],
+                      "directives": Array [],
+                      "kind": "Field",
+                      "name": Object {
+                        "kind": "Name",
+                        "value": "PTStopItems",
+                      },
+                      "selectionSet": Object {
+                        "kind": "SelectionSet",
+                        "selections": Array [
+                          Object {
+                            "alias": undefined,
+                            "arguments": Array [],
+                            "directives": Array [],
+                            "kind": "Field",
+                            "name": Object {
+                              "kind": "Name",
+                              "value": "type",
+                            },
+                            "selectionSet": undefined,
+                          },
+                          Object {
+                            "alias": undefined,
+                            "arguments": Array [],
+                            "directives": Array [],
+                            "kind": "Field",
+                            "name": Object {
+                              "kind": "Name",
+                              "value": "name",
+                            },
+                            "selectionSet": undefined,
+                          },
+                          Object {
+                            "alias": undefined,
+                            "arguments": Array [],
+                            "directives": Array [],
+                            "kind": "Field",
+                            "name": Object {
+                              "kind": "Name",
+                              "value": "key",
+                            },
+                            "selectionSet": undefined,
+                          },
+                          Object {
+                            "alias": undefined,
+                            "arguments": Array [],
+                            "directives": Array [],
+                            "kind": "Field",
+                            "name": Object {
+                              "kind": "Name",
+                              "value": "geojson",
+                            },
+                            "selectionSet": Object {
+                              "kind": "SelectionSet",
+                              "selections": Array [
+                                Object {
+                                  "alias": undefined,
+                                  "arguments": Array [],
+                                  "directives": Array [],
+                                  "kind": "Field",
+                                  "name": Object {
+                                    "kind": "Name",
+                                    "value": "type",
+                                  },
+                                  "selectionSet": undefined,
+                                },
+                                Object {
+                                  "alias": undefined,
+                                  "arguments": Array [],
+                                  "directives": Array [],
+                                  "kind": "Field",
+                                  "name": Object {
+                                    "kind": "Name",
+                                    "value": "geometry",
+                                  },
+                                  "selectionSet": Object {
+                                    "kind": "SelectionSet",
+                                    "selections": Array [
+                                      Object {
+                                        "alias": undefined,
+                                        "arguments": Array [],
+                                        "directives": Array [],
+                                        "kind": "Field",
+                                        "name": Object {
+                                          "kind": "Name",
+                                          "value": "type",
+                                        },
+                                        "selectionSet": undefined,
+                                      },
+                                      Object {
+                                        "alias": undefined,
+                                        "arguments": Array [],
+                                        "directives": Array [],
+                                        "kind": "Field",
+                                        "name": Object {
+                                          "kind": "Name",
+                                          "value": "coordinates",
+                                        },
+                                        "selectionSet": undefined,
+                                      },
+                                    ],
+                                  },
+                                },
+                              ],
+                            },
+                          },
+                          Object {
+                            "alias": undefined,
+                            "arguments": Array [],
+                            "directives": Array [],
+                            "kind": "Field",
+                            "name": Object {
+                              "kind": "Name",
+                              "value": "data",
+                            },
+                            "selectionSet": undefined,
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+                "variableDefinitions": Array [
+                  Object {
+                    "defaultValue": undefined,
+                    "directives": Array [],
+                    "kind": "VariableDefinition",
+                    "type": Object {
+                      "kind": "NonNullType",
+                      "type": Object {
+                        "kind": "ListType",
+                        "type": Object {
+                          "kind": "NamedType",
+                          "name": Object {
+                            "kind": "Name",
+                            "value": "String",
+                          },
+                        },
+                      },
+                    },
+                    "variable": Object {
+                      "kind": "Variable",
+                      "name": Object {
+                        "kind": "Name",
+                        "value": "modes",
+                      },
+                    },
+                  },
+                ],
+              },
+            ],
+            "kind": "Document",
+            "loc": Object {
+              "end": 231,
+              "start": 0,
+            },
+          },
+          "variables": Object {
+            "modes": Array [
+              "22",
+            ],
+          },
+        },
       },
     ]
   }
@@ -251,9 +450,9 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
     client={
       ApolloClient {
         "cache": InMemoryCache {
-          "addTypename": false,
+          "addTypename": true,
           "config": Object {
-            "addTypename": false,
+            "addTypename": true,
             "dataIdFromObject": [Function],
             "resultCaching": true,
             "typePolicies": Object {},
@@ -391,7 +590,7 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
           },
           "storeReader": StoreReader {
             "config": Object {
-              "addTypename": false,
+              "addTypename": true,
               "cache": [Circular],
             },
             "executeSelectionSet": [Function],
@@ -402,7 +601,7 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
             "cache": [Circular],
             "reader": StoreReader {
               "config": Object {
-                "addTypename": false,
+                "addTypename": true,
                 "cache": [Circular],
               },
               "executeSelectionSet": [Function],
@@ -419,53 +618,10 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
         "defaultOptions": Object {},
         "disableNetworkFetches": false,
         "link": MockLink {
-          "addTypename": false,
+          "addTypename": true,
           "mockedResponsesByKey": Object {
-            "{\\"query\\":\\"query PTStopItems($modes: [String]!) {\\\\n  PTStopItems(modes: $modes) {\\\\n    type\\\\n    name\\\\n    key\\\\n    geojson {\\\\n      type\\\\n      geometry {\\\\n        type\\\\n        coordinates\\\\n      }\\\\n    }\\\\n    data\\\\n  }\\\\n}\\\\n\\"}": Array [
+            "{\\"query\\":\\"query PTStopItems($modes: [String]!) {\\\\n  PTStopItems(modes: $modes) {\\\\n    type\\\\n    name\\\\n    key\\\\n    geojson {\\\\n      type\\\\n      geometry {\\\\n        type\\\\n        coordinates\\\\n        __typename\\\\n      }\\\\n      __typename\\\\n    }\\\\n    data\\\\n    __typename\\\\n  }\\\\n}\\\\n\\"}": Array [
               Object {
-                "data": Object {
-                  "PTStopItems": Array [
-                    Object {
-                      "data": Object {
-                        "_id": "5f6203cc0d5658001cd8fae8",
-                        "key": "100713",
-                        "keyMapping": Object {
-                          "diva": Object {
-                            "ojp": "713",
-                          },
-                          "gi": "1400015",
-                        },
-                        "loc": Object {
-                          "coord": null,
-                          "name": "Gaillard",
-                          "omc": "24074133",
-                          "placeId": "1",
-                        },
-                        "modes": Array [
-                          "4",
-                        ],
-                        "name": "Gaillard, Libération",
-                        "routes": Array [
-                          "ojp91017_Hj20",
-                          "ojp91017_Rj20",
-                        ],
-                      },
-                      "geojson": Object {
-                        "geometry": Object {
-                          "coordinates": Array [
-                            6.21145,
-                            46.19161,
-                          ],
-                          "type": "Point",
-                        },
-                        "type": "Feature",
-                      },
-                      "key": "100713",
-                      "name": "Gaillard, Libération",
-                      "type": "stop",
-                    },
-                  ],
-                },
                 "request": Object {
                   "query": Object {
                     "definitions": Array [
@@ -660,359 +816,7 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                     ],
                   },
                 },
-              },
-            ],
-          },
-        },
-        "localState": LocalState {
-          "cache": InMemoryCache {
-            "addTypename": false,
-            "config": Object {
-              "addTypename": false,
-              "dataIdFromObject": [Function],
-              "resultCaching": true,
-              "typePolicies": Object {},
-            },
-            "data": Root {
-              "canRead": [Function],
-              "data": Object {},
-              "getFieldValue": [Function],
-              "group": CacheGroup {
-                "caching": true,
-                "d": [Function],
-                "keyMaker": KeyTrie {
-                  "makeData": [Function],
-                  "weakness": true,
-                },
-              },
-              "policies": Policies {
-                "cache": [Circular],
-                "config": Object {
-                  "cache": [Circular],
-                  "dataIdFromObject": [Function],
-                  "possibleTypes": undefined,
-                  "typePolicies": Object {},
-                },
-                "fuzzySubtypes": Map {},
-                "rootIdsByTypename": Object {
-                  "Mutation": "ROOT_MUTATION",
-                  "Query": "ROOT_QUERY",
-                  "Subscription": "ROOT_SUBSCRIPTION",
-                },
-                "rootTypenamesById": Object {
-                  "ROOT_MUTATION": "Mutation",
-                  "ROOT_QUERY": "Query",
-                  "ROOT_SUBSCRIPTION": "Subscription",
-                },
-                "supertypeMap": Map {},
-                "toBeAdded": Object {},
-                "typePolicies": Object {},
-                "usingPossibleTypes": false,
-              },
-              "refs": Object {},
-              "rootIds": Object {},
-              "sharedLayerGroup": CacheGroup {
-                "caching": true,
-                "d": [Function],
-                "keyMaker": KeyTrie {
-                  "makeData": [Function],
-                  "weakness": true,
-                },
-              },
-              "storageTrie": KeyTrie {
-                "makeData": [Function],
-                "weakness": true,
-              },
-              "toReference": [Function],
-            },
-            "getFragmentDoc": [Function],
-            "makeVar": [Function],
-            "maybeBroadcastWatch": [Function],
-            "optimisticData": Root {
-              "canRead": [Function],
-              "data": Object {},
-              "getFieldValue": [Function],
-              "group": CacheGroup {
-                "caching": true,
-                "d": [Function],
-                "keyMaker": KeyTrie {
-                  "makeData": [Function],
-                  "weakness": true,
-                },
-              },
-              "policies": Policies {
-                "cache": [Circular],
-                "config": Object {
-                  "cache": [Circular],
-                  "dataIdFromObject": [Function],
-                  "possibleTypes": undefined,
-                  "typePolicies": Object {},
-                },
-                "fuzzySubtypes": Map {},
-                "rootIdsByTypename": Object {
-                  "Mutation": "ROOT_MUTATION",
-                  "Query": "ROOT_QUERY",
-                  "Subscription": "ROOT_SUBSCRIPTION",
-                },
-                "rootTypenamesById": Object {
-                  "ROOT_MUTATION": "Mutation",
-                  "ROOT_QUERY": "Query",
-                  "ROOT_SUBSCRIPTION": "Subscription",
-                },
-                "supertypeMap": Map {},
-                "toBeAdded": Object {},
-                "typePolicies": Object {},
-                "usingPossibleTypes": false,
-              },
-              "refs": Object {},
-              "rootIds": Object {},
-              "sharedLayerGroup": CacheGroup {
-                "caching": true,
-                "d": [Function],
-                "keyMaker": KeyTrie {
-                  "makeData": [Function],
-                  "weakness": true,
-                },
-              },
-              "storageTrie": KeyTrie {
-                "makeData": [Function],
-                "weakness": true,
-              },
-              "toReference": [Function],
-            },
-            "policies": Policies {
-              "cache": [Circular],
-              "config": Object {
-                "cache": [Circular],
-                "dataIdFromObject": [Function],
-                "possibleTypes": undefined,
-                "typePolicies": Object {},
-              },
-              "fuzzySubtypes": Map {},
-              "rootIdsByTypename": Object {
-                "Mutation": "ROOT_MUTATION",
-                "Query": "ROOT_QUERY",
-                "Subscription": "ROOT_SUBSCRIPTION",
-              },
-              "rootTypenamesById": Object {
-                "ROOT_MUTATION": "Mutation",
-                "ROOT_QUERY": "Query",
-                "ROOT_SUBSCRIPTION": "Subscription",
-              },
-              "supertypeMap": Map {},
-              "toBeAdded": Object {},
-              "typePolicies": Object {},
-              "usingPossibleTypes": false,
-            },
-            "storeReader": StoreReader {
-              "config": Object {
-                "addTypename": false,
-                "cache": [Circular],
-              },
-              "executeSelectionSet": [Function],
-              "executeSubSelectedArray": [Function],
-              "knownResults": WeakMap {},
-            },
-            "storeWriter": StoreWriter {
-              "cache": [Circular],
-              "reader": StoreReader {
-                "config": Object {
-                  "addTypename": false,
-                  "cache": [Circular],
-                },
-                "executeSelectionSet": [Function],
-                "executeSubSelectedArray": [Function],
-                "knownResults": WeakMap {},
-              },
-            },
-            "txCount": 0,
-            "typenameDocumentCache": Map {},
-            "watchDep": [Function],
-            "watches": Set {},
-          },
-          "client": [Circular],
-        },
-        "mutate": [Function],
-        "query": [Function],
-        "queryDeduplication": true,
-        "queryManager": QueryManager {
-          "assumeImmutableResults": false,
-          "cache": InMemoryCache {
-            "addTypename": false,
-            "config": Object {
-              "addTypename": false,
-              "dataIdFromObject": [Function],
-              "resultCaching": true,
-              "typePolicies": Object {},
-            },
-            "data": Root {
-              "canRead": [Function],
-              "data": Object {},
-              "getFieldValue": [Function],
-              "group": CacheGroup {
-                "caching": true,
-                "d": [Function],
-                "keyMaker": KeyTrie {
-                  "makeData": [Function],
-                  "weakness": true,
-                },
-              },
-              "policies": Policies {
-                "cache": [Circular],
-                "config": Object {
-                  "cache": [Circular],
-                  "dataIdFromObject": [Function],
-                  "possibleTypes": undefined,
-                  "typePolicies": Object {},
-                },
-                "fuzzySubtypes": Map {},
-                "rootIdsByTypename": Object {
-                  "Mutation": "ROOT_MUTATION",
-                  "Query": "ROOT_QUERY",
-                  "Subscription": "ROOT_SUBSCRIPTION",
-                },
-                "rootTypenamesById": Object {
-                  "ROOT_MUTATION": "Mutation",
-                  "ROOT_QUERY": "Query",
-                  "ROOT_SUBSCRIPTION": "Subscription",
-                },
-                "supertypeMap": Map {},
-                "toBeAdded": Object {},
-                "typePolicies": Object {},
-                "usingPossibleTypes": false,
-              },
-              "refs": Object {},
-              "rootIds": Object {},
-              "sharedLayerGroup": CacheGroup {
-                "caching": true,
-                "d": [Function],
-                "keyMaker": KeyTrie {
-                  "makeData": [Function],
-                  "weakness": true,
-                },
-              },
-              "storageTrie": KeyTrie {
-                "makeData": [Function],
-                "weakness": true,
-              },
-              "toReference": [Function],
-            },
-            "getFragmentDoc": [Function],
-            "makeVar": [Function],
-            "maybeBroadcastWatch": [Function],
-            "optimisticData": Root {
-              "canRead": [Function],
-              "data": Object {},
-              "getFieldValue": [Function],
-              "group": CacheGroup {
-                "caching": true,
-                "d": [Function],
-                "keyMaker": KeyTrie {
-                  "makeData": [Function],
-                  "weakness": true,
-                },
-              },
-              "policies": Policies {
-                "cache": [Circular],
-                "config": Object {
-                  "cache": [Circular],
-                  "dataIdFromObject": [Function],
-                  "possibleTypes": undefined,
-                  "typePolicies": Object {},
-                },
-                "fuzzySubtypes": Map {},
-                "rootIdsByTypename": Object {
-                  "Mutation": "ROOT_MUTATION",
-                  "Query": "ROOT_QUERY",
-                  "Subscription": "ROOT_SUBSCRIPTION",
-                },
-                "rootTypenamesById": Object {
-                  "ROOT_MUTATION": "Mutation",
-                  "ROOT_QUERY": "Query",
-                  "ROOT_SUBSCRIPTION": "Subscription",
-                },
-                "supertypeMap": Map {},
-                "toBeAdded": Object {},
-                "typePolicies": Object {},
-                "usingPossibleTypes": false,
-              },
-              "refs": Object {},
-              "rootIds": Object {},
-              "sharedLayerGroup": CacheGroup {
-                "caching": true,
-                "d": [Function],
-                "keyMaker": KeyTrie {
-                  "makeData": [Function],
-                  "weakness": true,
-                },
-              },
-              "storageTrie": KeyTrie {
-                "makeData": [Function],
-                "weakness": true,
-              },
-              "toReference": [Function],
-            },
-            "policies": Policies {
-              "cache": [Circular],
-              "config": Object {
-                "cache": [Circular],
-                "dataIdFromObject": [Function],
-                "possibleTypes": undefined,
-                "typePolicies": Object {},
-              },
-              "fuzzySubtypes": Map {},
-              "rootIdsByTypename": Object {
-                "Mutation": "ROOT_MUTATION",
-                "Query": "ROOT_QUERY",
-                "Subscription": "ROOT_SUBSCRIPTION",
-              },
-              "rootTypenamesById": Object {
-                "ROOT_MUTATION": "Mutation",
-                "ROOT_QUERY": "Query",
-                "ROOT_SUBSCRIPTION": "Subscription",
-              },
-              "supertypeMap": Map {},
-              "toBeAdded": Object {},
-              "typePolicies": Object {},
-              "usingPossibleTypes": false,
-            },
-            "storeReader": StoreReader {
-              "config": Object {
-                "addTypename": false,
-                "cache": [Circular],
-              },
-              "executeSelectionSet": [Function],
-              "executeSubSelectedArray": [Function],
-              "knownResults": WeakMap {},
-            },
-            "storeWriter": StoreWriter {
-              "cache": [Circular],
-              "reader": StoreReader {
-                "config": Object {
-                  "addTypename": false,
-                  "cache": [Circular],
-                },
-                "executeSelectionSet": [Function],
-                "executeSubSelectedArray": [Function],
-                "knownResults": WeakMap {},
-              },
-            },
-            "txCount": 0,
-            "typenameDocumentCache": Map {},
-            "watchDep": [Function],
-            "watches": Set {},
-          },
-          "clientAwareness": Object {
-            "name": undefined,
-            "version": undefined,
-          },
-          "fetchCancelFns": Map {},
-          "inFlightLinkObservables": Map {},
-          "link": MockLink {
-            "addTypename": false,
-            "mockedResponsesByKey": Object {
-              "{\\"query\\":\\"query PTStopItems($modes: [String]!) {\\\\n  PTStopItems(modes: $modes) {\\\\n    type\\\\n    name\\\\n    key\\\\n    geojson {\\\\n      type\\\\n      geometry {\\\\n        type\\\\n        coordinates\\\\n      }\\\\n    }\\\\n    data\\\\n  }\\\\n}\\\\n\\"}": Array [
-                Object {
+                "result": Object {
                   "data": Object {
                     "PTStopItems": Array [
                       Object {
@@ -1056,6 +860,557 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                       },
                     ],
                   },
+                },
+              },
+              Object {
+                "error": [Error: Something went wrong],
+                "request": Object {
+                  "query": Object {
+                    "definitions": Array [
+                      Object {
+                        "directives": Array [],
+                        "kind": "OperationDefinition",
+                        "name": Object {
+                          "kind": "Name",
+                          "value": "PTStopItems",
+                        },
+                        "operation": "query",
+                        "selectionSet": Object {
+                          "kind": "SelectionSet",
+                          "selections": Array [
+                            Object {
+                              "alias": undefined,
+                              "arguments": Array [
+                                Object {
+                                  "kind": "Argument",
+                                  "name": Object {
+                                    "kind": "Name",
+                                    "value": "modes",
+                                  },
+                                  "value": Object {
+                                    "kind": "Variable",
+                                    "name": Object {
+                                      "kind": "Name",
+                                      "value": "modes",
+                                    },
+                                  },
+                                },
+                              ],
+                              "directives": Array [],
+                              "kind": "Field",
+                              "name": Object {
+                                "kind": "Name",
+                                "value": "PTStopItems",
+                              },
+                              "selectionSet": Object {
+                                "kind": "SelectionSet",
+                                "selections": Array [
+                                  Object {
+                                    "alias": undefined,
+                                    "arguments": Array [],
+                                    "directives": Array [],
+                                    "kind": "Field",
+                                    "name": Object {
+                                      "kind": "Name",
+                                      "value": "type",
+                                    },
+                                    "selectionSet": undefined,
+                                  },
+                                  Object {
+                                    "alias": undefined,
+                                    "arguments": Array [],
+                                    "directives": Array [],
+                                    "kind": "Field",
+                                    "name": Object {
+                                      "kind": "Name",
+                                      "value": "name",
+                                    },
+                                    "selectionSet": undefined,
+                                  },
+                                  Object {
+                                    "alias": undefined,
+                                    "arguments": Array [],
+                                    "directives": Array [],
+                                    "kind": "Field",
+                                    "name": Object {
+                                      "kind": "Name",
+                                      "value": "key",
+                                    },
+                                    "selectionSet": undefined,
+                                  },
+                                  Object {
+                                    "alias": undefined,
+                                    "arguments": Array [],
+                                    "directives": Array [],
+                                    "kind": "Field",
+                                    "name": Object {
+                                      "kind": "Name",
+                                      "value": "geojson",
+                                    },
+                                    "selectionSet": Object {
+                                      "kind": "SelectionSet",
+                                      "selections": Array [
+                                        Object {
+                                          "alias": undefined,
+                                          "arguments": Array [],
+                                          "directives": Array [],
+                                          "kind": "Field",
+                                          "name": Object {
+                                            "kind": "Name",
+                                            "value": "type",
+                                          },
+                                          "selectionSet": undefined,
+                                        },
+                                        Object {
+                                          "alias": undefined,
+                                          "arguments": Array [],
+                                          "directives": Array [],
+                                          "kind": "Field",
+                                          "name": Object {
+                                            "kind": "Name",
+                                            "value": "geometry",
+                                          },
+                                          "selectionSet": Object {
+                                            "kind": "SelectionSet",
+                                            "selections": Array [
+                                              Object {
+                                                "alias": undefined,
+                                                "arguments": Array [],
+                                                "directives": Array [],
+                                                "kind": "Field",
+                                                "name": Object {
+                                                  "kind": "Name",
+                                                  "value": "type",
+                                                },
+                                                "selectionSet": undefined,
+                                              },
+                                              Object {
+                                                "alias": undefined,
+                                                "arguments": Array [],
+                                                "directives": Array [],
+                                                "kind": "Field",
+                                                "name": Object {
+                                                  "kind": "Name",
+                                                  "value": "coordinates",
+                                                },
+                                                "selectionSet": undefined,
+                                              },
+                                            ],
+                                          },
+                                        },
+                                      ],
+                                    },
+                                  },
+                                  Object {
+                                    "alias": undefined,
+                                    "arguments": Array [],
+                                    "directives": Array [],
+                                    "kind": "Field",
+                                    "name": Object {
+                                      "kind": "Name",
+                                      "value": "data",
+                                    },
+                                    "selectionSet": undefined,
+                                  },
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                        "variableDefinitions": Array [
+                          Object {
+                            "defaultValue": undefined,
+                            "directives": Array [],
+                            "kind": "VariableDefinition",
+                            "type": Object {
+                              "kind": "NonNullType",
+                              "type": Object {
+                                "kind": "ListType",
+                                "type": Object {
+                                  "kind": "NamedType",
+                                  "name": Object {
+                                    "kind": "Name",
+                                    "value": "String",
+                                  },
+                                },
+                              },
+                            },
+                            "variable": Object {
+                              "kind": "Variable",
+                              "name": Object {
+                                "kind": "Name",
+                                "value": "modes",
+                              },
+                            },
+                          },
+                        ],
+                      },
+                    ],
+                    "kind": "Document",
+                    "loc": Object {
+                      "end": 231,
+                      "start": 0,
+                    },
+                  },
+                  "variables": Object {
+                    "modes": Array [
+                      "22",
+                    ],
+                  },
+                },
+              },
+            ],
+          },
+        },
+        "localState": LocalState {
+          "cache": InMemoryCache {
+            "addTypename": true,
+            "config": Object {
+              "addTypename": true,
+              "dataIdFromObject": [Function],
+              "resultCaching": true,
+              "typePolicies": Object {},
+            },
+            "data": Root {
+              "canRead": [Function],
+              "data": Object {},
+              "getFieldValue": [Function],
+              "group": CacheGroup {
+                "caching": true,
+                "d": [Function],
+                "keyMaker": KeyTrie {
+                  "makeData": [Function],
+                  "weakness": true,
+                },
+              },
+              "policies": Policies {
+                "cache": [Circular],
+                "config": Object {
+                  "cache": [Circular],
+                  "dataIdFromObject": [Function],
+                  "possibleTypes": undefined,
+                  "typePolicies": Object {},
+                },
+                "fuzzySubtypes": Map {},
+                "rootIdsByTypename": Object {
+                  "Mutation": "ROOT_MUTATION",
+                  "Query": "ROOT_QUERY",
+                  "Subscription": "ROOT_SUBSCRIPTION",
+                },
+                "rootTypenamesById": Object {
+                  "ROOT_MUTATION": "Mutation",
+                  "ROOT_QUERY": "Query",
+                  "ROOT_SUBSCRIPTION": "Subscription",
+                },
+                "supertypeMap": Map {},
+                "toBeAdded": Object {},
+                "typePolicies": Object {},
+                "usingPossibleTypes": false,
+              },
+              "refs": Object {},
+              "rootIds": Object {},
+              "sharedLayerGroup": CacheGroup {
+                "caching": true,
+                "d": [Function],
+                "keyMaker": KeyTrie {
+                  "makeData": [Function],
+                  "weakness": true,
+                },
+              },
+              "storageTrie": KeyTrie {
+                "makeData": [Function],
+                "weakness": true,
+              },
+              "toReference": [Function],
+            },
+            "getFragmentDoc": [Function],
+            "makeVar": [Function],
+            "maybeBroadcastWatch": [Function],
+            "optimisticData": Root {
+              "canRead": [Function],
+              "data": Object {},
+              "getFieldValue": [Function],
+              "group": CacheGroup {
+                "caching": true,
+                "d": [Function],
+                "keyMaker": KeyTrie {
+                  "makeData": [Function],
+                  "weakness": true,
+                },
+              },
+              "policies": Policies {
+                "cache": [Circular],
+                "config": Object {
+                  "cache": [Circular],
+                  "dataIdFromObject": [Function],
+                  "possibleTypes": undefined,
+                  "typePolicies": Object {},
+                },
+                "fuzzySubtypes": Map {},
+                "rootIdsByTypename": Object {
+                  "Mutation": "ROOT_MUTATION",
+                  "Query": "ROOT_QUERY",
+                  "Subscription": "ROOT_SUBSCRIPTION",
+                },
+                "rootTypenamesById": Object {
+                  "ROOT_MUTATION": "Mutation",
+                  "ROOT_QUERY": "Query",
+                  "ROOT_SUBSCRIPTION": "Subscription",
+                },
+                "supertypeMap": Map {},
+                "toBeAdded": Object {},
+                "typePolicies": Object {},
+                "usingPossibleTypes": false,
+              },
+              "refs": Object {},
+              "rootIds": Object {},
+              "sharedLayerGroup": CacheGroup {
+                "caching": true,
+                "d": [Function],
+                "keyMaker": KeyTrie {
+                  "makeData": [Function],
+                  "weakness": true,
+                },
+              },
+              "storageTrie": KeyTrie {
+                "makeData": [Function],
+                "weakness": true,
+              },
+              "toReference": [Function],
+            },
+            "policies": Policies {
+              "cache": [Circular],
+              "config": Object {
+                "cache": [Circular],
+                "dataIdFromObject": [Function],
+                "possibleTypes": undefined,
+                "typePolicies": Object {},
+              },
+              "fuzzySubtypes": Map {},
+              "rootIdsByTypename": Object {
+                "Mutation": "ROOT_MUTATION",
+                "Query": "ROOT_QUERY",
+                "Subscription": "ROOT_SUBSCRIPTION",
+              },
+              "rootTypenamesById": Object {
+                "ROOT_MUTATION": "Mutation",
+                "ROOT_QUERY": "Query",
+                "ROOT_SUBSCRIPTION": "Subscription",
+              },
+              "supertypeMap": Map {},
+              "toBeAdded": Object {},
+              "typePolicies": Object {},
+              "usingPossibleTypes": false,
+            },
+            "storeReader": StoreReader {
+              "config": Object {
+                "addTypename": true,
+                "cache": [Circular],
+              },
+              "executeSelectionSet": [Function],
+              "executeSubSelectedArray": [Function],
+              "knownResults": WeakMap {},
+            },
+            "storeWriter": StoreWriter {
+              "cache": [Circular],
+              "reader": StoreReader {
+                "config": Object {
+                  "addTypename": true,
+                  "cache": [Circular],
+                },
+                "executeSelectionSet": [Function],
+                "executeSubSelectedArray": [Function],
+                "knownResults": WeakMap {},
+              },
+            },
+            "txCount": 0,
+            "typenameDocumentCache": Map {},
+            "watchDep": [Function],
+            "watches": Set {},
+          },
+          "client": [Circular],
+        },
+        "mutate": [Function],
+        "query": [Function],
+        "queryDeduplication": true,
+        "queryManager": QueryManager {
+          "assumeImmutableResults": false,
+          "cache": InMemoryCache {
+            "addTypename": true,
+            "config": Object {
+              "addTypename": true,
+              "dataIdFromObject": [Function],
+              "resultCaching": true,
+              "typePolicies": Object {},
+            },
+            "data": Root {
+              "canRead": [Function],
+              "data": Object {},
+              "getFieldValue": [Function],
+              "group": CacheGroup {
+                "caching": true,
+                "d": [Function],
+                "keyMaker": KeyTrie {
+                  "makeData": [Function],
+                  "weakness": true,
+                },
+              },
+              "policies": Policies {
+                "cache": [Circular],
+                "config": Object {
+                  "cache": [Circular],
+                  "dataIdFromObject": [Function],
+                  "possibleTypes": undefined,
+                  "typePolicies": Object {},
+                },
+                "fuzzySubtypes": Map {},
+                "rootIdsByTypename": Object {
+                  "Mutation": "ROOT_MUTATION",
+                  "Query": "ROOT_QUERY",
+                  "Subscription": "ROOT_SUBSCRIPTION",
+                },
+                "rootTypenamesById": Object {
+                  "ROOT_MUTATION": "Mutation",
+                  "ROOT_QUERY": "Query",
+                  "ROOT_SUBSCRIPTION": "Subscription",
+                },
+                "supertypeMap": Map {},
+                "toBeAdded": Object {},
+                "typePolicies": Object {},
+                "usingPossibleTypes": false,
+              },
+              "refs": Object {},
+              "rootIds": Object {},
+              "sharedLayerGroup": CacheGroup {
+                "caching": true,
+                "d": [Function],
+                "keyMaker": KeyTrie {
+                  "makeData": [Function],
+                  "weakness": true,
+                },
+              },
+              "storageTrie": KeyTrie {
+                "makeData": [Function],
+                "weakness": true,
+              },
+              "toReference": [Function],
+            },
+            "getFragmentDoc": [Function],
+            "makeVar": [Function],
+            "maybeBroadcastWatch": [Function],
+            "optimisticData": Root {
+              "canRead": [Function],
+              "data": Object {},
+              "getFieldValue": [Function],
+              "group": CacheGroup {
+                "caching": true,
+                "d": [Function],
+                "keyMaker": KeyTrie {
+                  "makeData": [Function],
+                  "weakness": true,
+                },
+              },
+              "policies": Policies {
+                "cache": [Circular],
+                "config": Object {
+                  "cache": [Circular],
+                  "dataIdFromObject": [Function],
+                  "possibleTypes": undefined,
+                  "typePolicies": Object {},
+                },
+                "fuzzySubtypes": Map {},
+                "rootIdsByTypename": Object {
+                  "Mutation": "ROOT_MUTATION",
+                  "Query": "ROOT_QUERY",
+                  "Subscription": "ROOT_SUBSCRIPTION",
+                },
+                "rootTypenamesById": Object {
+                  "ROOT_MUTATION": "Mutation",
+                  "ROOT_QUERY": "Query",
+                  "ROOT_SUBSCRIPTION": "Subscription",
+                },
+                "supertypeMap": Map {},
+                "toBeAdded": Object {},
+                "typePolicies": Object {},
+                "usingPossibleTypes": false,
+              },
+              "refs": Object {},
+              "rootIds": Object {},
+              "sharedLayerGroup": CacheGroup {
+                "caching": true,
+                "d": [Function],
+                "keyMaker": KeyTrie {
+                  "makeData": [Function],
+                  "weakness": true,
+                },
+              },
+              "storageTrie": KeyTrie {
+                "makeData": [Function],
+                "weakness": true,
+              },
+              "toReference": [Function],
+            },
+            "policies": Policies {
+              "cache": [Circular],
+              "config": Object {
+                "cache": [Circular],
+                "dataIdFromObject": [Function],
+                "possibleTypes": undefined,
+                "typePolicies": Object {},
+              },
+              "fuzzySubtypes": Map {},
+              "rootIdsByTypename": Object {
+                "Mutation": "ROOT_MUTATION",
+                "Query": "ROOT_QUERY",
+                "Subscription": "ROOT_SUBSCRIPTION",
+              },
+              "rootTypenamesById": Object {
+                "ROOT_MUTATION": "Mutation",
+                "ROOT_QUERY": "Query",
+                "ROOT_SUBSCRIPTION": "Subscription",
+              },
+              "supertypeMap": Map {},
+              "toBeAdded": Object {},
+              "typePolicies": Object {},
+              "usingPossibleTypes": false,
+            },
+            "storeReader": StoreReader {
+              "config": Object {
+                "addTypename": true,
+                "cache": [Circular],
+              },
+              "executeSelectionSet": [Function],
+              "executeSubSelectedArray": [Function],
+              "knownResults": WeakMap {},
+            },
+            "storeWriter": StoreWriter {
+              "cache": [Circular],
+              "reader": StoreReader {
+                "config": Object {
+                  "addTypename": true,
+                  "cache": [Circular],
+                },
+                "executeSelectionSet": [Function],
+                "executeSubSelectedArray": [Function],
+                "knownResults": WeakMap {},
+              },
+            },
+            "txCount": 0,
+            "typenameDocumentCache": Map {},
+            "watchDep": [Function],
+            "watches": Set {},
+          },
+          "clientAwareness": Object {
+            "name": undefined,
+            "version": undefined,
+          },
+          "fetchCancelFns": Map {},
+          "inFlightLinkObservables": Map {},
+          "link": MockLink {
+            "addTypename": true,
+            "mockedResponsesByKey": Object {
+              "{\\"query\\":\\"query PTStopItems($modes: [String]!) {\\\\n  PTStopItems(modes: $modes) {\\\\n    type\\\\n    name\\\\n    key\\\\n    geojson {\\\\n      type\\\\n      geometry {\\\\n        type\\\\n        coordinates\\\\n        __typename\\\\n      }\\\\n      __typename\\\\n    }\\\\n    data\\\\n    __typename\\\\n  }\\\\n}\\\\n\\"}": Array [
+                Object {
                   "request": Object {
                     "query": Object {
                       "definitions": Array [
@@ -1250,15 +1605,257 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                       ],
                     },
                   },
+                  "result": Object {
+                    "data": Object {
+                      "PTStopItems": Array [
+                        Object {
+                          "data": Object {
+                            "_id": "5f6203cc0d5658001cd8fae8",
+                            "key": "100713",
+                            "keyMapping": Object {
+                              "diva": Object {
+                                "ojp": "713",
+                              },
+                              "gi": "1400015",
+                            },
+                            "loc": Object {
+                              "coord": null,
+                              "name": "Gaillard",
+                              "omc": "24074133",
+                              "placeId": "1",
+                            },
+                            "modes": Array [
+                              "4",
+                            ],
+                            "name": "Gaillard, Libération",
+                            "routes": Array [
+                              "ojp91017_Hj20",
+                              "ojp91017_Rj20",
+                            ],
+                          },
+                          "geojson": Object {
+                            "geometry": Object {
+                              "coordinates": Array [
+                                6.21145,
+                                46.19161,
+                              ],
+                              "type": "Point",
+                            },
+                            "type": "Feature",
+                          },
+                          "key": "100713",
+                          "name": "Gaillard, Libération",
+                          "type": "stop",
+                        },
+                      ],
+                    },
+                  },
+                },
+                Object {
+                  "error": [Error: Something went wrong],
+                  "request": Object {
+                    "query": Object {
+                      "definitions": Array [
+                        Object {
+                          "directives": Array [],
+                          "kind": "OperationDefinition",
+                          "name": Object {
+                            "kind": "Name",
+                            "value": "PTStopItems",
+                          },
+                          "operation": "query",
+                          "selectionSet": Object {
+                            "kind": "SelectionSet",
+                            "selections": Array [
+                              Object {
+                                "alias": undefined,
+                                "arguments": Array [
+                                  Object {
+                                    "kind": "Argument",
+                                    "name": Object {
+                                      "kind": "Name",
+                                      "value": "modes",
+                                    },
+                                    "value": Object {
+                                      "kind": "Variable",
+                                      "name": Object {
+                                        "kind": "Name",
+                                        "value": "modes",
+                                      },
+                                    },
+                                  },
+                                ],
+                                "directives": Array [],
+                                "kind": "Field",
+                                "name": Object {
+                                  "kind": "Name",
+                                  "value": "PTStopItems",
+                                },
+                                "selectionSet": Object {
+                                  "kind": "SelectionSet",
+                                  "selections": Array [
+                                    Object {
+                                      "alias": undefined,
+                                      "arguments": Array [],
+                                      "directives": Array [],
+                                      "kind": "Field",
+                                      "name": Object {
+                                        "kind": "Name",
+                                        "value": "type",
+                                      },
+                                      "selectionSet": undefined,
+                                    },
+                                    Object {
+                                      "alias": undefined,
+                                      "arguments": Array [],
+                                      "directives": Array [],
+                                      "kind": "Field",
+                                      "name": Object {
+                                        "kind": "Name",
+                                        "value": "name",
+                                      },
+                                      "selectionSet": undefined,
+                                    },
+                                    Object {
+                                      "alias": undefined,
+                                      "arguments": Array [],
+                                      "directives": Array [],
+                                      "kind": "Field",
+                                      "name": Object {
+                                        "kind": "Name",
+                                        "value": "key",
+                                      },
+                                      "selectionSet": undefined,
+                                    },
+                                    Object {
+                                      "alias": undefined,
+                                      "arguments": Array [],
+                                      "directives": Array [],
+                                      "kind": "Field",
+                                      "name": Object {
+                                        "kind": "Name",
+                                        "value": "geojson",
+                                      },
+                                      "selectionSet": Object {
+                                        "kind": "SelectionSet",
+                                        "selections": Array [
+                                          Object {
+                                            "alias": undefined,
+                                            "arguments": Array [],
+                                            "directives": Array [],
+                                            "kind": "Field",
+                                            "name": Object {
+                                              "kind": "Name",
+                                              "value": "type",
+                                            },
+                                            "selectionSet": undefined,
+                                          },
+                                          Object {
+                                            "alias": undefined,
+                                            "arguments": Array [],
+                                            "directives": Array [],
+                                            "kind": "Field",
+                                            "name": Object {
+                                              "kind": "Name",
+                                              "value": "geometry",
+                                            },
+                                            "selectionSet": Object {
+                                              "kind": "SelectionSet",
+                                              "selections": Array [
+                                                Object {
+                                                  "alias": undefined,
+                                                  "arguments": Array [],
+                                                  "directives": Array [],
+                                                  "kind": "Field",
+                                                  "name": Object {
+                                                    "kind": "Name",
+                                                    "value": "type",
+                                                  },
+                                                  "selectionSet": undefined,
+                                                },
+                                                Object {
+                                                  "alias": undefined,
+                                                  "arguments": Array [],
+                                                  "directives": Array [],
+                                                  "kind": "Field",
+                                                  "name": Object {
+                                                    "kind": "Name",
+                                                    "value": "coordinates",
+                                                  },
+                                                  "selectionSet": undefined,
+                                                },
+                                              ],
+                                            },
+                                          },
+                                        ],
+                                      },
+                                    },
+                                    Object {
+                                      "alias": undefined,
+                                      "arguments": Array [],
+                                      "directives": Array [],
+                                      "kind": "Field",
+                                      "name": Object {
+                                        "kind": "Name",
+                                        "value": "data",
+                                      },
+                                      "selectionSet": undefined,
+                                    },
+                                  ],
+                                },
+                              },
+                            ],
+                          },
+                          "variableDefinitions": Array [
+                            Object {
+                              "defaultValue": undefined,
+                              "directives": Array [],
+                              "kind": "VariableDefinition",
+                              "type": Object {
+                                "kind": "NonNullType",
+                                "type": Object {
+                                  "kind": "ListType",
+                                  "type": Object {
+                                    "kind": "NamedType",
+                                    "name": Object {
+                                      "kind": "Name",
+                                      "value": "String",
+                                    },
+                                  },
+                                },
+                              },
+                              "variable": Object {
+                                "kind": "Variable",
+                                "name": Object {
+                                  "kind": "Name",
+                                  "value": "modes",
+                                },
+                              },
+                            },
+                          ],
+                        },
+                      ],
+                      "kind": "Document",
+                      "loc": Object {
+                        "end": 231,
+                        "start": 0,
+                      },
+                    },
+                    "variables": Object {
+                      "modes": Array [
+                        "22",
+                      ],
+                    },
+                  },
                 },
               ],
             },
           },
           "localState": LocalState {
             "cache": InMemoryCache {
-              "addTypename": false,
+              "addTypename": true,
               "config": Object {
-                "addTypename": false,
+                "addTypename": true,
                 "dataIdFromObject": [Function],
                 "resultCaching": true,
                 "typePolicies": Object {},
@@ -1396,7 +1993,7 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
               },
               "storeReader": StoreReader {
                 "config": Object {
-                  "addTypename": false,
+                  "addTypename": true,
                   "cache": [Circular],
                 },
                 "executeSelectionSet": [Function],
@@ -1407,7 +2004,7 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                 "cache": [Circular],
                 "reader": StoreReader {
                   "config": Object {
-                    "addTypename": false,
+                    "addTypename": true,
                     "cache": [Circular],
                   },
                   "executeSelectionSet": [Function],
@@ -1655,7 +2252,7 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                                                             </span>
                                                           </Checkbox>
                                                           <span>
-                                                            Load
+                                                            Laden
                                                           </span>
                                                         </label>
                                                       </Radio>
@@ -1713,7 +2310,7 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                                                             </span>
                                                           </Checkbox>
                                                           <span>
-                                                            New
+                                                            Neu
                                                           </span>
                                                         </label>
                                                       </Radio>
@@ -1744,7 +2341,7 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                                   </Row>
                                 </FormItem>
                                 <FormItem
-                                  label="Stop sequence name"
+                                  label="Haltestellensequenz name"
                                 >
                                   <Row
                                     className="ant-form-item"
@@ -1755,7 +2352,7 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                                       style={Object {}}
                                     >
                                       <FormItemLabel
-                                        label="Stop sequence name"
+                                        label="Haltestellensequenz name"
                                         prefixCls="ant-form"
                                         requiredMark={true}
                                       >
@@ -1768,16 +2365,16 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                                           >
                                             <label
                                               className=""
-                                              title="Stop sequence name"
+                                              title="Haltestellensequenz name"
                                             >
-                                              Stop sequence name
+                                              Haltestellensequenz name
                                             </label>
                                           </div>
                                         </Col>
                                       </FormItemLabel>
                                       <FormItemInput
                                         errors={Array []}
-                                        label="Stop sequence name"
+                                        label="Haltestellensequenz name"
                                         onDomErrorVisibleChange={[Function]}
                                         prefixCls="ant-form"
                                         status=""
@@ -1801,7 +2398,7 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                                                   id="stopSequence_autoComplete"
                                                   onChange={[Function]}
                                                   onSelect={[Function]}
-                                                  placeholder="Seach stop sequence by name"
+                                                  placeholder="Haltestellensequenz nach Namen suchen"
                                                   value=""
                                                 >
                                                   <ForwardRef(InternalSelect)
@@ -1811,7 +2408,7 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                                                     mode="SECRET_COMBOBOX_MODE_DO_NOT_USE"
                                                     onChange={[Function]}
                                                     onSelect={[Function]}
-                                                    placeholder="Seach stop sequence by name"
+                                                    placeholder="Haltestellensequenz nach Namen suchen"
                                                     prefixCls="ant-select"
                                                     value=""
                                                   >
@@ -1829,7 +2426,7 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                                                       notFoundContent={null}
                                                       onChange={[Function]}
                                                       onSelect={[Function]}
-                                                      placeholder="Seach stop sequence by name"
+                                                      placeholder="Haltestellensequenz nach Namen suchen"
                                                       prefixCls="ant-select"
                                                       removeIcon={<ForwardRef(CloseOutlined) />}
                                                       transitionName="slide-up"
@@ -1849,7 +2446,7 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                                                         notFoundContent={null}
                                                         onChange={[Function]}
                                                         onSelect={[Function]}
-                                                        placeholder="Seach stop sequence by name"
+                                                        placeholder="Haltestellensequenz nach Namen suchen"
                                                         prefixCls="ant-select"
                                                         removeIcon={<ForwardRef(CloseOutlined) />}
                                                         transitionName="slide-up"
@@ -2041,7 +2638,7 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                                                                       <span
                                                                         class="ant-select-selection-placeholder"
                                                                       >
-                                                                        Seach stop sequence by name
+                                                                        Haltestellensequenz nach Namen suchen
                                                                       </span>
                                                                     </div>,
                                                                   }
@@ -2062,7 +2659,7 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                                                                 onSearchSubmit={[Function]}
                                                                 onSelect={[Function]}
                                                                 onToggleOpen={[Function]}
-                                                                placeholder="Seach stop sequence by name"
+                                                                placeholder="Haltestellensequenz nach Namen suchen"
                                                                 prefixCls="ant-select"
                                                                 removeIcon={<ForwardRef(CloseOutlined) />}
                                                                 searchValue=""
@@ -2108,7 +2705,7 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                                                                           <span
                                                                             class="ant-select-selection-placeholder"
                                                                           >
-                                                                            Seach stop sequence by name
+                                                                            Haltestellensequenz nach Namen suchen
                                                                           </span>
                                                                         </div>,
                                                                       }
@@ -2151,7 +2748,7 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                                                                     onSearchSubmit={[Function]}
                                                                     onSelect={[Function]}
                                                                     onToggleOpen={[Function]}
-                                                                    placeholder="Seach stop sequence by name"
+                                                                    placeholder="Haltestellensequenz nach Namen suchen"
                                                                     prefixCls="ant-select"
                                                                     removeIcon={<ForwardRef(CloseOutlined) />}
                                                                     searchValue=""
@@ -2210,7 +2807,7 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                                                                     <span
                                                                       className="ant-select-selection-placeholder"
                                                                     >
-                                                                      Seach stop sequence by name
+                                                                      Haltestellensequenz nach Namen suchen
                                                                     </span>
                                                                   </SingleSelector>
                                                                 </div>
@@ -2333,7 +2930,7 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                                 accordion={false}
                                 destroyInactivePanel={false}
                                 expandIcon={[Function]}
-                                header="Stop sequence save form"
+                                header="Haltestellensequenz speichern Form"
                                 isActive={false}
                                 key="1"
                                 onItemClick={[Function]}
@@ -2363,7 +2960,7 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                                   destroyInactivePanel={false}
                                   expandIcon={[Function]}
                                   forceRender={false}
-                                  header="Stop sequence save form"
+                                  header="Haltestellensequenz speichern Form"
                                   headerClass=""
                                   isActive={false}
                                   onItemClick={[Function]}
@@ -2473,7 +3070,7 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                                           </span>
                                         </AntdIcon>
                                       </ForwardRef(RightOutlined)>
-                                      Stop sequence save form
+                                      Haltestellensequenz speichern Form
                                     </div>
                                     <CSSMotion
                                       forceRender={false}
@@ -2518,7 +3115,7 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
             <Col
               style={
                 Object {
-                  "height": "60vh",
+                  "padding": 0,
                 }
               }
               xs={24}
@@ -2528,52 +3125,7 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                 className="ant-col ant-col-xs-24 ant-col-xxl-24"
                 style={
                   Object {
-                    "height": "60vh",
-                    "paddingBottom": 4,
-                    "paddingLeft": 4,
-                    "paddingRight": 4,
-                    "paddingTop": 4,
-                  }
-                }
-              >
-                <Component
-                  distance={Array []}
-                  onAddAfterSelected={[Function]}
-                  onAddBeforSelected={[Function]}
-                  onClickOnMapMarker={[Function]}
-                  onDeleteStop={[Function]}
-                  onResetStopSequence={[Function]}
-                  onSelectAutoSearch={[Function]}
-                  stateDND={
-                    Object {
-                      "suggestions": Object {
-                        "items": Array [],
-                        "title": "Suggestion",
-                      },
-                      "trajekt": Object {
-                        "items": Array [],
-                        "title": "Stop sequence",
-                      },
-                    }
-                  }
-                  stations={Array []}
-                >
-                  <div
-                    id="mapMock"
-                  >
-                    Map mocked
-                  </div>
-                </Component>
-              </div>
-            </Col>
-            <Col
-              xs={24}
-              xxl={24}
-            >
-              <div
-                className="ant-col ant-col-xs-24 ant-col-xxl-24"
-                style={
-                  Object {
+                    "padding": 0,
                     "paddingBottom": 4,
                     "paddingLeft": 4,
                     "paddingRight": 4,
@@ -2660,7 +3212,13 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                               }
                             >
                               <Card
-                                title="Suggestion"
+                                bodyStyle={
+                                  Object {
+                                    "paddingLeft": 0,
+                                    "paddingRight": 0,
+                                  }
+                                }
+                                title="Vorschläge"
                                 type="inner"
                               >
                                 <div
@@ -2676,13 +3234,18 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                                       <div
                                         className="ant-card-head-title"
                                       >
-                                        Suggestion
+                                        Vorschläge
                                       </div>
                                     </div>
                                   </div>
                                   <div
                                     className="ant-card-body"
-                                    style={Object {}}
+                                    style={
+                                      Object {
+                                        "paddingLeft": 0,
+                                        "paddingRight": 0,
+                                      }
+                                    }
                                   >
                                     <ConnectFunction
                                       direction="vertical"
@@ -2801,8 +3364,14 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                               }
                             >
                               <Card
+                                bodyStyle={
+                                  Object {
+                                    "paddingLeft": 0,
+                                    "paddingRight": 0,
+                                  }
+                                }
                                 extra={null}
-                                title="Stop sequence"
+                                title="Haltestellensequenz"
                                 type="inner"
                               >
                                 <div
@@ -2818,13 +3387,18 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                                       <div
                                         className="ant-card-head-title"
                                       >
-                                        Stop sequence
+                                        Haltestellensequenz
                                       </div>
                                     </div>
                                   </div>
                                   <div
                                     className="ant-card-body"
-                                    style={Object {}}
+                                    style={
+                                      Object {
+                                        "paddingLeft": 0,
+                                        "paddingRight": 0,
+                                      }
+                                    }
                                   >
                                     <div
                                       style={Object {}}
@@ -2886,6 +3460,57 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                     </ErrorBoundary>
                   </DragDropContext>
                 </Memo(DragDrop)>
+              </div>
+            </Col>
+            <Col
+              style={
+                Object {
+                  "height": "500px",
+                }
+              }
+              xs={24}
+              xxl={24}
+            >
+              <div
+                className="ant-col ant-col-xs-24 ant-col-xxl-24"
+                style={
+                  Object {
+                    "height": "500px",
+                    "paddingBottom": 4,
+                    "paddingLeft": 4,
+                    "paddingRight": 4,
+                    "paddingTop": 4,
+                  }
+                }
+              >
+                <Component
+                  distance={Array []}
+                  onAddAfterSelected={[Function]}
+                  onAddBeforSelected={[Function]}
+                  onClickOnMapMarker={[Function]}
+                  onDeleteStop={[Function]}
+                  onResetStopSequence={[Function]}
+                  onSelectAutoSearch={[Function]}
+                  stateDND={
+                    Object {
+                      "suggestions": Object {
+                        "items": Array [],
+                        "title": "Suggestion",
+                      },
+                      "trajekt": Object {
+                        "items": Array [],
+                        "title": "Stop sequence",
+                      },
+                    }
+                  }
+                  stations={Array []}
+                >
+                  <div
+                    id="mapMock"
+                  >
+                    Map mocked
+                  </div>
+                </Component>
               </div>
             </Col>
           </div>

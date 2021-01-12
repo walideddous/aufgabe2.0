@@ -24,16 +24,16 @@ const SearchInput = ({
         display: "flex",
         justifyContent: "start",
         position: "absolute",
-        top: "40px",
+        top: "25px",
         zIndex: 10,
         width: "70%",
-        left: "20%",
+        left: "18%",
       }}
     >
       <AutoComplete
         id="stops_autoComplete"
         value={search}
-        placeholder="Enter stops name"
+        placeholder="Haltestellenname eingeben"
         open={search ? true : false}
         onSelect={(selectedStop: string, option: any) => {
           const { stop } = option;
@@ -54,10 +54,6 @@ const SearchInput = ({
             )
             .map((el: Tstations) => (
               <Option value={el.name} key={el._id} stop={{ ...el }}>
-                <i
-                  className="fas fa-subway"
-                  style={{ color: "#1890ff", margin: "0 10px" }}
-                ></i>
                 {el.name}
               </Option>
             ))}
