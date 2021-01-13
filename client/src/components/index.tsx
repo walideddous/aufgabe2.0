@@ -89,6 +89,17 @@ const MainRoot: React.FC = () => {
     setFormInformation(form);
   };
 
+  const handleDeleteSchedule = () => {
+    if (formInformation) {
+      setFormInformation((prev: any) => {
+        return {
+          ...prev,
+          schedule: [],
+        };
+      });
+    }
+  };
+
   return (
     <div className="Prototyp" style={{ position: "relative" }}>
       <Row gutter={[8, 8]}>
@@ -108,17 +119,19 @@ const MainRoot: React.FC = () => {
                       (radioButton === "Haltestellensequenz laden" &&
                         stateDND.trajekt.items.length >= 2 &&
                         currentStopSequence &&
+                        formInformation &&
+                        formInformation.schedule.length &&
                         JSON.stringify({
-                          name: formInformation?.name,
-                          desc: formInformation?.desc,
-                          schedule: formInformation?.schedule,
+                          name: formInformation.name,
+                          desc: formInformation.desc,
+                          schedule: formInformation.schedule,
                           stopSequence: stateDND.trajekt.items,
                         }) !==
                           JSON.stringify({
-                            name: currentStopSequence?.name,
-                            desc: currentStopSequence?.desc,
-                            schedule: currentStopSequence?.schedule,
-                            stopSequence: currentStopSequence?.stopSequence,
+                            name: currentStopSequence.name,
+                            desc: currentStopSequence.desc,
+                            schedule: currentStopSequence.schedule,
+                            stopSequence: currentStopSequence.stopSequence,
                           }))
                         ? false
                         : true
@@ -213,6 +226,7 @@ const MainRoot: React.FC = () => {
                     formInformation={formInformation}
                     loadStopSequenceSection={loadStopSequenceSection}
                     saveForm={handleSaveForm}
+                    deleteSchedule={handleDeleteSchedule}
                   />
                 </Col>
                 <Col xxl={24} xs={24} style={{ height: "500px" }}>

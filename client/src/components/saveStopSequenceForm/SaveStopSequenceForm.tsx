@@ -24,12 +24,14 @@ interface Tprops {
   formInformation: any;
   loadStopSequenceSection: boolean;
   saveForm: (formData: any) => void;
+  deleteSchedule: () => void;
 }
 
 const SaveStopSequenceForm = ({
   loadStopSequenceSection,
   formInformation,
   saveForm,
+  deleteSchedule,
 }: Tprops) => {
   const [form] = Form.useForm();
   const [name, setName] = useState<string>("");
@@ -470,6 +472,7 @@ const SaveStopSequenceForm = ({
                   disabled={tags.length ? false : true}
                   onClick={() => {
                     setTags([]);
+                    deleteSchedule();
                   }}
                 >
                   Zeitplan löschen
