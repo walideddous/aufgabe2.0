@@ -28,63 +28,58 @@ exports[`LoadStopSequence component Should match the LoadStopSequence component 
     }
     layout="vertical"
   >
-    <FormItem>
-      <Memo([object Object])
-        id="radioButton"
-        onChange={[Function]}
-        value="load"
-      >
-        <ForwardRef(RadioButton)
-          id="load_button"
-          value="load"
-        >
-          Laden
-        </ForwardRef(RadioButton)>
-        <ForwardRef(RadioButton)
-          id="new_button"
-          value="new"
-        >
-          Neu
-        </ForwardRef(RadioButton)>
-      </Memo([object Object])>
-    </FormItem>
     <FormItem
-      label="Haltestellensequenz name"
+      label="Verkehrsmittel typ"
     >
-      <ForwardRef(AutoComplete)
-        allowClear={true}
-        id="stopSequence_autoComplete"
+      <ForwardRef(InternalSelect)
+        id="mode_selector"
         onChange={[Function]}
-        onSelect={[Function]}
-        placeholder="Haltestellensequenz nach Namen suchen"
-        value=""
+        value="verkehrsmittel typ auswählen"
       >
         <Option
-          key="638b7703-d171-4e5f-8e78-21258f75cee4"
-          value="Test"
+          id="Modus auswählen"
+          value="verkehrsmittel typ auswählen"
         >
-          Test
+          verkehrsmittel typ auswählen
         </Option>
-      </ForwardRef(AutoComplete)>
+        <Option
+          id="13"
+          value="13"
+        >
+          13
+        </Option>
+        <Option
+          id="5"
+          value="5"
+        >
+          5
+        </Option>
+        <Option
+          id="8"
+          value="8"
+        >
+          8
+        </Option>
+        <Option
+          id="9"
+          value="9"
+        >
+          9
+        </Option>
+        <Option
+          id="2"
+          value="2"
+        >
+          2
+        </Option>
+        <Option
+          id="4"
+          value="4"
+        >
+          4
+        </Option>
+      </ForwardRef(InternalSelect)>
     </FormItem>
-    <div
-      style={
-        Object {
-          "display": "flex",
-          "justifyContent": "flex-end",
-        }
-      }
-    >
-      <Button
-        danger={true}
-        disabled={true}
-        id="delete_stopSequence"
-        onClick={[Function]}
-        type="primary"
-      >
-        Haltestellensequenz löschen
-      </Button>
-    </div>
   </ForwardRef(InternalForm)>
 </Card>
 `;

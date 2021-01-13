@@ -211,6 +211,19 @@ export default function useIndexHooks() {
   const handleDeleteStop = useCallback(
     (stop: Tstations, index: number) => {
       let vorschläge: any;
+      if (!selected) {
+        setStateDND((prev: any) => {
+          return {
+            ...prev,
+            trajekt: {
+              title: "Stop sequence",
+              items: stateDND.trajekt.items.filter(
+                (item: any, i: number) => item._id + i !== stop._id + index
+              ),
+            },
+          };
+        });
+      }
       if (
         !stateDND.trajekt.items.filter((item: any) => item._id === stop._id)
           .length
@@ -219,7 +232,7 @@ export default function useIndexHooks() {
       if (
         selected &&
         stateDND.trajekt.items.length > 1 &&
-        stop._id + index === selected?._id + selected?.index
+        stop._id + index === selected._id + selected.index
       ) {
         let newValue: any;
         let newIndex: any;
@@ -263,19 +276,18 @@ export default function useIndexHooks() {
           };
         });
       }
-
       if (
         stateDND.trajekt.items.length > 1 &&
-        //@ts-ignore
-        stop._id + index !== selected?._id + selected?.index
+        selected &&
+        stop._id + index !== selected._id + selected.index
       ) {
         //@ts-ignore
-        if (index < selected?.index) {
+        if (index < selected.index) {
           setSelected((prev: any) => {
             return {
               ...prev,
               //@ts-ignore
-              index: selected?.index - 1,
+              index: selected.index - 1,
             };
           });
         }
@@ -535,7 +547,6 @@ export default function useIndexHooks() {
       } else {
         body = {
           ...formInput,
-          _id: v4(),
           key: v4(),
           desc: formInput.desc,
           modes: currentMode,
@@ -561,7 +572,7 @@ export default function useIndexHooks() {
 
           handleClearAll();
         } else {
-          console.log("Could't save the RouteManagerAdd value");
+          console.error("Could't save the RouteManagerAdd value");
         }
       } catch (error) {
         console.error("Error from trycatch saveStopSequence ", error);
@@ -607,8 +618,6 @@ export default function useIndexHooks() {
         stopsFormatted,
         RouteManagerItemByKey
       );
-
-      setCurrentMode([...routeManagerFormatted[0].modes]);
       setCurrentStopSequence({ ...routeManagerFormatted[0] });
       setStateDND((prev) => {
         return {
@@ -659,30 +668,23 @@ export default function useIndexHooks() {
 
       // Dispatch the stop sequence GraphQl query
       queryStopSequenceByKey({ variables: { key } });
-
-      setCurrentMode(modes);
     },
     [getStopsByMode, queryStopSequenceByKey]
   );
 
   // Delete stop sequence by Id
   const handleDeleteStopSequenceMutation = useCallback(
-    async (_id: string) => {
+    async (key: string) => {
       if (isSending) return console.log("Please Wait");
       setIsSending(true);
       try {
         // GraphQL
         const deleteResponse = await deleteStopSequenceMutation({
-          variables: { _id },
+          variables: { key },
         });
         if (deleteResponse.data.RouteManagerDelete) {
           message.success(`Stop sequence successfully deleted`);
           console.log(`Stop sequence successfully deleted`);
-
-          // Set the state of stopSequence List
-          setStopSequenceList((prev) => {
-            return prev.filter((el: any) => el._id !== _id);
-          });
 
           handleClearAll();
           setCurrentStopSequence(undefined);
@@ -690,7 +692,7 @@ export default function useIndexHooks() {
           message.error("Couldn't delete the stop sequence");
         }
       } catch (err) {
-        console.log("Error from deleteStopSequence tryCatch ", err);
+        console.error("Error from deleteStopSequence tryCatch ", err);
       }
       setIsSending(false);
     },

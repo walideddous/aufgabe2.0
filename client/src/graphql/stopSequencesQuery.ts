@@ -54,8 +54,8 @@ export const GET_STOP_SEQUENCE_BY_NAME = gql`
 `;
 
 export const DELETE_STOP_SEQUENCE = gql`
-  mutation RouteManagerDelete($_id: String!) {
-    RouteManagerDelete(_id: $_id)
+  mutation RouteManagerDelete($key: String!) {
+    RouteManagerDelete(key: $key)
   }
 `;
 

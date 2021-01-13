@@ -34,12 +34,12 @@ interface TpropsOnMap {
   selected: Tstations | undefined;
   distance: Tdistance[];
   currentStopSequence: TStopSequence | undefined;
-  onResetStopSequence: () => void;
-  onSelectAutoSearch: (stop: Tstations) => void;
-  onAddBeforSelected: (stopMarker: Tstations) => void;
-  onAddAfterSelected: (stopMarker: Tstations) => void;
   onDeleteStop: (stopMarker: Tstations, index: number) => void;
+  onAddAfterSelected: (stopMarker: Tstations) => void;
+  onSelectAutoSearch: (stop: Tstations) => void;
   onClickOnMapMarker: (el: Tstations, index: number) => void;
+  onAddBeforSelected: (stopMarker: Tstations) => void;
+  onResetStopSequence: () => void;
 }
 
 // Map component

@@ -10,21 +10,21 @@ import { Tstations, TstateDND } from "../../types/types";
 interface TporpsDND {
   stateDND: TstateDND;
   selected: Tstations | undefined;
-  onResetStopSequence: () => void;
-  onAddStopsOnCLick: (stop: Tstations) => void;
   onDragEnd: ({ destination, source }: any) => void;
-  onClickOnDrop: (stop: Tstations, index: number) => void;
   onDeleteStop: (stop: Tstations, index: number) => void;
+  onClickOnDrop: (stop: Tstations, index: number) => void;
+  onAddStopsOnCLick: (stop: Tstations) => void;
+  onResetStopSequence: () => void;
 }
 
 const DragDrop = ({
   stateDND,
   selected,
-  onResetStopSequence,
-  onAddStopsOnCLick,
   onDragEnd,
-  onClickOnDrop,
   onDeleteStop,
+  onClickOnDrop,
+  onAddStopsOnCLick,
+  onResetStopSequence,
 }: TporpsDND) => {
   const [clicked, setClicked] = useState<boolean>(false);
   const [hide, setHide] = useState<boolean>(false);
@@ -212,13 +212,7 @@ const DragDrop = ({
           >
             <div
               style={
-                stateDND.trajekt.items.length > 0 &&
-                stateDND.trajekt.items.length < 7
-                  ? {
-                      height: "370px",
-                      overflowY: "auto",
-                    }
-                  : stateDND.trajekt.items.length >= 7
+                stateDND.trajekt.items.length >= 7
                   ? {
                       height: "370px",
                       overflowY: "auto",

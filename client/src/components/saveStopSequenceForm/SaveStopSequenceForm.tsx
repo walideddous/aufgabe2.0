@@ -15,28 +15,23 @@ import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 
 // import utils function
 import { getFormatTags } from "../../utils/getFormatTags";
-// import types
-import { TstateDND, TStopSequence } from "../../types/types";
 
 const { RangePicker } = TimePicker;
 const { Panel } = Collapse;
 const { Option } = Select;
 
 interface Tprops {
-  stateDND: TstateDND;
-  currentStopSequence: TStopSequence | undefined;
+  formInformation: any;
   loadStopSequenceSection: boolean;
-  onSaveStopSequence: (formData: any) => void;
+  saveForm: (formData: any) => void;
 }
 
 const SaveStopSequenceForm = ({
-  stateDND,
-  currentStopSequence,
   loadStopSequenceSection,
-  onSaveStopSequence,
+  formInformation,
+  saveForm,
 }: Tprops) => {
   const [form] = Form.useForm();
-  const initializeRef = React.useRef<boolean>(false);
   const [name, setName] = useState<string>("");
   const [desc, setDesc] = useState<string>("");
   const [addSchedule, setAddSchedule] = useState<boolean>(false);
@@ -62,28 +57,24 @@ const SaveStopSequenceForm = ({
   }>();
 
   useEffect(() => {
-    if (initializeRef.current) {
-      if (currentStopSequence) {
-        const { name, desc, schedule } = currentStopSequence;
-        setSavedForm({ name, desc, schedule });
-        form.setFieldsValue({
-          name: currentStopSequence.name,
-          desc: currentStopSequence.desc,
-        });
-      } else {
-        setSavedForm({ name: "", desc: "", schedule: [] });
-        form.setFieldsValue({
-          name: "",
-          desc: "",
-        });
-      }
+    if (formInformation) {
+      const { name, desc, schedule } = formInformation;
+      setSavedForm({ name, desc, schedule });
+      form.setFieldsValue({
+        name: formInformation.name,
+        desc: formInformation.desc,
+      });
     } else {
-      initializeRef.current = true;
+      setSavedForm({ name: "", desc: "", schedule: [] });
+      form.setFieldsValue({
+        name: "",
+        desc: "",
+      });
     }
-  }, [currentStopSequence, form]);
+  }, [formInformation, form]);
 
   useEffect(() => {
-    if (savedForm?.schedule.length) {
+    if (savedForm && savedForm.schedule) {
       const savedFormFormated = getFormatTags(savedForm);
       setTags(savedFormFormated);
     } else {
@@ -107,8 +98,8 @@ const SaveStopSequenceForm = ({
     }
 
     const data = {
-      from: `${date[0].format("YYYY-MM-DD")}`,
-      to: `${date[1].format("YYYY-MM-DD")}`,
+      from: `${date[0].format("DD-MM-YYYY")}`,
+      to: `${date[1].format("DD-MM-YYYY")}`,
       timeSlices: timeList.map((element: any) => {
         return {
           weekDays: day,
@@ -119,7 +110,7 @@ const SaveStopSequenceForm = ({
     };
 
     setSavedForm((prev: any) => {
-      if (prev) {
+      if (prev && prev.schedule) {
         if (
           prev.schedule.filter(
             (el: any) => el.from === data.from && el.to === data.to
@@ -213,7 +204,7 @@ const SaveStopSequenceForm = ({
     <Card bordered={true}>
       <Collapse
         activeKey={
-          (loadStopSequenceSection && currentStopSequence) ||
+          (loadStopSequenceSection && formInformation) ||
           !loadStopSequenceSection
             ? "1"
             : "2"
@@ -272,6 +263,7 @@ const SaveStopSequenceForm = ({
                 >
                   <DatePicker.RangePicker
                     id="date_input"
+                    format="DD-MM-YYYY"
                     placeholder={["Start Datum", "End Datum"]}
                   />
                 </Form.Item>
@@ -406,7 +398,9 @@ const SaveStopSequenceForm = ({
                     tags.map((tag: any, tagsIndex: number) => {
                       return (
                         <Fragment key={tagsIndex}>
-                          <p>{`${tag.from} ${tag.to}`}</p>
+                          <p
+                            style={{ marginBottom: "4px", marginTop: "4px" }}
+                          >{`${tag.from} ${tag.to}`}</p>
                           <Fragment>
                             {tag.displayedTags.map(
                               (el: string, displayedTagsIndex: number) => (
@@ -436,47 +430,49 @@ const SaveStopSequenceForm = ({
                   id="save_stopSequence"
                   disabled={
                     tags.length &&
-                    stateDND.trajekt.items.length &&
                     JSON.stringify({
                       ...savedForm,
-                      name: name !== "" ? name : savedForm?.name,
-                      desc: desc !== "" ? desc : savedForm?.desc,
-                      stopSequence: stateDND.trajekt.items,
+                      name: name !== "" ? name.trim() : savedForm?.name,
+                      desc: desc !== "" ? desc.trim() : savedForm?.desc,
                     }) !==
                       JSON.stringify({
-                        name: currentStopSequence?.name,
-                        desc: currentStopSequence?.desc,
-                        schedule: currentStopSequence?.schedule,
-                        stopSequence: currentStopSequence?.stopSequence,
+                        name: formInformation?.name,
+                        desc: formInformation?.desc,
+                        schedule: formInformation?.schedule,
                       })
                       ? false
                       : true
                   }
                   onClick={() => {
-                    if (
-                      tags.length &&
-                      stateDND.trajekt.items.length &&
-                      savedForm
-                    ) {
-                      onSaveStopSequence({
-                        ...savedForm,
-                        name: name !== "" ? name : savedForm?.name,
-                        desc: desc !== "" ? desc : savedForm?.desc,
-                      });
-                    }
+                    saveForm({
+                      ...savedForm,
+                      name: name !== "" ? name : savedForm?.name,
+                      desc: desc !== "" ? desc : savedForm?.desc,
+                    });
                   }}
                 >
-                  Speichern
+                  {JSON.stringify({
+                    ...savedForm,
+                    name: name !== "" ? name.trim() : savedForm?.name,
+                    desc: desc !== "" ? desc.trim() : savedForm?.desc,
+                  }) !==
+                  JSON.stringify({
+                    name: formInformation?.name,
+                    desc: formInformation?.desc,
+                    schedule: formInformation?.schedule,
+                  })
+                    ? "Form speichern"
+                    : "Form gespeichert"}
                 </Button>
                 <Button
-                  type="dashed"
+                  danger
                   id="clear_all"
                   disabled={tags.length ? false : true}
                   onClick={() => {
                     setTags([]);
                   }}
                 >
-                  Alle löschen
+                  Zeitplan löschen
                 </Button>
               </Panel>
             </Collapse>

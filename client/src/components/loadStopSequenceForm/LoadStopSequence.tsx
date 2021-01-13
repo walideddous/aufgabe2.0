@@ -1,36 +1,34 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { AutoComplete, Radio, Card, Form, Select, Button } from "antd";
+import { AutoComplete, Card, Form, Select, Button } from "antd";
 // Import types
 import { TStopSequence } from "../../types/types";
 
 interface TLoadStopSequence {
+  show: boolean;
+  currentMode: string[];
   stopSequenceList: TStopSequence[];
   currentStopSequence: TStopSequence | undefined;
-  currentMode: string[];
-  onStopSequenceSearch: (name: string) => void;
-  onLoadMode: (value: boolean) => void;
   onStopsQuery: (modes: string[]) => void;
-  onClearAll: () => void;
+  onStopSequenceSearch: (name: string) => void;
   onDeleteStopSequence: (id: string) => void;
-  ondisplayStopSequence: (modes: string[], key: string) => void;
+  onDisplayStopSequence: (modes: string[], key: string) => void;
 }
 
 const LoadStopSequence = ({
+  show,
+  currentMode,
   stopSequenceList,
   currentStopSequence,
-  currentMode,
-  onStopSequenceSearch,
-  onLoadMode,
   onStopsQuery,
-  onClearAll,
+  onStopSequenceSearch,
   onDeleteStopSequence,
-  ondisplayStopSequence,
+  onDisplayStopSequence,
 }: TLoadStopSequence) => {
   const [form] = Form.useForm();
   const [search, setSearch] = useState<string>("");
-  const [selectValue, setSelectValue] = useState<string>("Modus auswählen");
-  const [radioButton, setRadioButton] = useState<string>("load");
-  const [show, setShow] = useState<boolean>(true);
+  const [selectValue, setSelectValue] = useState<string>(
+    "verkehrsmittel typ auswählen"
+  );
 
   // Auto complete component
   const { Option } = AutoComplete;
@@ -46,7 +44,7 @@ const LoadStopSequence = ({
     if (search) {
       const dispatchRequest = setTimeout(() => {
         onStopSequenceSearch(search);
-      }, 200);
+      }, 1000);
 
       return () => clearTimeout(dispatchRequest);
     }
@@ -55,7 +53,7 @@ const LoadStopSequence = ({
   // handle the drop menu to display the choosed Modes on Map
   const handleModeChange = useCallback(
     (value: string) => {
-      if (value !== "Modus auswählen") {
+      if (value !== "verkehrsmittel typ auswählen") {
         onStopsQuery([value + ""]);
         setSelectValue(value + "");
       }
@@ -69,56 +67,24 @@ const LoadStopSequence = ({
         (el: any) => el.key === options.key
       )[0];
       if (response) {
-        ondisplayStopSequence(response.modes, options.key);
+        onDisplayStopSequence(response.modes, options.key);
       }
     },
-    [stopSequenceList, ondisplayStopSequence]
-  );
-
-  const handleRadioGroupChange = useCallback(
-    (e: any) => {
-      const { value } = e.target;
-      if (value === "load") {
-        setShow(true);
-        onLoadMode(true);
-      }
-      if (value === "new") {
-        setShow(false);
-        onClearAll();
-        setSearch("");
-        onLoadMode(false);
-      }
-      setRadioButton(value);
-    },
-    [onClearAll, onLoadMode]
+    [stopSequenceList, onDisplayStopSequence]
   );
 
   return (
     <Card>
       <Form form={form} layout="vertical">
-        <Form.Item>
-          <Radio.Group
-            id="radioButton"
-            value={radioButton}
-            onChange={handleRadioGroupChange}
-          >
-            <Radio.Button id="load_button" value="load">
-              Laden
-            </Radio.Button>
-            <Radio.Button id="new_button" value="new">
-              Neu
-            </Radio.Button>
-          </Radio.Group>
-        </Form.Item>
         {!show && (
-          <Form.Item label="Modus">
+          <Form.Item label="Verkehrsmittel typ">
             <Select
               id="mode_selector"
               value={selectValue}
               onChange={handleModeChange}
             >
-              <Option value="Modus auswählen" id="Modus auswählen">
-                Modus auswählen
+              <Option value="verkehrsmittel typ auswählen" id="Modus_auswählen">
+                verkehrsmittel typ auswählen
               </Option>
               <Option value="13" id="13">
                 13
@@ -165,9 +131,8 @@ const LoadStopSequence = ({
             {currentStopSequence && (
               <div style={{ display: "flex", justifyContent: "flex-end" }}>
                 <Button
-                  type="primary"
-                  id="delete_stopSequence"
                   danger
+                  id="delete_stopSequence"
                   disabled={
                     search &&
                     currentStopSequence &&
@@ -177,8 +142,8 @@ const LoadStopSequence = ({
                   }
                   onClick={() => {
                     if (currentStopSequence) {
-                      const { _id } = currentStopSequence;
-                      onDeleteStopSequence(_id);
+                      const { key } = currentStopSequence;
+                      onDeleteStopSequence(key);
                       setSearch("");
                     }
                   }}
