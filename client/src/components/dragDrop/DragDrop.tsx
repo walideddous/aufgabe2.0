@@ -214,7 +214,7 @@ const DragDrop = ({
               style={
                 stateDND.trajekt.items.length >= 7
                   ? {
-                      height: "370px",
+                      height: "310px",
                       overflowY: "auto",
                       display: "flex",
                       flexDirection: "column-reverse",
