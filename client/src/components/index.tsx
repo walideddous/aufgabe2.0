@@ -215,17 +215,6 @@ const MainRoot: React.FC = () => {
                     saveForm={handleSaveForm}
                   />
                 </Col>
-                <Col xxl={24} xs={24} style={{ padding: 0 }}>
-                  <DragDrop
-                    stateDND={stateDND}
-                    selected={selected}
-                    onDragEnd={handleDragEnd}
-                    onDeleteStop={handleDeleteStop}
-                    onClickOnDrop={handleClickOnDrop}
-                    onAddStopsOnCLick={handleAddStopsOnCLick}
-                    onResetStopSequence={handleResetStopSequence}
-                  />
-                </Col>
                 <Col xxl={24} xs={24} style={{ height: "500px" }}>
                   <Map
                     stations={stations}
@@ -238,6 +227,17 @@ const MainRoot: React.FC = () => {
                     onSelectAutoSearch={handleSelectAutoSearch}
                     onClickOnMapMarker={handleClickOnMapMarker}
                     onAddBeforSelected={handleAddBeforSelected}
+                    onResetStopSequence={handleResetStopSequence}
+                  />
+                </Col>
+                <Col xxl={24} xs={24} style={{ padding: 0 }}>
+                  <DragDrop
+                    stateDND={stateDND}
+                    selected={selected}
+                    onDragEnd={handleDragEnd}
+                    onDeleteStop={handleDeleteStop}
+                    onClickOnDrop={handleClickOnDrop}
+                    onAddStopsOnCLick={handleAddStopsOnCLick}
                     onResetStopSequence={handleResetStopSequence}
                   />
                 </Col>
