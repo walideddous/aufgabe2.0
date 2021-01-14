@@ -52,15 +52,15 @@ export default function useIndexHooks() {
     setLoadStopSequenceSection,
   ] = useState<boolean>(true);
 
+  const [getStopsByMode, stopsResponse] = useLazyQuery(GET_STOPS_BY_MODES, {
+    fetchPolicy: "no-cache",
+  });
   const [queryStopSequenceByKey, stopSequenceByKeyResponse] = useLazyQuery(
     GET_STOP_SEQUENCE_BY_KEY,
     {
       fetchPolicy: "network-only",
     }
   );
-  const [getStopsByMode, stopsResponse] = useLazyQuery(GET_STOPS_BY_MODES, {
-    fetchPolicy: "no-cache",
-  });
   const [queryStopSequenceByName, stopSequenceByNameResponse] = useLazyQuery(
     GET_STOP_SEQUENCE_BY_NAME,
     {
@@ -125,12 +125,20 @@ export default function useIndexHooks() {
       if (isSending) return console.log("Please wait");
       // Start loading
       setIsSending(true);
-      setCurrentMode(modes);
-
       console.log("start fetching");
 
-      // Dispatch the stops GraphQl query
-      getStopsByMode({ variables: { modes } });
+      if (
+        modes.filter((mode: string) => mode === "verkehrsmittel typ auswählen")
+          .length
+      ) {
+        setCurrentMode([]);
+        setIsSending(false);
+      } else {
+        setCurrentMode(modes);
+
+        // Dispatch the stops GraphQl query
+        getStopsByMode({ variables: { modes } });
+      }
     },
     [isSending, getStopsByMode]
   );
@@ -607,9 +615,12 @@ export default function useIndexHooks() {
 
       // Check if the stops mode is equal to the stopSequence mode
       if (
-        !PTStopItems[0].data.modes.filter(
-          (mode: string) => mode === RouteManagerItemByKey[0].modes[0]
-        ).length
+        !(
+          PTStopItems[0].data &&
+          PTStopItems[0].data.modes.filter(
+            (mode: string) => mode === RouteManagerItemByKey[0].modes[0]
+          ).length
+        )
       )
         return setIsSending(false);
 

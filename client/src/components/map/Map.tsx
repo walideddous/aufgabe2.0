@@ -287,7 +287,7 @@ const Map = ({
             stateDND.trajekt.items.length ? onResetStopSequence() : null
           }
         >
-          <DeleteOutlined style={{ paddingLeft: "8px" }} />
+          <DeleteOutlined style={{ paddingLeft: "8px", paddingTop: "8px" }} />
         </div>
       ) : null}
     </Fragment>

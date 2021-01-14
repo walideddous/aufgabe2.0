@@ -1,30 +1,40 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { AutoComplete, Card, Form, Select, Button } from "antd";
+import { AutoComplete, Card, Form, Select, Button, Popconfirm } from "antd";
 // Import types
-import { TstateDND, TStopSequence } from "../../types/types";
+import { TstateDND, TStopSequence, TformInformation } from "../../types/types";
 
 interface TLoadStopSequence {
-  stateDND: TstateDND;
   show: boolean;
+  stateDND: TstateDND;
+  radioButton: string;
   currentMode: string[];
+  formInformation: TformInformation | undefined;
   stopSequenceList: TStopSequence[];
   currentStopSequence: TStopSequence | undefined;
   onStopsQuery: (modes: string[]) => void;
+  onResetRadioButton: () => void;
   onStopSequenceSearch: (name: string) => void;
   onDeleteStopSequence: (id: string) => void;
   onDisplayStopSequence: (modes: string[], key: string) => void;
+  onResetFormInformation: () => void;
+  onSaveStopSequenceMutation: (stopSequence: any) => void;
 }
 
 const LoadStopSequence = ({
-  stateDND,
   show,
+  stateDND,
+  radioButton,
   currentMode,
+  formInformation,
   stopSequenceList,
   currentStopSequence,
   onStopsQuery,
+  onResetRadioButton,
   onStopSequenceSearch,
   onDeleteStopSequence,
   onDisplayStopSequence,
+  onResetFormInformation,
+  onSaveStopSequenceMutation,
 }: TLoadStopSequence) => {
   const [form] = Form.useForm();
   const [search, setSearch] = useState<string>("");
@@ -136,32 +146,82 @@ const LoadStopSequence = ({
                   ))}
               </AutoComplete>
             </Form.Item>
-            {currentStopSequence && (
-              <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                <Button
-                  danger
-                  id="delete_stopSequence"
-                  disabled={
-                    search &&
-                    currentStopSequence &&
-                    search === currentStopSequence.name
-                      ? false
-                      : true
-                  }
-                  onClick={() => {
-                    if (currentStopSequence) {
-                      const { key } = currentStopSequence;
-                      onDeleteStopSequence(key);
-                      setSearch("");
-                    }
-                  }}
-                >
-                  Haltestellensequenz löschen
-                </Button>
-              </div>
-            )}
           </>
         )}
+        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+          <Button
+            type="primary"
+            disabled={
+              (radioButton === "Haltestellensequenz erstellen" &&
+                stateDND.trajekt.items.length >= 2 &&
+                formInformation) ||
+              (radioButton === "Haltestellensequenz laden" &&
+                stateDND.trajekt.items.length >= 2 &&
+                currentStopSequence &&
+                formInformation &&
+                formInformation.schedule.length &&
+                JSON.stringify({
+                  name: formInformation.name,
+                  desc: formInformation.desc,
+                  schedule: formInformation.schedule,
+                  stopSequence: stateDND.trajekt.items,
+                }) !==
+                  JSON.stringify({
+                    name: currentStopSequence.name,
+                    desc: currentStopSequence.desc,
+                    schedule: currentStopSequence.schedule,
+                    stopSequence: currentStopSequence.stopSequence,
+                  }))
+                ? false
+                : true
+            }
+            onClick={() => {
+              onSaveStopSequenceMutation({
+                ...formInformation,
+                stopSequence: stateDND.trajekt.items,
+              });
+
+              onResetFormInformation();
+            }}
+          >
+            Speichern
+          </Button>
+          {currentStopSequence && (
+            <Button
+              danger
+              id="delete_stopSequence"
+              disabled={
+                search &&
+                currentStopSequence &&
+                search === currentStopSequence.name
+                  ? false
+                  : true
+              }
+              onClick={() => {
+                if (currentStopSequence) {
+                  const { key } = currentStopSequence;
+                  onDeleteStopSequence(key);
+                  setSearch("");
+                }
+              }}
+            >
+              löschen
+            </Button>
+          )}
+          <Popconfirm
+            title={`Wollen Sie wirklich nicht mehr ${radioButton} ?`}
+            placement="bottomRight"
+            okText="Ja"
+            cancelText="Nein"
+            onConfirm={() => {
+              onResetRadioButton();
+              onStopsQuery(["verkehrsmittel typ auswählen"]);
+              setSelectValue("verkehrsmittel typ auswählen");
+            }}
+          >
+            <Button danger>Abbrechen</Button>
+          </Popconfirm>
+        </div>
       </Form>
     </Card>
   );

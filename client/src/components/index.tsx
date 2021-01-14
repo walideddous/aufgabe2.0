@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { Row, Spin, Col, Radio, Card, Button, Popconfirm } from "antd";
+import { Row, Spin, Col, Radio, Card } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 
 // Import composents
@@ -100,67 +100,21 @@ const MainRoot: React.FC = () => {
     }
   };
 
+  const handleResetFormInformation = () => {
+    setFormInformation(undefined);
+  };
+
+  const handleResetRadioButton = () => {
+    setRadioButton("");
+  };
+
   return (
     <div className="Prototyp" style={{ position: "relative" }}>
       <Row gutter={[8, 8]}>
-        <Col xs={24}>
-          <Card>
-            {radioButton === "Haltestellensequenz laden" ||
-            radioButton === "Haltestellensequenz erstellen" ? (
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <p style={{ padding: "0", margin: "0" }}>{radioButton}</p>
-                <div>
-                  <Button
-                    type="primary"
-                    disabled={
-                      (radioButton === "Haltestellensequenz erstellen" &&
-                        stateDND.trajekt.items.length >= 2 &&
-                        formInformation) ||
-                      (radioButton === "Haltestellensequenz laden" &&
-                        stateDND.trajekt.items.length >= 2 &&
-                        currentStopSequence &&
-                        formInformation &&
-                        formInformation.schedule.length &&
-                        JSON.stringify({
-                          name: formInformation.name,
-                          desc: formInformation.desc,
-                          schedule: formInformation.schedule,
-                          stopSequence: stateDND.trajekt.items,
-                        }) !==
-                          JSON.stringify({
-                            name: currentStopSequence.name,
-                            desc: currentStopSequence.desc,
-                            schedule: currentStopSequence.schedule,
-                            stopSequence: currentStopSequence.stopSequence,
-                          }))
-                        ? false
-                        : true
-                    }
-                    onClick={() => {
-                      handleSaveStopSequenceMutation({
-                        ...formInformation,
-                        stopSequence: stateDND.trajekt.items,
-                      });
-
-                      setFormInformation(undefined);
-                    }}
-                  >
-                    Speichern
-                  </Button>
-                  <Popconfirm
-                    title={`Wollen Sie wirklich nicht mehr ${radioButton} ?`}
-                    placement="bottom"
-                    okText="Ja"
-                    cancelText="Nein"
-                    onConfirm={() => {
-                      setRadioButton("");
-                    }}
-                  >
-                    <Button danger>Abbrechen</Button>
-                  </Popconfirm>
-                </div>
-              </div>
-            ) : (
+        {radioButton === "Haltestellensequenz laden" ||
+        radioButton === "Haltestellensequenz erstellen" ? null : (
+          <Col xs={24}>
+            <Card>
               <Radio.Group
                 id="radioButton"
                 value={radioButton}
@@ -179,21 +133,26 @@ const MainRoot: React.FC = () => {
                   Neu
                 </Radio.Button>
               </Radio.Group>
-            )}
-          </Card>
-        </Col>
+            </Card>
+          </Col>
+        )}
         {radioButton && (
           <Col xs={24}>
             <LoadStopSequence
-              stateDND={stateDND}
               show={show}
+              stateDND={stateDND}
+              radioButton={radioButton}
               currentMode={currentMode}
+              formInformation={formInformation}
               stopSequenceList={stopSequenceList}
               currentStopSequence={currentStopSequence}
               onStopsQuery={handleStopsQuery}
+              onResetRadioButton={handleResetRadioButton}
               onStopSequenceSearch={handleStopSequenceSearchQuery}
               onDeleteStopSequence={handleDeleteStopSequenceMutation}
               onDisplayStopSequence={handledisplayStopSequenceQuery}
+              onResetFormInformation={handleResetFormInformation}
+              onSaveStopSequenceMutation={handleSaveStopSequenceMutation}
             />
           </Col>
         )}
