@@ -2476,12 +2476,7 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
               }
             >
               <div
-                style={
-                  Object {
-                    "height": "370px",
-                    "overflowY": "auto",
-                  }
-                }
+                style={Object {}}
               >
                 <Droppable
                   droppableId="trajekt"

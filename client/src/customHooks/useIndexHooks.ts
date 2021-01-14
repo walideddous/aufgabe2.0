@@ -568,11 +568,11 @@ export default function useIndexHooks() {
 
         if (saveResponse.data.RouteManagerAdd) {
           console.log("Stop sequence successfully saved");
-          message.success(`Stop sequence succesfully saved`);
+          message.success(`Haltestellensequenz erfolgreich gespeichert`);
 
           handleClearAll();
         } else {
-          console.error("Could't save the RouteManagerAdd value");
+          message.error("Konnte die Haltestellensequenz nicht speichern");
         }
       } catch (error) {
         console.error("Error from trycatch saveStopSequence ", error);
@@ -683,13 +683,13 @@ export default function useIndexHooks() {
           variables: { key },
         });
         if (deleteResponse.data.RouteManagerDelete) {
-          message.success(`Stop sequence successfully deleted`);
+          message.success(`Haltestellensequenz erfolgreich gelöscht`);
           console.log(`Stop sequence successfully deleted`);
 
           handleClearAll();
           setCurrentStopSequence(undefined);
         } else {
-          message.error("Couldn't delete the stop sequence");
+          message.error("Konnte die Haltestellensequenz nicht löschen");
         }
       } catch (err) {
         console.error("Error from deleteStopSequence tryCatch ", err);

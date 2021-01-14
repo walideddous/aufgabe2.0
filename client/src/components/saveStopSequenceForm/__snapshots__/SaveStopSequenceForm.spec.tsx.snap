@@ -661,11 +661,11 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                             valuePropName="value"
                                           >
                                             <Row
-                                              className="ant-form-item"
+                                              className="ant-form-item ant-form-item-has-success"
                                               key="row"
                                             >
                                               <div
-                                                className="ant-row ant-form-item"
+                                                className="ant-row ant-form-item ant-form-item-has-success"
                                                 style={Object {}}
                                               >
                                                 <FormItemLabel
@@ -719,9 +719,9 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                       },
                                                     ]
                                                   }
-                                                  status=""
-                                                  touched={false}
-                                                  validateStatus=""
+                                                  status="success"
+                                                  touched={true}
+                                                  validateStatus="success"
                                                   validating={false}
                                                 >
                                                   <Col
@@ -738,7 +738,8 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                           className="ant-form-item-control-input-content"
                                                         >
                                                           <Component
-                                                            update={2}
+                                                            update={3}
+                                                            value=""
                                                           >
                                                             <Input
                                                               allowClear={true}
@@ -746,6 +747,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                               onChange={[Function]}
                                                               placeholder="Haltestellensequenzname eingeben"
                                                               type="text"
+                                                              value=""
                                                             >
                                                               <ClearableLabeledInput
                                                                 allowClear={true}
@@ -760,6 +762,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                                     onKeyDown={[Function]}
                                                                     placeholder="Haltestellensequenzname eingeben"
                                                                     type="text"
+                                                                    value=""
                                                                   />
                                                                 }
                                                                 focused={false}
@@ -962,11 +965,11 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                             valuePropName="value"
                                           >
                                             <Row
-                                              className="ant-form-item"
+                                              className="ant-form-item ant-form-item-has-success"
                                               key="row"
                                             >
                                               <div
-                                                className="ant-row ant-form-item"
+                                                className="ant-row ant-form-item ant-form-item-has-success"
                                                 style={Object {}}
                                               >
                                                 <FormItemLabel
@@ -1004,9 +1007,9 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                   }
                                                   onDomErrorVisibleChange={[Function]}
                                                   prefixCls="ant-form"
-                                                  status=""
-                                                  touched={false}
-                                                  validateStatus=""
+                                                  status="success"
+                                                  touched={true}
+                                                  validateStatus="success"
                                                   validating={false}
                                                 >
                                                   <Col
@@ -1023,13 +1026,15 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                           className="ant-form-item-control-input-content"
                                                         >
                                                           <Component
-                                                            update={2}
+                                                            update={3}
+                                                            value=""
                                                           >
                                                             <ForwardRef
                                                               allowClear={true}
                                                               id="desc_input"
                                                               onChange={[Function]}
                                                               placeholder="Beschreibung"
+                                                              value=""
                                                             >
                                                               <ClearableLabeledInput
                                                                 allowClear={true}
@@ -1041,6 +1046,7 @@ exports[`SaveStopSequenceForm component Should matches snapshot with the SaveSto
                                                                     onChange={[Function]}
                                                                     placeholder="Beschreibung"
                                                                     prefixCls="ant-input"
+                                                                    value=""
                                                                   />
                                                                 }
                                                                 handleReset={[Function]}

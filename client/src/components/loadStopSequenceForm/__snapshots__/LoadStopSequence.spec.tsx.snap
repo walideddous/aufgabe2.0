@@ -37,7 +37,7 @@ exports[`LoadStopSequence component Should match the LoadStopSequence component 
         value="verkehrsmittel typ auswählen"
       >
         <Option
-          id="Modus auswählen"
+          id="Modus_auswählen"
           value="verkehrsmittel typ auswählen"
         >
           verkehrsmittel typ auswählen
