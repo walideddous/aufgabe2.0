@@ -10,6 +10,7 @@ interface TLoadStopSequence {
   currentMode: string[];
   formInformation: TformInformation | undefined;
   stopSequenceList: TStopSequence[];
+  saveButtonDisabled: boolean;
   currentStopSequence: TStopSequence | undefined;
   onStopsQuery: (modes: string[]) => void;
   onResetRadioButton: () => void;
@@ -27,6 +28,7 @@ const LoadStopSequence = ({
   currentMode,
   formInformation,
   stopSequenceList,
+  saveButtonDisabled,
   currentStopSequence,
   onStopsQuery,
   onResetRadioButton,
@@ -127,10 +129,10 @@ const LoadStopSequence = ({
         )}
         {show && (
           <>
-            <Form.Item label="Haltestellensequenz name">
+            <Form.Item label="Haltestellensequenz Name">
               <AutoComplete
                 id="stopSequence_autoComplete"
-                placeholder="Haltestellensequenz nach Namen suchen"
+                placeholder="Geben Sie der Haltestellensequenz Namen ein"
                 allowClear={true}
                 value={search}
                 onChange={(input: string) => {
@@ -154,10 +156,12 @@ const LoadStopSequence = ({
             disabled={
               (radioButton === "Haltestellensequenz erstellen" &&
                 stateDND.trajekt.items.length >= 2 &&
-                formInformation) ||
+                formInformation &&
+                saveButtonDisabled) ||
               (radioButton === "Haltestellensequenz laden" &&
                 stateDND.trajekt.items.length >= 2 &&
                 currentStopSequence &&
+                saveButtonDisabled &&
                 formInformation &&
                 formInformation.schedule.length &&
                 JSON.stringify({

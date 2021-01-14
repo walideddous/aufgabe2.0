@@ -24,6 +24,7 @@ interface Tprops {
   formInformation: any;
   loadStopSequenceSection: boolean;
   saveForm: (formData: any) => void;
+  onDisabled: (value: boolean) => void;
   deleteSchedule: () => void;
 }
 
@@ -31,6 +32,7 @@ const SaveStopSequenceForm = ({
   loadStopSequenceSection,
   formInformation,
   saveForm,
+  onDisabled,
   deleteSchedule,
 }: Tprops) => {
   const [form] = Form.useForm();
@@ -58,6 +60,7 @@ const SaveStopSequenceForm = ({
     }[];
   }>();
 
+  // set savedForm state when load data from Backend
   useEffect(() => {
     if (formInformation) {
       const { name, desc, schedule } = formInformation;
@@ -75,6 +78,7 @@ const SaveStopSequenceForm = ({
     }
   }, [formInformation, form]);
 
+  //set tags state when load data from Backend
   useEffect(() => {
     if (savedForm && savedForm.schedule) {
       const savedFormFormated = getFormatTags(savedForm);
@@ -201,6 +205,22 @@ const SaveStopSequenceForm = ({
     },
     []
   );
+
+  useEffect(() => {
+    tags.length &&
+    JSON.stringify({
+      ...savedForm,
+      name: name !== "" ? name.trim() : savedForm?.name,
+      desc: desc !== "" ? desc.trim() : savedForm?.desc,
+    }) !==
+      JSON.stringify({
+        name: formInformation?.name,
+        desc: formInformation?.desc,
+        schedule: formInformation?.schedule,
+      })
+      ? onDisabled(false)
+      : onDisabled(true);
+  }, [desc, name, formInformation, savedForm, tags.length, onDisabled]);
 
   return (
     <Card bordered={true}>

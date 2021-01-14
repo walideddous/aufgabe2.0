@@ -108,6 +108,12 @@ const MainRoot: React.FC = () => {
     setRadioButton("");
   };
 
+  const [saveButtonDisabled, setSaveButtonDisabled] = useState<boolean>(true);
+
+  const handledisabled = (value: boolean) => {
+    setSaveButtonDisabled(value);
+  };
+
   return (
     <div className="Prototyp" style={{ position: "relative" }}>
       <Row gutter={[8, 8]}>
@@ -115,24 +121,27 @@ const MainRoot: React.FC = () => {
         radioButton === "Haltestellensequenz erstellen" ? null : (
           <Col xs={24}>
             <Card>
-              <Radio.Group
-                id="radioButton"
-                value={radioButton}
-                onChange={handleRadioGroupChange}
-              >
-                <Radio.Button
-                  id="load_button"
-                  value="Haltestellensequenz laden"
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <p style={{ color: "#4383B4", font: "17px" }}>ManagedRoute</p>
+                <Radio.Group
+                  id="radioButton"
+                  value={radioButton}
+                  onChange={handleRadioGroupChange}
                 >
-                  Laden
-                </Radio.Button>
-                <Radio.Button
-                  id="new_button"
-                  value="Haltestellensequenz erstellen"
-                >
-                  Neu
-                </Radio.Button>
-              </Radio.Group>
+                  <Radio.Button
+                    id="load_button"
+                    value="Haltestellensequenz laden"
+                  >
+                    Laden
+                  </Radio.Button>
+                  <Radio.Button
+                    id="new_button"
+                    value="Haltestellensequenz erstellen"
+                  >
+                    Neu
+                  </Radio.Button>
+                </Radio.Group>
+              </div>
             </Card>
           </Col>
         )}
@@ -145,6 +154,7 @@ const MainRoot: React.FC = () => {
               currentMode={currentMode}
               formInformation={formInformation}
               stopSequenceList={stopSequenceList}
+              saveButtonDisabled={saveButtonDisabled}
               currentStopSequence={currentStopSequence}
               onStopsQuery={handleStopsQuery}
               onResetRadioButton={handleResetRadioButton}
@@ -183,6 +193,7 @@ const MainRoot: React.FC = () => {
                     formInformation={formInformation}
                     loadStopSequenceSection={loadStopSequenceSection}
                     saveForm={handleSaveForm}
+                    onDisabled={handledisabled}
                     deleteSchedule={handleDeleteSchedule}
                   />
                 </Col>
