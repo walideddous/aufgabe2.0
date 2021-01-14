@@ -1,9 +1,10 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { AutoComplete, Card, Form, Select, Button } from "antd";
 // Import types
-import { TStopSequence } from "../../types/types";
+import { TstateDND, TStopSequence } from "../../types/types";
 
 interface TLoadStopSequence {
+  stateDND: TstateDND;
   show: boolean;
   currentMode: string[];
   stopSequenceList: TStopSequence[];
@@ -15,6 +16,7 @@ interface TLoadStopSequence {
 }
 
 const LoadStopSequence = ({
+  stateDND,
   show,
   currentMode,
   stopSequenceList,
@@ -80,6 +82,12 @@ const LoadStopSequence = ({
           <Form.Item label="Verkehrsmittel typ">
             <Select
               id="mode_selector"
+              disabled={
+                stateDND.trajekt.items.length &&
+                selectValue !== "verkehrsmittel typ auswählen"
+                  ? true
+                  : false
+              }
               value={selectValue}
               onChange={handleModeChange}
             >
@@ -112,13 +120,13 @@ const LoadStopSequence = ({
             <Form.Item label="Haltestellensequenz name">
               <AutoComplete
                 id="stopSequence_autoComplete"
+                placeholder="Haltestellensequenz nach Namen suchen"
+                allowClear={true}
+                value={search}
                 onChange={(input: string) => {
                   setSearch(input);
                 }}
-                value={search}
                 onSelect={handleSelect}
-                placeholder="Haltestellensequenz nach Namen suchen"
-                allowClear={true}
               >
                 {stopSequenceList &&
                   stopSequenceList.map((el: any) => (

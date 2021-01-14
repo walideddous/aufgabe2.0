@@ -163,12 +163,15 @@ const Map = ({
     map.current.on("zoomend", function () {
       if (map.current.getZoom() < 9 && map.current.hasLayer(layerRef.current)) {
         map.current.removeLayer(layerRef.current);
+        map.current.removeLayer(polylineRef.current);
       }
       if (
         map.current.getZoom() >= 9 &&
-        map.current.hasLayer(layerRef.current) === false
+        map.current.hasLayer(layerRef.current) === false &&
+        map.current.hasLayer(polylineRef.current) === false
       ) {
         map.current.addLayer(layerRef.current);
+        map.current.addLayer(polylineRef.current);
       }
     });
   }, []);

@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { Row, Spin, Col, Radio, Card, Button } from "antd";
+import { Row, Spin, Col, Radio, Card, Button, Popconfirm } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 
 // Import composents
@@ -147,20 +147,17 @@ const MainRoot: React.FC = () => {
                   >
                     Speichern
                   </Button>
-                  <Button
-                    danger
-                    onClick={() => {
-                      if (
-                        window.confirm(
-                          `Willst du wirklich nicht mehr ${radioButton} ?`
-                        )
-                      ) {
-                        setRadioButton("");
-                      }
+                  <Popconfirm
+                    title={`Wollen Sie wirklich nicht mehr ${radioButton} ?`}
+                    placement="bottom"
+                    okText="Ja"
+                    cancelText="Nein"
+                    onConfirm={() => {
+                      setRadioButton("");
                     }}
                   >
-                    Abbrechen
-                  </Button>
+                    <Button danger>Abbrechen</Button>
+                  </Popconfirm>
                 </div>
               </div>
             ) : (
@@ -188,6 +185,7 @@ const MainRoot: React.FC = () => {
         {radioButton && (
           <Col xs={24}>
             <LoadStopSequence
+              stateDND={stateDND}
               show={show}
               currentMode={currentMode}
               stopSequenceList={stopSequenceList}
