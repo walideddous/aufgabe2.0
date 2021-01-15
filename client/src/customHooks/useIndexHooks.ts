@@ -123,22 +123,15 @@ export default function useIndexHooks() {
   const handleStopsQuery = useCallback(
     async (modes) => {
       if (isSending) return console.log("Please wait");
+      if (!modes.length) return setCurrentMode([]);
+
       // Start loading
       setIsSending(true);
       console.log("start fetching");
+      setCurrentMode(modes);
 
-      if (
-        modes.filter((mode: string) => mode === "verkehrsmittel typ auswählen")
-          .length
-      ) {
-        setCurrentMode([]);
-        setIsSending(false);
-      } else {
-        setCurrentMode(modes);
-
-        // Dispatch the stops GraphQl query
-        getStopsByMode({ variables: { modes } });
-      }
+      // Dispatch the stops GraphQl query
+      getStopsByMode({ variables: { modes } });
     },
     [isSending, getStopsByMode]
   );

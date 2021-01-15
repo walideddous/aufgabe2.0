@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { Row, Spin, Col, Radio, Card } from "antd";
+import { Row, Spin, Col, PageHeader, Popconfirm, Button } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 
 // Import composents
@@ -55,7 +55,7 @@ const MainRoot: React.FC = () => {
   const [show, setShow] = useState<boolean>(true);
 
   useEffect(() => {
-    if (currentStopSequence && radioButton === "Haltestellensequenz laden") {
+    if (currentStopSequence && radioButton === "laden") {
       setFormInformation({
         _id: currentStopSequence._id,
         key: currentStopSequence.key,
@@ -70,20 +70,6 @@ const MainRoot: React.FC = () => {
       setFormInformation(undefined);
     }
   }, [currentStopSequence, radioButton]);
-
-  const handleRadioGroupChange = (e: any) => {
-    const { value } = e.target;
-    if (value === "Haltestellensequenz laden") {
-      setShow(true);
-      handleLoadMode(true);
-    }
-    if (value === "Haltestellensequenz erstellen") {
-      setShow(false);
-      handleClearAll();
-      handleLoadMode(false);
-    }
-    setRadioButton(value);
-  };
 
   const handleSaveForm = (form: any) => {
     setFormInformation(form);
@@ -117,32 +103,116 @@ const MainRoot: React.FC = () => {
   return (
     <div className="Prototyp" style={{ position: "relative" }}>
       <Row gutter={[8, 8]}>
-        {radioButton === "Haltestellensequenz laden" ||
-        radioButton === "Haltestellensequenz erstellen" ? null : (
+        {radioButton === "laden" || radioButton === "erstellen" ? (
           <Col xs={24}>
-            <Card>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <p style={{ color: "#4383B4", font: "17px" }}>ManagedRoute</p>
-                <Radio.Group
-                  id="radioButton"
-                  value={radioButton}
-                  onChange={handleRadioGroupChange}
-                >
-                  <Radio.Button
+            <PageHeader
+              title={`Route manager ${radioButton}`}
+              style={{ padding: "24px" }}
+              extra={[
+                <Fragment key="1">
+                  <Button
+                    type="primary"
+                    disabled={
+                      (radioButton === "erstellen" &&
+                        stateDND.trajekt.items.length >= 2 &&
+                        formInformation &&
+                        saveButtonDisabled) ||
+                      (radioButton === "laden" &&
+                        stateDND.trajekt.items.length >= 2 &&
+                        currentStopSequence &&
+                        saveButtonDisabled &&
+                        formInformation &&
+                        formInformation.schedule.length &&
+                        JSON.stringify({
+                          name: formInformation.name,
+                          desc: formInformation.desc,
+                          schedule: formInformation.schedule,
+                          stopSequence: stateDND.trajekt.items,
+                        }) !==
+                          JSON.stringify({
+                            name: currentStopSequence.name,
+                            desc: currentStopSequence.desc,
+                            schedule: currentStopSequence.schedule,
+                            stopSequence: currentStopSequence.stopSequence,
+                          }))
+                        ? false
+                        : true
+                    }
+                    onClick={() => {
+                      handleSaveStopSequenceMutation({
+                        ...formInformation,
+                        stopSequence: stateDND.trajekt.items,
+                      });
+
+                      handleResetFormInformation();
+                    }}
+                  >
+                    Speichern
+                  </Button>
+                  {currentStopSequence && (
+                    <Button
+                      danger
+                      id="delete_stopSequence"
+                      disabled={currentStopSequence ? false : true}
+                      onClick={() => {
+                        if (currentStopSequence) {
+                          const { key } = currentStopSequence;
+                          handleDeleteStopSequenceMutation(key);
+                        }
+                      }}
+                    >
+                      löschen
+                    </Button>
+                  )}
+                  <Popconfirm
+                    title={`Wollen Sie wirklich nicht mehr route manager ${radioButton} ?`}
+                    placement="bottomRight"
+                    okText="Ja"
+                    cancelText="Nein"
+                    onConfirm={() => {
+                      handleResetRadioButton();
+                      handleStopsQuery([]);
+                    }}
+                  >
+                    <Button type="dashed">Abbrechen</Button>
+                  </Popconfirm>
+                </Fragment>,
+              ]}
+            />
+          </Col>
+        ) : (
+          <Col xs={24}>
+            <PageHeader
+              title={`Route manager ${radioButton}`}
+              style={{ padding: "24px" }}
+              extra={[
+                <Fragment key="1">
+                  <Button
                     id="load_button"
-                    value="Haltestellensequenz laden"
+                    value="laden"
+                    onClick={() => {
+                      setShow(true);
+                      handleLoadMode(true);
+                      setRadioButton("laden");
+                    }}
                   >
                     Laden
-                  </Radio.Button>
-                  <Radio.Button
+                  </Button>
+                  <Button
                     id="new_button"
-                    value="Haltestellensequenz erstellen"
+                    value="erstellen"
+                    onClick={() => {
+                      setShow(false);
+                      handleClearAll();
+                      handleLoadMode(false);
+                      setRadioButton("erstellen");
+                    }}
                   >
                     Neu
-                  </Radio.Button>
-                </Radio.Group>
-              </div>
-            </Card>
+                  </Button>
+                </Fragment>,
+              ]}
+            />
           </Col>
         )}
         {radioButton && (
@@ -150,25 +220,16 @@ const MainRoot: React.FC = () => {
             <LoadStopSequence
               show={show}
               stateDND={stateDND}
-              radioButton={radioButton}
-              currentMode={currentMode}
-              formInformation={formInformation}
               stopSequenceList={stopSequenceList}
-              saveButtonDisabled={saveButtonDisabled}
               currentStopSequence={currentStopSequence}
               onStopsQuery={handleStopsQuery}
-              onResetRadioButton={handleResetRadioButton}
               onStopSequenceSearch={handleStopSequenceSearchQuery}
-              onDeleteStopSequence={handleDeleteStopSequenceMutation}
               onDisplayStopSequence={handledisplayStopSequenceQuery}
-              onResetFormInformation={handleResetFormInformation}
-              onSaveStopSequenceMutation={handleSaveStopSequenceMutation}
             />
           </Col>
         )}
-        {(radioButton === "Haltestellensequenz laden" && currentStopSequence) ||
-        (radioButton === "Haltestellensequenz erstellen" &&
-          currentMode.length) ? (
+        {(radioButton === "laden" && currentStopSequence) ||
+        (radioButton === "erstellen" && currentMode.length) ? (
           <>
             {isSending ? (
               <div

@@ -1,6 +1,5 @@
 import React, { useState, useCallback, Fragment, useEffect } from "react";
 import {
-  Card,
   Form,
   Input,
   TimePicker,
@@ -207,302 +206,279 @@ const SaveStopSequenceForm = ({
   );
 
   useEffect(() => {
-    tags.length &&
-    JSON.stringify({
-      ...savedForm,
-      name: name !== "" ? name.trim() : savedForm?.name,
-      desc: desc !== "" ? desc.trim() : savedForm?.desc,
-    }) !==
+    if (
+      tags.length &&
       JSON.stringify({
-        name: formInformation?.name,
-        desc: formInformation?.desc,
-        schedule: formInformation?.schedule,
-      })
-      ? onDisabled(false)
-      : onDisabled(true);
-  }, [desc, name, formInformation, savedForm, tags.length, onDisabled]);
+        ...savedForm,
+        name: name !== "" ? name.trim() : savedForm?.name,
+        desc: desc !== "" ? desc.trim() : savedForm?.desc,
+      }) !==
+        JSON.stringify({
+          name: formInformation?.name,
+          desc: formInformation?.desc,
+          schedule: formInformation?.schedule,
+        })
+    ) {
+      onDisabled(false);
+      saveForm({
+        ...savedForm,
+        name: name !== "" ? name : savedForm?.name,
+        desc: desc !== "" ? desc : savedForm?.desc,
+      });
+    } else {
+      onDisabled(true);
+    }
+  }, [
+    desc,
+    name,
+    formInformation,
+    savedForm,
+    tags.length,
+    saveForm,
+    onDisabled,
+  ]);
 
   return (
-    <Card bordered={true}>
-      <Collapse
-        activeKey={
-          (loadStopSequenceSection && formInformation) ||
-          !loadStopSequenceSection
-            ? "1"
-            : "2"
-        }
-      >
-        <Panel header="Haltestellensequenz speichern Form" key="1">
-          <Form
-            autoComplete="off"
-            id="formWrapper"
-            layout="vertical"
-            requiredMark={false}
-            form={form}
-            onFinish={onFinish}
+    <Collapse
+      activeKey={
+        (loadStopSequenceSection && formInformation) || !loadStopSequenceSection
+          ? "1"
+          : "2"
+      }
+    >
+      <Panel header="Form" key="1">
+        <Form
+          autoComplete="off"
+          id="formWrapper"
+          layout="vertical"
+          requiredMark={false}
+          form={form}
+          onFinish={onFinish}
+        >
+          <Form.Item
+            label="Name"
+            name="name"
+            rules={[{ required: true, message: "Name fehlt" }]}
           >
-            <Form.Item
-              label="Name"
-              name="name"
-              rules={[{ required: true, message: "Name fehlt" }]}
-            >
-              <Input
-                id="name_input"
-                placeholder="Haltestellensequenzname eingeben"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                allowClear
-              />
-            </Form.Item>
-            <Form.Item label="Beschreibung" name="desc">
-              <Input.TextArea
-                id="desc_input"
-                placeholder="Beschreibung"
-                value={desc}
-                onChange={(e) => setDesc(e.target.value)}
-                allowClear
-              />
-            </Form.Item>
-            {!addSchedule && (
-              <div style={{ paddingBottom: "20px" }}>
-                <Button
-                  type="primary"
-                  onClick={() => {
-                    setAddSchedule(true);
-                  }}
-                  id="addSchedule_button"
+            <Input
+              id="name_input"
+              placeholder="Route manager Name eingeben"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              allowClear
+            />
+          </Form.Item>
+          <Form.Item label="Beschreibung" name="desc">
+            <Input.TextArea
+              id="desc_input"
+              placeholder="Beschreibung"
+              value={desc}
+              onChange={(e) => setDesc(e.target.value)}
+              allowClear
+            />
+          </Form.Item>
+          {!addSchedule && (
+            <div style={{ paddingBottom: "20px" }}>
+              <Button
+                type="primary"
+                onClick={() => {
+                  setAddSchedule(true);
+                }}
+                id="addSchedule_button"
+              >
+                Zeitplan hinzufügen
+              </Button>
+            </div>
+          )}
+          {addSchedule && (
+            <Fragment>
+              <Form.Item
+                label="Datum"
+                name="date"
+                rules={[{ required: true, message: "Datum fehlt" }]}
+              >
+                <DatePicker.RangePicker
+                  id="date_input"
+                  format="DD-MM-YYYY"
+                  placeholder={["Start Datum", "End Datum"]}
+                />
+              </Form.Item>
+              <Form.Item
+                id="dayPicker_form"
+                label="Tag"
+                name="day"
+                rules={[{ required: true, message: "Tag fehlt" }]}
+              >
+                <Select
+                  allowClear
+                  placeholder="Tage auswählen"
+                  id="dayPicker_input"
+                  mode="tags"
                 >
-                  Zeitplan hinzufügen
-                </Button>
-              </div>
-            )}
-            {addSchedule && (
-              <Fragment>
+                  <Option key="1" value="Mon">
+                    Monday
+                  </Option>
+                  <Option key="2" value="Tue">
+                    Tuesday
+                  </Option>
+                  <Option key="3" value="Wed">
+                    Wednesday
+                  </Option>
+                  <Option key="4" value="Thu">
+                    Thursday
+                  </Option>
+                  <Option key="5" value="Fri">
+                    Friday
+                  </Option>
+                  <Option key="6" value="Sat">
+                    Saturday
+                  </Option>
+                  <Option key="7" value="Sun">
+                    Sunday
+                  </Option>
+                  <Option key="8" value="Holiday">
+                    Holiday
+                  </Option>
+                </Select>
+              </Form.Item>
+              <div style={{ display: "flex", flexWrap: "wrap" }}>
                 <Form.Item
-                  label="Datum"
-                  name="date"
-                  rules={[{ required: true, message: "Datum fehlt" }]}
+                  name="time"
+                  label="Zeit"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Zeit fehlt",
+                    },
+                  ]}
                 >
-                  <DatePicker.RangePicker
-                    id="date_input"
-                    format="DD-MM-YYYY"
-                    placeholder={["Start Datum", "End Datum"]}
+                  <RangePicker
+                    placeholder={["Start Zeit", "End Zeit"]}
+                    format="HH:mm"
+                    id="timePicker_input"
                   />
                 </Form.Item>
-                <Form.Item
-                  id="dayPicker_form"
-                  label="Tag"
-                  name="day"
-                  rules={[{ required: true, message: "Tag fehlt" }]}
-                >
-                  <Select
-                    allowClear
-                    placeholder="Tag auswählen"
-                    id="dayPicker_input"
-                    mode="tags"
-                  >
-                    <Option key="1" value="Mon">
-                      Monday
-                    </Option>
-                    <Option key="2" value="Tue">
-                      Tuesday
-                    </Option>
-                    <Option key="3" value="Wed">
-                      Wednesday
-                    </Option>
-                    <Option key="4" value="Thu">
-                      Thursday
-                    </Option>
-                    <Option key="5" value="Fri">
-                      Friday
-                    </Option>
-                    <Option key="6" value="Sat">
-                      Saturday
-                    </Option>
-                    <Option key="7" value="Sun">
-                      Sunday
-                    </Option>
-                    <Option key="8" value="Holiday">
-                      Holiday
-                    </Option>
-                  </Select>
-                </Form.Item>
-                <div style={{ display: "flex", flexWrap: "wrap" }}>
-                  <Form.Item
-                    name="time"
-                    label="Zeit"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Zeit fehlt",
-                      },
-                    ]}
-                  >
-                    <RangePicker
-                      placeholder={["Start Zeit", "End Zeit"]}
-                      format="HH:mm"
-                      id="timePicker_input"
-                    />
-                  </Form.Item>
-                  <Form.List name="timeList">
-                    {(fields, { add, remove }) => {
-                      return (
-                        <div
-                          style={{
-                            display: "flex",
-                            paddingTop: "30px",
-                          }}
-                        >
-                          <Form.Item>
-                            <Button
-                              id="addTime_button"
-                              type="dashed"
-                              onClick={() => add()}
-                              icon={<PlusOutlined />}
+                <Form.List name="timeList">
+                  {(fields, { add, remove }) => {
+                    return (
+                      <div
+                        style={{
+                          display: "flex",
+                          paddingTop: "30px",
+                        }}
+                      >
+                        <Form.Item>
+                          <Button
+                            id="addTime_button"
+                            type="dashed"
+                            style={{ marginLeft: "10px", marginRight: "10px" }}
+                            onClick={() => add()}
+                            icon={<PlusOutlined />}
+                          >
+                            Zeit hinzufügen
+                          </Button>
+                        </Form.Item>
+                        <div>
+                          {fields.map((field) => (
+                            <Space
+                              key={field.key}
+                              style={{ display: "flex" }}
+                              align="baseline"
                             >
-                              Zeit hinzufügen
-                            </Button>
-                          </Form.Item>
-                          <div>
-                            {fields.map((field) => (
-                              <Space
-                                key={field.key}
-                                style={{ display: "flex" }}
-                                align="baseline"
-                              >
-                                <Form.Item name={[field.name, "time"]}>
-                                  <RangePicker
-                                    placeholder={["Start Zeit", "End Zeit"]}
-                                    format="HH:mm"
-                                    id={`timePicker_input${field.name}`}
-                                  />
-                                </Form.Item>
-                                <MinusCircleOutlined
-                                  id="remove_timePicker"
-                                  onClick={() => remove(field.name)}
+                              <Form.Item name={[field.name, "time"]}>
+                                <RangePicker
+                                  placeholder={["Start Zeit", "End Zeit"]}
+                                  format="HH:mm"
+                                  id={`timePicker_input${field.name}`}
                                 />
-                              </Space>
-                            ))}
-                          </div>
+                              </Form.Item>
+                              <MinusCircleOutlined
+                                id="remove_timePicker"
+                                onClick={() => remove(field.name)}
+                              />
+                            </Space>
+                          ))}
                         </div>
-                      );
-                    }}
-                  </Form.List>
-                </div>
-                <Form.Item>
-                  <Button id="save_schedule" type="primary" htmlType="submit">
-                    Zeitplan speichern
-                  </Button>
-                  <Button
-                    type="dashed"
-                    id="cancel_button"
-                    onClick={() => {
-                      setAddSchedule(false);
-                      form.resetFields(["date", "day", "time"]);
-                    }}
-                  >
-                    Abbrechen
-                  </Button>
-                </Form.Item>
-              </Fragment>
-            )}
-            <Collapse activeKey={tags.length ? "2" : ""}>
-              <Panel header="Zeitplan" key="2">
-                <div
-                  id="time_result"
-                  style={{
-                    height: "200px",
-                    overflowY: "auto",
-                    paddingBottom: "20px",
+                      </div>
+                    );
+                  }}
+                </Form.List>
+              </div>
+              <Form.Item>
+                <Button id="save_schedule" type="primary" htmlType="submit">
+                  Zeitplan speichern
+                </Button>
+                <Button
+                  type="dashed"
+                  id="cancel_button"
+                  style={{ marginLeft: "10px" }}
+                  onClick={() => {
+                    setAddSchedule(false);
+                    form.resetFields(["date", "day", "time"]);
                   }}
                 >
-                  {tags &&
-                    tags.map((tag: any, tagsIndex: number) => {
-                      return (
-                        <Fragment key={tagsIndex}>
-                          <p
-                            style={{ marginBottom: "4px", marginTop: "4px" }}
-                          >{`${tag.from} ${tag.to}`}</p>
-                          <Fragment>
-                            {tag.displayedTags.map(
-                              (el: string, displayedTagsIndex: number) => (
-                                <Tag
-                                  visible={true}
-                                  closable={true}
-                                  id={`dayTime_tags${displayedTagsIndex}`}
-                                  key={tagsIndex + displayedTagsIndex}
-                                  onClose={() => {
-                                    handleDeleteTags(
-                                      tagsIndex,
-                                      displayedTagsIndex
-                                    );
-                                  }}
-                                >
-                                  {el}
-                                </Tag>
-                              )
-                            )}
-                          </Fragment>
+                  Abbrechen
+                </Button>
+              </Form.Item>
+            </Fragment>
+          )}
+          <Collapse activeKey={tags.length ? "2" : ""}>
+            <Panel header="Zeitplan" key="2">
+              <div
+                id="time_result"
+                style={{
+                  height: "200px",
+                  overflowY: "auto",
+                  paddingBottom: "20px",
+                }}
+              >
+                {tags &&
+                  tags.map((tag: any, tagsIndex: number) => {
+                    return (
+                      <Fragment key={tagsIndex}>
+                        <p
+                          style={{ marginBottom: "4px", marginTop: "4px" }}
+                        >{`${tag.from} ${tag.to}`}</p>
+                        <Fragment>
+                          {tag.displayedTags.map(
+                            (el: string, displayedTagsIndex: number) => (
+                              <Tag
+                                visible={true}
+                                closable={true}
+                                id={`dayTime_tags${displayedTagsIndex}`}
+                                key={tagsIndex + displayedTagsIndex}
+                                onClose={() => {
+                                  handleDeleteTags(
+                                    tagsIndex,
+                                    displayedTagsIndex
+                                  );
+                                }}
+                              >
+                                {el}
+                              </Tag>
+                            )
+                          )}
                         </Fragment>
-                      );
-                    })}
-                </div>
-                <Button
-                  type="primary"
-                  id="save_stopSequence"
-                  disabled={
-                    tags.length &&
-                    JSON.stringify({
-                      ...savedForm,
-                      name: name !== "" ? name.trim() : savedForm?.name,
-                      desc: desc !== "" ? desc.trim() : savedForm?.desc,
-                    }) !==
-                      JSON.stringify({
-                        name: formInformation?.name,
-                        desc: formInformation?.desc,
-                        schedule: formInformation?.schedule,
-                      })
-                      ? false
-                      : true
-                  }
-                  onClick={() => {
-                    saveForm({
-                      ...savedForm,
-                      name: name !== "" ? name : savedForm?.name,
-                      desc: desc !== "" ? desc : savedForm?.desc,
-                    });
-                  }}
-                >
-                  {JSON.stringify({
-                    ...savedForm,
-                    name: name !== "" ? name.trim() : savedForm?.name,
-                    desc: desc !== "" ? desc.trim() : savedForm?.desc,
-                  }) !==
-                  JSON.stringify({
-                    name: formInformation?.name,
-                    desc: formInformation?.desc,
-                    schedule: formInformation?.schedule,
-                  })
-                    ? "Form speichern"
-                    : "Form gespeichert"}
-                </Button>
-                <Button
-                  danger
-                  id="clear_all"
-                  disabled={tags.length ? false : true}
-                  onClick={() => {
-                    setTags([]);
-                    deleteSchedule();
-                  }}
-                >
-                  Zeitplan löschen
-                </Button>
-              </Panel>
-            </Collapse>
-          </Form>
-        </Panel>
-      </Collapse>
-    </Card>
+                      </Fragment>
+                    );
+                  })}
+              </div>
+              <Button
+                danger
+                id="clear_all"
+                disabled={tags.length ? false : true}
+                onClick={() => {
+                  setTags([]);
+                  deleteSchedule();
+                }}
+              >
+                Zeitplan löschen
+              </Button>
+            </Panel>
+          </Collapse>
+        </Form>
+      </Panel>
+    </Collapse>
   );
 };
 
