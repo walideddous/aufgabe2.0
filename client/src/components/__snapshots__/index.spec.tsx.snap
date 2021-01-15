@@ -2087,133 +2087,152 @@ exports[`Test the customHooks of the /components/index.tsx Should match snapShot
                       className="ant-card-body"
                       style={Object {}}
                     >
-                      <ForwardRef
-                        id="radioButton"
-                        onChange={[Function]}
-                        value=""
+                      <div
+                        style={
+                          Object {
+                            "display": "flex",
+                            "justifyContent": "space-between",
+                          }
+                        }
                       >
-                        <div
-                          className="ant-radio-group ant-radio-group-outline"
-                          id="radioButton"
+                        <p
+                          style={
+                            Object {
+                              "color": "#4383B4",
+                              "font": "17px",
+                            }
+                          }
                         >
-                          <ForwardRef(RadioButton)
-                            id="load_button"
-                            value="Haltestellensequenz laden"
+                          ManagedRoute
+                        </p>
+                        <ForwardRef
+                          id="radioButton"
+                          onChange={[Function]}
+                          value=""
+                        >
+                          <div
+                            className="ant-radio-group ant-radio-group-outline"
+                            id="radioButton"
                           >
-                            <Radio
-                              checked={false}
+                            <ForwardRef(RadioButton)
                               id="load_button"
-                              prefixCls="ant-radio-button"
-                              type="radio"
                               value="Haltestellensequenz laden"
                             >
-                              <label
-                                className="ant-radio-button-wrapper"
+                              <Radio
+                                checked={false}
+                                id="load_button"
+                                prefixCls="ant-radio-button"
+                                type="radio"
+                                value="Haltestellensequenz laden"
                               >
-                                <Checkbox
-                                  checked={false}
-                                  className=""
-                                  defaultChecked={false}
-                                  id="load_button"
-                                  onBlur={[Function]}
-                                  onChange={[Function]}
-                                  onFocus={[Function]}
-                                  onKeyDown={[Function]}
-                                  onKeyPress={[Function]}
-                                  onKeyUp={[Function]}
-                                  prefixCls="ant-radio-button"
-                                  style={Object {}}
-                                  type="radio"
-                                  value="Haltestellensequenz laden"
+                                <label
+                                  className="ant-radio-button-wrapper"
                                 >
-                                  <span
-                                    className="ant-radio-button"
+                                  <Checkbox
+                                    checked={false}
+                                    className=""
+                                    defaultChecked={false}
+                                    id="load_button"
+                                    onBlur={[Function]}
+                                    onChange={[Function]}
+                                    onFocus={[Function]}
+                                    onKeyDown={[Function]}
+                                    onKeyPress={[Function]}
+                                    onKeyUp={[Function]}
+                                    prefixCls="ant-radio-button"
                                     style={Object {}}
+                                    type="radio"
+                                    value="Haltestellensequenz laden"
                                   >
-                                    <input
-                                      checked={false}
-                                      className="ant-radio-button-input"
-                                      id="load_button"
-                                      onBlur={[Function]}
-                                      onChange={[Function]}
-                                      onFocus={[Function]}
-                                      onKeyDown={[Function]}
-                                      onKeyPress={[Function]}
-                                      onKeyUp={[Function]}
-                                      type="radio"
-                                      value="Haltestellensequenz laden"
-                                    />
                                     <span
-                                      className="ant-radio-button-inner"
-                                    />
+                                      className="ant-radio-button"
+                                      style={Object {}}
+                                    >
+                                      <input
+                                        checked={false}
+                                        className="ant-radio-button-input"
+                                        id="load_button"
+                                        onBlur={[Function]}
+                                        onChange={[Function]}
+                                        onFocus={[Function]}
+                                        onKeyDown={[Function]}
+                                        onKeyPress={[Function]}
+                                        onKeyUp={[Function]}
+                                        type="radio"
+                                        value="Haltestellensequenz laden"
+                                      />
+                                      <span
+                                        className="ant-radio-button-inner"
+                                      />
+                                    </span>
+                                  </Checkbox>
+                                  <span>
+                                    Laden
                                   </span>
-                                </Checkbox>
-                                <span>
-                                  Laden
-                                </span>
-                              </label>
-                            </Radio>
-                          </ForwardRef(RadioButton)>
-                          <ForwardRef(RadioButton)
-                            id="new_button"
-                            value="Haltestellensequenz erstellen"
-                          >
-                            <Radio
-                              checked={false}
+                                </label>
+                              </Radio>
+                            </ForwardRef(RadioButton)>
+                            <ForwardRef(RadioButton)
                               id="new_button"
-                              prefixCls="ant-radio-button"
-                              type="radio"
                               value="Haltestellensequenz erstellen"
                             >
-                              <label
-                                className="ant-radio-button-wrapper"
+                              <Radio
+                                checked={false}
+                                id="new_button"
+                                prefixCls="ant-radio-button"
+                                type="radio"
+                                value="Haltestellensequenz erstellen"
                               >
-                                <Checkbox
-                                  checked={false}
-                                  className=""
-                                  defaultChecked={false}
-                                  id="new_button"
-                                  onBlur={[Function]}
-                                  onChange={[Function]}
-                                  onFocus={[Function]}
-                                  onKeyDown={[Function]}
-                                  onKeyPress={[Function]}
-                                  onKeyUp={[Function]}
-                                  prefixCls="ant-radio-button"
-                                  style={Object {}}
-                                  type="radio"
-                                  value="Haltestellensequenz erstellen"
+                                <label
+                                  className="ant-radio-button-wrapper"
                                 >
-                                  <span
-                                    className="ant-radio-button"
+                                  <Checkbox
+                                    checked={false}
+                                    className=""
+                                    defaultChecked={false}
+                                    id="new_button"
+                                    onBlur={[Function]}
+                                    onChange={[Function]}
+                                    onFocus={[Function]}
+                                    onKeyDown={[Function]}
+                                    onKeyPress={[Function]}
+                                    onKeyUp={[Function]}
+                                    prefixCls="ant-radio-button"
                                     style={Object {}}
+                                    type="radio"
+                                    value="Haltestellensequenz erstellen"
                                   >
-                                    <input
-                                      checked={false}
-                                      className="ant-radio-button-input"
-                                      id="new_button"
-                                      onBlur={[Function]}
-                                      onChange={[Function]}
-                                      onFocus={[Function]}
-                                      onKeyDown={[Function]}
-                                      onKeyPress={[Function]}
-                                      onKeyUp={[Function]}
-                                      type="radio"
-                                      value="Haltestellensequenz erstellen"
-                                    />
                                     <span
-                                      className="ant-radio-button-inner"
-                                    />
+                                      className="ant-radio-button"
+                                      style={Object {}}
+                                    >
+                                      <input
+                                        checked={false}
+                                        className="ant-radio-button-input"
+                                        id="new_button"
+                                        onBlur={[Function]}
+                                        onChange={[Function]}
+                                        onFocus={[Function]}
+                                        onKeyDown={[Function]}
+                                        onKeyPress={[Function]}
+                                        onKeyUp={[Function]}
+                                        type="radio"
+                                        value="Haltestellensequenz erstellen"
+                                      />
+                                      <span
+                                        className="ant-radio-button-inner"
+                                      />
+                                    </span>
+                                  </Checkbox>
+                                  <span>
+                                    Neu
                                   </span>
-                                </Checkbox>
-                                <span>
-                                  Neu
-                                </span>
-                              </label>
-                            </Radio>
-                          </ForwardRef(RadioButton)>
-                        </div>
-                      </ForwardRef>
+                                </label>
+                              </Radio>
+                            </ForwardRef(RadioButton)>
+                          </div>
+                        </ForwardRef>
+                      </div>
                     </div>
                   </div>
                 </Card>
