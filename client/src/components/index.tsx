@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useCallback, useState } from "react";
 import { Row, Spin, Col, PageHeader, Popconfirm, Button } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 
@@ -54,26 +54,9 @@ const MainRoot: React.FC = () => {
   const [radioButton, setRadioButton] = useState<string>("");
   const [show, setShow] = useState<boolean>(true);
 
-  useEffect(() => {
-    if (currentStopSequence && radioButton === "laden") {
-      setFormInformation({
-        _id: currentStopSequence._id,
-        key: currentStopSequence.key,
-        modes: currentStopSequence.modes,
-        name: currentStopSequence.name,
-        desc: currentStopSequence.desc,
-        schedule: currentStopSequence.schedule,
-        created: currentStopSequence.created,
-        modified: currentStopSequence.modified,
-      });
-    } else {
-      setFormInformation(undefined);
-    }
-  }, [currentStopSequence, radioButton]);
-
-  const handleSaveForm = (form: any) => {
-    setFormInformation(form);
-  };
+  const handleSaveNewForm = useCallback((newForm: any) => {
+    setFormInformation({ ...newForm });
+  }, []);
 
   const handleDeleteSchedule = () => {
     if (formInformation) {
@@ -112,32 +95,7 @@ const MainRoot: React.FC = () => {
                 <Fragment key="1">
                   <Button
                     type="primary"
-                    disabled={
-                      (radioButton === "erstellen" &&
-                        stateDND.trajekt.items.length >= 2 &&
-                        formInformation &&
-                        saveButtonDisabled) ||
-                      (radioButton === "laden" &&
-                        stateDND.trajekt.items.length >= 2 &&
-                        currentStopSequence &&
-                        saveButtonDisabled &&
-                        formInformation &&
-                        formInformation.schedule.length &&
-                        JSON.stringify({
-                          name: formInformation.name,
-                          desc: formInformation.desc,
-                          schedule: formInformation.schedule,
-                          stopSequence: stateDND.trajekt.items,
-                        }) !==
-                          JSON.stringify({
-                            name: currentStopSequence.name,
-                            desc: currentStopSequence.desc,
-                            schedule: currentStopSequence.schedule,
-                            stopSequence: currentStopSequence.stopSequence,
-                          }))
-                        ? false
-                        : true
-                    }
+                    disabled={saveButtonDisabled}
                     onClick={() => {
                       handleSaveStopSequenceMutation({
                         ...formInformation,
@@ -251,9 +209,9 @@ const MainRoot: React.FC = () => {
               <Fragment>
                 <Col xs={24}>
                   <SaveStopsSequenceForm
-                    formInformation={formInformation}
+                    currentStopSequence={currentStopSequence}
                     loadStopSequenceSection={loadStopSequenceSection}
-                    saveForm={handleSaveForm}
+                    saveNewForm={handleSaveNewForm}
                     onDisabled={handledisabled}
                     deleteSchedule={handleDeleteSchedule}
                   />

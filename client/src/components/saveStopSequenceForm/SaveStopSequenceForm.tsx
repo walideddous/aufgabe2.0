@@ -14,29 +14,30 @@ import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 
 // import utils function
 import { getFormatTags } from "../../utils/getFormatTags";
+// Importing types
+import { TStopSequence } from "../../types/types";
 
 const { RangePicker } = TimePicker;
 const { Panel } = Collapse;
 const { Option } = Select;
 
 interface Tprops {
-  formInformation: any;
+  currentStopSequence: TStopSequence | undefined;
   loadStopSequenceSection: boolean;
-  saveForm: (formData: any) => void;
+  saveNewForm: (formData: any) => void;
   onDisabled: (value: boolean) => void;
   deleteSchedule: () => void;
 }
 
 const SaveStopSequenceForm = ({
   loadStopSequenceSection,
-  formInformation,
-  saveForm,
+  currentStopSequence,
+  saveNewForm,
   onDisabled,
   deleteSchedule,
 }: Tprops) => {
   const [form] = Form.useForm();
-  const [name, setName] = useState<string>("");
-  const [desc, setDesc] = useState<string>("");
+
   const [addSchedule, setAddSchedule] = useState<boolean>(false);
   const [tags, setTags] = useState<
     {
@@ -61,12 +62,12 @@ const SaveStopSequenceForm = ({
 
   // set savedForm state when load data from Backend
   useEffect(() => {
-    if (formInformation) {
-      const { name, desc, schedule } = formInformation;
+    if (currentStopSequence) {
+      const { name, desc, schedule } = currentStopSequence;
       setSavedForm({ name, desc, schedule });
       form.setFieldsValue({
-        name: formInformation.name,
-        desc: formInformation.desc,
+        name: currentStopSequence.name,
+        desc: currentStopSequence.desc,
       });
     } else {
       setSavedForm({ name: "", desc: "", schedule: [] });
@@ -75,7 +76,7 @@ const SaveStopSequenceForm = ({
         desc: "",
       });
     }
-  }, [formInformation, form]);
+  }, [currentStopSequence, form]);
 
   //set tags state when load data from Backend
   useEffect(() => {
@@ -208,40 +209,30 @@ const SaveStopSequenceForm = ({
   useEffect(() => {
     if (
       tags.length &&
+      savedForm &&
       JSON.stringify({
         ...savedForm,
-        name: name !== "" ? name.trim() : savedForm?.name,
-        desc: desc !== "" ? desc.trim() : savedForm?.desc,
       }) !==
         JSON.stringify({
-          name: formInformation?.name,
-          desc: formInformation?.desc,
-          schedule: formInformation?.schedule,
+          name: currentStopSequence?.name,
+          desc: currentStopSequence?.desc,
+          schedule: currentStopSequence?.schedule,
         })
     ) {
       onDisabled(false);
-      saveForm({
+      saveNewForm({
         ...savedForm,
-        name: name !== "" ? name : savedForm?.name,
-        desc: desc !== "" ? desc : savedForm?.desc,
       });
     } else {
       onDisabled(true);
     }
-  }, [
-    desc,
-    name,
-    formInformation,
-    savedForm,
-    tags.length,
-    saveForm,
-    onDisabled,
-  ]);
+  }, [currentStopSequence, savedForm, tags.length, saveNewForm, onDisabled]);
 
   return (
     <Collapse
       activeKey={
-        (loadStopSequenceSection && formInformation) || !loadStopSequenceSection
+        (loadStopSequenceSection && currentStopSequence) ||
+        !loadStopSequenceSection
           ? "1"
           : "2"
       }
@@ -263,8 +254,12 @@ const SaveStopSequenceForm = ({
             <Input
               id="name_input"
               placeholder="Route manager Name eingeben"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) =>
+                setSavedForm((prev: any) => ({
+                  ...prev,
+                  name: e.target.value.trim(),
+                }))
+              }
               allowClear
             />
           </Form.Item>
@@ -272,8 +267,12 @@ const SaveStopSequenceForm = ({
             <Input.TextArea
               id="desc_input"
               placeholder="Beschreibung"
-              value={desc}
-              onChange={(e) => setDesc(e.target.value)}
+              onChange={(e) =>
+                setSavedForm((prev: any) => ({
+                  ...prev,
+                  desc: e.target.value.trim(),
+                }))
+              }
               allowClear
             />
           </Form.Item>
