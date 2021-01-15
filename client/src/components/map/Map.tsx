@@ -194,24 +194,24 @@ const Map = ({
         contextmenuWidth: "200",
         contextmenuInheritItems: false,
         contextmenuItems: [
-          { index: 0, text: "Close" },
+          { index: 0, text: "Schließen" },
           {
             index: 1,
             separator: true,
           },
           {
             index: 2,
-            text: "Add before the highlighted stations",
+            text: "Hinzufügen vor dem markierten Haltestellen",
             callback: addBeforSelected,
           },
           {
             index: 3,
-            text: "Add after the highlighted stations",
+            text: "Hinzufügen nach dem markierten Haltestellen",
             callback: addAfterSelected,
           },
           {
             index: 4,
-            text: "Delete",
+            text: "Löschen",
             callback: deleteMarkerFromMap,
           },
         ],
