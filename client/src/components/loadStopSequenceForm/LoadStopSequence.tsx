@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { AutoComplete, Card, Form, Select, Collapse } from "antd";
+import { AutoComplete, Form, Select, Collapse } from "antd";
 // Import types
 import { TstateDND, TStopSequence } from "../../types/types";
 
@@ -25,6 +25,7 @@ const LoadStopSequence = ({
 }: TLoadStopSequence) => {
   const [form] = Form.useForm();
   const [search, setSearch] = useState<string>("");
+  const [collapseOpen, setCollapseOpen] = useState<boolean>(true);
   const [selectValue, setSelectValue] = useState<string>(
     "verkehrsmittel typ auswählen"
   );
@@ -49,6 +50,7 @@ const LoadStopSequence = ({
       if (value !== "verkehrsmittel typ auswählen") {
         onStopsQuery([value + ""]);
         setSelectValue(value + "");
+        setCollapseOpen(false);
       }
     },
     [onStopsQuery]
@@ -59,82 +61,88 @@ const LoadStopSequence = ({
       const response = stopSequenceList.filter(
         (el: any) => el.key === options.key
       )[0];
-      if (response) {
+      if (response && response.key !== currentStopSequence?.key) {
         onDisplayStopSequence(response.modes, options.key);
+        setCollapseOpen(false);
       }
     },
-    [stopSequenceList, onDisplayStopSequence]
+    [stopSequenceList, currentStopSequence, onDisplayStopSequence]
   );
 
   return (
-    <Form form={form} layout="vertical">
-      {!show && (
-        <Card>
-          <Form.Item label="Verkehrsmittel typ">
-            <Select
-              id="mode_selector"
-              disabled={
-                stateDND.trajekt.items.length &&
-                selectValue !== "verkehrsmittel typ auswählen"
-                  ? true
-                  : false
-              }
-              value={selectValue}
-              onChange={handleModeChange}
-            >
-              <Option value="verkehrsmittel typ auswählen" id="Modus_auswählen">
-                verkehrsmittel typ auswählen
-              </Option>
-              <Option value="13" id="13">
-                13
-              </Option>
-              <Option value="5" id="5">
-                5
-              </Option>
-              <Option value="8" id="8">
-                8
-              </Option>
-              <Option value="9" id="9">
-                9
-              </Option>
-              <Option value="2" id="2">
-                2
-              </Option>
-              <Option value="4" id="4">
-                4
-              </Option>
-            </Select>
-          </Form.Item>
-        </Card>
-      )}
-      {show && (
-        <>
-          <Collapse defaultActiveKey={"1"}>
-            <Panel header="Route manager Suche Box " key="1">
-              <Form.Item label="Route manager Name">
-                <AutoComplete
-                  id="stopSequence_autoComplete"
-                  placeholder="Geben Sie der Route manager Namen ein"
-                  allowClear={true}
-                  value={search}
-                  onChange={(input: string) => {
-                    setSearch(input);
-                  }}
-                  onSelect={handleSelect}
+    <Collapse
+      defaultActiveKey={"1"}
+      activeKey={collapseOpen ? "1" : "2"}
+      onChange={() => {
+        setCollapseOpen(!collapseOpen);
+      }}
+    >
+      <Panel header={!show ? "Verkehrsmittel typ Box" : "Suche Box"} key="1">
+        <Form form={form} layout="vertical">
+          {!show && (
+            <Form.Item label="Verkehrsmittel typ">
+              <Select
+                id="mode_selector"
+                disabled={
+                  stateDND.trajekt.items.length &&
+                  selectValue !== "verkehrsmittel typ auswählen"
+                    ? true
+                    : false
+                }
+                value={selectValue}
+                onChange={handleModeChange}
+              >
+                <Option
+                  value="verkehrsmittel typ auswählen"
+                  id="Modus_auswählen"
                 >
-                  {stopSequenceList &&
-                    stopSequenceList.map((el: any) => (
-                      <Option value={el.name} key={el.key}>
-                        {el.name}
-                      </Option>
-                    ))}
-                </AutoComplete>
-              </Form.Item>
-            </Panel>
-          </Collapse>
-        </>
-      )}
-    </Form>
+                  verkehrsmittel typ auswählen
+                </Option>
+                <Option value="13" id="13">
+                  13
+                </Option>
+                <Option value="5" id="5">
+                  5
+                </Option>
+                <Option value="8" id="8">
+                  8
+                </Option>
+                <Option value="9" id="9">
+                  9
+                </Option>
+                <Option value="2" id="2">
+                  2
+                </Option>
+                <Option value="4" id="4">
+                  4
+                </Option>
+              </Select>
+            </Form.Item>
+          )}
+          {show && (
+            <Form.Item label="Linienname">
+              <AutoComplete
+                id="stopSequence_autoComplete"
+                placeholder="Geben Sie dem Linienname ein"
+                allowClear={true}
+                value={search}
+                onChange={(input: string) => {
+                  setSearch(input);
+                }}
+                onSelect={handleSelect}
+              >
+                {stopSequenceList &&
+                  stopSequenceList.map((el: any) => (
+                    <Option value={el.name} key={el.key}>
+                      {el.name}
+                    </Option>
+                  ))}
+              </AutoComplete>
+            </Form.Item>
+          )}
+        </Form>
+      </Panel>
+    </Collapse>
   );
 };
 

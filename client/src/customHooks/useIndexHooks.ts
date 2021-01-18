@@ -67,7 +67,6 @@ export default function useIndexHooks() {
       fetchPolicy: "no-cache",
     }
   );
-
   const [deleteStopSequenceMutation] = useMutation(DELETE_STOP_SEQUENCE);
   const [saveStopSequenceMutation] = useMutation(SAVE_STOP_SEQUENCE);
 
@@ -568,12 +567,12 @@ export default function useIndexHooks() {
         });
 
         if (saveResponse.data.RouteManagerAdd) {
-          console.log("Stop sequence successfully saved");
-          message.success(`Haltestellensequenz erfolgreich gespeichert`);
+          console.log("Route successfully saved");
+          message.success(`Linie erfolgreich gespeichert`);
 
           handleClearAll();
         } else {
-          message.error("Konnte die Haltestellensequenz nicht speichern");
+          message.error("Konnte die Linie nicht speichern");
         }
       } catch (error) {
         console.error("Error from trycatch saveStopSequence ", error);
@@ -687,13 +686,13 @@ export default function useIndexHooks() {
           variables: { key },
         });
         if (deleteResponse.data.RouteManagerDelete) {
-          message.success(`Haltestellensequenz erfolgreich gelöscht`);
-          console.log(`Stop sequence successfully deleted`);
+          message.success(`Linie erfolgreich gelöscht`);
+          console.log(`Linie successfully deleted`);
 
           handleClearAll();
           setCurrentStopSequence(undefined);
         } else {
-          message.error("Konnte die Haltestellensequenz nicht löschen");
+          message.error("Konnte die Linie nicht löschen");
         }
       } catch (err) {
         console.error("Error from deleteStopSequence tryCatch ", err);
@@ -723,7 +722,6 @@ export default function useIndexHooks() {
     currentMode,
     stopSequenceList,
     currentStopSequence,
-    loadStopSequenceSection,
     handleDragEnd,
     handleLoadMode,
     handleClearAll,

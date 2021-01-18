@@ -283,9 +283,12 @@ const Map = ({
       {stateDND.trajekt.items.length ? (
         <div
           className="trash_button"
-          onClick={() =>
-            stateDND.trajekt.items.length ? onResetStopSequence() : null
-          }
+          onClick={() => {
+            if (stateDND.trajekt.items.length) {
+              onResetStopSequence();
+              map.current.setView([position.lat, position.lng], position.zoom);
+            }
+          }}
         >
           <DeleteOutlined style={{ paddingLeft: "8px", paddingTop: "8px" }} />
         </div>

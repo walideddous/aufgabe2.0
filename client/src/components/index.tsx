@@ -1,6 +1,6 @@
-import React, { Fragment, useCallback, useState } from "react";
+import React, { Fragment, useCallback, useState, useRef } from "react";
 import { Row, Spin, Col, PageHeader, Popconfirm, Button } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
+import { LoadingOutlined, UnorderedListOutlined } from "@ant-design/icons";
 
 // Import composents
 import DragDrop from "./dragDrop/DragDrop";
@@ -10,8 +10,6 @@ import LoadStopSequence from "./loadStopSequenceForm/LoadStopSequence";
 
 // Import Custom Hook
 import useIndexHooks from "../customHooks/useIndexHooks";
-// Types
-import { TformInformation } from "../types/types";
 
 import "../App.css";
 
@@ -32,7 +30,6 @@ const MainRoot: React.FC = () => {
     currentMode,
     stopSequenceList,
     currentStopSequence,
-    loadStopSequenceSection,
     handleDragEnd,
     handleLoadMode,
     handleClearAll,
@@ -50,38 +47,14 @@ const MainRoot: React.FC = () => {
     handleDeleteStopSequenceMutation,
   } = useIndexHooks();
 
-  const [formInformation, setFormInformation] = useState<TformInformation>();
+  const [saveButtonDisabled, setSaveButtonDisabled] = useState<boolean>(true);
   const [radioButton, setRadioButton] = useState<string>("");
   const [show, setShow] = useState<boolean>(true);
+  const ref = useRef<{ current: { saveStopSequenceMutation: () => void } }>();
 
-  const handleSaveNewForm = useCallback((newForm: any) => {
-    setFormInformation({ ...newForm });
-  }, []);
-
-  const handleDeleteSchedule = () => {
-    if (formInformation) {
-      setFormInformation((prev: any) => {
-        return {
-          ...prev,
-          schedule: [],
-        };
-      });
-    }
-  };
-
-  const handleResetFormInformation = () => {
-    setFormInformation(undefined);
-  };
-
-  const handleResetRadioButton = () => {
-    setRadioButton("");
-  };
-
-  const [saveButtonDisabled, setSaveButtonDisabled] = useState<boolean>(true);
-
-  const handledisabled = (value: boolean) => {
+  const handleDisabled = useCallback((value: boolean) => {
     setSaveButtonDisabled(value);
-  };
+  }, []);
 
   return (
     <div className="Prototyp" style={{ position: "relative" }}>
@@ -89,60 +62,112 @@ const MainRoot: React.FC = () => {
         {radioButton === "laden" || radioButton === "erstellen" ? (
           <Col xs={24}>
             <PageHeader
-              title={`Route manager ${radioButton}`}
-              style={{ padding: "24px" }}
+              title={
+                <div
+                  style={{
+                    color: "#4383B4",
+                    fontSize: "17px",
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <UnorderedListOutlined
+                    style={{ paddingTop: "9px", paddingRight: "10px" }}
+                  />
+                  <p>
+                    {radioButton ? `Linie ${radioButton}` : `Linie manager`}
+                  </p>
+                </div>
+              }
+              style={{ padding: "16px" }}
               extra={[
-                <Fragment key="1">
+                <div key="1">
                   <Button
                     type="primary"
+                    htmlType="submit"
+                    form="formWrapper"
                     disabled={saveButtonDisabled}
                     onClick={() => {
-                      handleSaveStopSequenceMutation({
-                        ...formInformation,
-                        stopSequence: stateDND.trajekt.items,
-                      });
-
-                      handleResetFormInformation();
+                      //@ts-ignore
+                      ref?.current?.saveStopSequenceMutation();
                     }}
                   >
                     Speichern
                   </Button>
                   {currentStopSequence && (
-                    <Button
-                      danger
-                      id="delete_stopSequence"
-                      disabled={currentStopSequence ? false : true}
-                      onClick={() => {
-                        if (currentStopSequence) {
-                          const { key } = currentStopSequence;
-                          handleDeleteStopSequenceMutation(key);
-                        }
-                      }}
-                    >
-                      löschen
-                    </Button>
+                    <>
+                      <Popconfirm
+                        title={`Wollen Sie wirklich die Linie löschen ?`}
+                        placement="bottomRight"
+                        okText="Ja"
+                        cancelText="Nein"
+                        onConfirm={() => {
+                          if (currentStopSequence) {
+                            const { key } = currentStopSequence;
+                            handleDeleteStopSequenceMutation(key);
+                          }
+                        }}
+                      >
+                        <Button danger id="delete_stopSequence">
+                          löschen
+                        </Button>
+                      </Popconfirm>
+                      <Popconfirm
+                        title={`Wollen Sie wirklich die Linie resetten ?`}
+                        placement="bottomRight"
+                        okText="Ja"
+                        cancelText="Nein"
+                        onConfirm={() => {
+                          if (currentStopSequence) {
+                            const { key, modes } = currentStopSequence;
+                            handleClearAll();
+                            handledisplayStopSequenceQuery(modes, key);
+                          }
+                        }}
+                      >
+                        <Button danger id="delete_stopSequence">
+                          Reset
+                        </Button>
+                      </Popconfirm>
+                    </>
                   )}
                   <Popconfirm
-                    title={`Wollen Sie wirklich nicht mehr route manager ${radioButton} ?`}
+                    title={`Wollen Sie wirklich nicht mehr die Linie ${radioButton} ?`}
                     placement="bottomRight"
                     okText="Ja"
                     cancelText="Nein"
                     onConfirm={() => {
-                      handleResetRadioButton();
+                      setRadioButton("");
                       handleStopsQuery([]);
                     }}
                   >
                     <Button type="dashed">Abbrechen</Button>
                   </Popconfirm>
-                </Fragment>,
+                </div>,
               ]}
             />
           </Col>
         ) : (
           <Col xs={24}>
             <PageHeader
-              title={`Route manager ${radioButton}`}
-              style={{ padding: "24px" }}
+              title={
+                <div
+                  style={{
+                    color: "#4383B4",
+                    fontSize: "17px",
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <UnorderedListOutlined
+                    style={{ paddingTop: "9px", paddingRight: "10px" }}
+                  />
+                  <p>
+                    {radioButton ? `Linie ${radioButton}` : `Linie manager`}
+                  </p>
+                </div>
+              }
+              style={{ padding: "16px" }}
               extra={[
                 <Fragment key="1">
                   <Button
@@ -209,11 +234,11 @@ const MainRoot: React.FC = () => {
               <Fragment>
                 <Col xs={24}>
                   <SaveStopsSequenceForm
+                    ref={ref}
+                    stateDND={stateDND}
                     currentStopSequence={currentStopSequence}
-                    loadStopSequenceSection={loadStopSequenceSection}
-                    saveNewForm={handleSaveNewForm}
-                    onDisabled={handledisabled}
-                    deleteSchedule={handleDeleteSchedule}
+                    onDisabled={handleDisabled}
+                    onSaveStopSequenceMutation={handleSaveStopSequenceMutation}
                   />
                 </Col>
                 <Col xxl={24} xs={24} style={{ height: "500px" }}>

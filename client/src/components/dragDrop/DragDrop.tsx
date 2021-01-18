@@ -201,10 +201,11 @@ const DragDrop = ({
             extra={
               stateDND.trajekt.items.length ? (
                 <Button
+                  danger
                   id="clearAll_button"
                   onClick={() => onResetStopSequence()}
                 >
-                  Reset
+                  Alle löschen
                 </Button>
               ) : null
             }
