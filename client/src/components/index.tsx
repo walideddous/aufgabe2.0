@@ -214,6 +214,17 @@ const MainRoot: React.FC = () => {
             />
           </Col>
         )}
+        {radioButton === "erstellen" && (
+          <Col xs={24}>
+            <SaveStopsSequenceForm
+              ref={ref}
+              stateDND={stateDND}
+              currentStopSequence={currentStopSequence}
+              onDisabled={handleDisabled}
+              onSaveStopSequenceMutation={handleSaveStopSequenceMutation}
+            />
+          </Col>
+        )}
         {radioButton && (
           <Col xs={24}>
             <LoadStopSequence
@@ -248,15 +259,19 @@ const MainRoot: React.FC = () => {
               </div>
             ) : (
               <Fragment>
-                <Col xs={24}>
-                  <SaveStopsSequenceForm
-                    ref={ref}
-                    stateDND={stateDND}
-                    currentStopSequence={currentStopSequence}
-                    onDisabled={handleDisabled}
-                    onSaveStopSequenceMutation={handleSaveStopSequenceMutation}
-                  />
-                </Col>
+                {radioButton === "laden" && (
+                  <Col xs={24}>
+                    <SaveStopsSequenceForm
+                      ref={ref}
+                      stateDND={stateDND}
+                      currentStopSequence={currentStopSequence}
+                      onDisabled={handleDisabled}
+                      onSaveStopSequenceMutation={
+                        handleSaveStopSequenceMutation
+                      }
+                    />
+                  </Col>
+                )}
                 <Col xxl={24} xs={24} style={{ height: "500px" }}>
                   <Map
                     stations={stations}

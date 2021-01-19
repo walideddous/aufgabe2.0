@@ -455,71 +455,70 @@ const SaveStopSequenceForm = forwardRef(
                 </Form.Item>
               </Fragment>
             )}
-            <Collapse
-              activeKey={collapseOpen ? "2" : ""}
-              onChange={() => {
-                setCollapseOpen(!collapseOpen);
-              }}
-            >
-              <Panel
-                header={tags.length ? "Zeitplan" : "Kein Zeitplan"}
-                key="2"
+            {tags.length ? (
+              <Collapse
+                activeKey={collapseOpen ? "2" : ""}
+                onChange={() => {
+                  setCollapseOpen(!collapseOpen);
+                }}
               >
-                <div
-                  id="time_result"
-                  style={{
-                    height: "200px",
-                    overflowY: "auto",
-                    paddingBottom: "20px",
-                  }}
-                >
-                  {tags &&
-                    tags.map((tag: any, tagsIndex: number) => {
-                      return (
-                        <Fragment key={tagsIndex}>
-                          <p
-                            style={{ marginBottom: "4px", marginTop: "4px" }}
-                          >{`${tag.from} ${tag.to}`}</p>
-                          <Fragment>
-                            {tag.displayedTags.map(
-                              (el: string, displayedTagsIndex: number) => (
-                                <Tag
-                                  visible={true}
-                                  closable={true}
-                                  id={`dayTime_tags${displayedTagsIndex}`}
-                                  key={tagsIndex + displayedTagsIndex}
-                                  onClose={() => {
-                                    handleDeleteTags(
-                                      tagsIndex,
-                                      displayedTagsIndex
-                                    );
-                                  }}
-                                >
-                                  {el}
-                                </Tag>
-                              )
-                            )}
+                <Panel header={"Zeitplan"} key="2">
+                  <div
+                    id="time_result"
+                    style={{
+                      height: "200px",
+                      overflowY: "auto",
+                      paddingBottom: "20px",
+                    }}
+                  >
+                    {tags &&
+                      tags.map((tag: any, tagsIndex: number) => {
+                        return (
+                          <Fragment key={tagsIndex}>
+                            <p
+                              style={{ marginBottom: "4px", marginTop: "4px" }}
+                            >{`${tag.from} ${tag.to}`}</p>
+                            <Fragment>
+                              {tag.displayedTags.map(
+                                (el: string, displayedTagsIndex: number) => (
+                                  <Tag
+                                    visible={true}
+                                    closable={true}
+                                    id={`dayTime_tags${displayedTagsIndex}`}
+                                    key={tagsIndex + displayedTagsIndex}
+                                    onClose={() => {
+                                      handleDeleteTags(
+                                        tagsIndex,
+                                        displayedTagsIndex
+                                      );
+                                    }}
+                                  >
+                                    {el}
+                                  </Tag>
+                                )
+                              )}
+                            </Fragment>
                           </Fragment>
-                        </Fragment>
-                      );
-                    })}
-                </div>
-                <Button
-                  danger
-                  id="clear_all"
-                  disabled={tags.length ? false : true}
-                  onClick={() => {
-                    setTags([]);
-                    setSavedForm((prev: any) => ({
-                      ...prev,
-                      schedule: [],
-                    }));
-                  }}
-                >
-                  Zeitplan löschen
-                </Button>
-              </Panel>
-            </Collapse>
+                        );
+                      })}
+                  </div>
+                  <Button
+                    danger
+                    id="clear_all"
+                    disabled={tags.length ? false : true}
+                    onClick={() => {
+                      setTags([]);
+                      setSavedForm((prev: any) => ({
+                        ...prev,
+                        schedule: [],
+                      }));
+                    }}
+                  >
+                    Zeitplan löschen
+                  </Button>
+                </Panel>
+              </Collapse>
+            ) : null}
           </Form>
         </Panel>
       </Collapse>
