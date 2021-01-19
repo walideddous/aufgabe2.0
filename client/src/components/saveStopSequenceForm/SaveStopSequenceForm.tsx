@@ -171,6 +171,11 @@ const SaveStopSequenceForm = forwardRef(
       form.setFieldsValue({
         timeList: [],
       });
+
+      // to open the collapse when its closed
+      if (!collapseOpen) {
+        setCollapseOpen(true);
+      }
     };
 
     const handleDeleteTags = useCallback(
