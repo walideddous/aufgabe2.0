@@ -613,8 +613,9 @@ export default function useIndexHooks() {
             (mode: string) => mode === RouteManagerItemByKey[0].modes[0]
           ).length
         )
-      )
+      ) {
         return setIsSending(false);
+      }
 
       //// -> Format stopSequence and set the state
       const routeManagerFormatted = formatStopSequenceItems(
@@ -664,6 +665,8 @@ export default function useIndexHooks() {
   // Display the stop sequence on map when we load from the backend
   const handledisplayStopSequenceQuery = useCallback(
     (modes: string[], key: string) => {
+      if (isSending) return console.log("Please Wait");
+      setIsSending(true);
       console.log("Start fetching the stop sequence");
 
       // Dispatch the stops GraphQl query
@@ -672,7 +675,7 @@ export default function useIndexHooks() {
       // Dispatch the stop sequence GraphQl query
       queryStopSequenceByKey({ variables: { key } });
     },
-    [getStopsByMode, queryStopSequenceByKey]
+    [isSending, getStopsByMode, queryStopSequenceByKey]
   );
 
   // Delete stop sequence by Id

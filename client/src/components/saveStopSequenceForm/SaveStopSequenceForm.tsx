@@ -274,12 +274,13 @@ const SaveStopSequenceForm = forwardRef(
               <Input
                 id="name_input"
                 placeholder="Linienname eingeben"
-                onChange={(e) =>
+                onChange={(e) => {
+                  e.persist();
                   setSavedForm((prev: any) => ({
                     ...prev,
                     name: e.target.value.trim(),
-                  }))
-                }
+                  }));
+                }}
                 allowClear
               />
             </Form.Item>
@@ -287,12 +288,13 @@ const SaveStopSequenceForm = forwardRef(
               <Input.TextArea
                 id="desc_input"
                 placeholder="Linienbeschreibung eingeben"
-                onChange={(e) =>
+                onChange={(e) => {
+                  e.persist();
                   setSavedForm((prev: any) => ({
                     ...prev,
                     desc: e.target.value.trim(),
-                  }))
-                }
+                  }));
+                }}
                 allowClear
               />
             </Form.Item>
