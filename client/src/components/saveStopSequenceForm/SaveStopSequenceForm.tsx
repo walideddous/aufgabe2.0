@@ -66,6 +66,7 @@ const SaveStopSequenceForm = forwardRef(
         }[];
       }[];
     }>();
+    const [collapseOpen, setCollapseOpen] = useState<boolean>(false);
 
     // set savedForm state when load data from Backend
     useEffect(() => {
@@ -76,6 +77,7 @@ const SaveStopSequenceForm = forwardRef(
           name: currentStopSequence.name,
           desc: currentStopSequence.desc,
         });
+        setCollapseOpen(true);
       } else {
         setSavedForm({ name: "", desc: "", schedule: [] });
         form.setFieldsValue({
@@ -169,8 +171,6 @@ const SaveStopSequenceForm = forwardRef(
       form.setFieldsValue({
         timeList: [],
       });
-
-      form.resetFields(["date", "day", "time"]);
     };
 
     const handleDeleteTags = useCallback(
@@ -250,14 +250,17 @@ const SaveStopSequenceForm = forwardRef(
     }, [
       currentStopSequence,
       stateDND.trajekt.items,
-      tags.length,
+      tags,
       savedForm,
       onDisabled,
     ]);
 
     return (
       <Collapse defaultActiveKey={"1"}>
-        <Panel header="Form" key="1">
+        <Panel
+          header={savedForm?.name ? savedForm.name : "Linienverlauf"}
+          key="1"
+        >
           <Form
             autoComplete="off"
             id="formWrapper"
@@ -266,14 +269,10 @@ const SaveStopSequenceForm = forwardRef(
             form={form}
             onFinish={onFinish}
           >
-            <Form.Item
-              label="Name"
-              name="name"
-              rules={[{ required: true, message: "Name fehlt" }]}
-            >
+            <Form.Item label="Name" name="name">
               <Input
                 id="name_input"
-                placeholder="Linienname eingeben"
+                placeholder="Geben Sie dem Linienname ein"
                 onChange={(e) => {
                   e.persist();
                   setSavedForm((prev: any) => ({
@@ -287,7 +286,7 @@ const SaveStopSequenceForm = forwardRef(
             <Form.Item label="Beschreibung" name="desc">
               <Input.TextArea
                 id="desc_input"
-                placeholder="Linienbeschreibung eingeben"
+                placeholder="Geben Sie der Linienbeschreibung ein"
                 onChange={(e) => {
                   e.persist();
                   setSavedForm((prev: any) => ({
@@ -314,67 +313,74 @@ const SaveStopSequenceForm = forwardRef(
             {addSchedule && (
               <Fragment>
                 <Form.Item
-                  label="Datum"
+                  label="Gültigkeit"
                   name="date"
-                  rules={[{ required: true, message: "Datum fehlt" }]}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Geben Sie der Gültigkeit ein",
+                    },
+                  ]}
                 >
                   <DatePicker.RangePicker
                     id="date_input"
                     format="DD-MM-YYYY"
-                    placeholder={["Start Datum", "End Datum"]}
+                    placeholder={["Start Gültigkeit", "End Gültigkeit"]}
                   />
                 </Form.Item>
                 <Form.Item
                   id="dayPicker_form"
-                  label="Tag"
+                  label="Wochentage"
                   name="day"
-                  rules={[{ required: true, message: "Tag fehlt" }]}
+                  rules={[
+                    { required: true, message: "Geben Sie den Wochentage ein" },
+                  ]}
                 >
                   <Select
                     allowClear
-                    placeholder="Tage auswählen"
+                    placeholder="Wählen Sie den Wochentage aus"
                     id="dayPicker_input"
                     mode="tags"
                   >
                     <Option key="1" value="Mon">
-                      Monday
+                      Montag
                     </Option>
-                    <Option key="2" value="Tue">
-                      Tuesday
+                    <Option key="2" value="Die">
+                      Dienstag
                     </Option>
-                    <Option key="3" value="Wed">
-                      Wednesday
+                    <Option key="3" value="Mit">
+                      Mittwoch
                     </Option>
-                    <Option key="4" value="Thu">
-                      Thursday
+                    <Option key="4" value="Don">
+                      Donnerstag
                     </Option>
-                    <Option key="5" value="Fri">
-                      Friday
+                    <Option key="5" value="Fre">
+                      Freitag
                     </Option>
-                    <Option key="6" value="Sat">
-                      Saturday
+                    <Option key="6" value="Sam">
+                      Samstag
                     </Option>
-                    <Option key="7" value="Sun">
-                      Sunday
+                    <Option key="7" value="Son">
+                      Sonntag
                     </Option>
-                    <Option key="8" value="Holiday">
-                      Holiday
+                    <Option key="8" value="Feiertag">
+                      Feiertag
                     </Option>
                   </Select>
                 </Form.Item>
                 <div style={{ display: "flex", flexWrap: "wrap" }}>
                   <Form.Item
                     name="time"
-                    label="Zeit"
+                    label="Zeitintervall"
                     rules={[
                       {
                         required: true,
-                        message: "Zeit fehlt",
+                        message: "Geben Sie der Zeitintervall ein",
                       },
                     ]}
                   >
                     <RangePicker
-                      placeholder={["Start Zeit", "End Zeit"]}
+                      placeholder={["Start Zeitintervall", "End Zeitintervall"]}
                       format="HH:mm"
                       id="timePicker_input"
                     />
@@ -399,7 +405,7 @@ const SaveStopSequenceForm = forwardRef(
                               onClick={() => add()}
                               icon={<PlusOutlined />}
                             >
-                              Zeit hinzufügen
+                              Zeitintervall hinzufügen
                             </Button>
                           </Form.Item>
                           <div>
@@ -411,7 +417,10 @@ const SaveStopSequenceForm = forwardRef(
                               >
                                 <Form.Item name={[field.name, "time"]}>
                                   <RangePicker
-                                    placeholder={["Start Zeit", "End Zeit"]}
+                                    placeholder={[
+                                      "Start Zeitintervall",
+                                      "End Zeitintervall",
+                                    ]}
                                     format="HH:mm"
                                     id={`timePicker_input${field.name}`}
                                   />
@@ -430,7 +439,7 @@ const SaveStopSequenceForm = forwardRef(
                 </div>
                 <Form.Item>
                   <Button id="save_schedule" type="primary" htmlType="submit">
-                    Zeitplan speichern
+                    Zeitplan hinzufügen
                   </Button>
                   <Button
                     type="dashed"
@@ -447,10 +456,15 @@ const SaveStopSequenceForm = forwardRef(
               </Fragment>
             )}
             <Collapse
-              activeKey={tags.length ? "2" : ""}
-              collapsible={!tags.length ? "disabled" : undefined}
+              activeKey={collapseOpen ? "2" : ""}
+              onChange={() => {
+                setCollapseOpen(!collapseOpen);
+              }}
             >
-              <Panel header="Zeitplan" key="2">
+              <Panel
+                header={tags.length ? "Zeitplan" : "Kein Zeitplan"}
+                key="2"
+              >
                 <div
                   id="time_result"
                   style={{

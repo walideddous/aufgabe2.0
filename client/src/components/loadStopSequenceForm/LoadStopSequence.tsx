@@ -26,9 +26,6 @@ const LoadStopSequence = ({
   const [form] = Form.useForm();
   const [search, setSearch] = useState<string>("");
   const [collapseOpen, setCollapseOpen] = useState<boolean>(true);
-  const [selectValue, setSelectValue] = useState<string>(
-    "verkehrsmittel typ auswählen"
-  );
 
   // Auto complete component
   const { Option } = AutoComplete;
@@ -47,11 +44,8 @@ const LoadStopSequence = ({
   // handle the drop menu to display the choosed Modes on Map
   const handleModeChange = useCallback(
     (value: string) => {
-      if (value !== "verkehrsmittel typ auswählen") {
-        onStopsQuery([value + ""]);
-        setSelectValue(value + "");
-        setCollapseOpen(false);
-      }
+      onStopsQuery([value + ""]);
+      setCollapseOpen(false);
     },
     [onStopsQuery]
   );
@@ -64,6 +58,7 @@ const LoadStopSequence = ({
       if (response && response.key !== currentStopSequence?.key) {
         onDisplayStopSequence(response.modes, options.key);
         setCollapseOpen(false);
+        setSearch("");
       }
     },
     [stopSequenceList, currentStopSequence, onDisplayStopSequence]
@@ -77,27 +72,16 @@ const LoadStopSequence = ({
         setCollapseOpen(!collapseOpen);
       }}
     >
-      <Panel header={!show ? "Verkehrsmittel typ Box" : "Suche Box"} key="1">
+      <Panel header={!show ? "Verkehrsmitteltyp" : "Linienname suchen"} key="1">
         <Form form={form} layout="vertical">
           {!show && (
-            <Form.Item label="Verkehrsmittel typ">
+            <Form.Item>
               <Select
                 id="mode_selector"
-                disabled={
-                  stateDND.trajekt.items.length &&
-                  selectValue !== "verkehrsmittel typ auswählen"
-                    ? true
-                    : false
-                }
-                value={selectValue}
+                placeholder="Wählen Sie einen Vehrkehsmitteltyp aus"
+                disabled={stateDND.trajekt.items.length ? true : false}
                 onChange={handleModeChange}
               >
-                <Option
-                  value="verkehrsmittel typ auswählen"
-                  id="Modus_auswählen"
-                >
-                  verkehrsmittel typ auswählen
-                </Option>
                 <Option value="13" id="13">
                   13
                 </Option>
@@ -120,7 +104,7 @@ const LoadStopSequence = ({
             </Form.Item>
           )}
           {show && (
-            <Form.Item label="Linienname">
+            <Form.Item>
               <AutoComplete
                 id="stopSequence_autoComplete"
                 placeholder="Geben Sie dem Linienname ein"

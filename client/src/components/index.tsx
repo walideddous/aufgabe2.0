@@ -82,20 +82,20 @@ const MainRoot: React.FC = () => {
               style={{ padding: "16px" }}
               extra={[
                 <div key="1">
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    form="formWrapper"
-                    disabled={saveButtonDisabled}
-                    onClick={() => {
-                      //@ts-ignore
-                      ref?.current?.saveStopSequenceMutation();
-                    }}
-                  >
-                    Speichern
-                  </Button>
-                  {currentStopSequence && (
+                  {radioButton === "laden" && currentStopSequence && (
                     <>
+                      <Button
+                        type="primary"
+                        htmlType="submit"
+                        form="formWrapper"
+                        disabled={saveButtonDisabled}
+                        onClick={() => {
+                          //@ts-ignore
+                          ref?.current?.saveStopSequenceMutation();
+                        }}
+                      >
+                        Speichern
+                      </Button>
                       <Popconfirm
                         title={`Wollen Sie wirklich die Linie löschen ?`}
                         placement="bottomRight"
@@ -129,6 +129,22 @@ const MainRoot: React.FC = () => {
                           Reset
                         </Button>
                       </Popconfirm>
+                    </>
+                  )}
+                  {radioButton === "erstellen" && (
+                    <>
+                      <Button
+                        type="primary"
+                        htmlType="submit"
+                        form="formWrapper"
+                        disabled={saveButtonDisabled}
+                        onClick={() => {
+                          //@ts-ignore
+                          ref?.current?.saveStopSequenceMutation();
+                        }}
+                      >
+                        Speichern
+                      </Button>
                     </>
                   )}
                   <Popconfirm
