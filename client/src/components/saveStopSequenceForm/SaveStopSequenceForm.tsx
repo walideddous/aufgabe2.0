@@ -16,6 +16,8 @@ import {
   Select,
   Tag,
   Space,
+  Divider,
+  Popconfirm,
 } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 
@@ -236,10 +238,11 @@ const SaveStopSequenceForm = forwardRef(
       if (
         tags.length &&
         savedForm &&
+        savedForm.name &&
         stateDND.trajekt.items.length >= 2 &&
         JSON.stringify({
           ...savedForm,
-          stopSequence: stateDND.trajekt.items,
+          stopSequence: stateDND.trajekt.items.map((el) => el),
         }) !==
           JSON.stringify({
             name: currentStopSequence?.name,
@@ -253,26 +256,28 @@ const SaveStopSequenceForm = forwardRef(
         onDisabled(true);
       }
     }, [
-      currentStopSequence,
-      stateDND.trajekt.items,
       tags,
       savedForm,
+      currentStopSequence,
+      stateDND.trajekt.items,
       onDisabled,
     ]);
 
+    console.log("stateDND", stateDND.trajekt.items);
+
     return (
-      <Collapse defaultActiveKey={"1"}>
-        <Panel
-          header={savedForm?.name ? savedForm.name : "Linienverlauf"}
-          key="1"
-        >
-          <Form
-            autoComplete="off"
-            id="formWrapper"
-            layout="vertical"
-            requiredMark={false}
-            form={form}
-            onFinish={onFinish}
+      <Form
+        autoComplete="off"
+        id="formWrapper"
+        layout="vertical"
+        requiredMark={false}
+        form={form}
+        onFinish={onFinish}
+      >
+        <Collapse defaultActiveKey={"1"}>
+          <Panel
+            header={savedForm?.name ? savedForm.name : "Linienverlauf"}
+            key="1"
           >
             <Form.Item label="Name" name="name">
               <Input
@@ -302,6 +307,53 @@ const SaveStopSequenceForm = forwardRef(
                 allowClear
               />
             </Form.Item>
+          </Panel>
+        </Collapse>
+        <Collapse
+          style={{ marginTop: "8px" }}
+          activeKey={collapseOpen ? "2" : ""}
+          onChange={() => {
+            setCollapseOpen(!collapseOpen);
+          }}
+        >
+          <Panel header={tags.length ? "Zeitplan" : "kein Zeitplan"} key="2">
+            <div
+              id="time_result"
+              style={{
+                maxHeight: "200px",
+                overflowY: "auto",
+                paddingBottom: "20px",
+              }}
+            >
+              {tags &&
+                tags.map((tag: any, tagsIndex: number) => {
+                  return (
+                    <Fragment key={tagsIndex}>
+                      <p
+                        style={{ marginBottom: "4px", marginTop: "4px" }}
+                      >{`${tag.from} ${tag.to}`}</p>
+                      <Fragment>
+                        {tag.displayedTags.map(
+                          (el: string, displayedTagsIndex: number) => (
+                            <Tag
+                              visible={true}
+                              closable={true}
+                              id={`dayTime_tags${displayedTagsIndex}`}
+                              key={tagsIndex + displayedTagsIndex}
+                              onClose={() => {
+                                handleDeleteTags(tagsIndex, displayedTagsIndex);
+                              }}
+                            >
+                              {el}
+                            </Tag>
+                          )
+                        )}
+                      </Fragment>
+                    </Fragment>
+                  );
+                })}
+            </div>
+            <Divider />
             {!addSchedule && (
               <div style={{ paddingBottom: "20px" }}>
                 <Button
@@ -313,6 +365,30 @@ const SaveStopSequenceForm = forwardRef(
                 >
                   Zeitplan hinzufügen
                 </Button>
+                {tags.length ? (
+                  <Popconfirm
+                    title={`Wollen Sie wirklich den Zeitplan löschen ?`}
+                    placement="bottomRight"
+                    okText="Ja"
+                    cancelText="Nein"
+                    onConfirm={() => {
+                      setTags([]);
+                      setSavedForm((prev: any) => ({
+                        ...prev,
+                        schedule: [],
+                      }));
+                    }}
+                  >
+                    <Button
+                      danger
+                      id="clear_all"
+                      style={{ marginLeft: "10px" }}
+                      disabled={tags.length ? false : true}
+                    >
+                      Zeitplan löschen
+                    </Button>
+                  </Popconfirm>
+                ) : null}
               </div>
             )}
             {addSchedule && (
@@ -457,76 +533,36 @@ const SaveStopSequenceForm = forwardRef(
                   >
                     Abbrechen
                   </Button>
+                  {tags.length ? (
+                    <Popconfirm
+                      title={`Wollen Sie wirklich den Zeitplan löschen ?`}
+                      placement="bottomRight"
+                      okText="Ja"
+                      cancelText="Nein"
+                      onConfirm={() => {
+                        setTags([]);
+                        setSavedForm((prev: any) => ({
+                          ...prev,
+                          schedule: [],
+                        }));
+                      }}
+                    >
+                      <Button
+                        danger
+                        id="clear_all"
+                        style={{ marginLeft: "10px" }}
+                        disabled={tags.length ? false : true}
+                      >
+                        Zeitplan löschen
+                      </Button>
+                    </Popconfirm>
+                  ) : null}
                 </Form.Item>
               </Fragment>
             )}
-            {tags.length ? (
-              <Collapse
-                activeKey={collapseOpen ? "2" : ""}
-                onChange={() => {
-                  setCollapseOpen(!collapseOpen);
-                }}
-              >
-                <Panel header={"Zeitplan"} key="2">
-                  <div
-                    id="time_result"
-                    style={{
-                      height: "200px",
-                      overflowY: "auto",
-                      paddingBottom: "20px",
-                    }}
-                  >
-                    {tags &&
-                      tags.map((tag: any, tagsIndex: number) => {
-                        return (
-                          <Fragment key={tagsIndex}>
-                            <p
-                              style={{ marginBottom: "4px", marginTop: "4px" }}
-                            >{`${tag.from} ${tag.to}`}</p>
-                            <Fragment>
-                              {tag.displayedTags.map(
-                                (el: string, displayedTagsIndex: number) => (
-                                  <Tag
-                                    visible={true}
-                                    closable={true}
-                                    id={`dayTime_tags${displayedTagsIndex}`}
-                                    key={tagsIndex + displayedTagsIndex}
-                                    onClose={() => {
-                                      handleDeleteTags(
-                                        tagsIndex,
-                                        displayedTagsIndex
-                                      );
-                                    }}
-                                  >
-                                    {el}
-                                  </Tag>
-                                )
-                              )}
-                            </Fragment>
-                          </Fragment>
-                        );
-                      })}
-                  </div>
-                  <Button
-                    danger
-                    id="clear_all"
-                    disabled={tags.length ? false : true}
-                    onClick={() => {
-                      setTags([]);
-                      setSavedForm((prev: any) => ({
-                        ...prev,
-                        schedule: [],
-                      }));
-                    }}
-                  >
-                    Zeitplan löschen
-                  </Button>
-                </Panel>
-              </Collapse>
-            ) : null}
-          </Form>
-        </Panel>
-      </Collapse>
+          </Panel>
+        </Collapse>
+      </Form>
     );
   }
 );

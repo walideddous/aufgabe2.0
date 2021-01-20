@@ -26,6 +26,7 @@ const LoadStopSequence = ({
   const [form] = Form.useForm();
   const [search, setSearch] = useState<string>("");
   const [collapseOpen, setCollapseOpen] = useState<boolean>(true);
+  const [selectedMode, setSelectedMode] = useState("");
 
   // Auto complete component
   const { Option } = AutoComplete;
@@ -45,6 +46,7 @@ const LoadStopSequence = ({
   const handleModeChange = useCallback(
     (value: string) => {
       onStopsQuery([value + ""]);
+      setSelectedMode(value);
       setCollapseOpen(false);
     },
     [onStopsQuery]
@@ -72,7 +74,12 @@ const LoadStopSequence = ({
         setCollapseOpen(!collapseOpen);
       }}
     >
-      <Panel header={!show ? "Verkehrsmitteltyp" : "Linienname suchen"} key="1">
+      <Panel
+        header={
+          !show ? `Verkehrsmitteltyp ${selectedMode}` : "Linienname suchen"
+        }
+        key="1"
+      >
         <Form form={form} layout="vertical">
           {!show && (
             <Form.Item>

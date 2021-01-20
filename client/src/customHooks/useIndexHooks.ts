@@ -590,7 +590,7 @@ export default function useIndexHooks() {
     ]
   );
 
-  // Load stop sequence and stops when we dispatch handledisplayStopSequenceQuery function
+  // Load stop sequence and stops when we dispatch handleDisplayStopSequenceQuery function
   useEffect(() => {
     if (
       stopsResponse.data &&
@@ -663,7 +663,7 @@ export default function useIndexHooks() {
   }, [stopsResponse, stopSequenceByKeyResponse, loadStopSequenceSection]);
 
   // Display the stop sequence on map when we load from the backend
-  const handledisplayStopSequenceQuery = useCallback(
+  const handleDisplayStopSequenceQuery = useCallback(
     (modes: string[], key: string) => {
       if (isSending) return console.log("Please Wait");
       setIsSending(true);
@@ -738,7 +738,7 @@ export default function useIndexHooks() {
     handleStopsQuery,
     handleStopSequenceSearchQuery,
     handleSaveStopSequenceMutation,
-    handledisplayStopSequenceQuery,
+    handleDisplayStopSequenceQuery,
     handleDeleteStopSequenceMutation,
   };
 }

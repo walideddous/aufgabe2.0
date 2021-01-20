@@ -1,23 +1,25 @@
-import "@testing-library/jest-dom"
-import { configure } from "enzyme"
-import Adapter from "enzyme-adapter-react-16"
+import "@testing-library/jest-dom";
+import { configure } from "enzyme";
+import Adapter from "enzyme-adapter-react-16";
 
 // To handle th SVG that render Leaflet in Test
 //@ts-ignore
-var createElementNSOrig = global.document.createElementNS
+var createElementNSOrig = global.document.createElementNS;
 //@ts-ignore
-global.document.createElementNS = function(namespaceURI, qualifiedName) {
-  if (namespaceURI==='http://www.w3.org/2000/svg' && qualifiedName==='svg'){
-  //@ts-ignore  
-  var element = createElementNSOrig.apply(this,arguments)
-  //@ts-ignore
-    element.createSVGRect = function(){}; 
+global.document.createElementNS = function (namespaceURI, qualifiedName) {
+  if (
+    namespaceURI === "http://www.w3.org/2000/svg" &&
+    qualifiedName === "svg"
+  ) {
+    //@ts-ignore
+    var element = createElementNSOrig.apply(this, arguments);
+    //@ts-ignore
+    element.createSVGRect = function () {};
     return element;
   }
   //@ts-ignore
-  return createElementNSOrig.apply(this,arguments)
-}
-
+  return createElementNSOrig.apply(this, arguments);
+};
 
 // To handle the mount enzyme method
 Object.defineProperty(window, "matchMedia", {
@@ -34,7 +36,4 @@ Object.defineProperty(window, "matchMedia", {
   })),
 });
 
-
-configure( {adapter : new Adapter()})
-
-
+configure({ adapter: new Adapter() });

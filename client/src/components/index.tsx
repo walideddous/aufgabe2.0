@@ -1,12 +1,13 @@
 import React, { Fragment, useCallback, useState, useRef } from "react";
-import { Row, Spin, Col, PageHeader, Popconfirm, Button } from "antd";
-import { LoadingOutlined, UnorderedListOutlined } from "@ant-design/icons";
+import { Row, Spin, Col } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 
 // Import composents
 import DragDrop from "./dragDrop/DragDrop";
 import Map from "./map/Map";
 import SaveStopsSequenceForm from "./saveStopSequenceForm/SaveStopSequenceForm";
 import LoadStopSequence from "./loadStopSequenceForm/LoadStopSequence";
+import Header from "./header/Header";
 
 // Import Custom Hook
 import useIndexHooks from "../customHooks/useIndexHooks";
@@ -43,14 +44,39 @@ const MainRoot: React.FC = () => {
     handleStopsQuery,
     handleStopSequenceSearchQuery,
     handleSaveStopSequenceMutation,
-    handledisplayStopSequenceQuery,
+    handleDisplayStopSequenceQuery,
     handleDeleteStopSequenceMutation,
   } = useIndexHooks();
 
   const [saveButtonDisabled, setSaveButtonDisabled] = useState<boolean>(true);
   const [radioButton, setRadioButton] = useState<string>("");
   const [show, setShow] = useState<boolean>(true);
-  const ref = useRef<{ current: { saveStopSequenceMutation: () => void } }>();
+  const SaveRef = useRef<{
+    current: { saveStopSequenceMutation: () => void };
+  }>();
+
+  const handleAbbrechenButton = () => {
+    setRadioButton("");
+    handleStopsQuery([]);
+  };
+
+  const handleLadenButton = () => {
+    setShow(true);
+    handleLoadMode(true);
+    setRadioButton("laden");
+  };
+
+  const handleErstellenButton = () => {
+    setShow(false);
+    handleClearAll();
+    handleLoadMode(false);
+    setRadioButton("erstellen");
+  };
+
+  const handleSaveButton = () => {
+    //@ts-ignore
+    ref?.current?.saveStopSequenceMutation();
+  };
 
   const handleDisabled = useCallback((value: boolean) => {
     setSaveButtonDisabled(value);
@@ -59,165 +85,22 @@ const MainRoot: React.FC = () => {
   return (
     <div className="Prototyp" style={{ position: "relative" }}>
       <Row gutter={[8, 8]}>
-        {radioButton === "laden" || radioButton === "erstellen" ? (
-          <Col xs={24}>
-            <PageHeader
-              title={
-                <div
-                  style={{
-                    color: "#4383B4",
-                    fontSize: "17px",
-                    display: "flex",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <UnorderedListOutlined
-                    style={{ paddingTop: "9px", paddingRight: "10px" }}
-                  />
-                  <p>
-                    {radioButton ? `Linie ${radioButton}` : `Linie manager`}
-                  </p>
-                </div>
-              }
-              style={{ padding: "16px" }}
-              extra={[
-                <div key="1">
-                  {radioButton === "laden" && currentStopSequence && (
-                    <>
-                      <Button
-                        type="primary"
-                        htmlType="submit"
-                        form="formWrapper"
-                        disabled={saveButtonDisabled}
-                        onClick={() => {
-                          //@ts-ignore
-                          ref?.current?.saveStopSequenceMutation();
-                        }}
-                      >
-                        Speichern
-                      </Button>
-                      <Popconfirm
-                        title={`Wollen Sie wirklich die Linie löschen ?`}
-                        placement="bottomRight"
-                        okText="Ja"
-                        cancelText="Nein"
-                        onConfirm={() => {
-                          if (currentStopSequence) {
-                            const { key } = currentStopSequence;
-                            handleDeleteStopSequenceMutation(key);
-                          }
-                        }}
-                      >
-                        <Button danger id="delete_stopSequence">
-                          löschen
-                        </Button>
-                      </Popconfirm>
-                      <Popconfirm
-                        title={`Wollen Sie wirklich die Linie resetten ?`}
-                        placement="bottomRight"
-                        okText="Ja"
-                        cancelText="Nein"
-                        onConfirm={() => {
-                          if (currentStopSequence) {
-                            const { key, modes } = currentStopSequence;
-                            handleClearAll();
-                            handledisplayStopSequenceQuery(modes, key);
-                          }
-                        }}
-                      >
-                        <Button danger id="delete_stopSequence">
-                          Reset
-                        </Button>
-                      </Popconfirm>
-                    </>
-                  )}
-                  {radioButton === "erstellen" && (
-                    <>
-                      <Button
-                        type="primary"
-                        htmlType="submit"
-                        form="formWrapper"
-                        disabled={saveButtonDisabled}
-                        onClick={() => {
-                          //@ts-ignore
-                          ref?.current?.saveStopSequenceMutation();
-                        }}
-                      >
-                        Speichern
-                      </Button>
-                    </>
-                  )}
-                  <Popconfirm
-                    title={`Wollen Sie wirklich nicht mehr die Linie ${radioButton} ?`}
-                    placement="bottomRight"
-                    okText="Ja"
-                    cancelText="Nein"
-                    onConfirm={() => {
-                      setRadioButton("");
-                      handleStopsQuery([]);
-                    }}
-                  >
-                    <Button type="dashed">Abbrechen</Button>
-                  </Popconfirm>
-                </div>,
-              ]}
-            />
-          </Col>
-        ) : (
-          <Col xs={24}>
-            <PageHeader
-              title={
-                <div
-                  style={{
-                    color: "#4383B4",
-                    fontSize: "17px",
-                    display: "flex",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <UnorderedListOutlined
-                    style={{ paddingTop: "9px", paddingRight: "10px" }}
-                  />
-                  <p>
-                    {radioButton ? `Linie ${radioButton}` : `Linie manager`}
-                  </p>
-                </div>
-              }
-              style={{ padding: "16px" }}
-              extra={[
-                <Fragment key="1">
-                  <Button
-                    id="load_button"
-                    value="laden"
-                    onClick={() => {
-                      setShow(true);
-                      handleLoadMode(true);
-                      setRadioButton("laden");
-                    }}
-                  >
-                    Laden
-                  </Button>
-                  <Button
-                    id="new_button"
-                    value="erstellen"
-                    onClick={() => {
-                      setShow(false);
-                      handleClearAll();
-                      handleLoadMode(false);
-                      setRadioButton("erstellen");
-                    }}
-                  >
-                    Neu
-                  </Button>
-                </Fragment>,
-              ]}
-            />
-          </Col>
-        )}
+        <Header
+          radioButton={radioButton}
+          saveButtonDisabled={saveButtonDisabled}
+          currentStopSequence={currentStopSequence}
+          onClearAll={handleClearAll}
+          onSaveButton={handleSaveButton}
+          onLadenButton={handleLadenButton}
+          onErstellenButton={handleErstellenButton}
+          onAbbrechenButton={handleAbbrechenButton}
+          onDisplayStopSequenceQuery={handleDisplayStopSequenceQuery}
+          onDeleteStopSequenceMutation={handleDeleteStopSequenceMutation}
+        />
         {radioButton === "erstellen" && (
           <Col xs={24}>
             <SaveStopsSequenceForm
-              ref={ref}
+              ref={SaveRef}
               stateDND={stateDND}
               currentStopSequence={currentStopSequence}
               onDisabled={handleDisabled}
@@ -234,7 +117,7 @@ const MainRoot: React.FC = () => {
               currentStopSequence={currentStopSequence}
               onStopsQuery={handleStopsQuery}
               onStopSequenceSearch={handleStopSequenceSearchQuery}
-              onDisplayStopSequence={handledisplayStopSequenceQuery}
+              onDisplayStopSequence={handleDisplayStopSequenceQuery}
             />
           </Col>
         )}
@@ -262,7 +145,7 @@ const MainRoot: React.FC = () => {
                 {radioButton === "laden" && (
                   <Col xs={24}>
                     <SaveStopsSequenceForm
-                      ref={ref}
+                      ref={SaveRef}
                       stateDND={stateDND}
                       currentStopSequence={currentStopSequence}
                       onDisabled={handleDisabled}

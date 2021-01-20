@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test the Header Component Should match the Header component snapshot 1`] = `
+<Fragment>
+  <Col
+    xs={24}
+  >
+    <PageHeader
+      extra={
+        Array [
+          <React.Fragment>
+            <ForwardRef(InternalButton)
+              id="load_button"
+              onClick={[Function]}
+              value="laden"
+            >
+              Laden
+            </ForwardRef(InternalButton)>
+            <ForwardRef(InternalButton)
+              id="new_button"
+              onClick={[Function]}
+              value="erstellen"
+            >
+              Neu
+            </ForwardRef(InternalButton)>
+          </React.Fragment>,
+        ]
+      }
+      style={
+        Object {
+          "padding": "16px",
+        }
+      }
+      title={
+        <div
+          style={
+            Object {
+              "color": "#4383B4",
+              "display": "flex",
+              "fontSize": "17px",
+              "justifyContent": "space-between",
+            }
+          }
+        >
+          <ForwardRef(UnorderedListOutlined)
+            style={
+              Object {
+                "paddingRight": "10px",
+                "paddingTop": "9px",
+              }
+            }
+          />
+          <p>
+            Linie manager
+          </p>
+        </div>
+      }
+    />
+  </Col>
+</Fragment>
+`;
