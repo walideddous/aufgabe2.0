@@ -109,8 +109,7 @@ const Header = ({
                       form="formWrapper"
                       disabled={saveButtonDisabled}
                       onClick={() => {
-                        //@ts-ignore
-                        ref?.current?.saveStopSequenceMutation();
+                        onSaveButton();
                       }}
                     >
                       Speichern

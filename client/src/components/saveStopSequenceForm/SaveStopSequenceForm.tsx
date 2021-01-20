@@ -225,13 +225,27 @@ const SaveStopSequenceForm = forwardRef(
       () => ({
         saveStopSequenceMutation: () => {
           onDisabled(true);
+          setCollapseOpen(false);
+          setTags([]);
+          setSavedForm((prev: any) => ({
+            name: "",
+            desc: "",
+            schedule: [],
+          }));
+          form.resetFields(["name", "desc", "date", "day", "time"]);
           return onSaveStopSequenceMutation({
             ...savedForm,
             stopSequence: stateDND.trajekt.items,
           });
         },
       }),
-      [savedForm, stateDND.trajekt, onSaveStopSequenceMutation, onDisabled]
+      [
+        form,
+        savedForm,
+        stateDND.trajekt,
+        onDisabled,
+        onSaveStopSequenceMutation,
+      ]
     );
 
     useEffect(() => {
@@ -262,8 +276,6 @@ const SaveStopSequenceForm = forwardRef(
       stateDND.trajekt.items,
       onDisabled,
     ]);
-
-    console.log("stateDND", stateDND.trajekt.items);
 
     return (
       <Form

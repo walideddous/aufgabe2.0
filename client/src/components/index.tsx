@@ -75,7 +75,7 @@ const MainRoot: React.FC = () => {
 
   const handleSaveButton = () => {
     //@ts-ignore
-    ref?.current?.saveStopSequenceMutation();
+    SaveRef?.current?.saveStopSequenceMutation();
   };
 
   const handleDisabled = useCallback((value: boolean) => {
