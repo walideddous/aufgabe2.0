@@ -18,8 +18,13 @@ import {
   Space,
   Divider,
   Popconfirm,
+  Alert,
 } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import moment from "moment";
+
+// import the model
+import ManagedRoute from "../../model/ManagedRoute";
 
 // import utils function
 import { getFormatTags } from "../../utils/getFormatTags";
@@ -99,10 +104,11 @@ const SaveStopSequenceForm = forwardRef(
       }
     }, [savedForm]);
 
-    const onFinish = (values: any) => {
-      let { name, date, day, time, timeList, desc } = values;
+    const [errorMessage, setErrorMessage] = useState("");
 
-      // To refactor the data
+    const onFinish = (values: any) => {
+      let { date, day, time, timeList } = values;
+
       if (timeList) {
         const timeListTable = timeList.filter((el: any) => el.time);
         timeList = [{ time }];
@@ -114,7 +120,7 @@ const SaveStopSequenceForm = forwardRef(
         timeList = [{ time }];
       }
 
-      const data = {
+      const newFormData = {
         from: `${date[0].format("DD-MM-YYYY")}`,
         to: `${date[1].format("DD-MM-YYYY")}`,
         timeSlices: timeList.map((element: any) => {
@@ -126,26 +132,38 @@ const SaveStopSequenceForm = forwardRef(
         }),
       };
 
+      let managedRoute = new ManagedRoute();
+
+      const messageValidation = managedRoute.messageValidation(
+        savedForm,
+        newFormData
+      );
+
+      if (messageValidation) return setErrorMessage(messageValidation);
+
       setSavedForm((prev: any) => {
         if (prev && prev.schedule) {
           if (
             prev.schedule.filter(
-              (el: any) => el.from === data.from && el.to === data.to
+              (el: any) =>
+                el.from === newFormData.from && el.to === newFormData.to
             ).length
           ) {
             const sameDateIndex = prev.schedule
               .map((el: any) => `${el.from} ${el.to}`)
-              .indexOf(`${data.from} ${data.to}`);
+              .indexOf(`${newFormData.from} ${newFormData.to}`);
 
             return {
               ...prev,
-              name,
-              desc,
               schedule: prev.schedule.map((el: any, index: number) => {
-                if (sameDateIndex === index) {
+                if (
+                  sameDateIndex === index &&
+                  JSON.stringify(el.timeSlices) !==
+                    JSON.stringify(newFormData.timeSlices)
+                ) {
                   return {
                     ...el,
-                    timeSlices: el.timeSlices.concat(data.timeSlices),
+                    timeSlices: el.timeSlices.concat(newFormData.timeSlices),
                   };
                 } else {
                   return el;
@@ -155,29 +173,23 @@ const SaveStopSequenceForm = forwardRef(
           } else {
             return {
               ...prev,
-              name,
-              desc,
-              schedule: prev.schedule.concat(data),
+              schedule: prev.schedule.concat(newFormData),
             };
           }
         } else {
           return {
-            name,
-            desc,
-            schedule: [{ ...data }],
+            schedule: [{ ...newFormData }],
           };
         }
       });
+
+      // CLose the schedule field
+      setAddSchedule(false);
 
       // Force the timeList to reset
       form.setFieldsValue({
         timeList: [],
       });
-
-      // to open the collapse when its closed
-      if (!collapseOpen) {
-        setCollapseOpen(true);
-      }
     };
 
     const handleDeleteTags = useCallback(
@@ -233,7 +245,7 @@ const SaveStopSequenceForm = forwardRef(
             schedule: [],
           }));
           form.resetFields(["name", "desc", "date", "day", "time"]);
-          return onSaveStopSequenceMutation({
+          onSaveStopSequenceMutation({
             ...savedForm,
             stopSequence: stateDND.trajekt.items,
           });
@@ -276,6 +288,12 @@ const SaveStopSequenceForm = forwardRef(
       stateDND.trajekt.items,
       onDisabled,
     ]);
+
+    useEffect(() => {
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 3000);
+    }, [errorMessage]);
 
     return (
       <Form
@@ -328,7 +346,23 @@ const SaveStopSequenceForm = forwardRef(
             setCollapseOpen(!collapseOpen);
           }}
         >
-          <Panel header={tags.length ? "Zeitplan" : "kein Zeitplan"} key="2">
+          <Panel
+            header={
+              tags.length ? (
+                "Zeitplan"
+              ) : (
+                <p
+                  style={{
+                    color: "red",
+                    margin: "0",
+                  }}
+                >
+                  Kein Zeitplan
+                </p>
+              )
+            }
+            key="2"
+          >
             <div
               id="time_result"
               style={{
@@ -367,7 +401,7 @@ const SaveStopSequenceForm = forwardRef(
             </div>
             <Divider />
             {!addSchedule && (
-              <div style={{ paddingBottom: "20px" }}>
+              <Space>
                 <Button
                   type="primary"
                   onClick={() => {
@@ -389,22 +423,32 @@ const SaveStopSequenceForm = forwardRef(
                         ...prev,
                         schedule: [],
                       }));
+                      setCollapseOpen(false);
                     }}
                   >
                     <Button
                       danger
                       id="clear_all"
-                      style={{ marginLeft: "10px" }}
                       disabled={tags.length ? false : true}
                     >
                       Zeitplan löschen
                     </Button>
                   </Popconfirm>
                 ) : null}
-              </div>
+              </Space>
             )}
             {addSchedule && (
               <Fragment>
+                <Space>
+                  {errorMessage && (
+                    <Alert
+                      message={errorMessage}
+                      type="error"
+                      closable={true}
+                      showIcon
+                    />
+                  )}
+                </Space>
                 <Form.Item
                   label="Gültigkeit"
                   name="date"
@@ -414,6 +458,7 @@ const SaveStopSequenceForm = forwardRef(
                       message: "Geben Sie der Gültigkeit ein",
                     },
                   ]}
+                  initialValue={[moment(), moment().add(1, "w")]}
                 >
                   <DatePicker.RangePicker
                     id="date_input"
@@ -428,6 +473,7 @@ const SaveStopSequenceForm = forwardRef(
                   rules={[
                     { required: true, message: "Geben Sie den Wochentage ein" },
                   ]}
+                  initialValue={["Mon", "Die", "Mit", "Don", "Fre"]}
                 >
                   <Select
                     allowClear
@@ -471,6 +517,7 @@ const SaveStopSequenceForm = forwardRef(
                         message: "Geben Sie der Zeitintervall ein",
                       },
                     ]}
+                    initialValue={[moment(), moment().add(1, "h")]}
                   >
                     <RangePicker
                       placeholder={["Start Zeitintervall", "End Zeitintervall"]}
@@ -540,7 +587,6 @@ const SaveStopSequenceForm = forwardRef(
                     style={{ marginLeft: "10px" }}
                     onClick={() => {
                       setAddSchedule(false);
-                      form.resetFields(["date", "day", "time"]);
                     }}
                   >
                     Abbrechen
@@ -557,6 +603,7 @@ const SaveStopSequenceForm = forwardRef(
                           ...prev,
                           schedule: [],
                         }));
+                        setCollapseOpen(false);
                       }}
                     >
                       <Button

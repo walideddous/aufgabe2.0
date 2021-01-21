@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Col, PageHeader, Popconfirm, Button } from "antd";
+import { Col, PageHeader, Popconfirm, Button, Space } from "antd";
 import { UnorderedListOutlined } from "@ant-design/icons";
 
 //Import types
@@ -52,7 +52,7 @@ const Header = ({
             }
             style={{ padding: "16px" }}
             extra={[
-              <div key="1">
+              <Space wrap key="1">
                 {radioButton === "laden" && currentStopSequence && (
                   <>
                     <Button
@@ -127,7 +127,7 @@ const Header = ({
                 >
                   <Button type="dashed">Abbrechen</Button>
                 </Popconfirm>
-              </div>,
+              </Space>,
             ]}
           />
         </Col>
@@ -151,7 +151,7 @@ const Header = ({
             }
             style={{ padding: "16px" }}
             extra={[
-              <Fragment key="1">
+              <Space key="1">
                 <Button
                   id="load_button"
                   value="laden"
@@ -170,7 +170,7 @@ const Header = ({
                 >
                   Neu
                 </Button>
-              </Fragment>,
+              </Space>,
             ]}
           />
         </Col>
