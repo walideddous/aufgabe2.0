@@ -19,9 +19,12 @@ import {
   Divider,
   Popconfirm,
   Alert,
+  ConfigProvider,
 } from "antd";
-import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import moment from "moment";
+import "moment/locale/de";
+import locale from "antd/es/locale/de_DE";
+import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 
 // import the model
 import ManagedRoute from "../../model/ManagedRoute";
@@ -104,43 +107,43 @@ const SaveStopSequenceForm = forwardRef(
       }
     }, [savedForm]);
 
-    const [errorMessage, setErrorMessage] = useState("");
+    const [errorMessages, setErrorMessages] = useState<
+      { type: string; message: string }[]
+    >([]);
+
+    console.log("savedForm", savedForm);
+
+    const getWeekDayLabel = (value: string) => {
+      switch (value) {
+        case "MON":
+          return "Montag";
+        case "DIE":
+          return "Dienstag";
+        case "MIT":
+          return "Mittwoch";
+        case "DON":
+          return "Donnerstag";
+        case "FRE":
+          return "Freitag";
+        case "SAM":
+          return "Samstag";
+        case "SON":
+          return "Sonntag";
+      }
+    };
 
     const onFinish = (values: any) => {
-      let { date, day, time, timeList } = values;
+      const { date, days, time, timeList } = values;
 
-      if (timeList) {
-        const timeListTable = timeList.filter((el: any) => el.time);
-        timeList = [{ time }];
-        for (let i = 0; i < timeListTable.length; i++) {
-          // delete the bug in antd timeList
-          timeList = timeList.concat(timeListTable[i]);
-        }
-      } else {
-        timeList = [{ time }];
-      }
+      //const weekDayLabel = days.map((day: string) => getWeekDayLabel(day));
 
-      const newFormData = {
-        from: `${date[0].format("DD-MM-YYYY")}`,
-        to: `${date[1].format("DD-MM-YYYY")}`,
-        timeSlices: timeList.map((element: any) => {
-          return {
-            weekDays: day,
-            startTime: element.time[0].format("HH:mm"),
-            endTime: element.time[1].format("HH:mm"),
-          };
-        }),
-      };
+      const formData = new ManagedRoute(date, days, time, timeList);
 
-      let managedRoute = new ManagedRoute();
+      const newFormData = formData.getFormatedData();
 
-      const messageValidation = managedRoute.messageValidation(
-        savedForm,
-        newFormData
-      );
+      const messageValidation = formData.validationMessages(savedForm);
 
-      if (messageValidation) return setErrorMessage(messageValidation);
-
+      if (messageValidation.length) return setErrorMessages(messageValidation);
       setSavedForm((prev: any) => {
         if (prev && prev.schedule) {
           if (
@@ -290,306 +293,134 @@ const SaveStopSequenceForm = forwardRef(
     ]);
 
     useEffect(() => {
-      setTimeout(() => {
-        setErrorMessage("");
-      }, 3000);
-    }, [errorMessage]);
+      if (errorMessages.length) {
+        const ClearErrorMessage = setTimeout(() => {
+          setErrorMessages([]);
+        }, 5000);
+
+        return () => clearTimeout(ClearErrorMessage);
+      }
+    }, [errorMessages.length]);
 
     return (
-      <Form
-        autoComplete="off"
-        id="formWrapper"
-        layout="vertical"
-        requiredMark={false}
-        form={form}
-        onFinish={onFinish}
-      >
-        <Collapse defaultActiveKey={"1"}>
-          <Panel
-            header={savedForm?.name ? savedForm.name : "Linienverlauf"}
-            key="1"
-          >
-            <Form.Item label="Name" name="name">
-              <Input
-                id="name_input"
-                placeholder="Geben Sie dem Linienname ein"
-                onChange={(e) => {
-                  e.persist();
-                  setSavedForm((prev: any) => ({
-                    ...prev,
-                    name: e.target.value.trim(),
-                  }));
-                }}
-                allowClear
-              />
-            </Form.Item>
-            <Form.Item label="Beschreibung" name="desc">
-              <Input.TextArea
-                id="desc_input"
-                placeholder="Geben Sie der Linienbeschreibung ein"
-                onChange={(e) => {
-                  e.persist();
-                  setSavedForm((prev: any) => ({
-                    ...prev,
-                    desc: e.target.value.trim(),
-                  }));
-                }}
-                allowClear
-              />
-            </Form.Item>
-          </Panel>
-        </Collapse>
-        <Collapse
-          style={{ marginTop: "8px" }}
-          activeKey={collapseOpen ? "2" : ""}
-          onChange={() => {
-            setCollapseOpen(!collapseOpen);
-          }}
+      <ConfigProvider locale={locale}>
+        <Form
+          autoComplete="off"
+          id="formWrapper"
+          layout="vertical"
+          requiredMark={false}
+          form={form}
+          onFinish={onFinish}
         >
-          <Panel
-            header={
-              tags.length ? (
-                "Zeitplan"
-              ) : (
-                <p
-                  style={{
-                    color: "red",
-                    margin: "0",
-                  }}
-                >
-                  Kein Zeitplan
-                </p>
-              )
-            }
-            key="2"
-          >
-            <div
-              id="time_result"
-              style={{
-                maxHeight: "200px",
-                overflowY: "auto",
-                paddingBottom: "20px",
-              }}
+          <Collapse defaultActiveKey={"1"}>
+            <Panel
+              header={savedForm?.name ? savedForm.name : "Linienverlauf"}
+              key="1"
             >
-              {tags &&
-                tags.map((tag: any, tagsIndex: number) => {
-                  return (
-                    <Fragment key={tagsIndex}>
-                      <p
-                        style={{ marginBottom: "4px", marginTop: "4px" }}
-                      >{`${tag.from} ${tag.to}`}</p>
-                      <Fragment>
-                        {tag.displayedTags.map(
-                          (el: string, displayedTagsIndex: number) => (
-                            <Tag
-                              visible={true}
-                              closable={true}
-                              id={`dayTime_tags${displayedTagsIndex}`}
-                              key={tagsIndex + displayedTagsIndex}
-                              onClose={() => {
-                                handleDeleteTags(tagsIndex, displayedTagsIndex);
-                              }}
-                            >
-                              {el}
-                            </Tag>
-                          )
-                        )}
-                      </Fragment>
-                    </Fragment>
-                  );
-                })}
-            </div>
-            <Divider />
-            {!addSchedule && (
-              <Space>
-                <Button
-                  type="primary"
-                  onClick={() => {
-                    setAddSchedule(true);
+              <Form.Item label="Name" name="name">
+                <Input
+                  id="name_input"
+                  placeholder="Geben Sie dem Linienname ein"
+                  onChange={(e) => {
+                    e.persist();
+                    setSavedForm((prev: any) => ({
+                      ...prev,
+                      name: e.target.value.trim(),
+                    }));
                   }}
-                  id="addSchedule_button"
-                >
-                  Zeitplan hinzufügen
-                </Button>
-                {tags.length ? (
-                  <Popconfirm
-                    title={`Wollen Sie wirklich den Zeitplan löschen ?`}
-                    placement="bottomRight"
-                    okText="Ja"
-                    cancelText="Nein"
-                    onConfirm={() => {
-                      setTags([]);
-                      setSavedForm((prev: any) => ({
-                        ...prev,
-                        schedule: [],
-                      }));
-                      setCollapseOpen(false);
+                  allowClear
+                />
+              </Form.Item>
+              <Form.Item label="Beschreibung" name="desc">
+                <Input.TextArea
+                  id="desc_input"
+                  placeholder="Geben Sie der Linienbeschreibung ein"
+                  onChange={(e) => {
+                    e.persist();
+                    setSavedForm((prev: any) => ({
+                      ...prev,
+                      desc: e.target.value.trim(),
+                    }));
+                  }}
+                  allowClear
+                />
+              </Form.Item>
+            </Panel>
+          </Collapse>
+          <Collapse
+            style={{ marginTop: "8px" }}
+            activeKey={collapseOpen ? "2" : ""}
+            onChange={() => {
+              setCollapseOpen(!collapseOpen);
+            }}
+          >
+            <Panel
+              header={
+                tags.length ? (
+                  "Zeitplan"
+                ) : (
+                  <p
+                    style={{
+                      color: "red",
+                      margin: "0",
                     }}
                   >
-                    <Button
-                      danger
-                      id="clear_all"
-                      disabled={tags.length ? false : true}
-                    >
-                      Zeitplan löschen
-                    </Button>
-                  </Popconfirm>
-                ) : null}
-              </Space>
-            )}
-            {addSchedule && (
-              <Fragment>
-                <Space>
-                  {errorMessage && (
-                    <Alert
-                      message={errorMessage}
-                      type="error"
-                      closable={true}
-                      showIcon
-                    />
-                  )}
-                </Space>
-                <Form.Item
-                  label="Gültigkeit"
-                  name="date"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Geben Sie der Gültigkeit ein",
-                    },
-                  ]}
-                  initialValue={[moment(), moment().add(1, "w")]}
-                >
-                  <DatePicker.RangePicker
-                    id="date_input"
-                    format="DD-MM-YYYY"
-                    placeholder={["Start Gültigkeit", "End Gültigkeit"]}
-                  />
-                </Form.Item>
-                <Form.Item
-                  id="dayPicker_form"
-                  label="Wochentage"
-                  name="day"
-                  rules={[
-                    { required: true, message: "Geben Sie den Wochentage ein" },
-                  ]}
-                  initialValue={["Mon", "Die", "Mit", "Don", "Fre"]}
-                >
-                  <Select
-                    allowClear
-                    placeholder="Wählen Sie den Wochentage aus"
-                    id="dayPicker_input"
-                    mode="tags"
-                  >
-                    <Option key="1" value="Mon">
-                      Montag
-                    </Option>
-                    <Option key="2" value="Die">
-                      Dienstag
-                    </Option>
-                    <Option key="3" value="Mit">
-                      Mittwoch
-                    </Option>
-                    <Option key="4" value="Don">
-                      Donnerstag
-                    </Option>
-                    <Option key="5" value="Fre">
-                      Freitag
-                    </Option>
-                    <Option key="6" value="Sam">
-                      Samstag
-                    </Option>
-                    <Option key="7" value="Son">
-                      Sonntag
-                    </Option>
-                    <Option key="8" value="Feiertag">
-                      Feiertag
-                    </Option>
-                  </Select>
-                </Form.Item>
-                <div style={{ display: "flex", flexWrap: "wrap" }}>
-                  <Form.Item
-                    name="time"
-                    label="Zeitintervall"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Geben Sie der Zeitintervall ein",
-                      },
-                    ]}
-                    initialValue={[moment(), moment().add(1, "h")]}
-                  >
-                    <RangePicker
-                      placeholder={["Start Zeitintervall", "End Zeitintervall"]}
-                      format="HH:mm"
-                      id="timePicker_input"
-                    />
-                  </Form.Item>
-                  <Form.List name="timeList">
-                    {(fields, { add, remove }) => {
-                      return (
-                        <div
-                          style={{
-                            display: "flex",
-                            paddingTop: "30px",
-                          }}
-                        >
-                          <Form.Item>
-                            <Button
-                              id="addTime_button"
-                              type="dashed"
-                              style={{
-                                marginLeft: "10px",
-                                marginRight: "10px",
-                              }}
-                              onClick={() => add()}
-                              icon={<PlusOutlined />}
-                            >
-                              Zeitintervall hinzufügen
-                            </Button>
-                          </Form.Item>
-                          <div>
-                            {fields.map((field) => (
-                              <Space
-                                key={field.key}
-                                style={{ display: "flex" }}
-                                align="baseline"
+                    Kein Zeitplan
+                  </p>
+                )
+              }
+              key="2"
+            >
+              <div
+                id="time_result"
+                style={{
+                  maxHeight: "200px",
+                  overflowY: "auto",
+                  paddingBottom: "20px",
+                }}
+              >
+                {tags &&
+                  tags.map((tag: any, tagsIndex: number) => {
+                    return (
+                      <Fragment key={tagsIndex}>
+                        <p
+                          style={{ marginBottom: "4px", marginTop: "4px" }}
+                        >{`${tag.from} ${tag.to}`}</p>
+                        <Fragment>
+                          {tag.displayedTags.map(
+                            (el: string, displayedTagsIndex: number) => (
+                              <Tag
+                                visible={true}
+                                closable={true}
+                                id={`dayTime_tags${displayedTagsIndex}`}
+                                key={tagsIndex + displayedTagsIndex}
+                                onClose={() => {
+                                  handleDeleteTags(
+                                    tagsIndex,
+                                    displayedTagsIndex
+                                  );
+                                }}
                               >
-                                <Form.Item name={[field.name, "time"]}>
-                                  <RangePicker
-                                    placeholder={[
-                                      "Start Zeitintervall",
-                                      "End Zeitintervall",
-                                    ]}
-                                    format="HH:mm"
-                                    id={`timePicker_input${field.name}`}
-                                  />
-                                </Form.Item>
-                                <MinusCircleOutlined
-                                  id="remove_timePicker"
-                                  onClick={() => remove(field.name)}
-                                />
-                              </Space>
-                            ))}
-                          </div>
-                        </div>
-                      );
-                    }}
-                  </Form.List>
-                </div>
-                <Form.Item>
-                  <Button id="save_schedule" type="primary" htmlType="submit">
-                    Zeitplan hinzufügen
-                  </Button>
+                                {el}
+                              </Tag>
+                            )
+                          )}
+                        </Fragment>
+                      </Fragment>
+                    );
+                  })}
+              </div>
+              <Divider />
+              {!addSchedule && (
+                <Space>
                   <Button
-                    type="dashed"
-                    id="cancel_button"
-                    style={{ marginLeft: "10px" }}
+                    type="primary"
                     onClick={() => {
-                      setAddSchedule(false);
+                      setAddSchedule(true);
                     }}
+                    id="addSchedule_button"
                   >
-                    Abbrechen
+                    Zeitplan hinzufügen
                   </Button>
                   {tags.length ? (
                     <Popconfirm
@@ -609,19 +440,207 @@ const SaveStopSequenceForm = forwardRef(
                       <Button
                         danger
                         id="clear_all"
-                        style={{ marginLeft: "10px" }}
                         disabled={tags.length ? false : true}
                       >
                         Zeitplan löschen
                       </Button>
                     </Popconfirm>
                   ) : null}
-                </Form.Item>
-              </Fragment>
-            )}
-          </Panel>
-        </Collapse>
-      </Form>
+                </Space>
+              )}
+              {addSchedule && (
+                <Fragment>
+                  {errorMessages &&
+                    errorMessages.map((errorMessage: any, index: number) => (
+                      <Alert
+                        key={index}
+                        message={errorMessage.message}
+                        type={errorMessage.type}
+                        closable={true}
+                        showIcon
+                      />
+                    ))}
+
+                  <Form.Item
+                    label="Gültigkeit"
+                    name="date"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Geben Sie der Gültigkeit ein",
+                      },
+                    ]}
+                    initialValue={[moment(), moment().add(1, "w")]}
+                  >
+                    <DatePicker.RangePicker
+                      id="date_input"
+                      format="DD-MM-YYYY"
+                      placeholder={["Start Gültigkeit", "End Gültigkeit"]}
+                    />
+                  </Form.Item>
+                  <Form.Item
+                    id="dayPicker_form"
+                    label="Wochentage"
+                    name="days"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Geben Sie den Wochentage ein",
+                      },
+                    ]}
+                    initialValue={["MON", "DIE", "MIT", "DON", "FRE"]}
+                  >
+                    <Select
+                      allowClear
+                      placeholder="Wählen Sie den Wochentage aus"
+                      id="dayPicker_input"
+                      mode="tags"
+                    >
+                      <Option key="1" value="MON">
+                        {getWeekDayLabel("MON")}
+                      </Option>
+                      <Option key="2" value="DIE">
+                        {getWeekDayLabel("DIE")}
+                      </Option>
+                      <Option key="3" value="MIT">
+                        {getWeekDayLabel("MIT")}
+                      </Option>
+                      <Option key="4" value="DON">
+                        {getWeekDayLabel("DON")}
+                      </Option>
+                      <Option key="5" value="FRE">
+                        {getWeekDayLabel("FRE")}
+                      </Option>
+                      <Option key="6" value="SAM">
+                        {getWeekDayLabel("SAM")}
+                      </Option>
+                      <Option key="7" value="SON">
+                        {getWeekDayLabel("SON")}
+                      </Option>
+                      <Option key="8" value="Feiertag">
+                        Feiertag
+                      </Option>
+                    </Select>
+                  </Form.Item>
+                  <div style={{ display: "flex", flexWrap: "wrap" }}>
+                    <Form.Item
+                      name="time"
+                      label="Zeitintervall"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Geben Sie der Zeitintervall ein",
+                        },
+                      ]}
+                      initialValue={[moment(), moment().add(1, "h")]}
+                    >
+                      <RangePicker
+                        placeholder={[
+                          "Start Zeitintervall",
+                          "End Zeitintervall",
+                        ]}
+                        format="HH:mm"
+                        id="timePicker_input"
+                      />
+                    </Form.Item>
+                    <Form.List name="timeList">
+                      {(fields, { add, remove }) => {
+                        return (
+                          <div
+                            style={{
+                              display: "flex",
+                              paddingTop: "30px",
+                            }}
+                          >
+                            <Form.Item>
+                              <Button
+                                id="addTime_button"
+                                type="dashed"
+                                style={{
+                                  marginLeft: "10px",
+                                  marginRight: "10px",
+                                }}
+                                onClick={() => add()}
+                                icon={<PlusOutlined />}
+                              >
+                                Zeitintervall hinzufügen
+                              </Button>
+                            </Form.Item>
+                            <div>
+                              {fields.map((field) => (
+                                <Space
+                                  key={field.key}
+                                  style={{ display: "flex" }}
+                                  align="baseline"
+                                >
+                                  <Form.Item name={[field.name, "time"]}>
+                                    <RangePicker
+                                      placeholder={[
+                                        "Start Zeitintervall",
+                                        "End Zeitintervall",
+                                      ]}
+                                      format="HH:mm"
+                                      id={`timePicker_input${field.name}`}
+                                    />
+                                  </Form.Item>
+                                  <MinusCircleOutlined
+                                    id="remove_timePicker"
+                                    onClick={() => remove(field.name)}
+                                  />
+                                </Space>
+                              ))}
+                            </div>
+                          </div>
+                        );
+                      }}
+                    </Form.List>
+                  </div>
+                  <Form.Item>
+                    <Button id="save_schedule" type="primary" htmlType="submit">
+                      Zeitplan hinzufügen
+                    </Button>
+                    <Button
+                      type="dashed"
+                      id="cancel_button"
+                      style={{ marginLeft: "10px" }}
+                      onClick={() => {
+                        setAddSchedule(false);
+                      }}
+                    >
+                      Abbrechen
+                    </Button>
+                    {tags.length ? (
+                      <Popconfirm
+                        title={`Wollen Sie wirklich den Zeitplan löschen ?`}
+                        placement="bottomRight"
+                        okText="Ja"
+                        cancelText="Nein"
+                        onConfirm={() => {
+                          setTags([]);
+                          setSavedForm((prev: any) => ({
+                            ...prev,
+                            schedule: [],
+                          }));
+                          setCollapseOpen(false);
+                        }}
+                      >
+                        <Button
+                          danger
+                          id="clear_all"
+                          style={{ marginLeft: "10px" }}
+                          disabled={tags.length ? false : true}
+                        >
+                          Zeitplan löschen
+                        </Button>
+                      </Popconfirm>
+                    ) : null}
+                  </Form.Item>
+                </Fragment>
+              )}
+            </Panel>
+          </Collapse>
+        </Form>
+      </ConfigProvider>
     );
   }
 );
