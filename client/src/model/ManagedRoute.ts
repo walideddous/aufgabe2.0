@@ -187,15 +187,15 @@ class ManagedRoute {
 
         return validationMessages;
       }
-    }
 
-    //Check if the date overlap the old date
-    if (prevFormData && prevFormData.schedule) {
-      const { schedule: prevSchedule } = prevFormData;
-
+      //Check if the date overlap the old date
       for (let i = 0; i < prevSchedule.length; i++) {
-        const { from: prevFrom, to: prevTo } = prevSchedule[i];
-        const { from, to } = this.newFormData;
+        const {
+          from: prevFrom,
+          to: prevTo,
+          timeSlices: prevTimeSlices,
+        } = prevSchedule[i];
+        const { from, to, timeSlices } = this.newFormData;
 
         const diff1 = moment(prevFrom, "DD-MM-YYYY").diff(
           moment(to, "DD-MM-YYYY"),

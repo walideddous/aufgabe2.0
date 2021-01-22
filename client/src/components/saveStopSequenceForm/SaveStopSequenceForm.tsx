@@ -111,8 +111,6 @@ const SaveStopSequenceForm = forwardRef(
       { type: string; message: string }[]
     >([]);
 
-    console.log("savedForm", savedForm);
-
     const getWeekDayLabel = (value: string) => {
       switch (value) {
         case "MON":
