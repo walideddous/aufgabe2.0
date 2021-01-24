@@ -7,7 +7,7 @@ import {
   deleteStopSequenceRequest,
   queryStopSequenceRequest,
 } from "./stopSequenceService";
-import{currentStopSequence } from "../testUtils/testData"
+import{currentManagedRoute } from "../testUtils/testData"
 
 const serverCreate = setupServer(
   rest.post(`${GRAPHQL_API}/graphql`,(req,res,ctx)=>{
@@ -32,7 +32,7 @@ describe("Test the stopSequenceService", () => {
     expect(result.data.msg).toEqual("GrapQL query succesfully worked");
   });
   it("Should test the save stopSequence GraphQL query", async () => {
-    const result = await saveStopSequenceRequest(currentStopSequence);
+    const result = await saveStopSequenceRequest(currentManagedRoute);
     expect(result.data.msg).toEqual("GrapQL query succesfully worked");
   });
   it("Should test the delete stopSequence GraphQL query", async () => {

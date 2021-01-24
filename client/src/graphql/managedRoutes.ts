@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-export const GET_STOP_SEQUENCE_BY_KEY = gql`
+export const GET_MANAGED_ROUTE_BY_KEY = gql`
   query RouteManagerItemByKey($key: String!) {
     RouteManagerItemByKey(key: $key) {
       _id
@@ -26,7 +26,7 @@ export const GET_STOP_SEQUENCE_BY_KEY = gql`
     }
   }
 `;
-export const GET_STOP_SEQUENCE_BY_NAME = gql`
+export const GET_MANAGED_ROUTE_BY_NAME = gql`
   query RouteManagerItemsByName($name: String!) {
     RouteManagerItemsByName(name: $name) {
       _id
@@ -53,13 +53,13 @@ export const GET_STOP_SEQUENCE_BY_NAME = gql`
   }
 `;
 
-export const DELETE_STOP_SEQUENCE = gql`
+export const DELETE_MANAGED_ROUTE = gql`
   mutation RouteManagerDelete($key: String!) {
     RouteManagerDelete(key: $key)
   }
 `;
 
-export const SAVE_STOP_SEQUENCE = gql`
+export const SAVE_MANAGED_ROUTE = gql`
   mutation RouteManagerAdd($data: EMSManagedRouteInput) {
     RouteManagerAdd(data: $data)
   }

@@ -1,115 +1,121 @@
-import React, { Fragment } from "react";
-import { Col, PageHeader, Popconfirm, Button, Space } from "antd";
-import { UnorderedListOutlined } from "@ant-design/icons";
+import React, { Fragment } from 'react';
+import { Col, PageHeader, Popconfirm, Button, Space } from 'antd';
+import { UnorderedListOutlined } from '@ant-design/icons';
 
 //Import types
-import { TStopSequence } from "../../types/types";
+import { TManagedRoute } from '../../types/types';
 
 interface Tprops {
-  radioButton: string;
-  saveButtonDisabled: boolean;
-  currentStopSequence: TStopSequence | undefined;
+  clickedHeaderButton: string;
+  isHeaderSaveButtonDisabled: boolean;
+  currentManagedRoute: TManagedRoute | undefined;
   onClearAll: () => void;
-  onSaveButton: () => void;
-  onLadenButton: () => void;
-  onErstellenButton: () => void;
-  onAbbrechenButton: () => void;
-  onDisplayStopSequenceQuery: (modes: string[], key: string) => void;
-  onDeleteStopSequenceMutation: (key: string) => void;
+  onCLickOnHeaderSaveButton: () => void;
+  onClickOnHeaderLoadButton: () => void;
+  onClickOnHeaderNewButton: () => void;
+  onClickOnHeaderCancelButton: () => void;
+  onLoadManagedRouteQuery: (modes: string[], key: string) => void;
+  onDeleteManagedRouteMutation: (key: string) => void;
 }
 
 const Header = ({
-  radioButton,
-  saveButtonDisabled,
-  currentStopSequence,
+  clickedHeaderButton,
+  isHeaderSaveButtonDisabled,
+  currentManagedRoute,
   onClearAll,
-  onSaveButton,
-  onLadenButton,
-  onErstellenButton,
-  onAbbrechenButton,
-  onDisplayStopSequenceQuery,
-  onDeleteStopSequenceMutation,
+  onCLickOnHeaderSaveButton,
+  onClickOnHeaderLoadButton,
+  onClickOnHeaderNewButton,
+  onClickOnHeaderCancelButton,
+  onLoadManagedRouteQuery,
+  onDeleteManagedRouteMutation,
 }: Tprops) => {
   return (
     <Fragment>
-      {radioButton === "laden" || radioButton === "erstellen" ? (
+      {clickedHeaderButton === 'laden' ||
+      clickedHeaderButton === 'erstellen' ? (
         <Col xs={24}>
           <PageHeader
             title={
               <div
                 style={{
-                  color: "#4383B4",
-                  fontSize: "17px",
-                  display: "flex",
-                  justifyContent: "space-between",
+                  color: '#4383B4',
+                  fontSize: '17px',
+                  display: 'flex',
+                  justifyContent: 'space-between',
                 }}
               >
                 <UnorderedListOutlined
-                  style={{ paddingTop: "9px", paddingRight: "10px" }}
+                  style={{ paddingTop: '9px', paddingRight: '10px' }}
                 />
-                <p>{radioButton ? `Linie ${radioButton}` : `Linie manager`}</p>
+                <p>
+                  {clickedHeaderButton
+                    ? `Linie ${clickedHeaderButton}`
+                    : `Linie manager`}
+                </p>
               </div>
             }
-            style={{ padding: "16px" }}
+            style={{ padding: '16px' }}
             extra={[
-              <Space wrap key="1">
-                {radioButton === "laden" && currentStopSequence && (
+              //@ts-ignore
+              <Space key='1' wrap>
+                {clickedHeaderButton === 'laden' && currentManagedRoute && (
                   <>
                     <Button
-                      type="primary"
-                      htmlType="submit"
-                      form="formWrapper"
-                      disabled={saveButtonDisabled}
+                      type='primary'
+                      htmlType='submit'
+                      form='formWrapper'
+                      disabled={isHeaderSaveButtonDisabled}
                       onClick={() => {
-                        onSaveButton();
+                        onCLickOnHeaderSaveButton();
                       }}
                     >
                       Speichern
                     </Button>
                     <Popconfirm
                       title={`Wollen Sie wirklich die Linie löschen ?`}
-                      placement="bottomRight"
-                      okText="Ja"
-                      cancelText="Nein"
+                      placement='bottomRight'
+                      okText='Ja'
+                      cancelText='Nein'
                       onConfirm={() => {
-                        if (currentStopSequence) {
-                          const { key } = currentStopSequence;
-                          onDeleteStopSequenceMutation(key);
+                        if (currentManagedRoute) {
+                          const { key } = currentManagedRoute;
+                          onDeleteManagedRouteMutation(key);
                         }
                       }}
                     >
-                      <Button danger id="delete_stopSequence">
+                      <Button danger id='delete_stopSequence'>
                         löschen
                       </Button>
                     </Popconfirm>
                     <Popconfirm
                       title={`Wollen Sie wirklich die Linie resetten ?`}
-                      placement="bottomRight"
-                      okText="Ja"
-                      cancelText="Nein"
+                      placement='bottomRight'
+                      okText='Ja'
+                      cancelText='Nein'
                       onConfirm={() => {
-                        if (currentStopSequence) {
-                          const { key, modes } = currentStopSequence;
+                        if (currentManagedRoute) {
+                          const { key, modes } = currentManagedRoute;
                           onClearAll();
-                          onDisplayStopSequenceQuery(modes, key);
+                          onLoadManagedRouteQuery(modes, key);
                         }
                       }}
                     >
-                      <Button danger id="delete_stopSequence">
+                      <Button danger id='delete_stopSequence'>
                         Reset
                       </Button>
                     </Popconfirm>
                   </>
                 )}
-                {radioButton === "erstellen" && (
+                {clickedHeaderButton === 'erstellen' && (
                   <>
                     <Button
-                      type="primary"
-                      htmlType="submit"
-                      form="formWrapper"
-                      disabled={saveButtonDisabled}
+                      type='primary'
+                      htmlType='submit'
+                      form='formWrapper'
+                      disabled={isHeaderSaveButtonDisabled}
                       onClick={() => {
-                        onSaveButton();
+                        onCLickOnHeaderSaveButton();
                       }}
                     >
                       Speichern
@@ -117,15 +123,15 @@ const Header = ({
                   </>
                 )}
                 <Popconfirm
-                  title={`Wollen Sie wirklich nicht mehr die Linie ${radioButton} ?`}
-                  placement="bottomRight"
-                  okText="Ja"
-                  cancelText="Nein"
+                  title={`Wollen Sie wirklich nicht mehr die Linie ${clickedHeaderButton} ?`}
+                  placement='bottomRight'
+                  okText='Ja'
+                  cancelText='Nein'
                   onConfirm={() => {
-                    onAbbrechenButton();
+                    onClickOnHeaderCancelButton();
                   }}
                 >
-                  <Button type="dashed">Abbrechen</Button>
+                  <Button type='dashed'>Abbrechen</Button>
                 </Popconfirm>
               </Space>,
             ]}
@@ -137,35 +143,39 @@ const Header = ({
             title={
               <div
                 style={{
-                  color: "#4383B4",
-                  fontSize: "17px",
-                  display: "flex",
-                  justifyContent: "space-between",
+                  color: '#4383B4',
+                  fontSize: '17px',
+                  display: 'flex',
+                  justifyContent: 'space-between',
                 }}
               >
                 <UnorderedListOutlined
-                  style={{ paddingTop: "9px", paddingRight: "10px" }}
+                  style={{ paddingTop: '9px', paddingRight: '10px' }}
                 />
-                <p>{radioButton ? `Linie ${radioButton}` : `Linie manager`}</p>
+                <p>
+                  {clickedHeaderButton
+                    ? `Linie ${clickedHeaderButton}`
+                    : `Linie manager`}
+                </p>
               </div>
             }
-            style={{ padding: "16px" }}
+            style={{ padding: '16px' }}
             extra={[
-              <Space key="1">
+              <Space key='1'>
                 <Button
-                  id="load_button"
-                  value="laden"
+                  id='load_button'
+                  value='laden'
                   onClick={() => {
-                    onLadenButton();
+                    onClickOnHeaderLoadButton();
                   }}
                 >
                   Laden
                 </Button>
                 <Button
-                  id="new_button"
-                  value="erstellen"
+                  id='new_button'
+                  value='erstellen'
                   onClick={() => {
-                    onErstellenButton();
+                    onClickOnHeaderNewButton();
                   }}
                 >
                   Neu

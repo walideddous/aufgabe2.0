@@ -30,5 +30,5 @@ export interface SearchInput {
 
 export interface LoadingType {
   loading: boolean;
-  selected: any;
+  selectedStop: any;
 }

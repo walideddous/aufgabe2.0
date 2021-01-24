@@ -1,18 +1,18 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { v4 } from "uuid";
 import { message } from "antd";
 
 import { useLazyQuery, useMutation } from "@apollo/client";
-import { GET_STOPS_BY_MODES } from "../graphql/stopsQuery";
+import { GET_STOPS_BY_MODES } from "../graphql/stops";
 import {
-  GET_STOP_SEQUENCE_BY_KEY,
-  GET_STOP_SEQUENCE_BY_NAME,
-  DELETE_STOP_SEQUENCE,
-  SAVE_STOP_SEQUENCE,
-} from "../graphql/stopSequencesQuery";
+  GET_MANAGED_ROUTE_BY_KEY,
+  GET_MANAGED_ROUTE_BY_NAME,
+  DELETE_MANAGED_ROUTE,
+  SAVE_MANAGED_ROUTE,
+} from "../graphql/managedRoutes";
 
 // Typescript
-import { TstateDND, Tstations, Tdistance, TStopSequence } from "../types/types";
+import { TstopSequence, Tstops, Tdistance, TManagedRoute } from "../types/types";
 
 // Get the property from Utils
 import { getProperty } from "../utils/getPropertyKey";
@@ -20,16 +20,16 @@ import { getProperty } from "../utils/getPropertyKey";
 // Import function to format the PTStopItems => variable that comm from the GraphQl query
 import { formatPTStopItems } from "../utils/formatPTStopItems";
 //
-import { formatStopSequenceItems } from "../utils/formatStopSequenceItems";
+import { formatManagedRouteItems } from "../utils/formatManagedRouteItems";
 
-// get the function to compare the distance between a point fix and a banch of punkt
+// get the function to compare the distance between a point and banch of points
 import { calculateDistanceAndSort } from "../utils/getDistanceFromLatLonInKm";
 
 export default function useIndexHooks() {
-  const [stations, setStations] = useState<Tstations[]>([]);
-  const [selected, setSelected] = useState<Tstations>();
+  const [stops, setStops] = useState<Tstops[]>([]);
+  const [selectedStop, setSelectedStop] = useState<Tstops>();
   const [distance, setDistance] = useState<Tdistance[]>([]);
-  const [stateDND, setStateDND] = useState<TstateDND>({
+  const [stopSequence, setStopSequence] = useState<TstopSequence>({
     suggestions: {
       title: "Suggestion",
       items: [],
@@ -40,13 +40,12 @@ export default function useIndexHooks() {
     },
   });
   const [isSending, setIsSending] = useState<boolean>(false);
-  const [stopSequenceList, setStopSequenceList] = useState<TStopSequence[]>([]);
-  const [updateDate, setUpdateDate] = useState<string>("");
+  const [managedRoutes, setManagedRoutes] = useState<TManagedRoute[]>([]);
   const [currentMode, setCurrentMode] = useState<string[]>([]);
   const [
-    currentStopSequence,
-    setCurrentStopSequence,
-  ] = useState<TStopSequence>();
+    currentManagedRoute,
+    setCurrentManagedRoute,
+  ] = useState<TManagedRoute>();
   const [
     loadStopSequenceSection,
     setLoadStopSequenceSection,
@@ -55,55 +54,54 @@ export default function useIndexHooks() {
   const [getStopsByMode, stopsResponse] = useLazyQuery(GET_STOPS_BY_MODES, {
     fetchPolicy: "no-cache",
   });
-  const [queryStopSequenceByKey, stopSequenceByKeyResponse] = useLazyQuery(
-    GET_STOP_SEQUENCE_BY_KEY,
+  const [queryManagedRouteByKey, queryManagedRouteByKeyResponse] = useLazyQuery(
+    GET_MANAGED_ROUTE_BY_KEY,
     {
       fetchPolicy: "network-only",
     }
   );
-  const [queryStopSequenceByName, stopSequenceByNameResponse] = useLazyQuery(
-    GET_STOP_SEQUENCE_BY_NAME,
+  const [queryManagedRouteByName, queryManagedRouteByNameResponse] = useLazyQuery(
+    GET_MANAGED_ROUTE_BY_NAME,
     {
       fetchPolicy: "no-cache",
     }
   );
-  const [deleteStopSequenceMutation] = useMutation(DELETE_STOP_SEQUENCE);
-  const [saveStopSequenceMutation] = useMutation(SAVE_STOP_SEQUENCE);
+  const [deleteManagedRouteMutation] = useMutation(DELETE_MANAGED_ROUTE);
+  const [saveManagedRouteMutation] = useMutation(SAVE_MANAGED_ROUTE);
 
-  // Update the state when the stopsSequence is queried by name
+  // Update the state when the managedRoute is queried by name
   useEffect(() => {
-    if (stopSequenceByNameResponse.data) {
-      const { RouteManagerItemsByName } = stopSequenceByNameResponse.data;
+    if (queryManagedRouteByNameResponse.data) {
+      const { RouteManagerItemsByName } = queryManagedRouteByNameResponse.data;
 
-      setStopSequenceList(RouteManagerItemsByName);
+      setManagedRoutes(RouteManagerItemsByName);
     }
-    if (stopSequenceByNameResponse.error) {
+    if (queryManagedRouteByNameResponse.error) {
       console.error(
-        "Error from stopSequenceByNameResponse " +
-          stopSequenceByNameResponse.error.message
+        "Error from queryManagedRouteByNameResponse " +
+          queryManagedRouteByNameResponse.error.message
       );
     }
-  }, [stopSequenceByNameResponse]);
+  }, [queryManagedRouteByNameResponse]);
 
-  // Search stop sequence by name
-  const handleStopSequenceSearchQuery = useCallback(
+  // Search managed Route by name
+  const handleSearchManagedRouteQuery = useCallback(
     (name: string) => {
-      queryStopSequenceByName({
+      queryManagedRouteByName({
         variables: { name },
-      });
+      }); 
     },
-    [queryStopSequenceByName]
+    [queryManagedRouteByName]
   );
 
   // Update the state when the stops is queried
   useEffect(() => {
-    if (stopsResponse.data && !stopSequenceByKeyResponse.data) {
+    if (stopsResponse.data && !queryManagedRouteByKeyResponse.data) {
       const { PTStopItems } = stopsResponse.data;
 
       //// -> Format stops and set the state
-      const stopsFormatted = formatPTStopItems(PTStopItems);
-      setStations(stopsFormatted);
-      setUpdateDate(Date().toString().substr(4, 24));
+      const formattedStops = formatPTStopItems(PTStopItems);
+      setStops(formattedStops); 
 
       // End loading
       setIsSending(false);
@@ -116,7 +114,7 @@ export default function useIndexHooks() {
       // End loading
       setIsSending(false);
     }
-  }, [stopsResponse, stopSequenceByKeyResponse]);
+  }, [stopsResponse, queryManagedRouteByKeyResponse]);
 
   // Query stops from backend when we choose the mode
   const handleStopsQuery = useCallback(
@@ -135,18 +133,18 @@ export default function useIndexHooks() {
     [isSending, getStopsByMode]
   );
 
-  // Select the Station in drop part from the drapDrop component to show suggestions
+  // Select the stop in drop part from the drapDrop component to show suggestions
   const handleClickOnDrop = useCallback(
-    (stop: Tstations, index: number) => {
-      setSelected({ ...stop, index });
-      var vorschläge = calculateDistanceAndSort(stop, stations);
+    (stop: Tstops, index: number) => {
+      setSelectedStop({ ...stop, index });
+      var vorschläge = calculateDistanceAndSort(stop, stops);
       // Delete the repetition from the Suggestion Field
       vorschläge = vorschläge.filter(
         (el: any) =>
-          !stateDND.trajekt.items.map((el: any) => el._id).includes(el.to._id)
+          !stopSequence.trajekt.items.map((el: any) => el._id).includes(el.to._id)
       );
       setDistance([...vorschläge]);
-      setStateDND((prev: any) => {
+      setStopSequence((prev: any) => {
         return {
           ...prev,
           suggestions: {
@@ -162,26 +160,26 @@ export default function useIndexHooks() {
         };
       });
     },
-    [stations, stateDND.trajekt.items]
+    [stops, stopSequence.trajekt.items]
   );
 
   // Add stops to the Stop sequence field when we click on stops in suggestions field
   const handleAddStopsOnCLick = useCallback(
-    (stop: Tstations) => {
-      var vorschläge = calculateDistanceAndSort(stop, stations);
+    (stop: Tstops) => {
+      var vorschläge = calculateDistanceAndSort(stop, stops);
       // Delete the repetition from the Suggestion Field
       vorschläge = vorschläge.filter(
         (el: any) =>
-          !stateDND.trajekt.items.map((el: any) => el._id).includes(el.to._id)
+          !stopSequence.trajekt.items.map((el: any) => el._id).includes(el.to._id)
       );
       setDistance([...vorschläge]);
 
-      const index = stateDND.trajekt.items
+      const index = stopSequence.trajekt.items
         .map((el: any) => el._id)
-        .indexOf(selected?._id);
-      setSelected({ ...stop, index: index + 1 });
+        .indexOf(selectedStop?._id);
+      setSelectedStop({ ...stop, index: index + 1 });
 
-      setStateDND((prev: any) => {
+      setStopSequence((prev: any) => {
         return {
           ...prev,
           trajekt: {
@@ -204,20 +202,20 @@ export default function useIndexHooks() {
         };
       });
     },
-    [stations, stateDND.trajekt.items, selected]
+    [stops, stopSequence.trajekt.items, selectedStop]
   );
 
   // Delete stops from Drop Component
   const handleDeleteStop = useCallback(
-    (stop: Tstations, index: number) => {
+    (stop: Tstops, index: number) => {
       let vorschläge: any;
-      if (!selected) {
-        setStateDND((prev: any) => {
+      if (!selectedStop) {
+        setStopSequence((prev: any) => {
           return {
             ...prev,
             trajekt: {
               title: "Stop sequence",
-              items: stateDND.trajekt.items.filter(
+              items: stopSequence.trajekt.items.filter(
                 (item: any, i: number) => item._id + i !== stop._id + index
               ),
             },
@@ -225,41 +223,41 @@ export default function useIndexHooks() {
         });
       }
       if (
-        !stateDND.trajekt.items.filter((item: any) => item._id === stop._id)
+        !stopSequence.trajekt.items.filter((item: any) => item._id === stop._id)
           .length
       )
         return;
       if (
-        selected &&
-        stateDND.trajekt.items.length > 1 &&
-        stop._id + index === selected._id + selected.index
+        selectedStop &&
+        stopSequence.trajekt.items.length > 1 &&
+        stop._id + index === selectedStop._id + selectedStop.index
       ) {
         let newValue: any;
         let newIndex: any;
-        if (!selected.index) {
-          newValue = stateDND.trajekt.items[index + 1];
+        if (!selectedStop.index) {
+          newValue = stopSequence.trajekt.items[index + 1];
           newIndex = index;
         } else {
-          newValue = stateDND.trajekt.items[index - 1];
+          newValue = stopSequence.trajekt.items[index - 1];
           newIndex = index - 1;
         }
-        setSelected({ ...newValue, index: newIndex });
-        vorschläge = calculateDistanceAndSort(newValue, stations);
+        setSelectedStop({ ...newValue, index: newIndex });
+        vorschläge = calculateDistanceAndSort(newValue, stops);
         // Delete the repetition from the Suggestion Field
         vorschläge = vorschläge.filter(
           (el: any) =>
-            !stateDND.trajekt.items
+            !stopSequence.trajekt.items
               .filter((el) => stop._id !== el._id)
               .map((el: any) => el._id)
               .includes(el.to._id)
         );
         setDistance([...vorschläge]);
-        setStateDND((prev: any) => {
+        setStopSequence((prev: any) => {
           return {
             ...prev,
             trajekt: {
               title: "Stop sequence",
-              items: stateDND.trajekt.items.filter(
+              items: stopSequence.trajekt.items.filter(
                 (item: any, i: number) => item._id + i !== stop._id + index
               ),
             },
@@ -277,36 +275,36 @@ export default function useIndexHooks() {
         });
       }
       if (
-        stateDND.trajekt.items.length > 1 &&
-        selected &&
-        stop._id + index !== selected._id + selected.index
+        stopSequence.trajekt.items.length > 1 &&
+        selectedStop &&
+        stop._id + index !== selectedStop._id + selectedStop.index
       ) {
         //@ts-ignore
-        if (index < selected.index) {
-          setSelected((prev: any) => {
+        if (index < selectedStop.index) {
+          setSelectedStop((prev: any) => {
             return {
               ...prev,
               //@ts-ignore
-              index: selected.index - 1,
+              index: selectedStop.index - 1,
             };
           });
         }
-        vorschläge = calculateDistanceAndSort(selected, stations);
+        vorschläge = calculateDistanceAndSort(selectedStop, stops);
         // Delete the repetition from the Suggestion Field
         vorschläge = vorschläge.filter(
           (el: any) =>
-            !stateDND.trajekt.items
+            !stopSequence.trajekt.items
               .filter((el) => stop._id !== el._id)
               .map((el: any) => el._id)
               .includes(el.to._id)
         );
         setDistance([...vorschläge]);
-        setStateDND((prev: any) => {
+        setStopSequence((prev: any) => {
           return {
             ...prev,
             trajekt: {
               title: "Stop sequence",
-              items: stateDND.trajekt.items.filter(
+              items: stopSequence.trajekt.items.filter(
                 (item: any, i: number) => item._id + i !== stop._id + index
               ),
             },
@@ -323,14 +321,14 @@ export default function useIndexHooks() {
           };
         });
       }
-      if (stateDND.trajekt.items.length === 1) {
-        setSelected(undefined);
-        setStateDND((prev: any) => {
+      if (stopSequence.trajekt.items.length === 1) {
+        setSelectedStop(undefined);
+        setStopSequence((prev: any) => {
           return {
             ...prev,
             trajekt: {
               title: "Stop sequence",
-              items: stateDND.trajekt.items.filter(
+              items: stopSequence.trajekt.items.filter(
                 (item: any, i: number) => item._id + i !== stop._id + index
               ),
             },
@@ -342,28 +340,28 @@ export default function useIndexHooks() {
         });
       }
     },
-    [stations, stateDND, selected]
+    [stops, stopSequence, selectedStop]
   );
 
   // Select stops from the Stop search input field
   const handleSelectAutoSearch = useCallback(
-    (stop: Tstations) => {
-      if (selected) {
+    (stop: Tstops) => {
+      if (selectedStop) {
         handleAddStopsOnCLick(stop);
       } else {
-        var vorschläge = calculateDistanceAndSort(stop, stations);
+        var vorschläge = calculateDistanceAndSort(stop, stops);
         // Delete the repetition from the Suggestion Field
         vorschläge = vorschläge.filter(
           (el: any) =>
-            !stateDND.trajekt.items.map((el: any) => el._id).includes(el.to._id)
+            !stopSequence.trajekt.items.map((el: any) => el._id).includes(el.to._id)
         );
         setDistance([...vorschläge]);
 
-        setSelected({
+        setSelectedStop({
           ...stop,
-          index: stateDND.trajekt.items.length,
+          index: stopSequence.trajekt.items.length,
         });
-        setStateDND((prev: any) => {
+        setStopSequence((prev: any) => {
           return {
             ...prev,
             trajekt: {
@@ -389,7 +387,7 @@ export default function useIndexHooks() {
         });
       }
     },
-    [stations, stateDND.trajekt.items, selected, handleAddStopsOnCLick]
+    [stops, stopSequence.trajekt.items, selectedStop, handleAddStopsOnCLick]
   );
 
   // To Drag and Drop from source to the destination
@@ -411,10 +409,10 @@ export default function useIndexHooks() {
         return;
       }
       const itemCopy = {
-        ...getProperty(stateDND, source.droppableId).items[source.index],
+        ...getProperty(stopSequence, source.droppableId).items[source.index],
       };
 
-      setStateDND((prev) => {
+      setStopSequence((prev) => {
         prev = { ...prev };
 
         // Remove from previous items array
@@ -429,37 +427,37 @@ export default function useIndexHooks() {
         return prev;
       });
 
-      const index = stateDND.trajekt.items
+      const index = stopSequence.trajekt.items
         .map((el: any) => el._id)
         .indexOf(itemCopy._id);
       handleClickOnDrop(itemCopy, index);
     },
-    [stateDND, handleClickOnDrop]
+    [stopSequence, handleClickOnDrop]
   );
 
-  // Context menu to add the stop before the selected stops in the drop Menu
-  const handleAddBeforSelected = useCallback(
-    (stopMarker: Tstations) => {
+  // Add Stop before the selected Stop
+  const handleAddBeforselectedStop = useCallback(
+    (stopMarker: Tstops) => {
       if (
-        selected &&
-        stateDND.trajekt.items.filter((item: any) => item._id === selected._id)
+        selectedStop &&
+        stopSequence.trajekt.items.filter((item: any) => item._id === selectedStop._id)
           .length &&
-        stateDND.trajekt.items.filter(
+        stopSequence.trajekt.items.filter(
           (item: any) => item._id === stopMarker._id
         ).length === 0
       ) {
-        const index = stateDND.trajekt.items
+        const index = stopSequence.trajekt.items
           .map((el: any, i: number) => el._id + i)
-          .indexOf(selected._id + selected.index);
-        setSelected({ ...stopMarker, index });
-        var vorschläge = calculateDistanceAndSort(stopMarker, stations);
+          .indexOf(selectedStop._id + selectedStop.index);
+        setSelectedStop({ ...stopMarker, index });
+        var vorschläge = calculateDistanceAndSort(stopMarker, stops);
         // Delete the repetition from the Suggestion Field
         vorschläge = vorschläge.filter(
           (el: any) =>
-            !stateDND.trajekt.items.map((el: any) => el._id).includes(el.to._id)
+            !stopSequence.trajekt.items.map((el: any) => el._id).includes(el.to._id)
         );
         setDistance([...vorschläge]);
-        setStateDND((prev: any) => {
+        setStopSequence((prev: any) => {
           return {
             ...prev,
             trajekt: {
@@ -483,16 +481,16 @@ export default function useIndexHooks() {
         });
       }
     },
-    [stations, stateDND, selected]
+    [stops, stopSequence, selectedStop]
   );
 
   // Click on Marker in Map component
   const handleClickOnMapMarker = useCallback(
-    (station: Tstations, index: number) => {
-      if (selected?._id === station._id) return;
+    (station: Tstops, index: number) => {
+      if (selectedStop?._id === station._id) return;
 
       if (
-        stateDND.trajekt.items.filter((item: any) => item._id === station._id)
+        stopSequence.trajekt.items.filter((item: any) => item._id === station._id)
           .length === 0
       ) {
         handleAddStopsOnCLick(station);
@@ -500,13 +498,13 @@ export default function useIndexHooks() {
         handleClickOnDrop(station, index);
       }
     },
-    [stateDND.trajekt.items, selected, handleAddStopsOnCLick, handleClickOnDrop]
+    [stopSequence.trajekt.items, selectedStop, handleAddStopsOnCLick, handleClickOnDrop]
   );
 
   // Reset and delete all
-  const handleResetStopSequence = useCallback(() => {
-    setSelected(undefined);
-    setStateDND({
+  const handleResetManagedRoute = useCallback(() => {
+    setSelectedStop(undefined);
+    setStopSequence({
       suggestions: {
         title: "Suggestion",
         items: [],
@@ -520,25 +518,25 @@ export default function useIndexHooks() {
 
   // Clear all and delete all
   const handleClearAll = useCallback(() => {
-    handleResetStopSequence();
-    setCurrentStopSequence(undefined);
-  }, [handleResetStopSequence]);
+    handleResetManagedRoute();
+    setCurrentManagedRoute(undefined);
+  }, [handleResetManagedRoute]);
 
-  // Save stop sequence in data base
-  const handleSaveStopSequenceMutation = useCallback(
-    async (formInput: any) => {
-      const { items } = stateDND.trajekt;
+  // Save managed Route in data base
+  const handleSaveManagedRouteMutation = useCallback(
+    async (managedRouteForm: any) => {
+      const { items } = stopSequence.trajekt;
       let body: any;
 
       if (isSending) return console.log("Please wait");
       if (!items.length) return console.log("Please create your stop sequence");
 
-      if (currentStopSequence) {
+      if (currentManagedRoute) {
         body = {
-          ...currentStopSequence,
-          name: formInput.name,
-          desc: formInput.desc,
-          schedule: formInput.schedule,
+          ...currentManagedRoute,
+          name: managedRouteForm.name,
+          desc: managedRouteForm.desc,
+          schedule: managedRouteForm.schedule,
           stopSequence: items.map((item: any) => ({
             key: item.key,
             name: item.name,
@@ -546,9 +544,8 @@ export default function useIndexHooks() {
         };
       } else {
         body = {
-          ...formInput,
+          ...managedRouteForm,
           key: v4(),
-          desc: formInput.desc,
           modes: currentMode,
           stopSequence: items.map((item: any) => ({
             key: item.key,
@@ -562,7 +559,7 @@ export default function useIndexHooks() {
       // send the actual request
       try {
         // GraphQl
-        const saveResponse = await saveStopSequenceMutation({
+        const saveResponse = await saveManagedRouteMutation({
           variables: { data: body },
         });
 
@@ -575,35 +572,34 @@ export default function useIndexHooks() {
           message.error("Konnte die Linie nicht speichern");
         }
       } catch (error) {
-        console.error("Error from trycatch saveStopSequence ", error);
+        console.error("Error from trycatch saveManagedRoute ", error);
       }
       // once the request is sent, update state again
       setIsSending(false);
     },
     [
-      stateDND,
+      stopSequence,
       isSending,
       currentMode,
-      currentStopSequence,
+      currentManagedRoute,
       handleClearAll,
-      saveStopSequenceMutation,
+      saveManagedRouteMutation,
     ]
   );
 
-  // Load stop sequence and stops when we dispatch handleDisplayStopSequenceQuery function
+  // Load managed Route and stops when we dispatch handleLoadManagedRouteQuery function
   useEffect(() => {
     if (
       stopsResponse.data &&
-      stopSequenceByKeyResponse.data &&
+      queryManagedRouteByKeyResponse.data &&
       loadStopSequenceSection
     ) {
       const { PTStopItems } = stopsResponse.data;
-      const { RouteManagerItemByKey } = stopSequenceByKeyResponse.data;
+      const { RouteManagerItemByKey } = queryManagedRouteByKeyResponse.data;
 
       //// -> Format stops and set the state
       const stopsFormatted = formatPTStopItems(PTStopItems);
-      setStations(stopsFormatted);
-      setUpdateDate(Date().toString().substr(4, 24));
+      setStops(stopsFormatted);
 
       // Check if the stops mode is equal to the stopSequence mode
       if (
@@ -617,13 +613,13 @@ export default function useIndexHooks() {
         return setIsSending(false);
       }
 
-      //// -> Format stopSequence and set the state
-      const routeManagerFormatted = formatStopSequenceItems(
+      //// -> Format managedRoute and set the state
+      const routeManagerFormatted = formatManagedRouteItems(
         stopsFormatted,
         RouteManagerItemByKey
       );
-      setCurrentStopSequence({ ...routeManagerFormatted[0] });
-      setStateDND((prev) => {
+      setCurrentManagedRoute({ ...routeManagerFormatted[0] });
+      setStopSequence((prev) => {
         return {
           ...prev,
           trajekt: {
@@ -636,13 +632,13 @@ export default function useIndexHooks() {
       // End loading
       setIsSending(false);
 
-      console.log("End fetching the stop sequence");
+      console.log("End fetching the managed Route");
     } else if (
       stopsResponse.data &&
-      stopSequenceByKeyResponse.data &&
+      queryManagedRouteByKeyResponse.data &&
       !loadStopSequenceSection
     ) {
-      stopSequenceByKeyResponse.data = undefined;
+      queryManagedRouteByKeyResponse.data = undefined;
       setIsSending(false);
     }
 
@@ -652,40 +648,40 @@ export default function useIndexHooks() {
       setIsSending(false);
     }
 
-    if (stopSequenceByKeyResponse.error) {
+    if (queryManagedRouteByKeyResponse.error) {
       console.error(
-        "Error to fetch the stopSequenceByKeyResponse" +
-          stopSequenceByKeyResponse.error.message
+        "Error to fetch the queryManagedRouteByKeyResponse" +
+          queryManagedRouteByKeyResponse.error.message
       );
       // End loading
       setIsSending(false);
     }
-  }, [stopsResponse, stopSequenceByKeyResponse, loadStopSequenceSection]);
+  }, [stopsResponse, queryManagedRouteByKeyResponse, loadStopSequenceSection]);
 
   // Display the stop sequence on map when we load from the backend
-  const handleDisplayStopSequenceQuery = useCallback(
+  const handleLoadManagedRouteQuery = useCallback(
     (modes: string[], key: string) => {
       if (isSending) return console.log("Please Wait");
       setIsSending(true);
-      console.log("Start fetching the stop sequence");
+      console.log("Start fetching the managed Route");
 
       // Dispatch the stops GraphQl query
       getStopsByMode({ variables: { modes } });
 
-      // Dispatch the stop sequence GraphQl query
-      queryStopSequenceByKey({ variables: { key } });
+      // Dispatch the managed Route GraphQl query
+      queryManagedRouteByKey({ variables: { key } });
     },
-    [isSending, getStopsByMode, queryStopSequenceByKey]
+    [isSending, getStopsByMode, queryManagedRouteByKey]
   );
 
-  // Delete stop sequence by Id
-  const handleDeleteStopSequenceMutation = useCallback(
+  // Delete managed Route by Id
+  const handleDeleteManagedRouteMutation = useCallback(
     async (key: string) => {
       if (isSending) return console.log("Please Wait");
       setIsSending(true);
       try {
         // GraphQL
-        const deleteResponse = await deleteStopSequenceMutation({
+        const deleteResponse = await deleteManagedRouteMutation({
           variables: { key },
         });
         if (deleteResponse.data.RouteManagerDelete) {
@@ -693,16 +689,16 @@ export default function useIndexHooks() {
           console.log(`Linie successfully deleted`);
 
           handleClearAll();
-          setCurrentStopSequence(undefined);
+          setCurrentManagedRoute(undefined);
         } else {
           message.error("Konnte die Linie nicht löschen");
         }
       } catch (err) {
-        console.error("Error from deleteStopSequence tryCatch ", err);
+        console.error("Error from deleteManagedRoute tryCatch ", err);
       }
       setIsSending(false);
     },
-    [isSending, deleteStopSequenceMutation, handleClearAll]
+    [isSending, deleteManagedRouteMutation, handleClearAll]
   );
 
   // Set the mode Load or New
@@ -710,35 +706,79 @@ export default function useIndexHooks() {
     (value: boolean) => {
       handleClearAll();
       setLoadStopSequenceSection(value);
-      setStopSequenceList([]);
+      setManagedRoutes([]);
     },
     [handleClearAll]
   );
 
+  const [
+    isHeaderSaveButtonDisabled,
+    setIsHeaderSaveButtonDisabled,
+  ] = useState<boolean>(true);
+  const [clickedHeaderButton, setClickedHeaderButton] = useState<string>('');
+  const [toggleLoadOrNew, setToggleLoadOrNew] = useState<boolean>(true);
+  const SaveRef = useRef<{
+    current: { saveManagedRouteMutation: () => void };
+  }>();
+
+  const handleClickOnHeaderCancelButton = () => {
+    setClickedHeaderButton('');
+    handleStopsQuery([]);
+  };
+
+  const handleClickOnHeaderLoadButton = () => {
+    setToggleLoadOrNew(true);
+    handleLoadMode(true);
+    setClickedHeaderButton('laden');
+  };
+
+  const handleClickOnHeaderNewButton = () => {
+    setToggleLoadOrNew(false);
+    handleLoadMode(false);
+    setClickedHeaderButton('erstellen');
+  };
+
+  const handleClickOnHeaderSaveButton = () => {
+    //@ts-ignore
+    SaveRef?.current?.saveManagedRouteMutation();
+  };
+
+  const handleIsHeaderSaveButtonDisabled = (value: boolean) => {
+    setIsHeaderSaveButtonDisabled(value);
+  };
+
   return {
-    stations,
-    selected,
+    stops,
+    SaveRef,
     distance,
-    stateDND,
     isSending,
-    updateDate,
     currentMode,
-    stopSequenceList,
-    currentStopSequence,
+    stopSequence,
+    selectedStop,
+    managedRoutes,
+    toggleLoadOrNew,
+    currentManagedRoute,
+    clickedHeaderButton,
+    isHeaderSaveButtonDisabled,
     handleDragEnd,
     handleLoadMode,
     handleClearAll,
     handleDeleteStop,
+    handleStopsQuery,
     handleClickOnDrop,
     handleAddStopsOnCLick,
     handleSelectAutoSearch,
-    handleAddBeforSelected,
     handleClickOnMapMarker,
-    handleResetStopSequence,
-    handleStopsQuery,
-    handleStopSequenceSearchQuery,
-    handleSaveStopSequenceMutation,
-    handleDisplayStopSequenceQuery,
-    handleDeleteStopSequenceMutation,
+    handleResetManagedRoute,
+    handleAddBeforselectedStop,
+    handleLoadManagedRouteQuery,
+    handleClickOnHeaderNewButton,
+    handleClickOnHeaderLoadButton,
+    handleClickOnHeaderSaveButton,
+    handleSearchManagedRouteQuery,
+    handleSaveManagedRouteMutation,
+    handleClickOnHeaderCancelButton,
+    handleDeleteManagedRouteMutation,
+    handleIsHeaderSaveButtonDisabled,
   };
 }

@@ -10,8 +10,8 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
   onDelete={[Function]}
   onDeleteStop={[MockFunction]}
   onDragEnd={[MockFunction]}
-  onResetStopSequence={[MockFunction]}
-  selected={
+  onReseTManagedRoute={[MockFunction]}
+  selectedStop={
     Object {
       "_id": "5f6205c60d5658001cd9480b",
       "coord": Array [
@@ -26,7 +26,7 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
       "name": "Confignon, croisée",
     }
   }
-  stateDND={
+  stopSequence={
     Object {
       "suggestions": Object {
         "items": Array [
@@ -2398,10 +2398,11 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
           }
           extra={
             <ForwardRef(InternalButton)
+              danger={true}
               id="clearAll_button"
               onClick={[Function]}
             >
-              Reset
+              Alle löschen
             </ForwardRef(InternalButton)>
           }
           title="Haltestellensequenz"
@@ -2426,12 +2427,13 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                   className="ant-card-extra"
                 >
                   <Button
+                    danger={true}
                     id="clearAll_button"
                     onClick={[Function]}
                   >
                     <Wave>
                       <button
-                        className="ant-btn"
+                        className="ant-btn ant-btn-dangerous"
                         id="clearAll_button"
                         onClick={[Function]}
                         type="button"
@@ -2458,7 +2460,7 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
                         <span
                           key=".0"
                         >
-                          Reset
+                          Alle löschen
                         </span>
                       </button>
                     </Wave>

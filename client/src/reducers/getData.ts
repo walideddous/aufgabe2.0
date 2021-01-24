@@ -8,7 +8,7 @@ import {
 
 const initialState: LoadingType = {
   loading: true,
-  selected: {},
+  selectedStop: {},
   //data: data(),
 };
 
@@ -27,7 +27,7 @@ export default function getDataReducer(
       return {
         ...state,
         loading: false,
-        selected: payload,
+        selectedStop: payload,
       };
     default:
       return state;

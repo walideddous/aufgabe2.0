@@ -5,7 +5,7 @@ import React, {
   useEffect,
   useImperativeHandle,
   forwardRef,
-} from "react";
+} from 'react';
 import {
   Form,
   Input,
@@ -20,38 +20,38 @@ import {
   Popconfirm,
   Alert,
   ConfigProvider,
-} from "antd";
-import moment from "moment";
-import "moment/locale/de";
-import locale from "antd/es/locale/de_DE";
-import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
+} from 'antd';
+import moment from 'moment';
+import 'moment/locale/de';
+import locale from 'antd/es/locale/de_DE';
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 
 // import the model
-import ManagedRoute from "../../model/ManagedRoute";
+import ManagedRoute from '../../model/ManagedRoute';
 
 // import utils function
-import { getFormatTags } from "../../utils/getFormatTags";
+import { getFormatTags } from '../../utils/getFormatTags';
 // Importing types
-import { TstateDND, TStopSequence } from "../../types/types";
+import { TstopSequence, TManagedRoute } from '../../types/types';
 
 const { RangePicker } = TimePicker;
 const { Panel } = Collapse;
 const { Option } = Select;
 
 interface Tprops {
-  stateDND: TstateDND;
-  currentStopSequence: TStopSequence | undefined;
-  onDisabled: (value: boolean) => void;
-  onSaveStopSequenceMutation: (formInput: any) => void;
+  stopSequence: TstopSequence;
+  currentManagedRoute: TManagedRoute | undefined;
+  onIsHeaderSaveButtonDisabled: (value: boolean) => void;
+  onSaveManagedRouteMutation: (managedRouteForm: any) => void;
 }
 
-const SaveStopSequenceForm = forwardRef(
+const SaveManagedRouteForm = forwardRef(
   (
     {
-      stateDND,
-      currentStopSequence,
-      onDisabled,
-      onSaveStopSequenceMutation,
+      stopSequence,
+      currentManagedRoute,
+      onIsHeaderSaveButtonDisabled,
+      onSaveManagedRouteMutation,
     }: Tprops,
     ref: any
   ) => {
@@ -80,22 +80,22 @@ const SaveStopSequenceForm = forwardRef(
 
     // set savedForm state when load data from Backend
     useEffect(() => {
-      if (currentStopSequence) {
-        const { name, desc, schedule } = currentStopSequence;
+      if (currentManagedRoute) {
+        const { name, desc, schedule } = currentManagedRoute;
         setSavedForm({ name, desc, schedule });
         form.setFieldsValue({
-          name: currentStopSequence.name,
-          desc: currentStopSequence.desc,
+          name: currentManagedRoute.name,
+          desc: currentManagedRoute.desc,
         });
         setCollapseOpen(true);
       } else {
-        setSavedForm({ name: "", desc: "", schedule: [] });
+        setSavedForm({ name: '', desc: '', schedule: [] });
         form.setFieldsValue({
-          name: "",
-          desc: "",
+          name: '',
+          desc: '',
         });
       }
-    }, [currentStopSequence, form]);
+    }, [currentManagedRoute, form]);
 
     //set tags state when load data from Backend
     useEffect(() => {
@@ -113,20 +113,20 @@ const SaveStopSequenceForm = forwardRef(
 
     const getWeekDayLabel = (value: string) => {
       switch (value) {
-        case "MON":
-          return "Montag";
-        case "DIE":
-          return "Dienstag";
-        case "MIT":
-          return "Mittwoch";
-        case "DON":
-          return "Donnerstag";
-        case "FRE":
-          return "Freitag";
-        case "SAM":
-          return "Samstag";
-        case "SON":
-          return "Sonntag";
+        case 'MON':
+          return 'Montag';
+        case 'DIE':
+          return 'Dienstag';
+        case 'MIT':
+          return 'Mittwoch';
+        case 'DON':
+          return 'Donnerstag';
+        case 'FRE':
+          return 'Freitag';
+        case 'SAM':
+          return 'Samstag';
+        case 'SON':
+          return 'Sonntag';
       }
     };
 
@@ -236,28 +236,28 @@ const SaveStopSequenceForm = forwardRef(
     useImperativeHandle(
       ref,
       () => ({
-        saveStopSequenceMutation: () => {
-          onDisabled(true);
+        onSaveManagedRouteMutation: () => {
+          onIsHeaderSaveButtonDisabled(true);
           setCollapseOpen(false);
           setTags([]);
           setSavedForm((prev: any) => ({
-            name: "",
-            desc: "",
+            name: '',
+            desc: '',
             schedule: [],
           }));
-          form.resetFields(["name", "desc", "date", "day", "time"]);
-          onSaveStopSequenceMutation({
+          form.resetFields(['name', 'desc', 'date', 'day', 'time']);
+          onSaveManagedRouteMutation({
             ...savedForm,
-            stopSequence: stateDND.trajekt.items,
+            stopSequence: stopSequence.trajekt.items,
           });
         },
       }),
       [
         form,
         savedForm,
-        stateDND.trajekt,
-        onDisabled,
-        onSaveStopSequenceMutation,
+        stopSequence.trajekt,
+        onIsHeaderSaveButtonDisabled,
+        onSaveManagedRouteMutation,
       ]
     );
 
@@ -266,28 +266,28 @@ const SaveStopSequenceForm = forwardRef(
         tags.length &&
         savedForm &&
         savedForm.name &&
-        stateDND.trajekt.items.length >= 2 &&
+        stopSequence.trajekt.items.length >= 2 &&
         JSON.stringify({
           ...savedForm,
-          stopSequence: stateDND.trajekt.items.map((el) => el),
+          stopSequence: stopSequence.trajekt.items.map((el) => el),
         }) !==
           JSON.stringify({
-            name: currentStopSequence?.name,
-            desc: currentStopSequence?.desc,
-            schedule: currentStopSequence?.schedule,
-            stopSequence: currentStopSequence?.stopSequence,
+            name: currentManagedRoute?.name,
+            desc: currentManagedRoute?.desc,
+            schedule: currentManagedRoute?.schedule,
+            stopSequence: currentManagedRoute?.stopSequence,
           })
       ) {
-        onDisabled(false);
+        onIsHeaderSaveButtonDisabled(false);
       } else {
-        onDisabled(true);
+        onIsHeaderSaveButtonDisabled(true);
       }
     }, [
       tags,
       savedForm,
-      currentStopSequence,
-      stateDND.trajekt.items,
-      onDisabled,
+      currentManagedRoute,
+      stopSequence.trajekt.items,
+      onIsHeaderSaveButtonDisabled,
     ]);
 
     useEffect(() => {
@@ -303,22 +303,22 @@ const SaveStopSequenceForm = forwardRef(
     return (
       <ConfigProvider locale={locale}>
         <Form
-          autoComplete="off"
-          id="formWrapper"
-          layout="vertical"
+          autoComplete='off'
+          id='formWrapper'
+          layout='vertical'
           requiredMark={false}
           form={form}
           onFinish={onFinish}
         >
-          <Collapse defaultActiveKey={"1"}>
+          <Collapse defaultActiveKey={'1'}>
             <Panel
-              header={savedForm?.name ? savedForm.name : "Linienverlauf"}
-              key="1"
+              header={savedForm?.name ? savedForm.name : 'Linienverlauf'}
+              key='1'
             >
-              <Form.Item label="Name" name="name">
+              <Form.Item label='Name' name='name'>
                 <Input
-                  id="name_input"
-                  placeholder="Geben Sie dem Linienname ein"
+                  id='name_input'
+                  placeholder='Geben Sie dem Linienname ein'
                   onChange={(e) => {
                     e.persist();
                     setSavedForm((prev: any) => ({
@@ -329,10 +329,10 @@ const SaveStopSequenceForm = forwardRef(
                   allowClear
                 />
               </Form.Item>
-              <Form.Item label="Beschreibung" name="desc">
+              <Form.Item label='Beschreibung' name='desc'>
                 <Input.TextArea
-                  id="desc_input"
-                  placeholder="Geben Sie der Linienbeschreibung ein"
+                  id='desc_input'
+                  placeholder='Geben Sie der Linienbeschreibung ein'
                   onChange={(e) => {
                     e.persist();
                     setSavedForm((prev: any) => ({
@@ -346,8 +346,8 @@ const SaveStopSequenceForm = forwardRef(
             </Panel>
           </Collapse>
           <Collapse
-            style={{ marginTop: "8px" }}
-            activeKey={collapseOpen ? "2" : ""}
+            style={{ marginTop: '8px' }}
+            activeKey={collapseOpen ? '2' : ''}
             onChange={() => {
               setCollapseOpen(!collapseOpen);
             }}
@@ -355,26 +355,26 @@ const SaveStopSequenceForm = forwardRef(
             <Panel
               header={
                 tags.length ? (
-                  "Zeitplan"
+                  'Zeitplan'
                 ) : (
                   <p
                     style={{
-                      color: "red",
-                      margin: "0",
+                      color: 'red',
+                      margin: '0',
                     }}
                   >
                     Kein Zeitplan
                   </p>
                 )
               }
-              key="2"
+              key='2'
             >
               <div
-                id="time_result"
+                id='time_result'
                 style={{
-                  maxHeight: "200px",
-                  overflowY: "auto",
-                  paddingBottom: "20px",
+                  maxHeight: '200px',
+                  overflowY: 'auto',
+                  paddingBottom: '20px',
                 }}
               >
                 {tags &&
@@ -382,7 +382,7 @@ const SaveStopSequenceForm = forwardRef(
                     return (
                       <Fragment key={tagsIndex}>
                         <p
-                          style={{ marginBottom: "4px", marginTop: "4px" }}
+                          style={{ marginBottom: '4px', marginTop: '4px' }}
                         >{`${tag.from} ${tag.to}`}</p>
                         <Fragment>
                           {tag.displayedTags.map(
@@ -412,20 +412,20 @@ const SaveStopSequenceForm = forwardRef(
               {!addSchedule && (
                 <Space>
                   <Button
-                    type="primary"
+                    type='primary'
                     onClick={() => {
                       setAddSchedule(true);
                     }}
-                    id="addSchedule_button"
+                    id='addSchedule_button'
                   >
                     Zeitplan hinzufügen
                   </Button>
                   {tags.length ? (
                     <Popconfirm
                       title={`Wollen Sie wirklich den Zeitplan löschen ?`}
-                      placement="bottomRight"
-                      okText="Ja"
-                      cancelText="Nein"
+                      placement='bottomRight'
+                      okText='Ja'
+                      cancelText='Nein'
                       onConfirm={() => {
                         setTags([]);
                         setSavedForm((prev: any) => ({
@@ -437,7 +437,7 @@ const SaveStopSequenceForm = forwardRef(
                     >
                       <Button
                         danger
-                        id="clear_all"
+                        id='clear_all'
                         disabled={tags.length ? false : true}
                       >
                         Zeitplan löschen
@@ -460,103 +460,103 @@ const SaveStopSequenceForm = forwardRef(
                     ))}
 
                   <Form.Item
-                    label="Gültigkeit"
-                    name="date"
+                    label='Gültigkeit'
+                    name='date'
                     rules={[
                       {
                         required: true,
-                        message: "Geben Sie der Gültigkeit ein",
+                        message: 'Geben Sie der Gültigkeit ein',
                       },
                     ]}
-                    initialValue={[moment(), moment().add(1, "w")]}
+                    initialValue={[moment(), moment().add(1, 'w')]}
                   >
                     <DatePicker.RangePicker
-                      id="date_input"
-                      format="DD-MM-YYYY"
-                      placeholder={["Start Gültigkeit", "End Gültigkeit"]}
+                      id='date_input'
+                      format='DD-MM-YYYY'
+                      placeholder={['Start Gültigkeit', 'End Gültigkeit']}
                     />
                   </Form.Item>
                   <Form.Item
-                    id="dayPicker_form"
-                    label="Wochentage"
-                    name="days"
+                    id='dayPicker_form'
+                    label='Wochentage'
+                    name='days'
                     rules={[
                       {
                         required: true,
-                        message: "Geben Sie den Wochentage ein",
+                        message: 'Geben Sie den Wochentage ein',
                       },
                     ]}
-                    initialValue={["MON", "DIE", "MIT", "DON", "FRE"]}
+                    initialValue={['MON', 'DIE', 'MIT', 'DON', 'FRE']}
                   >
                     <Select
                       allowClear
-                      placeholder="Wählen Sie den Wochentage aus"
-                      id="dayPicker_input"
-                      mode="tags"
+                      placeholder='Wählen Sie den Wochentage aus'
+                      id='dayPicker_input'
+                      mode='tags'
                     >
-                      <Option key="1" value="MON">
-                        {getWeekDayLabel("MON")}
+                      <Option key='1' value='MON'>
+                        {getWeekDayLabel('MON')}
                       </Option>
-                      <Option key="2" value="DIE">
-                        {getWeekDayLabel("DIE")}
+                      <Option key='2' value='DIE'>
+                        {getWeekDayLabel('DIE')}
                       </Option>
-                      <Option key="3" value="MIT">
-                        {getWeekDayLabel("MIT")}
+                      <Option key='3' value='MIT'>
+                        {getWeekDayLabel('MIT')}
                       </Option>
-                      <Option key="4" value="DON">
-                        {getWeekDayLabel("DON")}
+                      <Option key='4' value='DON'>
+                        {getWeekDayLabel('DON')}
                       </Option>
-                      <Option key="5" value="FRE">
-                        {getWeekDayLabel("FRE")}
+                      <Option key='5' value='FRE'>
+                        {getWeekDayLabel('FRE')}
                       </Option>
-                      <Option key="6" value="SAM">
-                        {getWeekDayLabel("SAM")}
+                      <Option key='6' value='SAM'>
+                        {getWeekDayLabel('SAM')}
                       </Option>
-                      <Option key="7" value="SON">
-                        {getWeekDayLabel("SON")}
+                      <Option key='7' value='SON'>
+                        {getWeekDayLabel('SON')}
                       </Option>
-                      <Option key="8" value="Feiertag">
+                      <Option key='8' value='Feiertag'>
                         Feiertag
                       </Option>
                     </Select>
                   </Form.Item>
-                  <div style={{ display: "flex", flexWrap: "wrap" }}>
+                  <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                     <Form.Item
-                      name="time"
-                      label="Zeitintervall"
+                      name='time'
+                      label='Zeitintervall'
                       rules={[
                         {
                           required: true,
-                          message: "Geben Sie der Zeitintervall ein",
+                          message: 'Geben Sie der Zeitintervall ein',
                         },
                       ]}
-                      initialValue={[moment(), moment().add(1, "h")]}
+                      initialValue={[moment(), moment().add(1, 'h')]}
                     >
                       <RangePicker
                         placeholder={[
-                          "Start Zeitintervall",
-                          "End Zeitintervall",
+                          'Start Zeitintervall',
+                          'End Zeitintervall',
                         ]}
-                        format="HH:mm"
-                        id="timePicker_input"
+                        format='HH:mm'
+                        id='timePicker_input'
                       />
                     </Form.Item>
-                    <Form.List name="timeList">
+                    <Form.List name='timeList'>
                       {(fields, { add, remove }) => {
                         return (
                           <div
                             style={{
-                              display: "flex",
-                              paddingTop: "30px",
+                              display: 'flex',
+                              paddingTop: '30px',
                             }}
                           >
                             <Form.Item>
                               <Button
-                                id="addTime_button"
-                                type="dashed"
+                                id='addTime_button'
+                                type='dashed'
                                 style={{
-                                  marginLeft: "10px",
-                                  marginRight: "10px",
+                                  marginLeft: '10px',
+                                  marginRight: '10px',
                                 }}
                                 onClick={() => add()}
                                 icon={<PlusOutlined />}
@@ -568,21 +568,21 @@ const SaveStopSequenceForm = forwardRef(
                               {fields.map((field) => (
                                 <Space
                                   key={field.key}
-                                  style={{ display: "flex" }}
-                                  align="baseline"
+                                  style={{ display: 'flex' }}
+                                  align='baseline'
                                 >
-                                  <Form.Item name={[field.name, "time"]}>
+                                  <Form.Item name={[field.name, 'time']}>
                                     <RangePicker
                                       placeholder={[
-                                        "Start Zeitintervall",
-                                        "End Zeitintervall",
+                                        'Start Zeitintervall',
+                                        'End Zeitintervall',
                                       ]}
-                                      format="HH:mm"
+                                      format='HH:mm'
                                       id={`timePicker_input${field.name}`}
                                     />
                                   </Form.Item>
                                   <MinusCircleOutlined
-                                    id="remove_timePicker"
+                                    id='remove_timePicker'
                                     onClick={() => remove(field.name)}
                                   />
                                 </Space>
@@ -594,13 +594,13 @@ const SaveStopSequenceForm = forwardRef(
                     </Form.List>
                   </div>
                   <Form.Item>
-                    <Button id="save_schedule" type="primary" htmlType="submit">
+                    <Button id='save_schedule' type='primary' htmlType='submit'>
                       Zeitplan hinzufügen
                     </Button>
                     <Button
-                      type="dashed"
-                      id="cancel_button"
-                      style={{ marginLeft: "10px" }}
+                      type='dashed'
+                      id='cancel_button'
+                      style={{ marginLeft: '10px' }}
                       onClick={() => {
                         setAddSchedule(false);
                       }}
@@ -610,9 +610,9 @@ const SaveStopSequenceForm = forwardRef(
                     {tags.length ? (
                       <Popconfirm
                         title={`Wollen Sie wirklich den Zeitplan löschen ?`}
-                        placement="bottomRight"
-                        okText="Ja"
-                        cancelText="Nein"
+                        placement='bottomRight'
+                        okText='Ja'
+                        cancelText='Nein'
                         onConfirm={() => {
                           setTags([]);
                           setSavedForm((prev: any) => ({
@@ -624,8 +624,8 @@ const SaveStopSequenceForm = forwardRef(
                       >
                         <Button
                           danger
-                          id="clear_all"
-                          style={{ marginLeft: "10px" }}
+                          id='clear_all'
+                          style={{ marginLeft: '10px' }}
                           disabled={tags.length ? false : true}
                         >
                           Zeitplan löschen
@@ -643,4 +643,4 @@ const SaveStopSequenceForm = forwardRef(
   }
 );
 
-export default React.memo(SaveStopSequenceForm);
+export default React.memo(SaveManagedRouteForm);

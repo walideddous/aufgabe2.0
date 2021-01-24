@@ -1,12 +1,12 @@
-import React from "react";
-import { ReactWrapper, shallow } from "enzyme";
-import toJSON from "enzyme-to-json";
-import Header from "./Header";
+import React from 'react';
+import { shallow } from 'enzyme';
+import toJSON from 'enzyme-to-json';
+import Header from './Header';
 
 const makeProps = (props: any) => ({
-  radioButton: "",
+  radioButton: '',
   saveButtonDisabled: false,
-  currentStopSequence: {},
+  currentManagedRoute: {},
   onClearAll() {},
   onSaveButton() {},
   onLadenButton() {},
@@ -22,30 +22,31 @@ const setUp = (props: any) => {
   return shallowWrapper;
 };
 
-describe("Test the Header Component", () => {
+describe('Test the Header Component', () => {
   let shallowWrapper: any;
-  const radioButton = "";
-  const saveButtonDisabled = false;
-  const currentStopSequence = {};
+
+  const clickedHeaderButton = '';
+  const isHeaderSaveButtonDisabled = true;
+  const currentManagedRoute = {};
   const onClearAll = jest.fn();
-  const onSaveButton = jest.fn();
-  const onLadenButton = jest.fn();
-  const onErstellenButton = jest.fn();
-  const onAbbrechenButton = jest.fn();
+  const onCLickOnHeaderSaveButton = jest.fn();
+  const onClickOnHeaderLoadButton = jest.fn();
+  const onClickOnHeaderNewButton = jest.fn();
+  const onClickOnHeaderCancelButton = jest.fn();
   const onDisplayStopSequenceQuery = jest.fn();
   const onDeleteStopSequenceMutation = jest.fn();
 
   beforeEach(() => {
     shallowWrapper = setUp(
       makeProps({
-        radioButton,
-        saveButtonDisabled,
-        currentStopSequence,
+        clickedHeaderButton,
+        isHeaderSaveButtonDisabled,
+        currentManagedRoute,
         onClearAll,
-        onSaveButton,
-        onLadenButton,
-        onErstellenButton,
-        onAbbrechenButton,
+        onCLickOnHeaderSaveButton,
+        onClickOnHeaderLoadButton,
+        onClickOnHeaderNewButton,
+        onClickOnHeaderCancelButton,
         onDisplayStopSequenceQuery,
         onDeleteStopSequenceMutation,
       })
@@ -56,11 +57,11 @@ describe("Test the Header Component", () => {
     jest.resetAllMocks();
   });
 
-  it("Should test the jest framework", () => {
+  it('Should test the jest framework', () => {
     expect(true).toBe(true);
   });
-  it("Should match the Header component snapshot", () => {
+  it('Should match the Header component snapshot', () => {
     expect(toJSON(shallowWrapper)).toMatchSnapshot();
   });
-  it("Should test  ");
+  it('Should test  ');
 });

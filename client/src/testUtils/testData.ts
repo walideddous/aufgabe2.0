@@ -20,7 +20,7 @@ const table = () => {
   return tab;
 };
 
-export const stateDND = {
+export const stopSequence = {
   suggestions: {
     title: "Suggestion",
     items: table(),
@@ -39,7 +39,7 @@ export const stateDND = {
   },
 };
 
-export const selected = {
+export const selectedStop = {
   coord: [46.17831, 6.08824],
   index: 0,
   modes: ["4", "5"],
@@ -47,7 +47,7 @@ export const selected = {
   _id: "5f6205c60d5658001cd9480b",
 };
 
-export const stopSequenceList = [
+export const managedRoutes = [
   {
     _id: "638b7703-d171-4e5f-8e78-21258f75cee4",
     key: "638b7703-d171-4e5f-8e78-21258f75cee4",
@@ -76,7 +76,7 @@ export const stopSequenceList = [
   },
 ];
 
-export const currentStopSequence = {
+export const currentManagedRoute = {
   _id: "638b7703-d171-4e5f-8e78-21258f75cee4",
   key: "638b7703-d171-4e5f-8e78-21258f75cee4",
   name: "Test",
@@ -117,7 +117,7 @@ export const distance = [
   },
 ];
 
-export const stations = [
+export const stops = [
   {
     _id: "5f6203bb0d5658001cd8f85a",
     name: "Basel",

@@ -1,184 +1,160 @@
-import React, { Fragment, useCallback, useState, useRef } from "react";
-import { Row, Spin, Col } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
+import React, { Fragment } from 'react';
+import { Row, Spin, Col } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 
 // Import composents
-import DragDrop from "./dragDrop/DragDrop";
-import Map from "./map/Map";
-import SaveStopsSequenceForm from "./saveStopSequenceForm/SaveStopSequenceForm";
-import LoadStopSequence from "./loadStopSequenceForm/LoadStopSequence";
-import Header from "./header/Header";
+import DragDrop from './dragDrop/DragDrop';
+import Map from './map/Map';
+import SaveManagedRouteForm from './saveManagedRouteForm/SaveManagedRouteForm';
+import LoadManagedRouteForm from './loadManagedRouteForm/LoadManagedRouteForm';
+import Header from './header/Header';
 
 // Import Custom Hook
-import useIndexHooks from "../customHooks/useIndexHooks";
+import useIndexHooks from '../customHooks/useIndexHooks';
 
-import "../App.css";
+import '../App.css';
 
 // Import antd & leaflet
-import "antd/dist/antd.css";
-import "leaflet/dist/leaflet.css";
+import 'antd/dist/antd.css';
+import 'leaflet/dist/leaflet.css';
 
 // Custom Loader
 const antIcon = <LoadingOutlined style={{ fontSize: 100 }} spin />;
 
 const MainRoot: React.FC = () => {
   const {
-    stations,
-    selected,
+    stops,
+    SaveRef,
     distance,
-    stateDND,
     isSending,
     currentMode,
-    stopSequenceList,
-    currentStopSequence,
+    stopSequence,
+    selectedStop,
+    managedRoutes,
+    toggleLoadOrNew,
+    currentManagedRoute,
+    clickedHeaderButton,
+    isHeaderSaveButtonDisabled,
     handleDragEnd,
-    handleLoadMode,
     handleClearAll,
     handleDeleteStop,
+    handleStopsQuery,
     handleClickOnDrop,
     handleAddStopsOnCLick,
     handleSelectAutoSearch,
-    handleAddBeforSelected,
     handleClickOnMapMarker,
-    handleResetStopSequence,
-    handleStopsQuery,
-    handleStopSequenceSearchQuery,
-    handleSaveStopSequenceMutation,
-    handleDisplayStopSequenceQuery,
-    handleDeleteStopSequenceMutation,
+    handleResetManagedRoute,
+    handleAddBeforselectedStop,
+    handleLoadManagedRouteQuery,
+    handleClickOnHeaderNewButton,
+    handleClickOnHeaderLoadButton,
+    handleClickOnHeaderSaveButton,
+    handleSearchManagedRouteQuery,
+    handleSaveManagedRouteMutation,
+    handleClickOnHeaderCancelButton,
+    handleDeleteManagedRouteMutation,
+    handleIsHeaderSaveButtonDisabled,
   } = useIndexHooks();
 
-  const [saveButtonDisabled, setSaveButtonDisabled] = useState<boolean>(true);
-  const [radioButton, setRadioButton] = useState<string>("");
-  const [show, setShow] = useState<boolean>(true);
-  const SaveRef = useRef<{
-    current: { saveStopSequenceMutation: () => void };
-  }>();
-
-  const handleAbbrechenButton = () => {
-    setRadioButton("");
-    handleStopsQuery([]);
-  };
-
-  const handleLadenButton = () => {
-    setShow(true);
-    handleLoadMode(true);
-    setRadioButton("laden");
-  };
-
-  const handleErstellenButton = () => {
-    setShow(false);
-    handleClearAll();
-    handleLoadMode(false);
-    setRadioButton("erstellen");
-  };
-
-  const handleSaveButton = () => {
-    //@ts-ignore
-    SaveRef?.current?.saveStopSequenceMutation();
-  };
-
-  const handleDisabled = useCallback((value: boolean) => {
-    setSaveButtonDisabled(value);
-  }, []);
-
   return (
-    <div className="Prototyp" style={{ position: "relative" }}>
+    <div className='Prototyp' style={{ position: 'relative' }}>
       <Row gutter={[8, 8]}>
         <Header
-          radioButton={radioButton}
-          saveButtonDisabled={saveButtonDisabled}
-          currentStopSequence={currentStopSequence}
+          clickedHeaderButton={clickedHeaderButton}
+          isHeaderSaveButtonDisabled={isHeaderSaveButtonDisabled}
+          currentManagedRoute={currentManagedRoute}
           onClearAll={handleClearAll}
-          onSaveButton={handleSaveButton}
-          onLadenButton={handleLadenButton}
-          onErstellenButton={handleErstellenButton}
-          onAbbrechenButton={handleAbbrechenButton}
-          onDisplayStopSequenceQuery={handleDisplayStopSequenceQuery}
-          onDeleteStopSequenceMutation={handleDeleteStopSequenceMutation}
+          onCLickOnHeaderSaveButton={handleClickOnHeaderSaveButton}
+          onClickOnHeaderLoadButton={handleClickOnHeaderLoadButton}
+          onClickOnHeaderNewButton={handleClickOnHeaderNewButton}
+          onClickOnHeaderCancelButton={handleClickOnHeaderCancelButton}
+          onLoadManagedRouteQuery={handleLoadManagedRouteQuery}
+          onDeleteManagedRouteMutation={handleDeleteManagedRouteMutation}
         />
-        {radioButton === "erstellen" && (
+        {clickedHeaderButton === 'erstellen' && (
           <Col xs={24}>
-            <SaveStopsSequenceForm
+            <SaveManagedRouteForm
               ref={SaveRef}
-              stateDND={stateDND}
-              currentStopSequence={currentStopSequence}
-              onDisabled={handleDisabled}
-              onSaveStopSequenceMutation={handleSaveStopSequenceMutation}
+              stopSequence={stopSequence}
+              currentManagedRoute={currentManagedRoute}
+              onIsHeaderSaveButtonDisabled={handleIsHeaderSaveButtonDisabled}
+              onSaveManagedRouteMutation={handleSaveManagedRouteMutation}
             />
           </Col>
         )}
-        {radioButton && (
+        {clickedHeaderButton && (
           <Col xs={24}>
-            <LoadStopSequence
-              show={show}
-              stateDND={stateDND}
-              stopSequenceList={stopSequenceList}
-              currentStopSequence={currentStopSequence}
+            <LoadManagedRouteForm
+              toggleLoadOrNew={toggleLoadOrNew}
+              stopSequence={stopSequence}
+              managedRoutes={managedRoutes}
+              currentManagedRoute={currentManagedRoute}
               onStopsQuery={handleStopsQuery}
-              onStopSequenceSearch={handleStopSequenceSearchQuery}
-              onDisplayStopSequence={handleDisplayStopSequenceQuery}
+              onSearchManagedRouteQuery={handleSearchManagedRouteQuery}
+              onLoadManagedRouteQuery={handleLoadManagedRouteQuery}
             />
           </Col>
         )}
-        {(radioButton === "laden" && currentStopSequence) ||
-        (radioButton === "erstellen" && currentMode.length) ? (
+        {(clickedHeaderButton === 'laden' && currentManagedRoute) ||
+        (clickedHeaderButton === 'erstellen' && currentMode.length) ? (
           <>
             {isSending ? (
               <div
                 style={{
-                  marginTop: "20%",
-                  marginLeft: "50%",
-                  marginRight: "-50%",
-                  transform: "translate(-50%, -50%)",
+                  marginTop: '20%',
+                  marginLeft: '50%',
+                  marginRight: '-50%',
+                  transform: 'translate(-50%, -50%)',
                 }}
               >
                 <Spin
                   indicator={antIcon}
                   style={{
-                    display: "flex",
+                    display: 'flex',
                   }}
                 />
               </div>
             ) : (
               <Fragment>
-                {radioButton === "laden" && (
+                {clickedHeaderButton === 'laden' && (
                   <Col xs={24}>
-                    <SaveStopsSequenceForm
+                    <SaveManagedRouteForm
                       ref={SaveRef}
-                      stateDND={stateDND}
-                      currentStopSequence={currentStopSequence}
-                      onDisabled={handleDisabled}
-                      onSaveStopSequenceMutation={
-                        handleSaveStopSequenceMutation
+                      stopSequence={stopSequence}
+                      currentManagedRoute={currentManagedRoute}
+                      onIsHeaderSaveButtonDisabled={
+                        handleIsHeaderSaveButtonDisabled
+                      }
+                      onSaveManagedRouteMutation={
+                        handleSaveManagedRouteMutation
                       }
                     />
                   </Col>
                 )}
-                <Col xxl={24} xs={24} style={{ height: "500px" }}>
+                <Col xxl={24} xs={24} style={{ height: '500px' }}>
                   <Map
-                    stations={stations}
-                    stateDND={stateDND}
-                    selected={selected}
+                    stops={stops}
+                    stopSequence={stopSequence}
+                    selectedStop={selectedStop}
                     distance={distance}
-                    currentStopSequence={currentStopSequence}
+                    currentManagedRoute={currentManagedRoute}
                     onDeleteStop={handleDeleteStop}
-                    onAddAfterSelected={handleAddStopsOnCLick}
+                    onAddAfterSelectedStop={handleAddStopsOnCLick}
                     onSelectAutoSearch={handleSelectAutoSearch}
                     onClickOnMapMarker={handleClickOnMapMarker}
-                    onAddBeforSelected={handleAddBeforSelected}
-                    onResetStopSequence={handleResetStopSequence}
+                    onAddBeforSelectedStop={handleAddBeforselectedStop}
+                    onResetManagedRoute={handleResetManagedRoute}
                   />
                 </Col>
                 <Col xxl={24} xs={24} style={{ padding: 0 }}>
                   <DragDrop
-                    stateDND={stateDND}
-                    selected={selected}
+                    stopSequence={stopSequence}
+                    selectedStop={selectedStop}
                     onDragEnd={handleDragEnd}
                     onDeleteStop={handleDeleteStop}
                     onClickOnDrop={handleClickOnDrop}
                     onAddStopsOnCLick={handleAddStopsOnCLick}
-                    onResetStopSequence={handleResetStopSequence}
+                    onResetManagedRoute={handleResetManagedRoute}
                   />
                 </Col>
               </Fragment>

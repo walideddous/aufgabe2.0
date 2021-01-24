@@ -1,6 +1,6 @@
-import { formatStopSequenceItems } from "./formatStopSequenceItems"
+import { formatManagedRouteItems } from "./formatManagedRouteItems"
 
-describe("Test the formatStopSequenceItems function",()=>{
+describe("Test the formaTManagedRouteItems function",()=>{
    
    const stopInput = [
     {
@@ -50,6 +50,6 @@ describe("Test the formatStopSequenceItems function",()=>{
     })
 
     it("Should test the function without crashing", ()=>{
-        expect(formatStopSequenceItems(stopInput, RouteManagerItemByKey)).toEqual(result)
+        expect(formatManagedRouteItems(stopInput, RouteManagerItemByKey)).toEqual(result)
     })
 })

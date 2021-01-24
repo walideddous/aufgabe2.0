@@ -1,4 +1,4 @@
-export const formatStopSequenceItems = (
+export const formatManagedRouteItems = (
   stopsBymode: any,
   routeManagerItems: any
 ) => {

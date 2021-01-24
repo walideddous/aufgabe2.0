@@ -35,7 +35,7 @@ export const GET_STOP_SEQUENCE_BY_MODES = (modes: string[] ) => {
   }}`
 }
 
-export const SAVE_STOP_SEQUENCE_BY_MODES = (input:any) => {
+export const SAVE_MANAGED_ROUTE = (input:any) => {
   return `mutation{RouteManagerAdd(data:{
     _id:"${input._id}"
     name:"${input.name}"
@@ -74,7 +74,7 @@ export const SAVE_STOP_SEQUENCE_BY_MODES = (input:any) => {
   })}`
 }
 
-export const DELETE_STOP_SEQUENCE_BY_MODES = (id:string) => {
+export const DELETE_MANAGED_ROUTE = (id:string) => {
   return `mutation{
     RouteManagerDelete(_id:"${id}")
   }`

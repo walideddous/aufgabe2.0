@@ -1,53 +1,53 @@
-import React from "react";
-import { mount, shallow } from "enzyme";
-import toJSON from "enzyme-to-json";
-import Map from "./Map";
+import React from 'react';
+import { mount, shallow } from 'enzyme';
+import toJSON from 'enzyme-to-json';
+import Map from './Map';
 
 // import the datat to test with
 import {
-  stations,
-  stateDND,
-  selected,
-  currentStopSequence,
+  stops,
+  stopSequence,
+  selectedStop,
+  currentManagedRoute,
   distance,
-} from "../../testUtils/testData";
+} from '../../testUtils/testData';
 
 const makeProps = (props: any) => ({
-  stations: [],
-  stateDND: {},
-  selected: {},
-  currentStopSequence: {},
+  stops: [],
+  stopSequence: {},
+  selectedStop: {},
+  currentManagedRoute: {},
   distance: [],
-  onResetStopSequence() {},
+  onReseTManagedRoute() {},
   handleSelectAutoSearch() {},
-  onAddAfterSelected() {},
-  onAddBeforSelected() {},
+  onAddAfterselectedStop() {},
+  onAddBeforselectedStop() {},
   onDeleteStop() {},
   selectMarkerOnMap() {},
   ...props,
 });
 
-jest.mock("leaflet", () => ({
-  ...jest.requireActual("leaflet"),
+jest.mock('leaflet', () => ({
+  ...jest.requireActual('leaflet'),
   markerClusterGroup: jest.fn(() => {}),
 }));
 
 const setUp = (props: any) => {
-  const div = global.document.createElement("div");
+  const div = global.document.createElement('div');
   global.document.body.appendChild(div);
   const component = mount(<Map {...props} />, { attachTo: div });
   return component;
 };
 
-const onResetStopSequence = jest.fn();
+const onReseTManagedRoute = jest.fn();
 const onSelectAutoSearch = jest.fn();
-const onAddBeforSelected = jest.fn();
-const onAddAfterSelected = jest.fn();
+const onAddBeforselectedStop = jest.fn();
+const onAddAfterselectedStop = jest.fn();
 const onDeleteStop = jest.fn();
 const onClickOnMapMarker = jest.fn();
 
-describe("Map component", () => {
-  const div = global.document.createElement("div");
+describe('Map component', () => {
+  const div = global.document.createElement('div');
   global.document.body.appendChild(div);
 
   let mountwrapper: any;
@@ -55,15 +55,15 @@ describe("Map component", () => {
   beforeEach(() => {
     mountwrapper = setUp(
       makeProps({
-        stations,
-        stateDND,
-        selected,
-        currentStopSequence,
+        stops,
+        stopSequence,
+        selectedStop,
+        currentManagedRoute,
         distance,
-        onResetStopSequence,
+        onReseTManagedRoute,
         onSelectAutoSearch,
-        onAddBeforSelected,
-        onAddAfterSelected,
+        onAddBeforselectedStop,
+        onAddAfterselectedStop,
         onDeleteStop,
         onClickOnMapMarker,
       })
@@ -75,31 +75,31 @@ describe("Map component", () => {
     jest.resetAllMocks();
   });
 
-  it("Should match snapshot with the Map component", () => {
+  it('Should match snapshot with the Map component', () => {
     expect(toJSON(mountwrapper)).toMatchSnapshot();
   });
 });
 
-it("Should clear the map when we click on the trash button", () => {
+it('Should clear the map when we click on the trash button', () => {
   const button = shallow(
     <Map
       {...makeProps({
-        stations,
-        stateDND,
-        selected,
-        currentStopSequence,
+        stops,
+        stopSequence,
+        selectedStop,
+        currentManagedRoute,
         distance,
-        onResetStopSequence,
+        onReseTManagedRoute,
         onSelectAutoSearch,
-        onAddBeforSelected,
-        onAddAfterSelected,
+        onAddBeforselectedStop,
+        onAddAfterselectedStop,
         onDeleteStop,
         onClickOnMapMarker,
       })}
     />
   ).find("div[className='trash_button']");
 
-  button.simulate("click");
+  button.simulate('click');
 
-  expect(onResetStopSequence).toBeCalled();
+  expect(onReseTManagedRoute).toBeCalled();
 });

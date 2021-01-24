@@ -4,55 +4,55 @@ import React, {
   useEffect,
   useCallback,
   useRef,
-} from "react";
-import * as L from "leaflet";
-import { DeleteOutlined } from "@ant-design/icons";
+} from 'react';
+import * as L from 'leaflet';
+import { DeleteOutlined } from '@ant-design/icons';
 
-import SearchInput from "../search/SearchInput";
+import SearchStopsInput from '../searchStops/SearchStopsInput';
 // Import leaflet markerCluster
-import "leaflet.markercluster";
-import "./styles.min.css";
+import 'leaflet.markercluster';
+import './styles.min.css';
 
 // Import leaflet contextmenu
-import "leaflet-contextmenu";
-import "leaflet-contextmenu/dist/leaflet.contextmenu.css";
+import 'leaflet-contextmenu';
+import 'leaflet-contextmenu/dist/leaflet.contextmenu.css';
 
 // import the function to filter the table of the trajeckt and draw the linie on map
-import { getPathFromTrajekt } from "../../utils/getPathFromTrajekt";
+import { getPathFromTrajekt } from '../../utils/getPathFromTrajekt';
 
 // Typescript
 import {
-  Tstations,
+  Tstops,
   Tdistance,
-  TstateDND,
-  TStopSequence,
-} from "../../types/types";
+  TstopSequence,
+  TManagedRoute,
+} from '../../types/types';
 
 interface TpropsOnMap {
-  stations: Tstations[];
-  stateDND: TstateDND;
-  selected: Tstations | undefined;
+  stops: Tstops[];
+  stopSequence: TstopSequence;
+  selectedStop: Tstops | undefined;
   distance: Tdistance[];
-  currentStopSequence: TStopSequence | undefined;
-  onDeleteStop: (stopMarker: Tstations, index: number) => void;
-  onAddAfterSelected: (stopMarker: Tstations) => void;
-  onSelectAutoSearch: (stop: Tstations) => void;
-  onClickOnMapMarker: (el: Tstations, index: number) => void;
-  onAddBeforSelected: (stopMarker: Tstations) => void;
-  onResetStopSequence: () => void;
+  currentManagedRoute: TManagedRoute | undefined;
+  onDeleteStop: (stopMarker: Tstops, index: number) => void;
+  onAddAfterSelectedStop: (stopMarker: Tstops) => void;
+  onSelectAutoSearch: (stop: Tstops) => void;
+  onClickOnMapMarker: (el: Tstops, index: number) => void;
+  onAddBeforSelectedStop: (stopMarker: Tstops) => void;
+  onResetManagedRoute: () => void;
 }
 
 // Map component
 const Map = ({
-  stations,
-  stateDND,
-  selected,
+  stops,
+  stopSequence,
+  selectedStop,
   distance,
-  currentStopSequence,
-  onResetStopSequence,
+  currentManagedRoute,
+  onResetManagedRoute,
   onSelectAutoSearch,
-  onAddBeforSelected,
-  onAddAfterSelected,
+  onAddBeforSelectedStop,
+  onAddAfterSelectedStop,
   onDeleteStop,
   onClickOnMapMarker,
 }: TpropsOnMap) => {
@@ -83,52 +83,54 @@ const Map = ({
   }, [distance]);
 
   const clickOnMarker = useCallback(
-    (stationMarker: Tstations, index: number) => {
+    (stationMarker: Tstops, index: number) => {
       onClickOnMapMarker(stationMarker, index);
     },
     [onClickOnMapMarker]
   );
 
-  const addBeforSelected = useCallback(
+  const addBeforselectedStop = useCallback(
     (value: any) => {
       const { marker } = value.relatedTarget.options;
-      onAddBeforSelected(marker);
+      onAddBeforSelectedStop(marker);
     },
-    [onAddBeforSelected]
+    [onAddBeforSelectedStop]
   );
 
-  const addAfterSelected = useCallback(
+  const addAfterselectedStop = useCallback(
     (value: any) => {
       const { marker } = value.relatedTarget.options;
       if (
-        selected &&
-        stateDND.trajekt.items.filter((item: any) => item._id === selected._id)
-          .length &&
-        stateDND.trajekt.items.filter((item: any) => item._id === marker._id)
-          .length === 0
+        selectedStop &&
+        stopSequence.trajekt.items.filter(
+          (item: any) => item._id === selectedStop._id
+        ).length &&
+        stopSequence.trajekt.items.filter(
+          (item: any) => item._id === marker._id
+        ).length === 0
       ) {
-        onAddAfterSelected(marker);
+        onAddAfterSelectedStop(marker);
       }
     },
-    [selected, stateDND.trajekt.items, onAddAfterSelected]
+    [selectedStop, stopSequence.trajekt.items, onAddAfterSelectedStop]
   );
 
   const deleteMarkerFromMap = useCallback(
     (value: any) => {
       const { marker } = value.relatedTarget.options;
-      const index = stateDND.trajekt.items
+      const index = stopSequence.trajekt.items
         .map((item) => item._id)
         .indexOf(marker._id);
       onDeleteStop(marker, index);
     },
-    [onDeleteStop, stateDND.trajekt.items]
+    [onDeleteStop, stopSequence.trajekt.items]
   );
 
   // Displaying the map
   useEffect(() => {
-    map.current = L.map("mapId", {
+    map.current = L.map('mapId', {
       layers: [
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
           attribution:
             '&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
           maxZoom: 18,
@@ -140,15 +142,15 @@ const Map = ({
   // Setting dynamic zoom
   useEffect(() => {
     map.current.setView(
-      selected
-        ? [selected.coord[0], selected.coord[1]]
+      selectedStop
+        ? [selectedStop.coord[0], selectedStop.coord[1]]
         : [position.lat, position.lng],
-      !selected ? position.zoom : responsiveZoom.zoom
+      !selectedStop ? position.zoom : responsiveZoom.zoom
     );
     // set the min zoom
     map.current.options.minZoom = 8;
   }, [
-    selected,
+    selectedStop,
     position.lat,
     position.lng,
     position.zoom,
@@ -160,7 +162,7 @@ const Map = ({
     layerRef.current = L.layerGroup().addTo(map.current);
     polylineRef.current = L.layerGroup().addTo(map.current);
 
-    map.current.on("zoomend", function () {
+    map.current.on('zoomend', function () {
       if (map.current.getZoom() < 9 && map.current.hasLayer(layerRef.current)) {
         map.current.removeLayer(layerRef.current);
         map.current.removeLayer(polylineRef.current);
@@ -186,61 +188,61 @@ const Map = ({
     });
 
     //@ts-ignore
-    stations.forEach((stationMarker: Tstations, index: number) => {
+    stops.forEach((stationMarker: Tstops, index: number) => {
       //@ts-ignore
       const marker = L.circleMarker(stationMarker.coord, {
         //@ts-ignore
         contextmenu: true,
-        contextmenuWidth: "200",
+        contextmenuWidth: '200',
         contextmenuInheritItems: false,
         contextmenuItems: [
-          { index: 0, text: "Schließen" },
+          { index: 0, text: 'Schließen' },
           {
             index: 1,
             separator: true,
           },
           {
             index: 2,
-            text: "Hinzufügen vor dem markierten Haltestellen",
-            callback: addBeforSelected,
+            text: 'Hinzufügen vor dem markierten Haltestellen',
+            callback: addBeforselectedStop,
           },
           {
             index: 3,
-            text: "Hinzufügen nach dem markierten Haltestellen",
-            callback: addAfterSelected,
+            text: 'Hinzufügen nach dem markierten Haltestellen',
+            callback: addAfterselectedStop,
           },
           {
             index: 4,
-            text: "Löschen",
+            text: 'Löschen',
             callback: deleteMarkerFromMap,
           },
         ],
-        id: "Marker",
+        id: 'Marker',
         marker: stationMarker,
         index: index,
         color:
-          selected && selected._id === stationMarker._id
-            ? "red"
-            : stateDND.suggestions.items.length &&
-              stateDND.suggestions.items
+          selectedStop && selectedStop._id === stationMarker._id
+            ? 'red'
+            : stopSequence.suggestions.items.length &&
+              stopSequence.suggestions.items
                 .map((el) => el._id)
                 .includes(stationMarker._id)
-            ? "green"
-            : "blue",
+            ? 'green'
+            : 'blue',
       }).addTo(markers);
 
       markers.addTo(layerRef.current);
 
       marker.bindTooltip(stationMarker.name);
-      marker.on("click", () => clickOnMarker(stationMarker, index));
+      marker.on('click', () => clickOnMarker(stationMarker, index));
     });
   }, [
-    stations,
-    stateDND,
-    selected,
-    currentStopSequence,
-    addAfterSelected,
-    addBeforSelected,
+    stops,
+    stopSequence,
+    selectedStop,
+    currentManagedRoute,
+    addAfterselectedStop,
+    addBeforselectedStop,
     deleteMarkerFromMap,
     clickOnMarker,
   ]);
@@ -248,18 +250,18 @@ const Map = ({
   // Update polyline
   useEffect(() => {
     polylineRef.current.clearLayers();
-    if (stateDND.trajekt.items.length) {
-      const { items } = stateDND.trajekt;
+    if (stopSequence.trajekt.items.length) {
+      const { items } = stopSequence.trajekt;
       L.polyline(getPathFromTrajekt(items), {
-        color: "red",
+        color: 'red',
       }).addTo(polylineRef.current);
     }
-  }, [stateDND]);
+  }, [stopSequence]);
 
   // Center the map when we load the stopSequence
   useEffect(() => {
-    if (currentStopSequence && !selected) {
-      const { stopSequence } = currentStopSequence;
+    if (currentManagedRoute && !selectedStop) {
+      const { stopSequence } = currentManagedRoute;
       var corner1 = L.latLng(
           stopSequence[0].coord[0],
           stopSequence[0].coord[1]
@@ -271,26 +273,26 @@ const Map = ({
         bounds = L.latLngBounds(corner1, corner2);
       map.current.fitBounds(bounds);
     }
-  }, [currentStopSequence, selected]);
+  }, [currentManagedRoute, selectedStop]);
 
   return (
     <Fragment>
-      <div id="mapId" style={{ height: "450px", zIndex: 2, width: "99%" }} />
-      <SearchInput
-        stations={stations}
+      <div id='mapId' style={{ height: '450px', zIndex: 2, width: '99%' }} />
+      <SearchStopsInput
+        stops={stops}
         handleSelectAutoSearch={onSelectAutoSearch}
       />
-      {stateDND.trajekt.items.length ? (
+      {stopSequence.trajekt.items.length ? (
         <div
-          className="trash_button"
+          className='trash_button'
           onClick={() => {
-            if (stateDND.trajekt.items.length) {
-              onResetStopSequence();
+            if (stopSequence.trajekt.items.length) {
+              onResetManagedRoute();
               map.current.setView([position.lat, position.lng], position.zoom);
             }
           }}
         >
-          <DeleteOutlined style={{ paddingLeft: "8px", paddingTop: "8px" }} />
+          <DeleteOutlined style={{ paddingLeft: '8px', paddingTop: '8px' }} />
         </div>
       ) : null}
     </Fragment>

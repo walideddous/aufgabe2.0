@@ -1,5 +1,5 @@
 // Typescript
-import { Tstations } from "../types/types";
+import { Tstops } from "../types/types";
 
 const getpreciseDistanceFromLatLonInKm = (
   lat1: number,
@@ -61,7 +61,7 @@ const calculateAngle = (
 // Calculate the distance from a fixed poins to every points of the table
 export const calculateDistanceAndSort = (
   objClicked: any,
-  tabData: Tstations[]
+  tabData: Tstops[]
 ) => {
   const result: {
     from: string;

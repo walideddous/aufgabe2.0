@@ -8,7 +8,7 @@ describe("calculateDistanceAndSort function", ()=>{
     _id: "5f6206390d5658001cd959b4",
     }
 
-    const stations = [
+    const stops = [
         {
           coord:  [46.19161,6.21145],
           modes: ["4"],
@@ -53,6 +53,6 @@ describe("calculateDistanceAndSort function", ()=>{
 
     it("Should run the funcion calculateDistanceAndSort without crashing", ()=>{
       //@ts-ignore  
-        expect(calculateDistanceAndSort(response , stations)).toEqual(result)
+        expect(calculateDistanceAndSort(response , stops)).toEqual(result)
     })
 })

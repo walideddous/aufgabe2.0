@@ -1,5 +1,5 @@
 // Typescript
-export interface Tstations {
+export interface Tstops {
   index?: number;
   _id: string;
   name: string;
@@ -9,11 +9,11 @@ export interface Tstations {
 
 export interface Tdistance {
   from: string;
-  to: Tstations;
+  to: Tstops;
   distance: number;
 }
 
-export interface TstateDND {
+export interface TstopSequence {
   suggestions: {
     title: string;
     items: {
@@ -30,7 +30,7 @@ export interface TstateDND {
   };
 }
 
-export interface TStopSequence {
+export interface TManagedRoute {
   _id: string;
   key: string;
   name: string;
@@ -47,7 +47,9 @@ export interface TStopSequence {
       weekDays: string[];
     }[];
   }[];
-  stopSequence: Tstations[];
+  stopSequence: Tstops[];
+  createdFrom: string;
+  modifiedFrom: string;
 }
 export interface TformInformation {
   _id: string;
@@ -65,5 +67,7 @@ export interface TformInformation {
       endTime: string;
       weekDays: string[];
     }[];
+    createdFrom: string;
+    modifiedFrom: string;
   }[];
 }

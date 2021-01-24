@@ -8,7 +8,7 @@ exports[`Test the Header Component Should match the Header component snapshot 1`
     <PageHeader
       extra={
         Array [
-          <React.Fragment>
+          <Space>
             <ForwardRef(InternalButton)
               id="load_button"
               onClick={[Function]}
@@ -23,7 +23,7 @@ exports[`Test the Header Component Should match the Header component snapshot 1`
             >
               Neu
             </ForwardRef(InternalButton)>
-          </React.Fragment>,
+          </Space>,
         ]
       }
       style={
