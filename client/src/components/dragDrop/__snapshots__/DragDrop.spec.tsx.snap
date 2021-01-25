@@ -10,7 +10,8 @@ exports[`DragDrop component Should match snapshot of the DrapDrop component 1`] 
   onDelete={[Function]}
   onDeleteStop={[MockFunction]}
   onDragEnd={[MockFunction]}
-  onReseTManagedRoute={[MockFunction]}
+  onReseTManagedRoute={[Function]}
+  onResetManagedRoute={[MockFunction]}
   selectedStop={
     Object {
       "_id": "5f6205c60d5658001cd9480b",

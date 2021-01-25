@@ -1,10 +1,10 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import toJSON from 'enzyme-to-json';
-import Header from './Header';
+import React from "react";
+import { shallow } from "enzyme";
+import toJSON from "enzyme-to-json";
+import Header from "./Header";
 
 const makeProps = (props: any) => ({
-  radioButton: '',
+  radioButton: "",
   saveButtonDisabled: false,
   currentManagedRoute: {},
   onClearAll() {},
@@ -22,10 +22,10 @@ const setUp = (props: any) => {
   return shallowWrapper;
 };
 
-describe('Test the Header Component', () => {
+describe("Test the Header Component", () => {
   let shallowWrapper: any;
 
-  const clickedHeaderButton = '';
+  const clickedHeaderButton = "";
   const isHeaderSaveButtonDisabled = true;
   const currentManagedRoute = {};
   const onClearAll = jest.fn();
@@ -57,11 +57,11 @@ describe('Test the Header Component', () => {
     jest.resetAllMocks();
   });
 
-  it('Should test the jest framework', () => {
+  it("Should test the jest framework", () => {
     expect(true).toBe(true);
   });
-  it('Should match the Header component snapshot', () => {
+  it("Should match the Header component snapshot", () => {
     expect(toJSON(shallowWrapper)).toMatchSnapshot();
   });
-  it('Should test  ');
+  it("Should test  ");
 });

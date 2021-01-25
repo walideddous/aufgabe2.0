@@ -707,6 +707,9 @@ export default function useIndexHooks() {
         if (deleteResponse.data.RouteManagerDelete) {
           message.success(`Linie erfolgreich gelöscht`);
           console.log(`Linie successfully deleted`);
+          setManagedRoutes((prev: any) =>
+            prev.filter((el: any) => el.key !== key)
+          );
 
           handleClearAll();
           setCurrentManagedRoute(undefined);
