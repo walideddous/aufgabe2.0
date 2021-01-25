@@ -1,31 +1,33 @@
-import React from 'react';
-import { mount, ReactWrapper } from 'enzyme';
-import toJSON from 'enzyme-to-json';
-import { MockedProvider } from '@apollo/client/testing';
+import React from "react";
+import { mount, ReactWrapper } from "enzyme";
+import toJSON from "enzyme-to-json";
+import { MockedProvider } from "@apollo/client/testing";
 
-import { renderHook, act } from '@testing-library/react-hooks';
-import useIndexHooks from '../customHooks/useIndexHooks';
+import { renderHook, act } from "@testing-library/react-hooks";
+import useIndexHooks from "../customHooks/useIndexHooks";
 
-import { GET_STOPS_BY_MODES } from '../graphql/stops';
+import { GET_STOPS_BY_MODES } from "../graphql/stops";
 import {
   DELETE_MANAGED_ROUTE,
   GET_MANAGED_ROUTE_BY_KEY,
   GET_MANAGED_ROUTE_BY_NAME,
   SAVE_MANAGED_ROUTE,
-} from '../graphql/managedRoutes';
+} from "../graphql/managedRoutes";
 
 // Test utils
-import { graphQlStopsQuery, stops } from '../testUtils/testData';
+import { graphQlStopsQuery } from "../testUtils/testData";
 
 // Mock the map component
-jest.mock('./map/Map.tsx', () => () => <div id='mapMock'>Map mocked</div>);
+jest.mock("../components/map/Map.tsx", () => () => (
+  <div id="mapMock">Map mocked</div>
+));
 
 const queryStopsMocked = [
   {
     request: {
       query: GET_STOPS_BY_MODES,
       variables: {
-        modes: ['4'],
+        modes: ["4"],
       },
     },
     result: {
@@ -37,14 +39,14 @@ const queryStopsMocked = [
   {
     request: {
       query: GET_STOPS_BY_MODES,
-      variables: { modes: ['22'] },
+      variables: { modes: ["22"] },
     },
-    error: new Error('Something went wrong'),
+    error: new Error("Something went wrong"),
   },
 ];
 
-describe('Test the customHooks of the /components/index.tsx', () => {
-  const MainRoot = require('../components/index').default;
+describe("Test the customHooks of the /components/index.tsx", () => {
+  const MainRoot = require("../components/index").default;
 
   let wrappedComponent: ReactWrapper;
 
@@ -65,15 +67,15 @@ describe('Test the customHooks of the /components/index.tsx', () => {
     jest.resetAllMocks();
   });
 
-  it('Should test the jest framework', () => {
+  it("Should test the jest framework", () => {
     expect(true).toBe(true);
   });
 
-  it('Should match snapShot with the main component => component/index', () => {
+  it("Should match snapShot with the main component => component/index", () => {
     expect(toJSON(wrappedComponent)).toMatchSnapshot();
   });
 
-  it('Should return an array of stops when we choose the mode', async () => {
+  it("Should return an array of stops when we choose the mode", async () => {
     const wrapper = ({ children }: any) => (
       <MockedProvider mocks={queryStopsMocked} addTypename={false}>
         {children}
@@ -85,7 +87,7 @@ describe('Test the customHooks of the /components/index.tsx', () => {
     });
 
     act(() => {
-      result.current.handleStopsQuery(['4']);
+      result.current.handleStopsQuery(["4"]);
     });
 
     await waitForNextUpdate();

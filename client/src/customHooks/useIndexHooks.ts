@@ -12,7 +12,12 @@ import {
 } from "../graphql/managedRoutes";
 
 // Typescript
-import { TstopSequence, Tstops, Tdistance, TManagedRoute } from "../types/types";
+import {
+  TstopSequence,
+  Tstops,
+  Tdistance,
+  TManagedRoute,
+} from "../types/types";
 
 // Get the property from Utils
 import { getProperty } from "../utils/getPropertyKey";
@@ -60,12 +65,12 @@ export default function useIndexHooks() {
       fetchPolicy: "network-only",
     }
   );
-  const [queryManagedRouteByName, queryManagedRouteByNameResponse] = useLazyQuery(
-    GET_MANAGED_ROUTE_BY_NAME,
-    {
-      fetchPolicy: "no-cache",
-    }
-  );
+  const [
+    queryManagedRouteByName,
+    queryManagedRouteByNameResponse,
+  ] = useLazyQuery(GET_MANAGED_ROUTE_BY_NAME, {
+    fetchPolicy: "no-cache",
+  });
   const [deleteManagedRouteMutation] = useMutation(DELETE_MANAGED_ROUTE);
   const [saveManagedRouteMutation] = useMutation(SAVE_MANAGED_ROUTE);
 
@@ -89,7 +94,7 @@ export default function useIndexHooks() {
     (name: string) => {
       queryManagedRouteByName({
         variables: { name },
-      }); 
+      });
     },
     [queryManagedRouteByName]
   );
@@ -101,7 +106,7 @@ export default function useIndexHooks() {
 
       //// -> Format stops and set the state
       const formattedStops = formatPTStopItems(PTStopItems);
-      setStops(formattedStops); 
+      setStops(formattedStops);
 
       // End loading
       setIsSending(false);
@@ -141,7 +146,9 @@ export default function useIndexHooks() {
       // Delete the repetition from the Suggestion Field
       vorschläge = vorschläge.filter(
         (el: any) =>
-          !stopSequence.trajekt.items.map((el: any) => el._id).includes(el.to._id)
+          !stopSequence.trajekt.items
+            .map((el: any) => el._id)
+            .includes(el.to._id)
       );
       setDistance([...vorschläge]);
       setStopSequence((prev: any) => {
@@ -170,7 +177,9 @@ export default function useIndexHooks() {
       // Delete the repetition from the Suggestion Field
       vorschläge = vorschläge.filter(
         (el: any) =>
-          !stopSequence.trajekt.items.map((el: any) => el._id).includes(el.to._id)
+          !stopSequence.trajekt.items
+            .map((el: any) => el._id)
+            .includes(el.to._id)
       );
       setDistance([...vorschläge]);
 
@@ -353,7 +362,9 @@ export default function useIndexHooks() {
         // Delete the repetition from the Suggestion Field
         vorschläge = vorschläge.filter(
           (el: any) =>
-            !stopSequence.trajekt.items.map((el: any) => el._id).includes(el.to._id)
+            !stopSequence.trajekt.items
+              .map((el: any) => el._id)
+              .includes(el.to._id)
         );
         setDistance([...vorschläge]);
 
@@ -440,8 +451,9 @@ export default function useIndexHooks() {
     (stopMarker: Tstops) => {
       if (
         selectedStop &&
-        stopSequence.trajekt.items.filter((item: any) => item._id === selectedStop._id)
-          .length &&
+        stopSequence.trajekt.items.filter(
+          (item: any) => item._id === selectedStop._id
+        ).length &&
         stopSequence.trajekt.items.filter(
           (item: any) => item._id === stopMarker._id
         ).length === 0
@@ -454,7 +466,9 @@ export default function useIndexHooks() {
         // Delete the repetition from the Suggestion Field
         vorschläge = vorschläge.filter(
           (el: any) =>
-            !stopSequence.trajekt.items.map((el: any) => el._id).includes(el.to._id)
+            !stopSequence.trajekt.items
+              .map((el: any) => el._id)
+              .includes(el.to._id)
         );
         setDistance([...vorschläge]);
         setStopSequence((prev: any) => {
@@ -490,15 +504,21 @@ export default function useIndexHooks() {
       if (selectedStop?._id === station._id) return;
 
       if (
-        stopSequence.trajekt.items.filter((item: any) => item._id === station._id)
-          .length === 0
+        stopSequence.trajekt.items.filter(
+          (item: any) => item._id === station._id
+        ).length === 0
       ) {
         handleAddStopsOnCLick(station);
       } else {
         handleClickOnDrop(station, index);
       }
     },
-    [stopSequence.trajekt.items, selectedStop, handleAddStopsOnCLick, handleClickOnDrop]
+    [
+      stopSequence.trajekt.items,
+      selectedStop,
+      handleAddStopsOnCLick,
+      handleClickOnDrop,
+    ]
   );
 
   // Reset and delete all
@@ -715,32 +735,32 @@ export default function useIndexHooks() {
     isHeaderSaveButtonDisabled,
     setIsHeaderSaveButtonDisabled,
   ] = useState<boolean>(true);
-  const [clickedHeaderButton, setClickedHeaderButton] = useState<string>('');
+  const [clickedHeaderButton, setClickedHeaderButton] = useState<string>("");
   const [toggleLoadOrNew, setToggleLoadOrNew] = useState<boolean>(true);
   const SaveRef = useRef<{
     current: { saveManagedRouteMutation: () => void };
   }>();
 
   const handleClickOnHeaderCancelButton = () => {
-    setClickedHeaderButton('');
+    setClickedHeaderButton("");
     handleStopsQuery([]);
   };
 
   const handleClickOnHeaderLoadButton = () => {
     setToggleLoadOrNew(true);
     handleLoadMode(true);
-    setClickedHeaderButton('laden');
+    setClickedHeaderButton("laden");
   };
 
   const handleClickOnHeaderNewButton = () => {
     setToggleLoadOrNew(false);
     handleLoadMode(false);
-    setClickedHeaderButton('erstellen');
+    setClickedHeaderButton("erstellen");
   };
 
   const handleClickOnHeaderSaveButton = () => {
     //@ts-ignore
-    SaveRef?.current?.saveManagedRouteMutation();
+    SaveRef?.current?.onSaveManagedRouteMutation();
   };
 
   const handleIsHeaderSaveButtonDisabled = (value: boolean) => {

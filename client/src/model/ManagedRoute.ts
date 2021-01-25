@@ -68,76 +68,139 @@ class ManagedRoute {
 
     if (prevFormData && prevFormData.schedule) {
       const { schedule: prevSchedule } = prevFormData;
-      // Check if the date already exist
-      if (
-        prevSchedule.filter(
-          (el: any) =>
-            el.from === this.newFormData.from && el.to === this.newFormData.to
-        ).length
-      ) {
-        const sameDateIndex = prevSchedule
-          .map((el: any) => `${el.from} ${el.to}`)
-          .indexOf(`${this.newFormData.from} ${this.newFormData.to}`);
+      const { from, to, timeSlices } = this.newFormData;
 
-        for (let index = 0; index < prevSchedule.length; index++) {
-          // Check if the value is duplicated
+      for (let index = 0; index < prevSchedule.length; index++) {
+        const {
+          from: prevFrom,
+          to: prevTo,
+          timeSlices: prevTimeSlices,
+        } = prevSchedule[index];
 
-          if (
-            sameDateIndex === index &&
-            JSON.stringify(
-              prevSchedule[index].timeSlices[
-                prevSchedule[index].timeSlices.length - 1
-              ]
-            ) ===
+        // Check if the date already exist
+        if (prevFrom === from && prevTo === to) {
+          for (let j = 0; j < prevTimeSlices.length; j++) {
+            const {
+              weekDays: prevWeekDays,
+              startTime: prevStartTime,
+              endTime: prevEndTime,
+            } = prevTimeSlices[j];
+            const { weekDays, startTime, endTime } = timeSlices[0];
+
+            let existDays =
+              prevWeekDays.length >= weekDays.length
+                ? prevWeekDays.filter((prevWeekDay: string) =>
+                    weekDays
+                      .map((weekDay: string) => weekDay)
+                      .includes(prevWeekDay)
+                  ).length
+                : weekDays
+                    .map((weekDay: string) => weekDay)
+                    .filter((weekDay: string) => prevWeekDays.includes(weekDay))
+                    .length;
+
+            if (
+              JSON.stringify(prevTimeSlices[j]) ===
               JSON.stringify({
-                ...this.newFormData.timeSlices[0],
-                weekDays: this.newFormData.timeSlices[0].weekDays.map(
+                ...timeSlices[0],
+                weekDays: timeSlices[0].weekDays.map(
                   (weekDay: string) => weekDay
                 ),
               })
-          ) {
-            return validationMessages.concat({
-              type: "error",
-              message: "Bitte vermeiden Sie doppelte Gültigkeiten",
-            });
-          }
-
-          // Check if the time overlap the old time
-          if (sameDateIndex === index) {
-            for (let i = 0; i < prevSchedule[index].timeSlices.length; i++) {
-              const {
-                startTime: prevStartTime,
-                endTime: prevEndTime,
-                weekDays: prevWeekDays,
-              } = prevSchedule[index].timeSlices[i];
-              const {
-                startTime,
-                endTime,
-                weekDays,
-              } = this.newFormData.timeSlices[0];
-              let existDays =
-                prevWeekDays.length >= weekDays.length
-                  ? prevWeekDays.filter((prevWeekDay: string) =>
-                      weekDays
-                        .map((weekDay: string) => weekDay)
-                        .includes(prevWeekDay)
-                    ).length
-                  : weekDays
-                      .map((weekDay: string) => weekDay)
-                      .filter((weekDay: string) =>
-                        prevWeekDays.includes(weekDay)
-                      ).length;
+            ) {
+              return validationMessages.concat({
+                type: "error",
+                message: "Bitte vermeiden Sie doppelte Gültigkeiten",
+              });
 
               // Check if the days are already exists and the time overlap
-              if (
-                existDays &&
-                !(startTime > prevEndTime || endTime < prevStartTime)
-              ) {
-                return validationMessages.concat({
-                  type: "error",
-                  message: "Die ZeitIntervalle überlappen sich",
-                });
-              }
+            } else if (
+              existDays &&
+              !(startTime > prevEndTime || endTime < prevStartTime)
+            ) {
+              return validationMessages.concat({
+                type: "error",
+                message: "Die ZeitIntervalle überlappen sich",
+              });
+            }
+          }
+        } else if (
+          (moment(to, "DD-MM-YYYY").diff(
+            moment(prevFrom, "DD-MM-YYYY"),
+            "days"
+          ) >= 0 &&
+            moment(prevTo, "DD-MM-YYYY").diff(
+              moment(to, "DD-MM-YYYY"),
+              "days"
+            ) > 0) ||
+          (moment(to, "DD-MM-YYYY").diff(
+            moment(prevFrom, "DD-MM-YYYY"),
+            "days"
+          ) > 0 &&
+            moment(prevTo, "DD-MM-YYYY").diff(
+              moment(to, "DD-MM-YYYY"),
+              "days"
+            ) >= 0) ||
+          (moment(from, "DD-MM-YYYY").diff(
+            moment(prevFrom, "DD-MM-YYYY"),
+            "days"
+          ) >= 0 &&
+            moment(prevTo, "DD-MM-YYYY").diff(
+              moment(from, "DD-MM-YYYY"),
+              "days"
+            ) > 0) ||
+          (moment(from, "DD-MM-YYYY").diff(
+            moment(prevFrom, "DD-MM-YYYY"),
+            "days"
+          ) > 0 &&
+            moment(prevTo, "DD-MM-YYYY").diff(
+              moment(from, "DD-MM-YYYY"),
+              "days"
+            ) >= 0)
+        ) {
+          for (let j = 0; j < prevTimeSlices.length; j++) {
+            const {
+              weekDays: prevWeekDays,
+              startTime: prevStartTime,
+              endTime: prevEndTime,
+            } = prevTimeSlices[j];
+            const { weekDays, startTime, endTime } = timeSlices[0];
+
+            let existDays =
+              prevWeekDays.length >= weekDays.length
+                ? prevWeekDays.filter((prevWeekDay: string) =>
+                    weekDays
+                      .map((weekDay: string) => weekDay)
+                      .includes(prevWeekDay)
+                  ).length
+                : weekDays
+                    .map((weekDay: string) => weekDay)
+                    .filter((weekDay: string) => prevWeekDays.includes(weekDay))
+                    .length;
+
+            if (
+              JSON.stringify(prevTimeSlices[j]) ===
+              JSON.stringify({
+                ...timeSlices[0],
+                weekDays: timeSlices[0].weekDays.map(
+                  (weekDay: string) => weekDay
+                ),
+              })
+            ) {
+              return validationMessages.concat({
+                type: "error",
+                message: "Die gültigkeiten überlappen sich",
+              });
+
+              // Check if the days are already exists and the time overlap
+            } else if (
+              existDays &&
+              !(startTime > prevEndTime || endTime < prevStartTime)
+            ) {
+              return validationMessages.concat({
+                type: "error",
+                message: "Die ZeitIntervalle überlappen sich",
+              });
             }
           }
         }
@@ -145,7 +208,6 @@ class ManagedRoute {
 
       // Validating the number of day selected in the date and it should be more than 7 days
       // if the perioed less than 7 days check if the selected Days are valid in this period
-      const { to, from, timeSlices } = this.newFormData;
       let daysNumber = moment(
         to
           .split("-")
@@ -186,33 +248,6 @@ class ManagedRoute {
         }
 
         return validationMessages;
-      }
-
-      //Check if the date overlap the old date
-      for (let i = 0; i < prevSchedule.length; i++) {
-        const {
-          from: prevFrom,
-          to: prevTo,
-          timeSlices: prevTimeSlices,
-        } = prevSchedule[i];
-        const { from, to, timeSlices } = this.newFormData;
-
-        const diff1 = moment(prevFrom, "DD-MM-YYYY").diff(
-          moment(to, "DD-MM-YYYY"),
-          "days"
-        );
-
-        const diff2 = moment(from, "DD-MM-YYYY").diff(
-          moment(prevTo, "DD-MM-YYYY"),
-          "days"
-        );
-
-        if (!(diff1 > 0 || diff2 > 0) && diff1 - diff2 !== 0) {
-          return validationMessages.concat({
-            type: "error",
-            message: "Die gültigkeiten überlappen sich",
-          });
-        }
       }
     }
 

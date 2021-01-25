@@ -1,7 +1,7 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import { AutoComplete, Form, Select, Collapse } from 'antd';
+import React, { useState, useCallback, useEffect } from "react";
+import { AutoComplete, Form, Select, Collapse } from "antd";
 // Import types
-import { TstopSequence, TManagedRoute } from '../../types/types';
+import { TstopSequence, TManagedRoute } from "../../types/types";
 
 interface TLoadStopSequence {
   toggleLoadOrNew: boolean;
@@ -24,9 +24,9 @@ const LoadManagedRouteForm = ({
   onLoadManagedRouteQuery,
 }: TLoadStopSequence) => {
   const [form] = Form.useForm();
-  const [search, setSearch] = useState<string>('');
+  const [search, setSearch] = useState<string>("");
   const [collapseOpen, setCollapseOpen] = useState<boolean>(true);
-  const [selectedStopMode, setselectedStopMode] = useState('');
+  const [selectedStopMode, setselectedStopMode] = useState("");
 
   // Auto complete component
   const { Option } = AutoComplete;
@@ -45,7 +45,7 @@ const LoadManagedRouteForm = ({
   // handle the drop menu to display the choosed Modes on Map
   const handleModeChange = useCallback(
     (value: string) => {
-      onStopsQuery([value + '']);
+      onStopsQuery([value + ""]);
       setselectedStopMode(value);
       setCollapseOpen(false);
     },
@@ -60,16 +60,22 @@ const LoadManagedRouteForm = ({
       if (response && response.key !== currentManagedRoute?.key) {
         onLoadManagedRouteQuery(response.modes, options.key);
         setCollapseOpen(false);
-        setSearch('');
+        setSearch("");
       }
     },
     [managedRoutes, currentManagedRoute, onLoadManagedRouteQuery]
   );
 
+  useEffect(() => {
+    if (!currentManagedRoute) {
+      setCollapseOpen(true);
+    }
+  }, [currentManagedRoute]);
+
   return (
     <Collapse
-      defaultActiveKey={'1'}
-      activeKey={collapseOpen ? '1' : '2'}
+      defaultActiveKey={"1"}
+      activeKey={collapseOpen ? "1" : "2"}
       onChange={() => {
         setCollapseOpen(!collapseOpen);
       }}
@@ -78,35 +84,35 @@ const LoadManagedRouteForm = ({
         header={
           !toggleLoadOrNew
             ? `Verkehrsmitteltyp ${selectedStopMode}`
-            : 'Linienname suchen'
+            : "Linienname suchen"
         }
-        key='1'
+        key="1"
       >
-        <Form form={form} layout='vertical'>
+        <Form form={form} layout="vertical">
           {!toggleLoadOrNew && (
             <Form.Item>
               <Select
-                id='mode_selector'
-                placeholder='Wählen Sie einen Vehrkehsmitteltyp aus'
+                id="mode_selector"
+                placeholder="Wählen Sie einen Vehrkehsmitteltyp aus"
                 disabled={stopSequence.trajekt.items.length ? true : false}
                 onChange={handleModeChange}
               >
-                <Option value='13' id='13'>
+                <Option value="13" id="13">
                   13
                 </Option>
-                <Option value='5' id='5'>
+                <Option value="5" id="5">
                   5
                 </Option>
-                <Option value='8' id='8'>
+                <Option value="8" id="8">
                   8
                 </Option>
-                <Option value='9' id='9'>
+                <Option value="9" id="9">
                   9
                 </Option>
-                <Option value='2' id='2'>
+                <Option value="2" id="2">
                   2
                 </Option>
-                <Option value='4' id='4'>
+                <Option value="4" id="4">
                   4
                 </Option>
               </Select>
@@ -115,8 +121,8 @@ const LoadManagedRouteForm = ({
           {toggleLoadOrNew && (
             <Form.Item>
               <AutoComplete
-                id='stopSequence_autoComplete'
-                placeholder='Geben Sie dem Linienname ein'
+                id="stopSequence_autoComplete"
+                placeholder="Geben Sie dem Linienname ein"
                 allowClear={true}
                 value={search}
                 onChange={(input: string) => {

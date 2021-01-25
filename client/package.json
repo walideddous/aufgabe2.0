@@ -78,12 +78,10 @@
     "collectCoverageFrom": [
       "src/**/*.tsx",
       "src/utils/*.ts",
-      "src/services/*.ts",
-      "src/customHooks/*.ts",
+      "!src/customHooks/*.ts",
       "!src/utils/getPropertyKey.ts",
-      "!src/components/navBar/NavBar.tsx",
-      "!src/index.tsx",
       "!src/App.tsx",
+      "!src/index.tsx",
       "!src/components/react.tsx"
     ]
   }
