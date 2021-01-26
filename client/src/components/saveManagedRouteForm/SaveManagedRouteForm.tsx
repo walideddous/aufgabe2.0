@@ -314,6 +314,7 @@ const SaveManagedRouteForm = forwardRef(
           autoComplete="off"
           id="formWrapper"
           layout="vertical"
+          //@ts-ignore
           requiredMark={false}
           form={form}
           onFinish={onFinish}
@@ -518,7 +519,7 @@ const SaveManagedRouteForm = forwardRef(
                         message: "Geben Sie der Gültigkeit ein",
                       },
                     ]}
-                    initialValue={[moment(), moment().add(1, "w")]}
+                    initialValue={[moment().add(1, "w"), moment().add(4, "w")]}
                   >
                     <DatePicker.RangePicker
                       id="date_input"
@@ -542,7 +543,7 @@ const SaveManagedRouteForm = forwardRef(
                       allowClear
                       placeholder="Wählen Sie den Wochentage aus"
                       id="dayPicker_input"
-                      mode="tags"
+                      mode="multiple"
                     >
                       <Option key="1" value="MON">
                         {getWeekDayLabel("MON")}
@@ -585,6 +586,7 @@ const SaveManagedRouteForm = forwardRef(
                         moment("14:00", "HH:mm"),
                       ]}
                     >
+                      {/*@ts-ignore*/}
                       <RangePicker
                         placeholder={[
                           "Start Zeitintervall",
@@ -625,6 +627,7 @@ const SaveManagedRouteForm = forwardRef(
                                   align="baseline"
                                 >
                                   <Form.Item name={[field.name, "time"]}>
+                                    {/*@ts-ignore*/}
                                     <RangePicker
                                       placeholder={[
                                         "Start Zeitintervall",

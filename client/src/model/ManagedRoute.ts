@@ -208,18 +208,8 @@ class ManagedRoute {
 
       // Validating the number of day selected in the date and it should be more than 7 days
       // if the perioed less than 7 days check if the selected Days are valid in this period
-      let daysNumber = moment(
-        to
-          .split("-")
-          .reverse()
-          .map((el: string) => parseInt(el, 10))
-      ).diff(
-        moment(
-          from
-            .split("-")
-            .reverse()
-            .map((el: string) => parseInt(el, 10))
-        ),
+      let daysNumber = moment(to.split("-").reverse()).diff(
+        moment(from.split("-").reverse()),
         "days"
       );
 
